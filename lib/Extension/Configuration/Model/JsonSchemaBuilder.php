@@ -12,8 +12,10 @@ class JsonSchemaBuilder
     /**
      * @param class-string[] $extensions
      */
-    public function __construct(private string $title, private array $extensions)
-    {
+    public function __construct(
+        private string $title,
+        private array $extensions
+    ) {
     }
 
     public function dump(): string

@@ -9,8 +9,10 @@ use RuntimeException;
 
 final class SourceCode implements TextDocument
 {
-    private function __construct(private string $code, private TextDocumentUri $uri)
-    {
+    private function __construct(
+        private string $code,
+        private TextDocumentUri $uri
+    ) {
     }
 
     public function __toString(): string

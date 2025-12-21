@@ -23,8 +23,11 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class WorseExtractConstant implements ExtractConstant
 {
-    public function __construct(private Reflector $reflector, private Updater $updater, private Parser $parser = new Parser())
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private Updater $updater,
+        private Parser $parser = new Parser(),
+    ) {
     }
 
     public function extractConstant(SourceCode $sourceCode, int $offset, string $constantName): TextDocumentEdits

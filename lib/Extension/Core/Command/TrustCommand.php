@@ -14,8 +14,10 @@ class TrustCommand extends Command
 {
     const OPT_TRUST = 'trust';
 
-    public function __construct(private Trust $status, private string $projectDir)
-    {
+    public function __construct(
+        private Trust $status,
+        private string $projectDir
+    ) {
         parent::__construct();
     }
 

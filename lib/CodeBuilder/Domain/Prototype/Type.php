@@ -6,8 +6,10 @@ final class Type extends Prototype
 {
     private bool $none = false;
 
-    public function __construct(private ?string $type = null, private mixed $originalType = null)
-    {
+    public function __construct(
+        private ?string $type = null,
+        private mixed $originalType = null
+    ) {
         parent::__construct();
     }
 

@@ -8,8 +8,10 @@ final class DumperRegistry
 {
     private $dumpers = [];
 
-    public function __construct(array $dumpers, private string $default)
-    {
+    public function __construct(
+        array $dumpers,
+        private string $default
+    ) {
         foreach ($dumpers as $name => $dumper) {
             $this->add($name, $dumper);
         }

@@ -11,8 +11,10 @@ use Phpactor\TextDocument\TextDocument;
 
 class LabelFormattingCompletor implements Completor
 {
-    public function __construct(private Completor $completor, private LabelFormatter $labelFormatter)
-    {
+    public function __construct(
+        private Completor $completor,
+        private LabelFormatter $labelFormatter
+    ) {
     }
 
     public function complete(

@@ -11,8 +11,10 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 class IndexOnSaveListener implements ListenerProviderInterface
 {
-    public function __construct(private Indexer $indexer, private TextDocumentLocator $locator)
-    {
+    public function __construct(
+        private Indexer $indexer,
+        private TextDocumentLocator $locator
+    ) {
     }
 
     /**

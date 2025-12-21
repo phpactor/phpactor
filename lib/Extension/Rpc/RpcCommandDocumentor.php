@@ -9,8 +9,10 @@ use RuntimeException;
 
 class RpcCommandDocumentor implements Documentor
 {
-    public function __construct(private HandlerRegistry $handlerRegistry, private DefinitionDocumentor $definitionDocumentor)
-    {
+    public function __construct(
+        private HandlerRegistry $handlerRegistry,
+        private DefinitionDocumentor $definitionDocumentor
+    ) {
     }
 
     public function document(string $commandName=''): string

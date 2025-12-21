@@ -13,8 +13,12 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ConditionalType extends Type
 {
-    public function __construct(private string $variable, private Type $isType, private Type $left, private Type $right)
-    {
+    public function __construct(
+        private string $variable,
+        private Type $isType,
+        private Type $left,
+        private Type $right
+    ) {
     }
 
     public function __toString(): string

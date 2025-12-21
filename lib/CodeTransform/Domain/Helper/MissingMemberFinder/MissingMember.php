@@ -6,8 +6,11 @@ use Phpactor\TextDocument\ByteOffsetRange;
 
 class MissingMember
 {
-    public function __construct(private string $name, public ByteOffsetRange $range, private string $memberType)
-    {
+    public function __construct(
+        private string $name,
+        public ByteOffsetRange $range,
+        private string $memberType
+    ) {
     }
 
     public function range(): ByteOffsetRange

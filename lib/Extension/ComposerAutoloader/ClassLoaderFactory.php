@@ -7,8 +7,10 @@ use Psr\Log\LoggerInterface;
 
 class ClassLoaderFactory
 {
-    public function __construct(private string $composerDir, private LoggerInterface $logger)
-    {
+    public function __construct(
+        private string $composerDir,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function getLoader(): ClassLoader

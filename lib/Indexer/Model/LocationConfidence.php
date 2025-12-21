@@ -10,8 +10,10 @@ class LocationConfidence
     public const CONFIDENCE_NOT = 'not';
     public const CONFIDENCE_MAYBE = 'maybe';
 
-    public function __construct(private Location $location, private string $confidence)
-    {
+    public function __construct(
+        private Location $location,
+        private string $confidence
+    ) {
     }
 
     public function __toString(): string

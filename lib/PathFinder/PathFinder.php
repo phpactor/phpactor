@@ -10,8 +10,10 @@ class PathFinder
     /**
      * @param array<string, Pattern> $destinations
      */
-    private function __construct(private string $basePath, private array $destinations)
-    {
+    private function __construct(
+        private string $basePath,
+        private array $destinations
+    ) {
     }
 
     /**

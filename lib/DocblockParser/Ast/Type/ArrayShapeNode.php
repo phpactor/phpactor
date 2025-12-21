@@ -14,7 +14,10 @@ class ArrayShapeNode extends TypeNode
         'close',
     ];
 
-    public function __construct(public Token $open, public ArrayKeyValueList $arrayKeyValueList, public ?Token $close)
-    {
+    public function __construct(
+        public Token $open,
+        public ArrayKeyValueList $arrayKeyValueList,
+        public ?Token $close
+    ) {
     }
 }

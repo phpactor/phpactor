@@ -13,8 +13,10 @@ use Throwable;
 
 final class TolerantCodeActionProvider implements CodeActionProvider
 {
-    public function __construct(private CodeActionProvider $provider, private ClientApi $client)
-    {
+    public function __construct(
+        private CodeActionProvider $provider,
+        private ClientApi $client
+    ) {
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise

@@ -11,8 +11,11 @@ class UndefinedVariableDiagnostic implements Diagnostic
     /**
      * @param list<string> $suggestions
      */
-    public function __construct(private ByteOffsetRange $byteOffsetRange, private string $varName, private array $suggestions)
-    {
+    public function __construct(
+        private ByteOffsetRange $byteOffsetRange,
+        private string $varName,
+        private array $suggestions
+    ) {
     }
 
     public function range(): ByteOffsetRange

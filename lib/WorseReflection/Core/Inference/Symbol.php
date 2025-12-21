@@ -26,8 +26,11 @@ final class Symbol
     /**
      * @param Symbol::* $symbolType
      */
-    private function __construct(private string $symbolType, string $name, private ByteOffsetRange $position)
-    {
+    private function __construct(
+        private string $symbolType,
+        string $name,
+        private ByteOffsetRange $position
+    ) {
         $this->name = ltrim($name, '$');
     }
 

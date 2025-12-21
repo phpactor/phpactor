@@ -10,8 +10,11 @@ class MemberReference
     /**
      * @param MemberRecord::TYPE_* $type
      */
-    public function __construct(private string $type, private ?FullyQualifiedName $name, private ?string $memberName)
-    {
+    public function __construct(
+        private string $type,
+        private ?FullyQualifiedName $name,
+        private ?string $memberName
+    ) {
     }
 
     /**

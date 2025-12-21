@@ -10,8 +10,11 @@ use IteratorAggregate;
  */
 class StepGenerator implements IteratorAggregate
 {
-    public function __construct(private BehatConfig $config, private StepFactory $factory, private StepParser $parser)
-    {
+    public function __construct(
+        private BehatConfig $config,
+        private StepFactory $factory,
+        private StepParser $parser
+    ) {
     }
 
     public function getIterator(): Generator

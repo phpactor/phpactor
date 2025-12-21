@@ -13,8 +13,10 @@ final class TrustHandler implements Handler
     const NAME = 'trust';
     const PARAM_TRUST = 'trust';
 
-    public function __construct(private Trust $status, private string $projectDir)
-    {
+    public function __construct(
+        private Trust $status,
+        private string $projectDir
+    ) {
     }
 
     public function configure(Resolver $resolver): void

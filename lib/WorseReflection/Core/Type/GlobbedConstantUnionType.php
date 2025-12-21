@@ -9,8 +9,10 @@ use Phpactor\WorseReflection\Core\Type;
 
 class GlobbedConstantUnionType extends Type
 {
-    public function __construct(private Type $classType, private string $glob)
-    {
+    public function __construct(
+        private Type $classType,
+        private string $glob
+    ) {
     }
 
     public function __toString(): string

@@ -16,8 +16,10 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class InlayHintHandler implements Handler, CanRegisterCapabilities
 {
-    public function __construct(private InlayHintProvider $provider, private Workspace $workspace)
-    {
+    public function __construct(
+        private InlayHintProvider $provider,
+        private Workspace $workspace
+    ) {
     }
     public function methods(): array
     {

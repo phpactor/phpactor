@@ -9,8 +9,10 @@ use Phpactor\WorseReflection\Core\DiagnosticTag;
 
 class UnusedImportDiagnostic implements Diagnostic
 {
-    private function __construct(private ByteOffsetRange $range, private string $name)
-    {
+    private function __construct(
+        private ByteOffsetRange $range,
+        private string $name
+    ) {
     }
 
     public static function for(ByteOffsetRange $range, string $name): self

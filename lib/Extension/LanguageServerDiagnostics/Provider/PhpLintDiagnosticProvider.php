@@ -13,8 +13,10 @@ use function Amp\call;
 
 class PhpLintDiagnosticProvider implements DiagnosticsProvider
 {
-    public function __construct(private PhpLinter $linter, private TextDocumentLocator $locator)
-    {
+    public function __construct(
+        private PhpLinter $linter,
+        private TextDocumentLocator $locator
+    ) {
     }
 
 

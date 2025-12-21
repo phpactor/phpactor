@@ -15,8 +15,11 @@ class VarTag extends TagNode
         'variable',
     ];
 
-    public function __construct(public Token $tag, public ?TypeNode $type, public ?VariableNode $variable)
-    {
+    public function __construct(
+        public Token $tag,
+        public ?TypeNode $type,
+        public ?VariableNode $variable
+    ) {
     }
 
     public function type(): ?TypeNode

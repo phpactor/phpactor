@@ -15,8 +15,10 @@ class PathExcludingDiagnosticsProvider implements DiagnosticsProvider
     /**
      * @param list<string> $paths
      */
-    public function __construct(private DiagnosticsProvider $innerProvider, private array $paths)
-    {
+    public function __construct(
+        private DiagnosticsProvider $innerProvider,
+        private array $paths
+    ) {
     }
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise

@@ -13,8 +13,10 @@ class TestLinter implements Linter
     /**
      * @param array<Diagnostic> $diagnostics
      */
-    public function __construct(private array $diagnostics, private int $delay)
-    {
+    public function __construct(
+        private array $diagnostics,
+        private int $delay
+    ) {
     }
 
     public function lint(string $url, ?string $text): Promise

@@ -11,8 +11,10 @@ class NameImportTable
     private array $importedNameRefs = [];
 
     /** @param ImportedNameReference[] $importedNamespaceNames */
-    private function __construct(private Namespace_ $namespace, array $importedNamespaceNames)
-    {
+    private function __construct(
+        private Namespace_ $namespace,
+        array $importedNamespaceNames
+    ) {
         foreach ($importedNamespaceNames as $importedNamespaceName) {
             $this->addImportedName($importedNamespaceName);
         }

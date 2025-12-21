@@ -14,8 +14,10 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class ParameterTypeResolver
 {
-    public function __construct(private ReflectionParameter $parameter, private GenericMapResolver $mapResolver)
-    {
+    public function __construct(
+        private ReflectionParameter $parameter,
+        private GenericMapResolver $mapResolver
+    ) {
     }
 
     public function resolve(): Type

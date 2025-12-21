@@ -6,8 +6,10 @@ use Phpactor\Extension\Rpc\Response;
 
 class ReplaceFileSourceResponse implements Response
 {
-    private function __construct(private string $path, private string $replacementSource)
-    {
+    private function __construct(
+        private string $path,
+        private string $replacementSource
+    ) {
     }
 
     public static function fromPathAndSource(string $path, string $replacementSource)

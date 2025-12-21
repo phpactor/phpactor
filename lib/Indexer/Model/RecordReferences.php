@@ -20,8 +20,10 @@ class RecordReferences implements IteratorAggregate
     /**
      * @param array<RecordReference> $references
      */
-    public function __construct(private FileRecord $file, array $references)
-    {
+    public function __construct(
+        private FileRecord $file,
+        array $references
+    ) {
         foreach ($references as $reference) {
             $this->add($reference);
         }

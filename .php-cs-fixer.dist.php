@@ -48,6 +48,9 @@ return (new Config())
             'anonymous_class' => true,
             'named_class' => true,
         ],
+        'multiline_promoted_properties' => [
+            'minimum_number_of_parameters' => 2
+        ],
     ])
     ->setFinder($finder)
 ;

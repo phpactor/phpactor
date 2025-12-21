@@ -4,8 +4,12 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 
 class TextInput implements Input
 {
-    private function __construct(private string $name, private string $label, private ?string $default = null, private ?string $type = null)
-    {
+    private function __construct(
+        private string $name,
+        private string $label,
+        private ?string $default = null,
+        private ?string $type = null
+    ) {
     }
 
     public static function fromNameLabelAndDefault(string $name, string $label, ?string $default = null, ?string $type = null)

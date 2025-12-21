@@ -13,8 +13,11 @@ final class OffsetExtractorResult
      * @param array<string, ByteOffset[]> $offsets
      * @param array<string, ByteOffsetRange[]> $ranges
      */
-    public function __construct(private string $source, private array $offsets, private array $ranges)
-    {
+    public function __construct(
+        private string $source,
+        private array $offsets,
+        private array $ranges
+    ) {
     }
 
     public function source(): string

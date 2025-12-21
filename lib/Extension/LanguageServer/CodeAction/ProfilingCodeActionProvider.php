@@ -14,8 +14,10 @@ use function Amp\call;
 
 class ProfilingCodeActionProvider implements CodeActionProvider
 {
-    public function __construct(private CodeActionProvider $innerProvider, private LoggerInterface $logger)
-    {
+    public function __construct(
+        private CodeActionProvider $innerProvider,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise

@@ -13,8 +13,10 @@ use function Amp\call;
 
 class ProfilerMiddleware implements Middleware
 {
-    public function __construct(private LoggerInterface $logger, private bool $trace = false)
-    {
+    public function __construct(
+        private LoggerInterface $logger,
+        private bool $trace = false
+    ) {
     }
 
     public function process(Message $request, RequestHandler $handler): Promise

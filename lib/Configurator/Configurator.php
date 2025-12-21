@@ -14,8 +14,10 @@ class Configurator
      * @param list<ChangeSuggestor> $suggestors
      * @param list<ChangeApplicator> $applicators
      */
-    public function __construct(private array $suggestors, private array $applicators)
-    {
+    public function __construct(
+        private array $suggestors,
+        private array $applicators
+    ) {
     }
 
     public function suggestChanges(): Changes

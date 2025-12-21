@@ -15,8 +15,10 @@ class LazyFrame implements Frame
 {
     private ?Frame $frame = null;
 
-    public function __construct(private FrameResolver $frameResolver, private Node $node)
-    {
+    public function __construct(
+        private FrameResolver $frameResolver,
+        private Node $node
+    ) {
     }
 
     public function __toString(): string

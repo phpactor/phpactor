@@ -8,8 +8,11 @@ use function memory_get_usage;
 
 final class MemoryUsage
 {
-    private function __construct(private ?int $memoryLimit, private int $memoryUsage, private int $precision = 0)
-    {
+    private function __construct(
+        private ?int $memoryLimit,
+        private int $memoryUsage,
+        private int $precision = 0
+    ) {
     }
 
     public static function create(): self

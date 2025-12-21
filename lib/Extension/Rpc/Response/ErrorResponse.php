@@ -7,8 +7,10 @@ use Exception;
 
 class ErrorResponse implements Response
 {
-    private function __construct(private string $message, private string $details)
-    {
+    private function __construct(
+        private string $message,
+        private string $details
+    ) {
     }
 
     public static function fromMessageAndDetails(string $message, string $details): ErrorResponse

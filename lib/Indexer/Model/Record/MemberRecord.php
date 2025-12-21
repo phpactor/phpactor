@@ -23,8 +23,11 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
     /**
      * @param MemberRecord::TYPE_* $type
      */
-    public function __construct(string $type, private string $memberName, private ?string $containerType = null)
-    {
+    public function __construct(
+        string $type,
+        private string $memberName,
+        private ?string $containerType = null
+    ) {
         if (!in_array($type, [
             self::TYPE_PROPERTY,
             self::TYPE_CONSTANT,

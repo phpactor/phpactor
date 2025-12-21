@@ -20,8 +20,10 @@ use RuntimeException;
  */
 class ParserDocblockUpdater implements DocBlockUpdater
 {
-    public function __construct(private DocblockParser $parser, private TextFormat $textFormat)
-    {
+    public function __construct(
+        private DocblockParser $parser,
+        private TextFormat $textFormat
+    ) {
     }
 
     public function set(string $docblockText, TagPrototype $prototype): string

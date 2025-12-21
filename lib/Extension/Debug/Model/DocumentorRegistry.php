@@ -10,8 +10,10 @@ class DocumentorRegistry
     /**
      * @param array<string> $documentors
      */
-    public function __construct(private Container $container, private array $documentors)
-    {
+    public function __construct(
+        private Container $container,
+        private array $documentors
+    ) {
     }
 
     public function get(string $string): Documentor

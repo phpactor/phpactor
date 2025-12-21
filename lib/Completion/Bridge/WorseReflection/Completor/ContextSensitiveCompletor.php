@@ -28,8 +28,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    public function __construct(private TolerantCompletor $inner, private Reflector $reflector)
-    {
+    public function __construct(
+        private TolerantCompletor $inner,
+        private Reflector $reflector
+    ) {
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

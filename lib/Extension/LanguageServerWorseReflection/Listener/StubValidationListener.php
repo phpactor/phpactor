@@ -11,8 +11,10 @@ class StubValidationListener implements ListenerProviderInterface
     /**
      * @param list<string> $stubPaths
      */
-    public function __construct(private ClientApi $api, private array $stubPaths)
-    {
+    public function __construct(
+        private ClientApi $api,
+        private array $stubPaths
+    ) {
     }
 
     /**

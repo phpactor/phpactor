@@ -17,8 +17,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseGenerateDecorator implements GenerateDecorator
 {
-    public function __construct(private Reflector $reflector, private Updater $updater)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private Updater $updater
+    ) {
     }
 
     public function getTextEdits(SourceCode $source, string $interfaceFQN): TextEdits

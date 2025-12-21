@@ -23,8 +23,10 @@ class OverrideMethodHandler extends AbstractHandler
     const PARAM_METHOD_NAME = 'method_name';
     const PARAM_PATH = 'path';
 
-    public function __construct(private Reflector $reflector, private OverrideMethod $overrideMethod)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private OverrideMethod $overrideMethod
+    ) {
     }
 
     public function name(): string

@@ -7,8 +7,10 @@ use Phpactor\WorseReflection\Core\Type;
 
 class TypeLocation
 {
-    public function __construct(private Type $type, private Location $location)
-    {
+    public function __construct(
+        private Type $type,
+        private Location $location
+    ) {
     }
 
     public function type(): Type

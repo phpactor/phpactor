@@ -9,8 +9,13 @@ final class PhpstanConfig
     /**
      * @param DiagnosticSeverity::* $severity
      */
-    public function __construct(private string $phpstanBin, private int $severity, private ?string $level = null, private ?string $config = null, private ?string $memLimit = null)
-    {
+    public function __construct(
+        private string $phpstanBin,
+        private int $severity,
+        private ?string $level = null,
+        private ?string $config = null,
+        private ?string $memLimit = null
+    ) {
     }
 
     public function level(): ?string

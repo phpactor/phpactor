@@ -23,8 +23,10 @@ class IndexBuildCommand extends Command
 
     private MemoryUsage $usage;
 
-    public function __construct(private Indexer $indexer, private Watcher $watcher)
-    {
+    public function __construct(
+        private Indexer $indexer,
+        private Watcher $watcher
+    ) {
         parent::__construct();
         $this->usage = MemoryUsage::create();
     }

@@ -6,8 +6,10 @@ use Phpactor\WorseReflection\Core\Type;
 
 final class IntRangeType extends IntType
 {
-    public function __construct(public ?Type $lower, public ?Type $upper)
-    {
+    public function __construct(
+        public ?Type $lower,
+        public ?Type $upper
+    ) {
     }
 
     public function __toString(): string

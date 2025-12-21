@@ -12,8 +12,10 @@ class CallableType extends PrimitiveType implements InvokeableType
     /**
      * @param Type[] $args
      */
-    public function __construct(private array $args = [], private Type $returnType = new MissingType())
-    {
+    public function __construct(
+        private array $args = [],
+        private Type $returnType = new MissingType(),
+    ) {
     }
 
     public function __toString(): string

@@ -23,8 +23,10 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
     public const PARAM_VARIANT = 'variant';
     public const PARAM_OVERWRITE_EXISTING = 'overwrite_existing';
 
-    public function __construct(protected Generators $generators, protected FileToClass $fileToClass)
-    {
+    public function __construct(
+        protected Generators $generators,
+        protected FileToClass $fileToClass
+    ) {
     }
 
     public function configure(Resolver $resolver): void

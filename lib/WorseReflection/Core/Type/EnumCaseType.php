@@ -10,8 +10,11 @@ use Phpactor\WorseReflection\Core\Type;
 
 class EnumCaseType extends ReflectedClassType implements ClassLikeType
 {
-    public function __construct(ClassReflector $reflector, public ClassType $enumType, public string $caseName)
-    {
+    public function __construct(
+        ClassReflector $reflector,
+        public ClassType $enumType,
+        public string $caseName
+    ) {
         parent::__construct($reflector, ClassName::fromString('UnitEnumCase'));
     }
 

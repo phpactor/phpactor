@@ -9,8 +9,11 @@ class UpdateFileSourceResponse implements Response
 {
     private TextEditBuilder $textEditBuilder;
 
-    private function __construct(private string $path, private string $oldSource, private string $newSource)
-    {
+    private function __construct(
+        private string $path,
+        private string $oldSource,
+        private string $newSource
+    ) {
         // TODO: This should be a service
         $this->textEditBuilder = new TextEditBuilder();
     }

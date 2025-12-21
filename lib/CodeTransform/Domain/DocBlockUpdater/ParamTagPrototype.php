@@ -8,8 +8,10 @@ use Phpactor\WorseReflection\Core\Type;
 
 class ParamTagPrototype implements TagPrototype
 {
-    public function __construct(public string $name, public Type $type)
-    {
+    public function __construct(
+        public string $name,
+        public Type $type
+    ) {
     }
 
     public function matches(TagNode $tag): bool

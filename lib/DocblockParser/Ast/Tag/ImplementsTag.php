@@ -16,8 +16,10 @@ class ImplementsTag extends TagNode
     /**
      * @param array<array-key, Token|TypeNode> $tokensAndTypes
      */
-    public function __construct(public Token $tag, public array $tokensAndTypes = [])
-    {
+    public function __construct(
+        public Token $tag,
+        public array $tokensAndTypes = []
+    ) {
     }
 
     /**

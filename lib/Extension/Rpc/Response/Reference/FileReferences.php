@@ -6,8 +6,10 @@ class FileReferences
 {
     private array $references = [];
 
-    private function __construct(private string $filePath, array $references)
-    {
+    private function __construct(
+        private string $filePath,
+        array $references
+    ) {
         foreach ($references as $reference) {
             $this->addReference($reference);
         }

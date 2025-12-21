@@ -13,8 +13,10 @@ class SearchIncludeIndex implements SearchIndex
     /**
      * @param list<string> $patterns
      */
-    public function __construct(private SearchIndex $innerIndex, private array $patterns)
-    {
+    public function __construct(
+        private SearchIndex $innerIndex,
+        private array $patterns
+    ) {
     }
 
     public function search(Criteria $criteria): Generator

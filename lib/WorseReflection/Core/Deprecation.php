@@ -4,8 +4,10 @@ namespace Phpactor\WorseReflection\Core;
 
 class Deprecation
 {
-    public function __construct(private bool $isDefined, private ?string $message = null)
-    {
+    public function __construct(
+        private bool $isDefined,
+        private ?string $message = null
+    ) {
     }
 
     public function isDefined(): bool
