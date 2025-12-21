@@ -26,10 +26,16 @@ class CacheForDocument
      */
     public function getOrSet(TextDocumentUri $uri, string $key, Closure $setter)
     {
+        return $this->cacheForDocument($uri)->getOrSet($key, $setter);
+    }
+
+    public function cacheForDocument(TextDocumentUri $uri): Cache
+    {
         if (!isset($this->caches[$uri->__toString()])) {
             $this->caches[$uri->__toString()] = ($this->cacheFactory)();
         }
-        return $this->caches[$uri->__toString()]->getOrSet($key, $setter);
+
+        return $this->caches[$uri->__toString()];
     }
 
     public function purge(TextDocumentUri $uri): void

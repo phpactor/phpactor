@@ -28,4 +28,24 @@ class StaticCache implements Cache
     {
         $this->cache = [];
     }
+
+    public function has(string $key): bool
+    {
+        return isset($this->cache[$key]);
+    }
+
+    public function get(string $key): mixed
+    {
+        return $this->cache[$key] ?? null;
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        $this->cache[$key] = $value;
+    }
+
+    public function remove(string $key): void
+    {
+        unset($this->cache[$key]);
+    }
 }

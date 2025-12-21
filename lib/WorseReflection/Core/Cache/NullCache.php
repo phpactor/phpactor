@@ -15,4 +15,22 @@ class NullCache implements Cache
     public function purge(): void
     {
     }
+
+    public function has(string $key): bool
+    {
+        return false;
+    }
+
+    public function get(string $key): mixed
+    {
+        return null;
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+    }
+
+    public function remove(string $key): void
+    {
+    }
 }
