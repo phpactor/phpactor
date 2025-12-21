@@ -4,8 +4,9 @@ namespace Phpactor\WorseReflection\Core;
 
 use Closure;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\Cache\NullCache;
 
-class CacheForDocument
+final class CacheForDocument
 {
     /**
      * @var array<string,Cache>
@@ -17,6 +18,11 @@ class CacheForDocument
      */
     public function __construct(private Closure $cacheFactory)
     {
+    }
+
+    public static function none(): self
+    {
+        return new self(fn () => new NullCache());
     }
 
     /**

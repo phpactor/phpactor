@@ -156,7 +156,10 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(self::SERVICE_PARSER, function (Container $container) {
-            return new CachedParser($container->get(Cache::class));
+            return new CachedParser(
+                $container->get(Cache::class),
+                $container->get(CacheForDocument::class),
+            );
         });
 
         $container->register(Cache::class, function (Container $container) {
