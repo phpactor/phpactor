@@ -14,9 +14,12 @@ Improvements:
   - Restrict attribute completion using targets #2629 @przepompownia
   - Use the Phan fork of the Tolerant Parser as a base #2946 @dantleech
   - Show find references progress with LSP progress #2947 @dantleech
+  - Cache and highlighter refactoring #2883, #2992, #2991 @dantleech
 
 Bug fixes:
 
+  - Do not enter infinite loop on self-referencing constants #2984 @mamazu
+  - Do not index files that exceed a configured size #2979 @mamazu
   - Fix scoped property access variable renaming #2968 @dantleech
   - Fix display of configuration warnings #2971 @dantleech
 
