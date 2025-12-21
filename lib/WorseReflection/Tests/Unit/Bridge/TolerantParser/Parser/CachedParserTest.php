@@ -21,7 +21,7 @@ class CachedParserTest extends TestCase
     {
         $parser = new CachedParser(new TtlCache());
         $node1 = $parser->parseSourceFile(file_get_contents(__FILE__));
-        $node2 = $parser->parseSourceFile(file_get_contents(__FILE__), 'uri://test.php');
+        $node2 = $parser->parseSourceFile(file_get_contents(__FILE__), 'file:///test.php');
 
         $this->assertNotSame($node1, $node2);
     }
