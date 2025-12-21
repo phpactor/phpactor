@@ -17,6 +17,15 @@ class CachedParserTest extends TestCase
         $this->assertSame($node1, $node2);
     }
 
+    public function testUsesUriInKey(): void
+    {
+        $parser = new CachedParser(new TtlCache());
+        $node1 = $parser->parseSourceFile(file_get_contents(__FILE__));
+        $node2 = $parser->parseSourceFile(file_get_contents(__FILE__), 'uri://test.php');
+
+        $this->assertNotSame($node1, $node2);
+    }
+
     public function testReturnsDifferentResultsForDifferentSourceCodes(): void
     {
         $parser = new CachedParser(new TtlCache());

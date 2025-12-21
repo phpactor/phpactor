@@ -16,8 +16,9 @@ class CachedParser extends Parser
 
     public function parseSourceFile(string $source, ?string $uri = null): SourceFileNode
     {
-        return $this->cache->getOrSet('__parser__' . md5($source), function () use ($source, $uri) {
-            return parent::parseSourceFile($source, $uri);
-        });
+        return $this->cache->getOrSet(
+            '__parser__' . md5($source . ($uri ?? '')),
+            function () use ($source, $uri) {return parent::parseSourceFile($source, $uri);}
+        );
     }
 }

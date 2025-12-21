@@ -27,6 +27,7 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\EfficientLineCols;
+use Phpactor\TextDocument\TextDocument;
 use function Amp\call;
 use function Amp\delay;
 
@@ -41,7 +42,7 @@ class Highlighter
     /**
      * @return Promise<Highlights>
      */
-    public function highlightsFor(string $source, ByteOffset $offset): Promise
+    public function highlightsFor(TextDocument $source, ByteOffset $offset): Promise
     {
         // ensure we only process one inlay request at a time
         if ($this->previousCancellationSource) {
@@ -85,9 +86,9 @@ class Highlighter
     /**
      * @return Generator<Highlight>
      */
-    public function generate(string $source, ByteOffset $offset): Generator
+    private function generate(TextDocument $source, ByteOffset $offset): Generator
     {
-        $rootNode = $this->parser->parseSourceFile($source);
+        $rootNode = $this->parser->parseSourceFile($source->__toString(), $source->uri()?->__toString());
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class)) {

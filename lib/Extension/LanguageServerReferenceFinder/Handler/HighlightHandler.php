@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
 use Phpactor\LanguageServerProtocol\DocumentHighlight;
 use Phpactor\LanguageServerProtocol\DocumentHighlightParams;
@@ -37,7 +38,8 @@ class HighlightHandler implements Handler, CanRegisterCapabilities
         $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
 
         return call(function () use ($textDocument, $offset) {
-            return (yield $this->highlighter->highlightsFor($textDocument->text, $offset))->toArray();
+            $document = TextDocumentConverter::fromLspTextItem($textDocument);
+            return (yield $this->highlighter->highlightsFor($document, $offset))->toArray();
         });
     }
 
