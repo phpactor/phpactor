@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Cache;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\CacheEntry;
 
 class NullCache implements Cache
 {
@@ -21,7 +22,7 @@ class NullCache implements Cache
         return false;
     }
 
-    public function get(string $key): mixed
+    public function get(string $key): ?CacheEntry
     {
         return null;
     }
