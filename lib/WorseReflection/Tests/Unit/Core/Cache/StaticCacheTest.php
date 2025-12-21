@@ -13,8 +13,10 @@ class StaticCacheTest extends TestCase
         $counter = 0;
         $value = $cache->getOrSet('foobar', fn () => $counter++);
         self::assertEquals(0, $counter);
+        self::assertEquals(0, $value);
         $value = $cache->getOrSet('foobar', fn () => $counter++);
         self::assertEquals(0, $counter);
+        self::assertEquals(0, $value);
     }
 
     public function testGetHasSet(): void
@@ -22,15 +24,15 @@ class StaticCacheTest extends TestCase
         $cache = new StaticCache();
         $counter = 0;
 
-        self::assertFalse($cache->has('foo'));
+        self::assertNull($cache->get('foo'));
 
         $cache->set('foo', 'bar');
 
-        self::assertTrue($cache->has('foo'));
-        self::assertEquals('bar', $cache->get('foo'));
+        self::assertNotNull($cache->get('foo'));
+        self::assertEquals('bar', $cache->get('foo')->scalar());
 
         $cache->remove('foo');
 
-        self::assertFalse($cache->has('foo'));
+        self::assertNull($cache->get('foo'));
     }
 }

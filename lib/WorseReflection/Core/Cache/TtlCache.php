@@ -4,11 +4,12 @@ namespace Phpactor\WorseReflection\Core\Cache;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\CacheEntry;
 
 class TtlCache implements Cache
 {
     /**
-     * @var array<string, mixed>
+     * @var array<string, CacheEntry>
      */
     private array $cache = [];
 
@@ -30,14 +31,16 @@ class TtlCache implements Cache
     {
         $this->purgeIfNeeded();
 
-        if ($this->has($key)) {
-            return $this->get($key);
+        $entry = $this->get($key);
+
+        if (null !== $entry) {
+            return $entry->value();
         }
 
         $value = $setter();
         $this->set($key, $value);
 
-        return $this->cache[$key];
+        return $this->cache[$key]->value();
     }
 
     public function purge(): void
@@ -46,21 +49,15 @@ class TtlCache implements Cache
         $this->expires = [];
     }
 
-    public function has(string $key): bool
+    public function get(string $key): ?CacheEntry
     {
         $this->purgeIfNeeded();
-        return isset($this->cache[$key]) && $this->expires[$key] > microtime(true);
-    }
-
-    public function get(string $key): mixed
-    {
-        $this->purgeIfNeeded();
-        return $this->has($key) ? $this->cache[$key] : null;
+        return $this->cache[$key] ?? null;
     }
 
     public function set(string $key, mixed $value): void
     {
-        $this->cache[$key] = $value;
+        $this->cache[$key] = new CacheEntry($value);
         $this->expires[$key] = microtime(true) + $this->lifetime;
     }
 
