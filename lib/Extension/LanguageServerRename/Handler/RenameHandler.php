@@ -9,9 +9,10 @@ use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\WorkspaceOperations;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\Rename\Model\Renamer;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\WorkspaceOperationsConverter;
 use Phpactor\LanguageServerProtocol\PrepareRenameParams;
 use Phpactor\LanguageServerProtocol\PrepareRenameRequest;
 use Phpactor\LanguageServerProtocol\Range;
@@ -31,7 +32,7 @@ use function Amp\delay;
 class RenameHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private LocatedTextEditConverter $converter,
+        private WorkspaceOperationsConverter $converter,
         private TextDocumentLocator $documentLocator,
         private Renamer $renamer,
         private ClientApi $clientApi
@@ -81,7 +82,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
                 $previous = $error->getPrevious();
 
                 $this->clientApi->window()->showMessage()->error(sprintf(
-                    $error->getMessage() . ($previous?->getTraceAsString() ?? '')
+                    '%s %s',
+                    $error->getMessage(),
+                    $previous?->getTraceAsString() ?? '',
                 ));
 
                 return new WorkspaceEdit(null, []);
@@ -120,9 +123,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
      */
     private function resultToWorkspaceEdit(array $locatedEdits, ?RenameResult $renameResult): WorkspaceEdit
     {
-        return $this->converter->toWorkspaceEdit(
-            LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
-            $renameResult
-        );
+        return $this->converter->toWorkspaceEdit(new WorkspaceOperations(array_filter([
+            ...LocatedTextEditsMap::fromLocatedEdits($locatedEdits)->toLocatedTextEdits(),
+            $renameResult,
+        ])));
     }
 }
