@@ -17,8 +17,11 @@ class AutoConfigListener implements ListenerProviderInterface
     const NO = 'no';
 
 
-    public function __construct(private Configurator $configurator, private ClientApi $clientApi, private bool $trusted)
-    {
+    public function __construct(
+        private Configurator $configurator,
+        private ClientApi $clientApi,
+        private bool $trusted
+    ) {
     }
 
 

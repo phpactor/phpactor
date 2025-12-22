@@ -12,8 +12,10 @@ use RecursiveIteratorIterator;
 
 final class SimpleFileListProvider implements FileListProvider
 {
-    public function __construct(private FilePath $path, private bool $followSymlinks = false)
-    {
+    public function __construct(
+        private FilePath $path,
+        private bool $followSymlinks = false
+    ) {
     }
 
     public function fileList(): FileList

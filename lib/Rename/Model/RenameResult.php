@@ -6,8 +6,10 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class RenameResult
 {
-    public function __construct(private TextDocumentUri $oldUri, private TextDocumentUri $newUri)
-    {
+    public function __construct(
+        private TextDocumentUri $oldUri,
+        private TextDocumentUri $newUri
+    ) {
     }
 
     public function oldUri(): TextDocumentUri

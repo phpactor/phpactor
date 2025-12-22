@@ -19,8 +19,12 @@ class GenericNode extends TypeNode
     /**
      * @param TypeList<Element> $parameters
      */
-    public function __construct(public Token $open, public TypeNode $type, public TypeList $parameters, public Token $close)
-    {
+    public function __construct(
+        public Token $open,
+        public TypeNode $type,
+        public TypeList $parameters,
+        public Token $close
+    ) {
     }
 
     public function close(): Token

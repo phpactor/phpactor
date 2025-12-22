@@ -22,8 +22,10 @@ class SymfonyContainerCompletor implements TolerantCompletor
 {
     const CONTAINER_CLASS = 'Symfony\\Component\\DependencyInjection\\ContainerInterface';
 
-    public function __construct(private Reflector $reflector, private SymfonyContainerInspector $inspector)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private SymfonyContainerInspector $inspector
+    ) {
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

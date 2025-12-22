@@ -9,8 +9,10 @@ class Request
     const KEY_ACTION = 'action';
     const KEY_PARAMETERS = 'parameters';
 
-    private function __construct(private string $name, private array $parameters)
-    {
+    private function __construct(
+        private string $name,
+        private array $parameters
+    ) {
     }
 
     public static function fromNameAndParameters(string $name, array $parameters)

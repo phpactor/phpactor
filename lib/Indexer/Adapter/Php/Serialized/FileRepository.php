@@ -33,7 +33,7 @@ class FileRepository
     public function __construct(
         private string $path,
         private RecordSerializer $serializer,
-        private LoggerInterface $logger = new NullLogger()
+        private LoggerInterface $logger = new NullLogger(),
     ) {
         $this->initializeLastUpdate();
     }

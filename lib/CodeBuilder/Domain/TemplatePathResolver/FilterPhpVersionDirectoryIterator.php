@@ -16,8 +16,10 @@ class FilterPhpVersionDirectoryIterator extends FilterIterator
     /**
      *      @see https://www.php.net/manual/en/reserved.constants.php#reserved.constants.core
      */
-    public function __construct(Iterator $iterator, private string $phpVersion)
-    {
+    public function __construct(
+        Iterator $iterator,
+        private string $phpVersion
+    ) {
         parent::__construct($iterator);
     }
 

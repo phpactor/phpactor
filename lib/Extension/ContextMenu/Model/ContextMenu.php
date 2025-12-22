@@ -9,8 +9,10 @@ class ContextMenu
 {
     private array $actions = [];
 
-    public function __construct(array $actions, private array $contexts)
-    {
+    public function __construct(
+        array $actions,
+        private array $contexts
+    ) {
         foreach ($actions as $name => $action) {
             $this->actions[$name] = Invoke::new(Action::class, $action);
         }

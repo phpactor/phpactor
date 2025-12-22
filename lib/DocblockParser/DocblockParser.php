@@ -7,8 +7,10 @@ use RuntimeException;
 
 final class DocblockParser
 {
-    public function __construct(private Lexer $lexer, private Parser $parser)
-    {
+    public function __construct(
+        private Lexer $lexer,
+        private Parser $parser
+    ) {
     }
 
     public static function create(): self

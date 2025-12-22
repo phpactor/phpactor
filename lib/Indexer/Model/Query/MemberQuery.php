@@ -13,8 +13,10 @@ use Phpactor\Indexer\Model\Record\MemberRecord;
 
 class MemberQuery implements IndexQuery
 {
-    public function __construct(private Index $index, private RecordReferenceEnhancer $enhancer)
-    {
+    public function __construct(
+        private Index $index,
+        private RecordReferenceEnhancer $enhancer
+    ) {
     }
 
     public function get(string $identifier): ?MemberRecord

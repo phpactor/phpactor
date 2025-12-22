@@ -14,7 +14,7 @@ class AbstractClassGenerator
     public function __construct(
         protected ClassFileNormalizer $normalizer,
         protected Generators $generators,
-        private LoggerInterface $logger = new NullLogger()
+        private LoggerInterface $logger = new NullLogger(),
     ) {
     }
 

@@ -18,8 +18,10 @@ use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
 
 class ReflectedClassType extends ClassType
 {
-    public function __construct(protected ClassReflector $reflector, public ClassName $name)
-    {
+    public function __construct(
+        protected ClassReflector $reflector,
+        public ClassName $name
+    ) {
         $this->members = ClassLikeReflectionMemberCollection::empty();
     }
 

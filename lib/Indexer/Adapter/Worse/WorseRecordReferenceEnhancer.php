@@ -16,8 +16,11 @@ use Psr\Log\LoggerInterface;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
-    public function __construct(private SourceCodeReflector $reflector, private LoggerInterface $logger, private TextDocumentLocator $locator)
-    {
+    public function __construct(
+        private SourceCodeReflector $reflector,
+        private LoggerInterface $logger,
+        private TextDocumentLocator $locator
+    ) {
     }
 
     public function enhance(FileRecord $record, RecordReference $reference): RecordReference

@@ -17,8 +17,10 @@ use function Amp\call;
 
 class HighlightHandler implements Handler, CanRegisterCapabilities
 {
-    public function __construct(private Workspace $workspace, private Highlighter $highlighter)
-    {
+    public function __construct(
+        private Workspace $workspace,
+        private Highlighter $highlighter
+    ) {
     }
 
 

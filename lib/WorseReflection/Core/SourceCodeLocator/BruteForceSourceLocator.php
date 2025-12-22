@@ -19,8 +19,10 @@ final class BruteForceSourceLocator implements SourceCodeLocator
      */
     private ?array $map = null;
 
-    public function __construct(private Reflector $reflector, private string $path)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private string $path
+    ) {
     }
 
     public function locate(Name $name): TextDocument

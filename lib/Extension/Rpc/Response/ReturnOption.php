@@ -4,8 +4,10 @@ namespace Phpactor\Extension\Rpc\Response;
 
 class ReturnOption
 {
-    private function __construct(private string $name, private $value)
-    {
+    private function __construct(
+        private string $name,
+        private $value
+    ) {
     }
 
     public static function fromNameAndValue(string $name, $value)

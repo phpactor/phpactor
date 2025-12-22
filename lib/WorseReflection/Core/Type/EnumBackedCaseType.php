@@ -11,8 +11,12 @@ use Phpactor\WorseReflection\Core\Type;
 
 class EnumBackedCaseType extends EnumCaseType implements ClassLikeType
 {
-    public function __construct(ClassReflector $reflector, ClassType $enumType, string $name, public Type $value)
-    {
+    public function __construct(
+        ClassReflector $reflector,
+        ClassType $enumType,
+        string $name,
+        public Type $value
+    ) {
         parent::__construct($reflector, $enumType, $name);
     }
 

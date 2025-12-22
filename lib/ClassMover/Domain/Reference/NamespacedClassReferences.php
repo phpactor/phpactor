@@ -20,8 +20,10 @@ final class NamespacedClassReferences implements IteratorAggregate
     /**
      * @param ClassReference[] $classRefs
      */
-    private function __construct(private NamespaceReference $namespaceRef, array $classRefs)
-    {
+    private function __construct(
+        private NamespaceReference $namespaceRef,
+        array $classRefs
+    ) {
         foreach ($classRefs as $classRef) {
             $this->add($classRef);
         }

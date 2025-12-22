@@ -13,8 +13,10 @@ class CallbackExpander implements Expander
     /**
      * @param Closure():string $callback
     */
-    public function __construct(private string $tokenName, Closure $callback)
-    {
+    public function __construct(
+        private string $tokenName,
+        Closure $callback
+    ) {
         $this->callback = $callback;
     }
 

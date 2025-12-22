@@ -15,7 +15,11 @@ class TypeAliasTag extends TagNode
         'type',
     ];
 
-    public function __construct(public Token $tag, public ?TypeNode $alias, public ?Token $equals, public ?TypeNode $type)
-    {
+    public function __construct(
+        public Token $tag,
+        public ?TypeNode $alias,
+        public ?Token $equals,
+        public ?TypeNode $type
+    ) {
     }
 }

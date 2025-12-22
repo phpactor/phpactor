@@ -12,8 +12,10 @@ class TextDocumentUri
     public const SCHEME_PHAR = 'phar';
     public const SCHEMES = [self::SCHEME_FILE, self::SCHEME_UNTITLED, self::SCHEME_PHAR];
 
-    final private function __construct(private string $scheme, private string $path)
-    {
+    final private function __construct(
+        private string $scheme,
+        private string $path
+    ) {
     }
 
     public function __toString(): string

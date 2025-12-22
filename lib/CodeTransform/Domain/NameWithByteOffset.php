@@ -17,8 +17,11 @@ final class NameWithByteOffset
 
     private string $type;
 
-    public function __construct(private Name $name, private ByteOffset $byteOffset, string $type = self::TYPE_CLASS)
-    {
+    public function __construct(
+        private Name $name,
+        private ByteOffset $byteOffset,
+        string $type = self::TYPE_CLASS
+    ) {
         if (!in_array($type, self::VALID_TYPES)) {
             throw new RuntimeException(sprintf(
                 'Invalid type "%s", valid types "%s"',

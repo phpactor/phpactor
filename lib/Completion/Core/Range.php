@@ -6,8 +6,10 @@ use Phpactor\TextDocument\ByteOffset;
 
 class Range
 {
-    public function __construct(private ByteOffset $byteStart, private ByteOffset $byteEnd)
-    {
+    public function __construct(
+        private ByteOffset $byteStart,
+        private ByteOffset $byteEnd
+    ) {
     }
 
     public static function fromStartAndEnd(int $byteStart, int $byteEnd): self

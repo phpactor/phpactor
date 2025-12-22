@@ -7,8 +7,10 @@ use Psr\Log\LoggerInterface;
 
 class ClientLogger implements LoggerInterface
 {
-    public function __construct(private ClientApi $client, private LoggerInterface $innerLogger)
-    {
+    public function __construct(
+        private ClientApi $client,
+        private LoggerInterface $innerLogger
+    ) {
     }
 
 

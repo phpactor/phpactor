@@ -12,8 +12,10 @@ use IteratorAggregate;
  */
 class TextDocumentEdits implements IteratorAggregate
 {
-    public function __construct(private TextDocumentUri $uri, private TextEdits $textEdits)
-    {
+    public function __construct(
+        private TextDocumentUri $uri,
+        private TextEdits $textEdits
+    ) {
     }
 
     public static function fromTextDocument(TextDocument $textDocument, TextEdits $edits): self

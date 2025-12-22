@@ -15,7 +15,10 @@ class ThrowsTag extends TagNode
         'text',
     ];
 
-    public function __construct(public Token $tag, public ?TypeNode $exceptionClass, public ?TextNode $text)
-    {
+    public function __construct(
+        public Token $tag,
+        public ?TypeNode $exceptionClass,
+        public ?TextNode $text
+    ) {
     }
 }

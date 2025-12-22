@@ -19,8 +19,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class ReflectionScope implements CoreReflectionScope
 {
-    public function __construct(private Reflector $reflector, private Node $node)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private Node $node
+    ) {
     }
 
     /**

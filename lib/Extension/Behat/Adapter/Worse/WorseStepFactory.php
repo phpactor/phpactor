@@ -14,8 +14,10 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 class WorseStepFactory implements StepFactory
 {
-    public function __construct(private ClassReflector $reflector, private ContextClassResolver $contextClassResolver)
-    {
+    public function __construct(
+        private ClassReflector $reflector,
+        private ContextClassResolver $contextClassResolver
+    ) {
     }
 
     /**

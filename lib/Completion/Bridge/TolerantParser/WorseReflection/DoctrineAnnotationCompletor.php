@@ -25,7 +25,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     public function __construct(
         NameSearcher $nameSearcher,
         private Reflector $reflector,
-        private Parser $parser = new Parser()
+        private Parser $parser = new Parser(),
     ) {
         parent::__construct($nameSearcher);
     }

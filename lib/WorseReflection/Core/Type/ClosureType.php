@@ -14,8 +14,11 @@ class ClosureType extends ReflectedClassType implements ClassLikeType, Invokeabl
     /**
      * @param Type[] $args
      */
-    public function __construct(ClassReflector $reflector, private array $args = [], private Type $returnType = new MissingType())
-    {
+    public function __construct(
+        ClassReflector $reflector,
+        private array $args = [],
+        private Type $returnType = new MissingType(),
+    ) {
         parent::__construct($reflector, ClassName::fromString('Closure'));
     }
 

@@ -70,8 +70,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class TypeConverter
 {
-    public function __construct(private Reflector $reflector, private ?ReflectionScope $scope)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private ?ReflectionScope $scope
+    ) {
     }
 
     public function convert(?TypeNode $type): Type

@@ -11,8 +11,11 @@ class Diagnostic
     public const INFORMATION = 3;
     public const HINT = 4;
 
-    public function __construct(private ByteOffsetRange $range, private string $message, private int $severity)
-    {
+    public function __construct(
+        private ByteOffsetRange $range,
+        private string $message,
+        private int $severity
+    ) {
     }
 
     public function range(): ByteOffsetRange

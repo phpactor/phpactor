@@ -17,8 +17,10 @@ use function Amp\Promise\wait;
 
 class Analyser
 {
-    public function __construct(private FilesystemRegistry $filesystem, private SourceCodeReflector $reflector)
-    {
+    public function __construct(
+        private FilesystemRegistry $filesystem,
+        private SourceCodeReflector $reflector
+    ) {
     }
 
     /**

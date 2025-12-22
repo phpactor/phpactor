@@ -4,8 +4,10 @@ namespace Phpactor\Filesystem\Domain;
 
 final class CopyReport
 {
-    private function __construct(private FileList $srcFiles, private FileList $destFiles)
-    {
+    private function __construct(
+        private FileList $srcFiles,
+        private FileList $destFiles
+    ) {
     }
 
     public static function fromSrcAndDestFiles(FileList $srcFiles, FileList $destFiles): CopyReport

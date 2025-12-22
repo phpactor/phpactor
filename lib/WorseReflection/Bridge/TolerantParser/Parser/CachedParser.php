@@ -13,8 +13,10 @@ class CachedParser extends Parser
 {
     private CacheForDocument $cacheForDocument;
 
-    public function __construct(private Cache $cache = new TtlCache(), ?CacheForDocument $cacheForDocument = null)
-    {
+    public function __construct(
+        private Cache $cache = new TtlCache(),
+        ?CacheForDocument $cacheForDocument = null
+    ) {
         parent::__construct();
         $this->cacheForDocument = $cacheForDocument ?? CacheForDocument::none();
     }

@@ -10,8 +10,10 @@ class PhpactorConfigChange implements Change
     /**
      * @param Closure(bool):array<string,mixed> $keyValues
      */
-    public function __construct(private string $prompt, private Closure $keyValues)
-    {
+    public function __construct(
+        private string $prompt,
+        private Closure $keyValues
+    ) {
     }
 
     public function prompt(): string

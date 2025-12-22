@@ -6,7 +6,10 @@ use Phpactor\WorseReflection\Core\Type;
 
 final class DocBlockTypeAssertion
 {
-    public function __construct(public string $variableName, public Type $type, public bool $negated)
-    {
+    public function __construct(
+        public string $variableName,
+        public Type $type,
+        public bool $negated
+    ) {
     }
 }

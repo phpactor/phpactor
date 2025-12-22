@@ -10,8 +10,10 @@ class InputCallbackResponse implements Response
 {
     private array $inputs = [];
 
-    private function __construct(private Request $callbackAction, array $inputs)
-    {
+    private function __construct(
+        private Request $callbackAction,
+        array $inputs
+    ) {
         foreach ($inputs as $input) {
             $this->add($input);
         }

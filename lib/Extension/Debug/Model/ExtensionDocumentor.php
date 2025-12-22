@@ -12,8 +12,10 @@ class ExtensionDocumentor implements Documentor
     /**
      * @param array<string> $extensionFqns
      */
-    public function __construct(private array $extensionFqns, private DefinitionDocumentor $definitionDocumentor)
-    {
+    public function __construct(
+        private array $extensionFqns,
+        private DefinitionDocumentor $definitionDocumentor
+    ) {
     }
 
     public function document(string $commandName=''): string

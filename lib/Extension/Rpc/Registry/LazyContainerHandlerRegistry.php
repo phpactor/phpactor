@@ -9,8 +9,10 @@ use Psr\Container\ContainerInterface;
 
 class LazyContainerHandlerRegistry implements HandlerRegistry
 {
-    public function __construct(private ContainerInterface $container, private array $serviceMap)
-    {
+    public function __construct(
+        private ContainerInterface $container,
+        private array $serviceMap
+    ) {
     }
 
     public function get($handlerName): Handler

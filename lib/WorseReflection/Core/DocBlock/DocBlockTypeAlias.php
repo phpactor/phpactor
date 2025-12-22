@@ -6,8 +6,10 @@ use Phpactor\WorseReflection\Core\Type;
 
 final class DocBlockTypeAlias
 {
-    public function __construct(private string $alias, private Type $type)
-    {
+    public function __construct(
+        private string $alias,
+        private Type $type
+    ) {
     }
 
     public function alias(): string

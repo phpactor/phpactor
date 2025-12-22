@@ -14,8 +14,10 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 final class LocatedTextEditConverter
 {
-    public function __construct(private Workspace $workspace, private TextDocumentLocator $locator)
-    {
+    public function __construct(
+        private Workspace $workspace,
+        private TextDocumentLocator $locator
+    ) {
     }
 
     public function toWorkspaceEdit(LocatedTextEditsMap $map, ?RenameResult $renameResult = null): WorkspaceEdit

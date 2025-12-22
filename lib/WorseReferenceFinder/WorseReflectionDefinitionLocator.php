@@ -26,8 +26,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionDefinitionLocator implements DefinitionLocator
 {
-    public function __construct(private Reflector $reflector, private Cache $cache)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private Cache $cache
+    ) {
     }
 
 

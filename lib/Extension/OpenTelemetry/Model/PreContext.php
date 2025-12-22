@@ -11,8 +11,14 @@ final class PreContext
     /**
      * @param array<int,mixed> $params
      */
-    public function __construct(public object $object, public array $params, public string $class, public string $function, public ?string $filename, public ?int $lineno)
-    {
+    public function __construct(
+        public object $object,
+        public array $params,
+        public string $class,
+        public string $function,
+        public ?string $filename,
+        public ?int $lineno
+    ) {
     }
 
     public function context(): ContextInterface

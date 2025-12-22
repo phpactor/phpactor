@@ -20,7 +20,7 @@ class SimpleFilesystem implements Filesystem
     public function __construct(
         private FilePath $path,
         ?FileListProvider $fileListProvider = null,
-        private SymfonyFilesystem $filesystem = new SymfonyFilesystem()
+        private SymfonyFilesystem $filesystem = new SymfonyFilesystem(),
     ) {
         $this->fileListProvider = $fileListProvider ?? new SimpleFileListProvider($this->path);
     }

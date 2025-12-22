@@ -19,8 +19,10 @@ class CodeFilteringDiagnosticProvider implements DiagnosticsProvider
     /**
      * @param list<string> $ignoreCodes
      */
-    public function __construct(private DiagnosticsProvider $innerProvider, array $ignoreCodes)
-    {
+    public function __construct(
+        private DiagnosticsProvider $innerProvider,
+        array $ignoreCodes
+    ) {
         $this->ignoreCodes = array_flip($ignoreCodes);
     }
 

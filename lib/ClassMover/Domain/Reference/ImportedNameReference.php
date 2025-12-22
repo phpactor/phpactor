@@ -8,8 +8,10 @@ final class ImportedNameReference
 {
     private bool $exists;
 
-    private function __construct(private ?Position $position = null, private ?ImportedName $importedName = null)
-    {
+    private function __construct(
+        private ?Position $position = null,
+        private ?ImportedName $importedName = null
+    ) {
     }
 
     public function __toString(): string

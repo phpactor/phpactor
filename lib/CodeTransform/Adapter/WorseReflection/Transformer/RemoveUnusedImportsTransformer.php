@@ -25,8 +25,10 @@ class RemoveUnusedImportsTransformer implements Transformer
      */
     private array $fixed = [];
 
-    public function __construct(private Reflector $reflector, private Parser $parser)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private Parser $parser
+    ) {
     }
 
     /**

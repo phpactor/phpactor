@@ -13,8 +13,11 @@ class Pattern
     /**
      * @param array<string> $tokenNames
      */
-    public function __construct(private string $regex, private string $pattern, private array $tokenNames)
-    {
+    public function __construct(
+        private string $regex,
+        private string $pattern,
+        private array $tokenNames
+    ) {
     }
 
     public static function fromPattern(string $pattern): self

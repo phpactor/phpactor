@@ -31,8 +31,10 @@ use Psr\Log\NullLogger;
  */
 class NodeToTypeConverter
 {
-    public function __construct(private Reflector $reflector, private LoggerInterface $logger = new NullLogger())
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private LoggerInterface $logger = new NullLogger(),
+    ) {
     }
 
     /**

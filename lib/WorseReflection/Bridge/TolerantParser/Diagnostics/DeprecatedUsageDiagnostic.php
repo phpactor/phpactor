@@ -9,8 +9,12 @@ use Phpactor\WorseReflection\Core\DiagnosticTag;
 
 class DeprecatedUsageDiagnostic implements Diagnostic
 {
-    public function __construct(private ByteOffsetRange $range, private string $memberName, private string $message, private string $memberType)
-    {
+    public function __construct(
+        private ByteOffsetRange $range,
+        private string $memberName,
+        private string $message,
+        private string $memberType
+    ) {
     }
 
     public function range(): ByteOffsetRange

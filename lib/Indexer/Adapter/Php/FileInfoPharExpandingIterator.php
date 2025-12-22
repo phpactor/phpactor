@@ -19,8 +19,10 @@ class FileInfoPharExpandingIterator implements IteratorAggregate
      * @param Iterator<SplFileInfo> $innerIterator
      * @param list<string> $supportedExtensions
      */
-    public function __construct(private Iterator $innerIterator, private array $supportedExtensions = ['php'])
-    {
+    public function __construct(
+        private Iterator $innerIterator,
+        private array $supportedExtensions = ['php']
+    ) {
     }
 
     public function getIterator(): Traversable

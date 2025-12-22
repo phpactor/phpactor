@@ -14,8 +14,11 @@ class PropertyTag extends TagNode
         'name',
     ];
 
-    public function __construct(public Token $tag, public ?TypeNode $type, public ?Token $name)
-    {
+    public function __construct(
+        public Token $tag,
+        public ?TypeNode $type,
+        public ?Token $name
+    ) {
     }
 
     public function propertyName(): ?string

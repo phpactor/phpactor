@@ -9,8 +9,11 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 
 class ClassLikeContext extends NodeContext
 {
-    public function __construct(Symbol $symbol, private ByteOffsetRange $byteOffsetRange, private ReflectionClassLike $class)
-    {
+    public function __construct(
+        Symbol $symbol,
+        private ByteOffsetRange $byteOffsetRange,
+        private ReflectionClassLike $class
+    ) {
         parent::__construct($symbol, $class->type());
     }
 

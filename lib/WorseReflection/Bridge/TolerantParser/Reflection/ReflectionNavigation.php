@@ -13,8 +13,10 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 
 class ReflectionNavigation
 {
-    public function __construct(private ServiceLocator $locator, private Node $node)
-    {
+    public function __construct(
+        private ServiceLocator $locator,
+        private Node $node
+    ) {
     }
 
     /**

@@ -15,8 +15,10 @@ class FilteredSearchIndex implements SearchIndex
     /**
      * @param array<string> $recordTypes
      */
-    public function __construct(private SearchIndex $innerIndex, private array $recordTypes)
-    {
+    public function __construct(
+        private SearchIndex $innerIndex,
+        private array $recordTypes
+    ) {
     }
 
 

@@ -20,8 +20,10 @@ use function Amp\call;
 
 class CandidateFinder
 {
-    public function __construct(private Reflector $reflector, private SearchClient $client)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private SearchClient $client
+    ) {
     }
 
     /**

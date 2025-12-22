@@ -11,8 +11,10 @@ class Trust
     /**
      * @param array<string,bool> $trust
      */
-    public function __construct(public array $trust, public readonly ?string $path)
-    {
+    public function __construct(
+        public array $trust,
+        public readonly ?string $path
+    ) {
         $this->unconditionalTrust = (bool)getenv('PHPACTOR_UNCONDITIONAL_TRUST');
     }
 

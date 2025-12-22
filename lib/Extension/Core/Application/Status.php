@@ -21,7 +21,7 @@ class Status
         private string $workingDirectory,
         private PhpVersionResolver $phpVersionResolver,
         private Trust $trust,
-        private ExecutableFinder $executableFinder = new ExecutableFinder()
+        private ExecutableFinder $executableFinder = new ExecutableFinder(),
     ) {
     }
 
