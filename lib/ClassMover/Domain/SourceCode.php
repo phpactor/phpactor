@@ -4,8 +4,11 @@ namespace Phpactor\ClassMover\Domain;
 
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use InvalidArgumentException;
+use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentLanguage;
+use Phpactor\TextDocument\TextDocumentUri;
 
-class SourceCode
+class SourceCode implements TextDocument
 {
     public function __construct(private string $source)
     {
@@ -110,5 +113,20 @@ class SourceCode
         }
 
         return [ $phpDeclarationLineNb, $namespaceLineNb, $lastUseLineNb ];
+    }
+
+    public function uri(): ?TextDocumentUri
+    {
+        return null;
+    }
+
+    public function language(): TextDocumentLanguage
+    {
+        return TextDocumentLanguage::fromString(TextDocumentLanguage::LANGUAGE_PHP);
+    }
+
+    public function uriOrThrow(): TextDocumentUri
+    {
+        throw new \RuntimeException('Class mover source code does not currently have a URI');
     }
 }
