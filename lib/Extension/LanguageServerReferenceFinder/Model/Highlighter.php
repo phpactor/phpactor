@@ -88,7 +88,7 @@ class Highlighter
      */
     private function generate(TextDocument $source, ByteOffset $offset): Generator
     {
-        $rootNode = $this->parser->get($source->__toString(), $source->uri()?->__toString());
+        $rootNode = $this->parser->get($source);
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class)) {

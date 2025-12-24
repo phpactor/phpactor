@@ -40,7 +40,7 @@ class WorseFillObject implements ByteOffsetRefactor
     {
         /** @var ObjectCreationExpression|Attribute|null $node */
         $node = $this->parser
-            ->get($document->__toString())
+            ->get($document)
             ->getDescendantNodeAtPosition($offset->toInt())
             ->getFirstAncestor(ObjectCreationExpression::class, Attribute::class)
         ;

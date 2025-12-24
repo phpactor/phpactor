@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerSymbolProvider\Handler;
 
 use Amp\Promise;
 use Amp\Success;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerSymbolProvider\Model\DocumentSymbolProvider;
 use Phpactor\LanguageServerProtocol\DocumentSymbolParams;
 use Phpactor\LanguageServerProtocol\DocumentSymbolRequest;
@@ -35,7 +36,7 @@ class DocumentSymbolProviderHandler implements Handler, CanRegisterCapabilities
     {
         $textDocument = $this->workspace->get($params->textDocument->uri);
 
-        return new Success($this->provider->provideFor($textDocument->text));
+        return new Success($this->provider->provideFor(TextDocumentConverter::fromLspTextItem($textDocument)));
     }
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void

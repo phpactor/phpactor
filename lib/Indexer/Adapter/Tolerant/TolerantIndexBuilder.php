@@ -63,10 +63,7 @@ final class TolerantIndexBuilder implements IndexBuilder
             $indexer->beforeParse($this->index, $document);
         }
 
-        $node = $this->parser->get(
-            $document->__toString(),
-            $document->uri()?->__toString()
-        );
+        $node = $this->parser->get($document);
         $this->indexNode($document, $node);
     }
 

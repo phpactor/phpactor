@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerSelectionRange\Handler;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerSelectionRange\Model\RangeProvider;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\SelectionRange;
@@ -41,7 +42,10 @@ class SelectionRangeHandler implements Handler, CanRegisterCapabilities
             return PositionConverter::positionToByteOffset($position, $textDocument->text);
         }, $params->positions);
 
-        return new Success($this->provider->provide($textDocument->text, $offsets));
+        return new Success($this->provider->provide(
+            TextDocumentConverter::fromLspTextItem($textDocument),
+            $offsets
+        ));
     }
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void

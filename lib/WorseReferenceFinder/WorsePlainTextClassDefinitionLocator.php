@@ -80,7 +80,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
             return $word;
         }
 
-        $node = $this->parser->get($document->__toString());
+        $node = $this->parser->get($document);
         $node = NodeUtil::firstDescendantNodeAfterOffset($node, $byteOffset->toInt());
 
         if ($node instanceof SourceFileNode) {

@@ -24,7 +24,7 @@ class TolerantHereDoc implements ByteOffsetRefactor
     public function refactor(TextDocument $document, ByteOffset $offset): TextEdits
     {
         $node = $this->parser
-            ->get($document->__toString())
+            ->get($document)
             ->getDescendantNodeAtPosition($offset->toInt())
         ;
 

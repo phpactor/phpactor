@@ -24,7 +24,7 @@ class WorseInterestingOffsetFinder implements InterestingOffsetFinder
             return $interestingOffset;
         }
 
-        $node = $this->parser->get($source->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($source)->getDescendantNodeAtPosition($offset->toInt());
 
         do {
             $offset = ByteOffset::fromInt($node->getStartPosition());

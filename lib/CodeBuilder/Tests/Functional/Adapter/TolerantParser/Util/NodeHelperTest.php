@@ -7,11 +7,10 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
 use Phpactor\TestUtils\ExtractOffset;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
-use Phpactor\WorseReflection\Core\AstProvider;
 
 class NodeHelperTest extends TestCase
 {
-    private AstProvider $parser;
+    private TolerantAstProvider $parser;
 
     protected function setUp(): void
     {
@@ -31,7 +30,7 @@ class NodeHelperTest extends TestCase
     private function findSelfNode(): array
     {
         [$source, $methodOffset, $nameOffset] = ExtractOffset::fromSource('<?php class Foobar { public function f<>oo(): sel<>f() { return $this; }}');
-        $root = $this->parser->get($source);
+        $root = $this->parser->parseString($source);
         return [
             $root->getDescendantNodeAtPosition($methodOffset),
             $root->getDescendantNodeAtPosition($nameOffset),

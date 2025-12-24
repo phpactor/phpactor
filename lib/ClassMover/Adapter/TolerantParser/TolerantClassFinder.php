@@ -37,7 +37,7 @@ class TolerantClassFinder implements ClassFinder
 
     public function findIn(TextDocument $source): NamespacedClassReferences
     {
-        $ast = $this->parser->get($source->__toString());
+        $ast = $this->parser->get($source);
 
         $namespaceRef = $this->getNamespaceRef($ast);
         $sourceEnvironment = $this->getClassEnvironment($namespaceRef->namespace(), $ast);

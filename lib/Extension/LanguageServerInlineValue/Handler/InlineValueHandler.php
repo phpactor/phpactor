@@ -53,7 +53,7 @@ class InlineValueHandler implements Handler, CanRegisterCapabilities
         $start = PositionConverter::positionToByteOffset($range->start, $document)->toInt();
         $end = PositionConverter::positionToByteOffset($range->end, $document)->toInt();
 
-        $root = $this->parser->get((string) $document, $document->uri()?->__toString());
+        $root = $this->parser->get($document);
 
         $i = $root->getDescendantNodes(fn ($child) => $child->getStartPosition() <= $end && $child->getEndPosition() >= $start);
         $i = new CallbackFilterIterator($i, fn ($node) =>

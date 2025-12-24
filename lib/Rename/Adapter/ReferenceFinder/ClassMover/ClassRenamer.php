@@ -43,7 +43,7 @@ final class ClassRenamer implements Renamer
 
     public function getRenameRange(TextDocument $textDocument, ByteOffset $offset): ?ByteOffsetRange
     {
-        $node = $this->parser->get($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($textDocument)->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node instanceof ClassDeclaration) {
             return TokenUtil::offsetRangeFromToken($node->name, false);
@@ -70,7 +70,7 @@ final class ClassRenamer implements Renamer
 
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
-        $node = $this->parser->get($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($textDocument)->getDescendantNodeAtPosition($offset->toInt());
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);

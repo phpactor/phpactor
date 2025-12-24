@@ -7,5 +7,5 @@ use Phpactor\TextDocument\TextDocument;
 
 interface AstProvider
 {
-    public function get(string|TextDocument $document, ?string $uri = null): SourceFileNode;
+    public function get(TextDocument $document): SourceFileNode;
 }

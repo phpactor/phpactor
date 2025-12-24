@@ -44,7 +44,7 @@ class WorseExtractConstant implements ExtractConstant
 
     public function canExtractConstant(SourceCode $source, int $offset): bool
     {
-        $node = $this->parser->get($source->__toString());
+        $node = $this->parser->get($source);
         $targetNode = $node->getDescendantNodeAtPosition($offset);
         try {
             $this->getComparableValue($targetNode);
@@ -86,7 +86,7 @@ class WorseExtractConstant implements ExtractConstant
 
     private function replaceValues(SourceCode $sourceCode, int $offset, string $constantName): TextEdits
     {
-        $node = $this->parser->get($sourceCode->__toString());
+        $node = $this->parser->get($sourceCode);
         $targetNode = $node->getDescendantNodeAtPosition($offset);
         $targetValue = $this->getComparableValue($targetNode);
         $classNode = $targetNode->getFirstAncestor(ClassLike::class);

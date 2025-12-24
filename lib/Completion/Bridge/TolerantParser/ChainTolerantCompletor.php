@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
@@ -31,15 +32,20 @@ class ChainTolerantCompletor implements Completor
         $truncatedSource = $this->truncateSource((string) $source, $byteOffset->toInt());
         $truncatedLength = strlen($truncatedSource);
 
+        // gh-3001: this is potentially very inefficient
         $node = $this->parser
-            ->get(substr_replace((string) $source, ' ', $truncatedLength, 0))
+            ->get(TextDocumentBuilder::create(
+                substr_replace((string) $source, ' ', $truncatedLength, 0)
+            )->build())
             ->getDescendantNodeAtPosition(
                 // the parser requires the byte offset, not the char offset
                 $truncatedLength,
             );
 
         if ($node->getEndPosition() > $truncatedLength) {
-            $node = $this->parser->get($truncatedSource)->getDescendantNodeAtPosition($truncatedLength);
+            $node = $this->parser->get(
+                TextDocumentBuilder::create($truncatedSource)->build()
+            )->getDescendantNodeAtPosition($truncatedLength);
         }
 
         $isComplete = true;

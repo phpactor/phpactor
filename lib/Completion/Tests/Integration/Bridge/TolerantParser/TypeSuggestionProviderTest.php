@@ -30,7 +30,7 @@ class TypeSuggestionProviderTest extends TestCase
             ),
         ]);
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->parseString($source)->getDescendantNodeAtPosition((int)$offset);
         $suggestions = iterator_to_array((new TypeSuggestionProvider($searcher))->provide($node, $search));
         self::assertArraySubset(
             $expected,

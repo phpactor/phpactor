@@ -30,7 +30,7 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
 
     public function refactor(TextDocument $document, ByteOffset $offset): TextEdits
     {
-        $node = $this->parser->get($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($document)->getDescendantNodeAtPosition($offset->toInt());
         $node = $node instanceof MatchExpression ? $node : $node->getFirstAncestor(MatchExpression::class);
         if (!$node instanceof MatchExpression) {
             return TextEdits::none();

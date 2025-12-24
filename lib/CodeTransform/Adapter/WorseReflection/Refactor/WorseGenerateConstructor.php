@@ -116,7 +116,7 @@ class WorseGenerateConstructor implements GenerateConstructor
 
     private function node(TextDocument $document, ByteOffset $offset): ?Node
     {
-        $node = $this->parser->get($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($document)->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node->parent instanceof Attribute) {
             return $node->parent;

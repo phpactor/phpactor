@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerSelectionRange\Model;
 
 use Microsoft\PhpParser\Node;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Range;
@@ -20,7 +21,7 @@ class RangeProvider
      *
      * @return array<SelectionRange>
      */
-    public function provide(string $source, array $offsets): array
+    public function provide(TextDocument $source, array $offsets): array
     {
         $rootNode = $this->parser->get($source);
 

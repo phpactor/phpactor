@@ -39,7 +39,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
      */
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
-        $sourceNode = $this->sourceNode($document->__toString());
+        $sourceNode = $this->parser->get($document);
         $variable = $this->variableNodeFromSource($sourceNode, $byteOffset->toInt());
         if ($variable === null) {
             return false;
@@ -57,11 +57,6 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         }
 
         return true;
-    }
-
-    private function sourceNode(string $source): SourceFileNode
-    {
-        return $this->parser->get($source);
     }
 
     private function variableNodeFromSource(SourceFileNode $sourceNode, int $offset): ?Node
