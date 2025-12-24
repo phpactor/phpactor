@@ -4,7 +4,6 @@ namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder\ClassMover;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\Rename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;

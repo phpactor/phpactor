@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServerSymbolProvider;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;

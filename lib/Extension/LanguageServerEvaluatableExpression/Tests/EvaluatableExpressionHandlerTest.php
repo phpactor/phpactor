@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServerEvaluatableExpression\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Handler\EvaluatableExpressionHandler;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Protocol\EvaluatableExpression;

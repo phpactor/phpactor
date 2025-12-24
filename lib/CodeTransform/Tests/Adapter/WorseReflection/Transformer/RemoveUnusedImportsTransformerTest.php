@@ -4,7 +4,6 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;

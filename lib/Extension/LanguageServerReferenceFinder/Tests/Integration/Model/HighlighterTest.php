@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Integration\Mod
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlights;

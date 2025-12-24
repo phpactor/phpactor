@@ -4,7 +4,6 @@ namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\TextDocument\ByteOffset;

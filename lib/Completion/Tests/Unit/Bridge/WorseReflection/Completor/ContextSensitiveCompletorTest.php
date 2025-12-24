@@ -4,7 +4,6 @@ namespace Phpactor\Completion\Tests\Unit\Bridge\WorseReflection\Completor;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantArrayCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Completor\ContextSensitiveCompletor;

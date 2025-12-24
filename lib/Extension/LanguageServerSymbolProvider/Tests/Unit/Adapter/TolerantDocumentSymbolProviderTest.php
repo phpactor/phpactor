@@ -10,7 +10,6 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\SymbolKind;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerSymbolProvider\Adapter\TolerantDocumentSymbolProvider;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;

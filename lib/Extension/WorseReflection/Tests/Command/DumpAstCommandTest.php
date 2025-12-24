@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\WorseReflection\Tests\Command;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;

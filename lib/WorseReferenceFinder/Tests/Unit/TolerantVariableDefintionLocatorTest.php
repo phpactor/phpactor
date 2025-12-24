@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\WorseReferenceFinder\Tests\DefinitionLocatorTestCase;
 use Phpactor\WorseReferenceFinder\TolerantVariableDefintionLocator;

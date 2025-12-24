@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider;
 
-use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\TextDocument\TextDocument;
@@ -13,7 +13,7 @@ final class TolerantAstProvider implements AstProvider
     {
     }
 
-    public function get(string|TextDocument $document, ?string $uri = null): Node
+    public function get(string|TextDocument $document, ?string $uri = null): SourceFileNode
     {
         if (is_string($document)) {
             return $this->parser->parseSourceFile($document, $uri);

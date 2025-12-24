@@ -2,14 +2,11 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Parser;
 
-use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
@@ -28,32 +25,25 @@ class CachedParser implements AstProvider
         $this->parser = new Parser();
     }
 
-    public function get(string|TextDocument $document, ?string $uri = null): Node
+    public function get(string|TextDocument $document, ?string $uri = null): SourceFileNode
     {
-        if (is_string($document) && null === $uri) {
+
+        $uri = ($document instanceof TextDocument ? $document->uri()?->__toString() : null) ?? $uri;
+
+        if (null === $uri) {
             return $this->cache->getOrSet(
                 '__parser__' . md5($document),
                 function () use ($document) {
-                    return $this->parser->parseSourceFile($document);
+                    return $this->parser->parseSourceFile((string)$document);
                 }
             );
         }
 
-        if (null !== $uri && $document instanceof TextDocument) {
-            throw new \RuntimeException(
-                'Cannot provide a URI when using a TextDocument'
-            );
-        }
-
-        if (null !== $uri) {
-            $document = TextDocumentBuilder::create($document)->uri($uri)->build();
-        }
-
         return $this->cacheForDocument->getOrSet(
-            $document->uri(),
+            TextDocumentUri::fromString($uri),
             'ast',
-            function () use ($document) {
-                return $this->parser->parseSourceFile($document->__toString(), $document->uri()->__toString());
+            function () use ($document, $uri) {
+                return $this->parser->parseSourceFile((string)$document, $uri);
             }
         );
     }

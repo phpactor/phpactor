@@ -3,8 +3,6 @@
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
-use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;

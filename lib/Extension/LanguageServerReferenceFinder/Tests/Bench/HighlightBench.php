@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Bench;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;

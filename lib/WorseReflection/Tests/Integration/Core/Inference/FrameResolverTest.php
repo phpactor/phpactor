@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\ByteOffset;

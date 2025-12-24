@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core;
 
-use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\TextDocument\TextDocument;
 
 interface AstProvider
 {
-    public function get(string|TextDocument $document, ?string $uri = null): Node;
+    public function get(string|TextDocument $document, ?string $uri = null): SourceFileNode;
 }

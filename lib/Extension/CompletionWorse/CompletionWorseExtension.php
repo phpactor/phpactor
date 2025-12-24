@@ -168,7 +168,7 @@ class CompletionWorseExtension implements Extension
                     }
                     return $container->get($serviceId) ?? false;
                 }, $container->get(self::SERVICE_COMPLETOR_MAP))),
-                $container->expect('worse_reflection.tolerant_parser', AstProvider::class)
+                $container->get(AstProvider::class)
             );
         }, [ CompletionExtension::TAG_COMPLETOR => []]);
 

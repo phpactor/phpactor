@@ -5,7 +5,6 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceF
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Suggestions;

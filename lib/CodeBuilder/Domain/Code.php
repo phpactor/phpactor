@@ -5,6 +5,7 @@ namespace Phpactor\CodeBuilder\Domain;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLanguage;
 use Phpactor\TextDocument\TextDocumentUri;
+use RuntimeException;
 
 class Code implements TextDocument
 {
@@ -34,6 +35,6 @@ class Code implements TextDocument
 
     public function uriOrThrow(): TextDocumentUri
     {
-        throw new \RuntimeException('Code builder source code does not currently have a URI');
+        throw new RuntimeException('Code builder source code does not currently have a URI');
     }
 }

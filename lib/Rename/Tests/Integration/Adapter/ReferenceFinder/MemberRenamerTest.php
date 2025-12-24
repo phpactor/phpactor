@@ -4,7 +4,6 @@ namespace Phpactor\Rename\Tests\Integration\Adapter\ReferenceFinder;
 
 use Closure;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;

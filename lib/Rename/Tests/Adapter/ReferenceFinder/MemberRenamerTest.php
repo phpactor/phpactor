@@ -3,7 +3,6 @@
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Generator;
 use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefiniedImplementationFinder;

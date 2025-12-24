@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServerInlineValue\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerInlineValue\Handler\InlineValueHandler;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;

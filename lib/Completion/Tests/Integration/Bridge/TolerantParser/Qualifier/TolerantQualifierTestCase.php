@@ -4,7 +4,6 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\Qualifier;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\Completion\Tests\TestCase;
 use Phpactor\TestUtils\ExtractOffset;

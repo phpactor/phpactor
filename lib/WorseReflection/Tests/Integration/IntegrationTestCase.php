@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\WorseReflection\ReflectorBuilder;
