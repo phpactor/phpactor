@@ -26,7 +26,9 @@ use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\Reference\Position;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\TextDocument\NodeToTextDocumentConverter;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\TextDocument\ByteOffset;
@@ -47,7 +49,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
     public function __construct(
         ?Reflector $reflector = null,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new TolerantAstProvider(),
         private LoggerInterface $logger = new NullLogger(),
     ) {
         $this->reflector = $reflector ?: ReflectorBuilder::create()->addSource(TextDocumentBuilder::empty());
@@ -55,7 +57,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
     public function findMembers(SourceCode $source, ClassMemberQuery $query): MemberReferences
     {
-        $rootNode = $this->parser->parseSourceFile((string) $source);
+        $rootNode = $this->parser->get((string) $source);
         $memberNodes = $this->collectMemberReferences($rootNode, $query);
 
         $queryClassReflection = null;

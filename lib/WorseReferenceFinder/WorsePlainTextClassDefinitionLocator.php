@@ -2,12 +2,13 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Exception;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\TypeLocation;
@@ -22,11 +23,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 {
-    private Parser $parser;
+    private AstProvider $parser;
 
     public function __construct(private Reflector $reflector)
     {
-        $this->parser = new Parser();
+        $this->parser = new TolerantAstProvider();
     }
 
 
@@ -79,7 +80,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
             return $word;
         }
 
-        $node = $this->parser->parseSourceFile($document->__toString());
+        $node = $this->parser->get($document->__toString());
         $node = NodeUtil::firstDescendantNodeAfterOffset($node, $byteOffset->toInt());
 
         if ($node instanceof SourceFileNode) {

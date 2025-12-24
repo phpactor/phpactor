@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -11,7 +12,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\NumericLiteral;
@@ -26,7 +27,7 @@ class WorseExtractConstant implements ExtractConstant
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 
@@ -43,7 +44,7 @@ class WorseExtractConstant implements ExtractConstant
 
     public function canExtractConstant(SourceCode $source, int $offset): bool
     {
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->get($source->__toString());
         $targetNode = $node->getDescendantNodeAtPosition($offset);
         try {
             $this->getComparableValue($targetNode);
@@ -85,7 +86,7 @@ class WorseExtractConstant implements ExtractConstant
 
     private function replaceValues(SourceCode $sourceCode, int $offset, string $constantName): TextEdits
     {
-        $node = $this->parser->parseSourceFile($sourceCode->__toString());
+        $node = $this->parser->get($sourceCode->__toString());
         $targetNode = $node->getDescendantNodeAtPosition($offset);
         $targetValue = $this->getComparableValue($targetNode);
         $classNode = $targetNode->getFirstAncestor(ClassLike::class);

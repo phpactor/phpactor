@@ -7,7 +7,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -29,7 +29,7 @@ class WorseGenerateConstructor implements GenerateConstructor
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 
@@ -116,7 +116,7 @@ class WorseGenerateConstructor implements GenerateConstructor
 
     private function node(TextDocument $document, ByteOffset $offset): ?Node
     {
-        $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node->parent instanceof Attribute) {
             return $node->parent;

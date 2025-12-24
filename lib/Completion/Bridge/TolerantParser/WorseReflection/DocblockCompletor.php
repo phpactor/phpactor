@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Core\Suggestion;
@@ -48,7 +48,7 @@ class DocblockCompletor implements TolerantCompletor
 
     public function __construct(
         private TypeSuggestionProvider $typeSuggestionProvider,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 
@@ -60,7 +60,7 @@ class DocblockCompletor implements TolerantCompletor
         // we re-parse the document because the above node is for the truncated
         // doc, which will often (if not always) result in a SourceFileNode
         // with no namespace context
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->get($source->__toString());
         $node = NodeUtil::firstDescendantNodeAfterOffset($node, $byteOffset->toInt());
 
         [$tag, $type, $var] = $this->extractTag($source, $byteOffset);

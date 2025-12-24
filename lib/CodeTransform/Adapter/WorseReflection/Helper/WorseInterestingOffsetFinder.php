@@ -2,7 +2,8 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Helper;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
@@ -13,7 +14,7 @@ class WorseInterestingOffsetFinder implements InterestingOffsetFinder
 {
     public function __construct(
         private SourceCodeReflector $reflector,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 
@@ -23,7 +24,7 @@ class WorseInterestingOffsetFinder implements InterestingOffsetFinder
             return $interestingOffset;
         }
 
-        $node = $this->parser->parseSourceFile($source->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($source->__toString())->getDescendantNodeAtPosition($offset->toInt());
 
         do {
             $offset = ByteOffset::fromInt($node->getStartPosition());

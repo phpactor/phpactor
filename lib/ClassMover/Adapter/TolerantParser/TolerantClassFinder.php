@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Adapter\TolerantParser;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\NamespaceAliasingClause;
@@ -14,7 +15,7 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\ClassMover\Domain\Reference\ClassReference;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\Name\ImportedName;
@@ -30,13 +31,13 @@ use Phpactor\TextDocument\TextDocument;
 
 class TolerantClassFinder implements ClassFinder
 {
-    public function __construct(private Parser $parser = new Parser())
+    public function __construct(private AstProvider $parser = new TolerantAstProvider())
     {
     }
 
     public function findIn(TextDocument $source): NamespacedClassReferences
     {
-        $ast = $this->parser->parseSourceFile($source->__toString());
+        $ast = $this->parser->get($source->__toString());
 
         $namespaceRef = $this->getNamespaceRef($ast);
         $sourceEnvironment = $this->getClassEnvironment($namespaceRef->namespace(), $ast);

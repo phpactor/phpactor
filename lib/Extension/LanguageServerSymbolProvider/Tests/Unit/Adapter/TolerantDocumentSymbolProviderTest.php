@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerSymbolProvider\Tests\Unit\Adapter;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
@@ -10,7 +11,6 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\SymbolKind;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerSymbolProvider\Adapter\TolerantDocumentSymbolProvider;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;
@@ -35,7 +35,7 @@ class TolerantDocumentSymbolProviderTest extends TestCase
     #[DataProvider('provideEnums')]
     public function testBuildDocumentSymbol(string $source, array $expected): void
     {
-        $actual = (new TolerantDocumentSymbolProvider(new Parser()))->provideFor($source);
+        $actual = (new TolerantDocumentSymbolProvider(new TolerantAstProvider()))->provideFor($source);
         $this->assertTree($actual, $expected);
     }
 

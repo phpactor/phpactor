@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -39,7 +39,7 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Symfony\Component\Filesystem\Path;
 
@@ -54,7 +54,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_STUB_CACHE_DIR = 'worse_reflection.cache_dir';
     const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
-    const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
+    const SERVICE_PARSER = AstProvider::class;
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
     const TAG_MEMBER_TYPE_RESOLVER = 'worse_reflection.member_type_resolver';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
@@ -108,7 +108,7 @@ class WorseReflectionExtension implements Extension
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $builder = ReflectorBuilder::create()
-                ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, Parser::class)))
+                ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, AstProvider::class)))
                 ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
 
             if ($container->parameter(self::PARAM_ENABLE_CONTEXT_LOCATION)->bool()) {
@@ -156,7 +156,7 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(self::SERVICE_PARSER, function (Container $container) {
-            return new CachedParser(
+            return new CachedAstProvider(
                 $container->get(Cache::class),
                 $container->get(CacheForDocument::class),
             );
@@ -255,7 +255,7 @@ class WorseReflectionExtension implements Extension
     private function registerCommands(ContainerBuilder $container): void
     {
         $container->register(DumpAstCommand::class, function (Container $container) {
-            return new DumpAstCommand($container->expect(self::SERVICE_PARSER, Parser::class));
+            return new DumpAstCommand($container->expect(self::SERVICE_PARSER, AstProvider::class));
         }, [
             ConsoleExtension::TAG_COMMAND => [
                 'name' => 'worse:dump-ast',

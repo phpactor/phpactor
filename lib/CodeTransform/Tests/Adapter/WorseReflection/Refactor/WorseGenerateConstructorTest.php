@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use GlobIterator;
-use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TextDocument\ByteOffset;
@@ -64,7 +64,7 @@ class WorseGenerateConstructorTest extends WorseTestCase
             $reflector,
             $this->builderFactory($reflector),
             $this->updater(),
-            new Parser()
+            new TolerantAstProvider()
         );
     }
 }

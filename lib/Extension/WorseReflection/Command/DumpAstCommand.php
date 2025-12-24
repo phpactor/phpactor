@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\WorseReflection\Command;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -15,7 +15,7 @@ class DumpAstCommand extends Command
 {
     const ARG_PATH = 'path';
 
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class DumpAstCommand extends Command
             ));
         }
         $parseStart = microtime(true);
-        $rootNode = $this->parser->parseSourceFile($contents);
+        $rootNode = $this->parser->get($contents);
         $parseEnd = microtime(true);
 
         $traveralStart = microtime(true);

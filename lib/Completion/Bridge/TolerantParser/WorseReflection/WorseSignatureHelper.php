@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
@@ -10,7 +11,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
 use Phpactor\Completion\Core\Exception\CouldNotHelpWithSignature;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
@@ -34,7 +35,7 @@ class WorseSignatureHelper implements SignatureHelper
     public function __construct(
         private Reflector $reflector,
         private ObjectFormatter $formatter,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 
@@ -51,7 +52,7 @@ class WorseSignatureHelper implements SignatureHelper
 
     private function doSignatureHelp(TextDocument $textDocument, ByteOffset $offset): SignatureHelp // NOSONAR
     {
-        $rootNode = $this->parser->parseSourceFile($textDocument->__toString());
+        $rootNode = $this->parser->get($textDocument->__toString());
         $nodeAtPosition = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
         [$argsNode, $callNode] = $this->resolveArgsAndCallNode($nodeAtPosition, $offset);

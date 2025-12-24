@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\LanguageServerEvaluatableExpression\Tests;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Handler\EvaluatableExpressionHandler;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Protocol\EvaluatableExpression;
@@ -65,7 +65,7 @@ class EvaluatableExpressionHandlerTest extends TestCase
     protected function createTester(): LanguageServerTester
     {
         $tester = LanguageServerTesterBuilder::create();
-        $tester->addHandler(new EvaluatableExpressionHandler($tester->workspace(), new Parser()));
+        $tester->addHandler(new EvaluatableExpressionHandler($tester->workspace(), new TolerantAstProvider()));
         return $tester->build();
     }
 }

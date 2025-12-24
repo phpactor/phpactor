@@ -19,7 +19,7 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
 use Phpactor\LanguageServerProtocol\DocumentHighlight;
 use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
@@ -35,7 +35,7 @@ class Highlighter
 {
     private ?CancellationTokenSource $previousCancellationSource = null;
 
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
     }
 
@@ -88,7 +88,7 @@ class Highlighter
      */
     private function generate(TextDocument $source, ByteOffset $offset): Generator
     {
-        $rootNode = $this->parser->parseSourceFile($source->__toString(), $source->uri()?->__toString());
+        $rootNode = $this->parser->get($source->__toString(), $source->uri()?->__toString());
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class)) {

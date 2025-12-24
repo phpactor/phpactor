@@ -30,6 +30,7 @@ use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Reflector;
 
 class LanguageServerRenameWorseExtension implements Extension
@@ -40,7 +41,7 @@ class LanguageServerRenameWorseExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register(VariableRenamer::class, function (Container $container) {
-            $parser = $container->get('worse_reflection.tolerant_parser');
+            $parser = $container->get(AstProvider::class);
 
             return new VariableRenamer(
                 new TolerantVariableReferenceFinder($parser, true),
@@ -76,7 +77,7 @@ class LanguageServerRenameWorseExtension implements Extension
                 new ClassToFileNameToUriConverter($container->get(ClassToFileExtension::SERVICE_CONVERTER)),
                 $container->get(DefinitionAndReferenceFinder::class),
                 $container->get(TextDocumentLocator::class),
-                $container->get('worse_reflection.tolerant_parser'),
+                $container->get(AstProvider::class),
                 $container->get(ClassMover::class)
             );
         }, [

@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -27,7 +27,7 @@ class RemoveUnusedImportsTransformer implements Transformer
 
     public function __construct(
         private Reflector $reflector,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 
@@ -37,7 +37,7 @@ class RemoveUnusedImportsTransformer implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $rootNode = $this->parser->parseSourceFile($code);
+            $rootNode = $this->parser->get($code);
             $edits = [];
 
             foreach ((yield $this->reflector->diagnostics($code))->byClass(UnusedImportDiagnostic::class) as $unusedImport) {

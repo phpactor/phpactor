@@ -2,10 +2,11 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node;
@@ -19,7 +20,7 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantRenameVariable implements RenameVariable
 {
-    public function __construct(private Parser $parser = new Parser())
+    public function __construct(private AstProvider $parser = new TolerantAstProvider())
     {
     }
 
@@ -35,7 +36,7 @@ class TolerantRenameVariable implements RenameVariable
 
     private function sourceNode(string $source): SourceFileNode
     {
-        return $this->parser->parseSourceFile($source);
+        return $this->parser->get($source);
     }
 
     private function variableNodeFromSource(SourceFileNode $sourceNode, int $offset): Node

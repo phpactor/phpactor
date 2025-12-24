@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerSymbolProvider;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -25,7 +25,7 @@ class LanguageServerSymbolProviderExtension implements Extension
             LanguageServerExtension::TAG_METHOD_HANDLER => [],
         ]);
         $container->register(DocumentSymbolProvider::class, function (Container $container) {
-            return new TolerantDocumentSymbolProvider(new Parser());
+            return new TolerantDocumentSymbolProvider(new TolerantAstProvider());
         });
     }
 

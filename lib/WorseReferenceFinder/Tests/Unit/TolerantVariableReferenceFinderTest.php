@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\TextDocument\ByteOffset;
@@ -28,7 +28,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
             ->language('php')
             ->build();
 
-        $finder = new TolerantVariableReferenceFinder(new Parser(), $includeDefinition);
+        $finder = new TolerantVariableReferenceFinder(new TolerantAstProvider(), $includeDefinition);
         $generator = $finder->findReferences($document, ByteOffset::fromInt($selectionOffset));
         $actualReferences = iterator_to_array($generator, false);
 

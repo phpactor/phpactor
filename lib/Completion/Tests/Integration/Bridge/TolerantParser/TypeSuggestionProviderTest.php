@@ -2,10 +2,10 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
-use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Core\Suggestion;
@@ -30,7 +30,7 @@ class TypeSuggestionProviderTest extends TestCase
             ),
         ]);
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         $suggestions = iterator_to_array((new TypeSuggestionProvider($searcher))->provide($node, $search));
         self::assertArraySubset(
             $expected,

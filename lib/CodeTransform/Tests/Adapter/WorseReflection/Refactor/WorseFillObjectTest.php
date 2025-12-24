@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use GlobIterator;
-use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TextDocument\ByteOffset;
@@ -72,7 +72,7 @@ class WorseFillObjectTest extends WorseTestCase
     {
         $fill = new WorseFillObject(
             $this->reflectorForWorkspace($source),
-            new Parser(),
+            new TolerantAstProvider(),
             $this->updater(),
             $named,
             $hint

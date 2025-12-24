@@ -4,7 +4,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -28,7 +28,7 @@ class WorseFillObject implements ByteOffsetRefactor
 
     public function __construct(
         private Reflector $reflector,
-        private Parser $parser,
+        private AstProvider $parser,
         private Updater $updater,
         private bool $namedParameters = true,
         private bool $hint = true
@@ -40,7 +40,7 @@ class WorseFillObject implements ByteOffsetRefactor
     {
         /** @var ObjectCreationExpression|Attribute|null $node */
         $node = $this->parser
-            ->parseSourceFile($document->__toString())
+            ->get($document->__toString())
             ->getDescendantNodeAtPosition($offset->toInt())
             ->getFirstAncestor(ObjectCreationExpression::class, Attribute::class)
         ;

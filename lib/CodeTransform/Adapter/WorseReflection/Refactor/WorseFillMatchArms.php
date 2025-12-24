@@ -6,7 +6,7 @@ use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\MatchArm;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
@@ -24,13 +24,13 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
 {
     public function __construct(
         private Reflector $reflector,
-        private Parser $parser,
+        private AstProvider $parser,
     ) {
     }
 
     public function refactor(TextDocument $document, ByteOffset $offset): TextEdits
     {
-        $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
         $node = $node instanceof MatchExpression ? $node : $node->getFirstAncestor(MatchExpression::class);
         if (!$node instanceof MatchExpression) {
             return TextEdits::none();

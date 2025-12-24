@@ -44,7 +44,7 @@ class ImporterNamesTest extends TestCase
         $this->assertEquals(['Foobar', 'Barfoo\Barfoo'], $iterator->classNames());
     }
 
-    private function parse($source): Node
+    private function parse(string $source): Node
     {
         $parser = new Parser();
         return $parser->parseSourceFile($source);
