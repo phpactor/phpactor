@@ -3,6 +3,8 @@
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
@@ -34,7 +36,7 @@ class DocblockParserFactory implements DocBlockFactory
     public function __construct(
         private Reflector $reflector,
         private Lexer $lexer = new Lexer(),
-        private Parser $parser = new TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 
