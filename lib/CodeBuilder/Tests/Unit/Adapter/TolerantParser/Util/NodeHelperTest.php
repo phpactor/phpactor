@@ -15,7 +15,7 @@ class NodeHelperTest extends TestCase
     public function testEmptyLinesPrecedingNode(string $source, int $expectedLines): void
     {
         [ $source, $offset ] = ExtractOffset::fromSource($source);
-        $node = (new Parser())->get($source)->getDescendantNodeAtPosition($offset);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition($offset);
         self::assertEquals($expectedLines, NodeHelper::emptyLinesPrecedingNode($node));
     }
 

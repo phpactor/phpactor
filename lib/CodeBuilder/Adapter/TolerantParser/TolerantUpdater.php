@@ -22,6 +22,8 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\InterfaceUpdater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\TraitUpdater;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
+use Phpactor\WorseReflection\Core\AstProvider;
 
 class TolerantUpdater implements Updater
 {
@@ -38,7 +40,7 @@ class TolerantUpdater implements Updater
     public function __construct(
         private Renderer $renderer,
         private TextFormat $textFormat = new TextFormat(),
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
         $this->classUpdater = new ClassUpdater($renderer);
         $this->interfaceUpdater = new InterfaceUpdater($renderer);
