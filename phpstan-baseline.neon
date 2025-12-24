@@ -85,18 +85,6 @@ parameters:
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
 
 		-
-			message: '#^Parameter \#1 \$finder of class Phpactor\\ClassMover\\ClassMover constructor expects Phpactor\\ClassMover\\Domain\\ClassFinder\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/ClassMover/Extension/ClassMoverExtension.php
-
-		-
-			message: '#^Parameter \#2 \$replacer of class Phpactor\\ClassMover\\ClassMover constructor expects Phpactor\\ClassMover\\Domain\\ClassReplacer\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/ClassMover/Extension/ClassMoverExtension.php
-
-		-
 			message: '#^Cannot call method end\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 3
@@ -935,18 +923,6 @@ parameters:
 			identifier: foreach.nonIterable
 			count: 1
 			path: lib/CodeBuilder/Tests/IntegrationTestCase.php
-
-		-
-			message: '#^Method Phpactor\\CodeBuilder\\Tests\\Unit\\Adapter\\TolerantParser\\Util\\ImporterNamesTest\:\:parse\(\) has parameter \$source with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/ImporterNamesTest.php
-
-		-
-			message: '#^Parameter \#1 \$fileContents of method Microsoft\\PhpParser\\Parser\:\:parseSourceFile\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/ImporterNamesTest.php
 
 		-
 			message: '#^Cannot call method visibility\(\) on Phpactor\\CodeBuilder\\Domain\\Prototype\\Parameter\|null\.$#'
@@ -4837,18 +4813,6 @@ parameters:
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
-			message: '#^Parameter \#2 \$parser of class Phpactor\\CodeTransform\\Adapter\\TolerantParser\\Refactor\\TolerantImportName constructor expects Microsoft\\PhpParser\\Parser\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: '#^Parameter \#2 \$parser of class Phpactor\\CodeTransform\\Adapter\\WorseReflection\\Transformer\\RemoveUnusedImportsTransformer constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
 			message: '#^Parameter \#2 \$renderer of class Phpactor\\CodeTransform\\Adapter\\WorseReflection\\GenerateFromExisting\\InterfaceFromExistingGenerator constructor expects Phpactor\\CodeBuilder\\Domain\\Renderer, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4862,18 +4826,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: '#^Parameter \#3 \$parser of class Phpactor\\CodeBuilder\\Adapter\\TolerantParser\\TolerantUpdater constructor expects Microsoft\\PhpParser\\Parser\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: '#^Parameter \#4 \$parser of class Phpactor\\CodeTransform\\Adapter\\WorseReflection\\Refactor\\WorseGenerateConstructor constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
@@ -6649,31 +6601,7 @@ parameters:
 			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
 
 		-
-			message: '#^Parameter \#2 \$parser of class Phpactor\\Completion\\Bridge\\TolerantParser\\ChainTolerantCompletor constructor expects Microsoft\\PhpParser\\Parser\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
-
-		-
-			message: '#^Parameter \#2 \$parser of class Phpactor\\Completion\\Bridge\\TolerantParser\\WorseReflection\\DocblockCompletor constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
-
-		-
-			message: '#^Parameter \#2 \$reflector of class Phpactor\\Completion\\Bridge\\TolerantParser\\WorseReflection\\DoctrineAnnotationCompletor constructor expects Phpactor\\WorseReflection\\Reflector, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
-
-		-
 			message: '#^Parameter \#2 \$renderer of class Phpactor\\Completion\\Bridge\\WorseReflection\\SuggestionDocumentor\\WorseSuggestionDocumentor constructor expects Phpactor\\ObjectRenderer\\Model\\ObjectRenderer, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
-
-		-
-			message: '#^Parameter \#2 \$typeFormatter of class Phpactor\\Completion\\Bridge\\TolerantParser\\WorseReflection\\WorseLocalVariableCompletor constructor expects Phpactor\\Completion\\Core\\Formatter\\ObjectFormatter\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
@@ -6682,12 +6610,6 @@ parameters:
 			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 2
-			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
-
-		-
-			message: '#^Parameter \#3 \$parser of class Phpactor\\Completion\\Bridge\\TolerantParser\\WorseReflection\\DoctrineAnnotationCompletor constructor expects Microsoft\\PhpParser\\Parser\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
 			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
 
 		-
@@ -7587,7 +7509,7 @@ parameters:
 		-
 			message: '#^Cannot call method resolve\(\) on mixed\.$#'
 			identifier: method.nonObject
-			count: 2
+			count: 1
 			path: lib/Extension/Core/CoreExtension.php
 
 		-
@@ -7615,12 +7537,6 @@ parameters:
 			path: lib/Extension/Core/CoreExtension.php
 
 		-
-			message: '#^Parameter \#1 \$registry of class Phpactor\\Extension\\Core\\Application\\Status constructor expects Phpactor\\Filesystem\\Domain\\FilesystemRegistry, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
 			message: '#^Parameter \#1 \$status of class Phpactor\\Extension\\Core\\Command\\StatusCommand constructor expects Phpactor\\Extension\\Core\\Application\\Status, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -7639,19 +7555,7 @@ parameters:
 			path: lib/Extension/Core/CoreExtension.php
 
 		-
-			message: '#^Parameter \#2 \$paths of class Phpactor\\Extension\\Core\\Application\\Status constructor expects Phpactor\\ConfigLoader\\Core\\PathCandidates, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
 			message: '#^Parameter \#2 \$paths of class Phpactor\\Extension\\Core\\Rpc\\StatusHandler constructor expects Phpactor\\ConfigLoader\\Core\\PathCandidates, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
-			message: '#^Parameter \#3 \$workingDirectory of class Phpactor\\Extension\\Core\\Application\\Status constructor expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/Core/CoreExtension.php
@@ -10033,12 +9937,6 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Model/Highlights.php
 
 		-
-			message: '#^Parameter \#1 \$source of method Phpactor\\Extension\\LanguageServerReferenceFinder\\Model\\Highlighter\:\:highlightsFor\(\) expects string, string\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Bench/HighlightBench.php
-
-		-
 			message: '#^Cannot access property \$result on Phpactor\\LanguageServer\\Core\\Rpc\\ResponseMessage\|null\.$#'
 			identifier: property.nonObject
 			count: 2
@@ -10147,12 +10045,6 @@ parameters:
 			path: lib/Extension/LanguageServerRename/LanguageServerRenameWorseExtension.php
 
 		-
-			message: '#^Parameter \#1 \$parser of class Phpactor\\WorseReferenceFinder\\TolerantVariableReferenceFinder constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerRename/LanguageServerRenameWorseExtension.php
-
-		-
 			message: '#^Parameter \#1 \$reflector of class Phpactor\\Rename\\Adapter\\WorseReflection\\WorseNameToUriConverter constructor expects Phpactor\\WorseReflection\\Reflector, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -10160,24 +10052,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$workspace of class Phpactor\\Extension\\LanguageServerReferenceFinder\\Adapter\\Indexer\\WorkspaceUpdateReferenceFinder constructor expects Phpactor\\LanguageServer\\Core\\Workspace\\Workspace, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerRename/LanguageServerRenameWorseExtension.php
-
-		-
-			message: '#^Parameter \#3 \$parser of class Phpactor\\Rename\\Adapter\\ReferenceFinder\\MemberRenamer constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerRename/LanguageServerRenameWorseExtension.php
-
-		-
-			message: '#^Parameter \#3 \$parser of class Phpactor\\Rename\\Adapter\\ReferenceFinder\\VariableRenamer constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerRename/LanguageServerRenameWorseExtension.php
-
-		-
-			message: '#^Parameter \#5 \$parser of class Phpactor\\Rename\\Adapter\\ReferenceFinder\\ClassMover\\ClassRenamer constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServerRename/LanguageServerRenameWorseExtension.php
@@ -12553,12 +12427,6 @@ parameters:
 			path: lib/Extension/WorseReferenceFinder/Tests/Unit/WorseReferenceFinderExtensionTest.php
 
 		-
-			message: '#^Parameter \#1 \$parser of class Phpactor\\WorseReferenceFinder\\TolerantVariableReferenceFinder constructor expects Microsoft\\PhpParser\\Parser, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: lib/Extension/WorseReferenceFinder/WorseReferenceFinderExtension.php
-
-		-
 			message: '#^Parameter \#1 \$reflector of class Phpactor\\WorseReferenceFinder\\WorsePlainTextClassDefinitionLocator constructor expects Phpactor\\WorseReflection\\Reflector, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -13859,18 +13727,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: lib/ReferenceFinder/ChainReferenceFinder.php
-
-		-
-			message: '#^Method Phpactor\\ReferenceFinder\\ChainTypeLocator\:\:__construct\(\) has parameter \$locators with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: lib/ReferenceFinder/ChainTypeLocator.php
-
-		-
-			message: '#^Parameter \#1 \$locator of method Phpactor\\ReferenceFinder\\ChainTypeLocator\:\:add\(\) expects Phpactor\\ReferenceFinder\\TypeLocator, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/ReferenceFinder/ChainTypeLocator.php
 
 		-
 			message: '#^Property Phpactor\\ReferenceFinder\\Tests\\Unit\\ChainReferenceFinderTest\:\:\$locator1 \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\ReferenceFinder\\ClassReferenceFinder\>\) does not accept Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\ReferenceFinder\\ReferenceFinder\>\.$#'
