@@ -9,18 +9,18 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\Helper\NodeQuery;
 use Phpactor\TestUtils\ExtractOffset;
 
 class NodeQueryTest extends TestCase
 {
-    private Parser $parser;
+    private AstProvider $parser;
 
     protected function setUp(): void
     {
-        $this->parser = new Parser();
+        $this->parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider();
     }
 
     #[DataProvider('provideFirstAncestorVia')]
@@ -63,6 +63,6 @@ class NodeQueryTest extends TestCase
     private function nodeFromSource(string $source): Node
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        return $this->parser->parseSourceFile($source)->getDescendantNodeAtPosition($offset);
+        return $this->parser->get($source)->getDescendantNodeAtPosition($offset);
     }
 }

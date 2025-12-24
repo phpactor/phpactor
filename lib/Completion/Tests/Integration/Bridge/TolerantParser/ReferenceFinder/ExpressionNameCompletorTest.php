@@ -5,7 +5,7 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceF
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Suggestions;
@@ -36,7 +36,7 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
         );
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition($offset);
+        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition($offset);
         $results = new Suggestions(
             ...iterator_to_array(
                 $completor->complete(

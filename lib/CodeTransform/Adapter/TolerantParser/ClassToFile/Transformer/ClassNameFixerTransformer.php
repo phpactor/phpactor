@@ -14,7 +14,7 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\FilePath;
@@ -33,7 +33,7 @@ class ClassNameFixerTransformer implements Transformer
 {
     public function __construct(
         private FileToClass $fileToClass,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
     ) {
     }
 
@@ -49,7 +49,7 @@ class ClassNameFixerTransformer implements Transformer
         $correctClassName = $classFqn->name();
         $correctNamespace = $classFqn->namespace();
 
-        $rootNode = $this->parser->parseSourceFile((string) $code);
+        $rootNode = $this->parser->get((string) $code);
         $edits = [];
 
         if ($textEdit = $this->fixNamespace($rootNode, $correctNamespace)) {
@@ -72,7 +72,7 @@ class ClassNameFixerTransformer implements Transformer
         if ($code->uri()->scheme() !== 'file') {
             return new Success(Diagnostics::none());
         }
-        $rootNode = $this->parser->parseSourceFile((string) $code);
+        $rootNode = $this->parser->get((string) $code);
         try {
             $classFqn = $this->determineClassFqn($code);
         } catch (RuntimeException) {

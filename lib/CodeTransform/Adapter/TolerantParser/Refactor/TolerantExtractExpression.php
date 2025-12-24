@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdit;
@@ -18,7 +18,7 @@ use function preg_match;
 
 class TolerantExtractExpression implements ExtractExpression
 {
-    public function __construct(private Parser $parser = new Parser())
+    public function __construct(private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())
     {
     }
 
@@ -54,7 +54,7 @@ class TolerantExtractExpression implements ExtractExpression
         if ($offsetStart === $offsetEnd) {
             return null;
         }
-        $rootNode = $this->parser->parseSourceFile((string) $source);
+        $rootNode = $this->parser->get((string) $source);
         $startNode = $rootNode->getDescendantNodeAtPosition($offsetStart);
 
         if ($offsetEnd) {

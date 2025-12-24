@@ -8,7 +8,7 @@ use Microsoft\PhpParser\Node\Expression\ScriptInclusionExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
@@ -26,7 +26,7 @@ class IncludeWalker implements Walker
     public function __construct(
         private LoggerInterface $logger,
         private FrameResolver $resolver,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
     ) {
     }
 
@@ -69,7 +69,7 @@ class IncludeWalker implements Walker
         }
 
         $sourceCode = (string)file_get_contents($includeUri);
-        $sourceNode = $this->parser->parseSourceFile($sourceCode);
+        $sourceNode = $this->parser->get($sourceCode);
         $includedFrame = $this->resolver->build($sourceNode);
         $frame->locals()->merge($includedFrame->locals());
 

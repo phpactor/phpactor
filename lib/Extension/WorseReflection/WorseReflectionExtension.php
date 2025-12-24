@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -108,7 +108,7 @@ class WorseReflectionExtension implements Extension
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $builder = ReflectorBuilder::create()
-                ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, Parser::class)))
+                ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, AstProvider::class)))
                 ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
 
             if ($container->parameter(self::PARAM_ENABLE_CONTEXT_LOCATION)->bool()) {
@@ -255,7 +255,7 @@ class WorseReflectionExtension implements Extension
     private function registerCommands(ContainerBuilder $container): void
     {
         $container->register(DumpAstCommand::class, function (Container $container) {
-            return new DumpAstCommand($container->expect(self::SERVICE_PARSER, Parser::class));
+            return new DumpAstCommand($container->expect(self::SERVICE_PARSER, AstProvider::class));
         }, [
             ConsoleExtension::TAG_COMMAND => [
                 'name' => 'worse:dump-ast',

@@ -10,7 +10,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\Name\QualifiedName;
@@ -36,14 +36,14 @@ final class ClassRenamer implements Renamer
         private NameToUriConverter $newNameToUriConverter,
         private ReferenceFinder $referenceFinder,
         private TextDocumentLocator $locator,
-        private Parser $parser,
+        private AstProvider $parser,
         private ClassMover $classMover
     ) {
     }
 
     public function getRenameRange(TextDocument $textDocument, ByteOffset $offset): ?ByteOffsetRange
     {
-        $node = $this->parser->parseSourceFile($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node instanceof ClassDeclaration) {
             return TokenUtil::offsetRangeFromToken($node->name, false);
@@ -70,7 +70,7 @@ final class ClassRenamer implements Renamer
 
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
-        $node = $this->parser->parseSourceFile($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);

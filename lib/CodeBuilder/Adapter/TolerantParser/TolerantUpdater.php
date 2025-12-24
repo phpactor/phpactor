@@ -50,7 +50,7 @@ class TolerantUpdater implements Updater
     public function textEditsFor(Prototype $prototype, Code $code): TextEdits
     {
         $edits = new Edits($this->textFormat);
-        $node = $this->parser->parseSourceFile((string) $code);
+        $node = $this->parser->get((string) $code);
 
         $this->updateNamespace($edits, $prototype, $node);
         $this->useStatementUpdater->updateUseStatements($edits, $prototype, $node);

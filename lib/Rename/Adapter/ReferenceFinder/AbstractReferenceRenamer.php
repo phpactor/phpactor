@@ -4,7 +4,7 @@ namespace Phpactor\Rename\Adapter\ReferenceFinder;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\LocatedTextEdit;
@@ -23,13 +23,13 @@ abstract class AbstractReferenceRenamer implements Renamer
     public function __construct(
         private ReferenceFinder $referenceFinder,
         private TextDocumentLocator $locator,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 
     public function getRenameRange(TextDocument $textDocument, ByteOffset $offset): ?ByteOffsetRange
     {
-        $node = $this->parser->parseSourceFile($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
         return $this->getRenameRangeForNode($node);
     }
 

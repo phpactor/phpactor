@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Integration\Mod
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlights;
@@ -26,7 +26,7 @@ class HighlighterTest extends TestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $assertion(
-            wait((new Highlighter(new Parser()))->highlightsFor(
+            wait((new Highlighter(new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider()))->highlightsFor(
                 TextDocumentBuilder::create($source)->build(),
                 ByteOffset::fromInt((int)$offset)
             ))

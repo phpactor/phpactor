@@ -3,7 +3,7 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Microsoft\PhpParser\Node\QualifiedName;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -21,7 +21,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
     ) {
     }
 
@@ -55,7 +55,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 
     public function canReplaceWithImport(SourceCode $source, int $offset): bool
     {
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->get($source->__toString());
         $targetNode = $node->getDescendantNodeAtPosition($offset);
 
         if ($targetNode instanceof QualifiedName) {

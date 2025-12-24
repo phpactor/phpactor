@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use PHPUnit\Framework\TestCase;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -60,8 +60,8 @@ class IntegrationTestCase extends TestCase
 
     protected function parseSource(string $source, ?string $uri = null): SourceFileNode
     {
-        $parser = new Parser();
+        $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider();
 
-        return $parser->parseSourceFile($source, $uri);
+        return $parser->get($source, $uri);
     }
 }

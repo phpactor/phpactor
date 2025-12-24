@@ -4,7 +4,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Util\OffsetHelper;
@@ -18,7 +18,7 @@ class ChainTolerantCompletor implements Completor
      */
     public function __construct(
         private array $tolerantCompletors,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
     ) {
     }
 
@@ -31,14 +31,14 @@ class ChainTolerantCompletor implements Completor
         $truncatedLength = strlen($truncatedSource);
 
         $node = $this->parser
-            ->parseSourceFile(substr_replace((string) $source, ' ', $truncatedLength, 0))
+            ->get(substr_replace((string) $source, ' ', $truncatedLength, 0))
             ->getDescendantNodeAtPosition(
                 // the parser requires the byte offset, not the char offset
                 $truncatedLength,
             );
 
         if ($node->getEndPosition() > $truncatedLength) {
-            $node = $this->parser->parseSourceFile($truncatedSource)->getDescendantNodeAtPosition($truncatedLength);
+            $node = $this->parser->get($truncatedSource)->getDescendantNodeAtPosition($truncatedLength);
         }
 
         $isComplete = true;

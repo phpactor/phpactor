@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\ByteOffset;
@@ -90,7 +90,7 @@ class FrameResolverTest extends IntegrationTestCase
         $docblockFactory = $this->createMock(DocBlockFactory::class);
         $cache = new StaticCache();
 
-        $ast = (new Parser())->parseSourceFile($source, 'file:///test.php');
+        $ast = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source, 'file:///test.php');
 
         foreach ($offsets as $offset) {
             $nodeResolver = new NodeContextResolver(

@@ -16,7 +16,7 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\UseVariableName;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
@@ -29,7 +29,7 @@ use Exception;
 class TolerantVariableReferenceFinder implements ReferenceFinder
 {
     public function __construct(
-        private Parser $parser,
+        private AstProvider $parser,
         private bool $includeDefinition = false
     ) {
     }
@@ -61,7 +61,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
 
     private function sourceNode(string $source): SourceFileNode
     {
-        return $this->parser->parseSourceFile($source);
+        return $this->parser->get($source);
     }
 
     private function variableNodeFromSource(SourceFileNode $sourceNode, int $offset): ?Node

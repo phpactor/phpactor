@@ -8,7 +8,7 @@ use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Amp\Success;
 use Amp\Promise;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -26,7 +26,7 @@ class InlineValueHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
         private Workspace $workspace,
-        private Parser $parser,
+        private AstProvider $parser,
     ) {
     }
 
@@ -53,7 +53,7 @@ class InlineValueHandler implements Handler, CanRegisterCapabilities
         $start = PositionConverter::positionToByteOffset($range->start, $document)->toInt();
         $end = PositionConverter::positionToByteOffset($range->end, $document)->toInt();
 
-        $root = $this->parser->parseSourceFile((string) $document, $document->uri()?->__toString());
+        $root = $this->parser->get((string) $document, $document->uri()?->__toString());
 
         $i = $root->getDescendantNodes(fn ($child) => $child->getStartPosition() <= $end && $child->getEndPosition() >= $start);
         $i = new CallbackFilterIterator($i, fn ($node) =>

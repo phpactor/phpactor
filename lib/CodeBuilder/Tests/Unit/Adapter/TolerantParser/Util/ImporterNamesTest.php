@@ -47,6 +47,6 @@ class ImporterNamesTest extends TestCase
     private function parse($source): Node
     {
         $parser = new Parser();
-        return $parser->parseSourceFile($source);
+        return $parser->get($source);
     }
 }

@@ -15,7 +15,7 @@ use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Reflector;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Microsoft\PhpParser\TokenKind;
@@ -36,7 +36,7 @@ class WorseExtractMethod implements ExtractMethod
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
     ) {
     }
 
@@ -45,7 +45,7 @@ class WorseExtractMethod implements ExtractMethod
         if ($offsetEnd == $offsetStart || $offsetEnd - $offsetStart === strlen($source->__toString())) {
             return false;
         }
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->get($source->__toString());
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
         $startNode = $node->getDescendantNodeAtPosition($offsetStart);
 
@@ -423,7 +423,7 @@ class WorseExtractMethod implements ExtractMethod
 
     private function isSelectionAnExpression(SourceCode $source, int $offsetStart, int $offsetEnd): bool
     {
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->get($source->__toString());
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
 
         // end node is in the statement body, get last child node
@@ -461,7 +461,7 @@ class WorseExtractMethod implements ExtractMethod
     private function parseSelection(string $source): SourceFileNode
     {
         $source = '<?php ' . $source;
-        $node = $this->parser->parseSourceFile($source);
+        $node = $this->parser->get($source);
         return $node;
     }
 }

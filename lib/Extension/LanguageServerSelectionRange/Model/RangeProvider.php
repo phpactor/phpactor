@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\LanguageServerSelectionRange\Model;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\SelectionRange;
@@ -11,7 +11,7 @@ use Phpactor\TextDocument\ByteOffset;
 
 class RangeProvider
 {
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
     }
 
@@ -22,7 +22,7 @@ class RangeProvider
      */
     public function provide(string $source, array $offsets): array
     {
-        $rootNode = $this->parser->parseSourceFile($source);
+        $rootNode = $this->parser->get($source);
 
         $selectionRanges = [];
         foreach ($offsets as $byteOffset) {

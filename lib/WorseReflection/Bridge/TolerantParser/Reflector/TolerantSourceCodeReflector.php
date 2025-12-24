@@ -24,7 +24,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset as TolerantReflectionOffset;
 use Phpactor\WorseReflection\Core\Inference\NodeReflector;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as TolerantReflectionFunctionCollection;
 use function Amp\call;
 use function Amp\delay;
@@ -33,7 +33,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 {
     public function __construct(
         private ServiceLocator $serviceLocator,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 
@@ -161,6 +161,6 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     private function parseSourceCode(TextDocument $sourceCode): SourceFileNode
     {
-        return $this->parser->parseSourceFile((string) $sourceCode, $sourceCode->uri()?->__toString());
+        return $this->parser->get((string) $sourceCode, $sourceCode->uri()?->__toString());
     }
 }

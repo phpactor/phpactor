@@ -30,7 +30,7 @@ class NodeHelperTest extends TestCase
     private function findSelfNode(): array
     {
         [$source, $methodOffset, $nameOffset] = ExtractOffset::fromSource('<?php class Foobar { public function f<>oo(): sel<>f() { return $this; }}');
-        $root = $this->parser->parseSourceFile($source);
+        $root = $this->parser->get($source);
         return [
             $root->getDescendantNodeAtPosition($methodOffset),
             $root->getDescendantNodeAtPosition($nameOffset),

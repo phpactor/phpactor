@@ -24,7 +24,7 @@ use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitMembers;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerSymbolProvider\Model\DocumentSymbolProvider;
 use Phpactor\LanguageServerProtocol\DocumentSymbol;
@@ -33,13 +33,13 @@ use Phpactor\LanguageServerProtocol\SymbolKind;
 
 class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
 {
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
     }
 
     public function provideFor(string $source): array
     {
-        $rootNode = $this->parser->parseSourceFile($source);
+        $rootNode = $this->parser->get($source);
 
         return $this->buildNodes($rootNode->getChildNodes(), $source);
     }

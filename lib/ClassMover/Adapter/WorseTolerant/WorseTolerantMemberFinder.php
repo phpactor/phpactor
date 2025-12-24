@@ -55,7 +55,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
     public function findMembers(SourceCode $source, ClassMemberQuery $query): MemberReferences
     {
-        $rootNode = $this->parser->parseSourceFile((string) $source);
+        $rootNode = $this->parser->get((string) $source);
         $memberNodes = $this->collectMemberReferences($rootNode, $query);
 
         $queryClassReflection = null;

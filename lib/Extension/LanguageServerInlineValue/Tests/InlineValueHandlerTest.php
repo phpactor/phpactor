@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerInlineValue\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerInlineValue\Handler\InlineValueHandler;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
@@ -77,7 +77,7 @@ class InlineValueHandlerTest extends TestCase
     protected function createTester(): LanguageServerTester
     {
         $tester = LanguageServerTesterBuilder::create();
-        $tester->addHandler(new InlineValueHandler($tester->workspace(), new Parser()));
+        $tester->addHandler(new InlineValueHandler($tester->workspace(), new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider()));
         return $tester->build();
     }
 }
