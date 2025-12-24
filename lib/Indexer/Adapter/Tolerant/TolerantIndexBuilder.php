@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Adapter\Tolerant;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
@@ -32,7 +33,7 @@ final class TolerantIndexBuilder implements IndexBuilder
         private Index $index,
         private array $indexers,
         private LoggerInterface $logger,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

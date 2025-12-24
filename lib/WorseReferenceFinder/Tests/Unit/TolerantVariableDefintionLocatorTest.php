@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\WorseReferenceFinder\Tests\DefinitionLocatorTestCase;
 use Phpactor\WorseReferenceFinder\TolerantVariableDefintionLocator;
@@ -45,7 +46,7 @@ class TolerantVariableDefintionLocatorTest extends DefinitionLocatorTestCase
     protected function locator(): DefinitionLocator
     {
         return new TolerantVariableDefintionLocator(
-            new TolerantVariableReferenceFinder(new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(), true)
+            new TolerantVariableReferenceFinder(new TolerantAstProvider(), true)
         );
     }
 }

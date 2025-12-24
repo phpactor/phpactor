@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Amp\Promise;
 use Amp\Success;
 use Microsoft\PhpParser\ClassLike;
@@ -33,7 +34,7 @@ class ClassNameFixerTransformer implements Transformer
 {
     public function __construct(
         private FileToClass $fileToClass,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

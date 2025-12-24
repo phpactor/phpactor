@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection\Tests\Command;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
@@ -16,7 +17,7 @@ class DumpAstCommandTest extends TestCase
         $workspace = new Workspace(__DIR__ . '/../Workspace');
         $workspace->reset();
         $workspace->put('test.php', '<?php echo "hello";');
-        $exitCode = (new DumpAstCommand(new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider()))->run(new ArrayInput([
+        $exitCode = (new DumpAstCommand(new TolerantAstProvider()))->run(new ArrayInput([
             'path' => $workspace->path('test.php')
         ]), $output);
         self::assertEquals(0, $exitCode);

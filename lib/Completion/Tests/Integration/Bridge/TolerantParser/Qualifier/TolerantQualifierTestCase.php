@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\Qualifier;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
@@ -15,7 +16,7 @@ abstract class TolerantQualifierTestCase extends TestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
 
-        $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider();
+        $parser = new TolerantAstProvider();
         $root = $parser->get($source);
         $node = $root->getDescendantNodeAtPosition($offset);
 

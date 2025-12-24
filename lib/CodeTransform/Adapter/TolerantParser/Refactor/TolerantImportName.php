@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node\SourceFileNode;
@@ -29,7 +30,7 @@ class TolerantImportName implements ImportName
 {
     public function __construct(
         private Updater $updater,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
         private bool $importGlobals = false,
     ) {
     }

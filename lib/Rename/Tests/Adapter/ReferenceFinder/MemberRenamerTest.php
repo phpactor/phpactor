@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Generator;
@@ -46,7 +47,7 @@ class MemberRenamerTest extends TestCase
         $variableRenamer = new MemberRenamer(
             new PredefinedReferenceFinder(...[]),
             InMemoryDocumentLocator::fromTextDocuments([]),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+            new TolerantAstProvider(),
             new PredefiniedImplementationFinder(new Locations([])),
         );
 
@@ -115,7 +116,7 @@ class MemberRenamerTest extends TestCase
                 );
             }, $references)),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+            new TolerantAstProvider(),
             new PredefiniedImplementationFinder(new Locations(array_map(function (ByteOffset $reference) use ($textDocument) {
                 return new Location($textDocument->uri(), ByteOffsetRange::fromByteOffset($reference));
             }, $implementations))),

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser\Helper;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
@@ -20,7 +21,7 @@ class NodeQueryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider();
+        $this->parser = new TolerantAstProvider();
     }
 
     #[DataProvider('provideFirstAncestorVia')]

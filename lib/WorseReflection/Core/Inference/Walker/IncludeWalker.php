@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\ScriptInclusionExpression;
@@ -26,7 +27,7 @@ class IncludeWalker implements Walker
     public function __construct(
         private LoggerInterface $logger,
         private FrameResolver $resolver,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

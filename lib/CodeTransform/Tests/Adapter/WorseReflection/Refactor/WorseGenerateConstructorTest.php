@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use GlobIterator;
@@ -63,7 +64,7 @@ class WorseGenerateConstructorTest extends WorseTestCase
             $reflector,
             $this->builderFactory($reflector),
             $this->updater(),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider()
+            new TolerantAstProvider()
         );
     }
 }

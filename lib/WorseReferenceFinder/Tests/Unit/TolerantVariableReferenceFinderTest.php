@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +28,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
             ->language('php')
             ->build();
 
-        $finder = new TolerantVariableReferenceFinder(new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(), $includeDefinition);
+        $finder = new TolerantVariableReferenceFinder(new TolerantAstProvider(), $includeDefinition);
         $generator = $finder->findReferences($document, ByteOffset::fromInt($selectionOffset));
         $actualReferences = iterator_to_array($generator, false);
 

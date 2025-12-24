@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -19,7 +20,7 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantRenameVariable implements RenameVariable
 {
-    public function __construct(private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())
+    public function __construct(private AstProvider $parser = new TolerantAstProvider())
     {
     }
 

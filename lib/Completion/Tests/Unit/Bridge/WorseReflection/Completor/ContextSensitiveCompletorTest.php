@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\WorseReflection\Completor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +24,7 @@ class ContextSensitiveCompletorTest extends TestCase
     public function testComplete(array $suggestions, string $source, array $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source);
+        $node = (new TolerantAstProvider())->get($source);
         $node = $node->getDescendantNodeAtPosition($offset);
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $inner = new TolerantArrayCompletor(array_map(

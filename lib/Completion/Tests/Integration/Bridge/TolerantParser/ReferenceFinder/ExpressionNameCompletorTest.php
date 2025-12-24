@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceFinder;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
@@ -35,7 +36,7 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
         );
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition($offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition($offset);
         $results = new Suggestions(
             ...iterator_to_array(
                 $completor->complete(

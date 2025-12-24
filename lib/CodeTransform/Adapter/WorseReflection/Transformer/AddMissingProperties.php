@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Amp\Promise;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Domain\Diagnostic;
@@ -28,7 +29,7 @@ class AddMissingProperties implements Transformer
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

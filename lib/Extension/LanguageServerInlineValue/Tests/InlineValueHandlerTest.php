@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerInlineValue\Tests;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
@@ -76,7 +77,7 @@ class InlineValueHandlerTest extends TestCase
     protected function createTester(): LanguageServerTester
     {
         $tester = LanguageServerTesterBuilder::create();
-        $tester->addHandler(new InlineValueHandler($tester->workspace(), new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider()));
+        $tester->addHandler(new InlineValueHandler($tester->workspace(), new TolerantAstProvider()));
         return $tester->build();
     }
 }

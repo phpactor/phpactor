@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +16,7 @@ class CompletionContextTest extends TestCase
     public function testExpression(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         self::assertEquals($expected, CompletionContext::expression($node));
     }
 
@@ -87,7 +88,7 @@ class CompletionContextTest extends TestCase
     public function testClassMemberBody(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         self::assertEquals($expected, CompletionContext::classMembersBody($node));
     }
 
@@ -144,7 +145,7 @@ class CompletionContextTest extends TestCase
     public function testClassClause(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         self::assertEquals($expected, CompletionContext::classClause($node, ByteOffset::fromInt((int)$offset)));
     }
 
@@ -180,7 +181,7 @@ class CompletionContextTest extends TestCase
     public function testAttribute(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         self::assertEquals($expected, CompletionContext::attribute($node));
     }
 
@@ -219,7 +220,7 @@ class CompletionContextTest extends TestCase
     public function testAnonymousUse(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         self::assertEquals($expected, CompletionContext::anonymousUse($node));
     }
 
@@ -258,7 +259,7 @@ class CompletionContextTest extends TestCase
     public function testPromotedProperty(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         self::assertEquals($expected, CompletionContext::promotedPropertyVisibility($node));
     }
 
@@ -294,7 +295,7 @@ class CompletionContextTest extends TestCase
     public function testMethodName(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         self::assertEquals($expected, CompletionContext::methodName($node));
     }
 

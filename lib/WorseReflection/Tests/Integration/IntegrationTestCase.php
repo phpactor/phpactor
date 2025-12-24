@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\TestUtils\Workspace;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
@@ -59,7 +60,7 @@ class IntegrationTestCase extends TestCase
 
     protected function parseSource(string $source, ?string $uri = null): SourceFileNode
     {
-        $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider();
+        $parser = new TolerantAstProvider();
 
         return $parser->get($source, $uri);
     }

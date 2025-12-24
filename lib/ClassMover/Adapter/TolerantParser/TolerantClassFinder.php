@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Adapter\TolerantParser;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\NamespaceAliasingClause;
@@ -30,7 +31,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class TolerantClassFinder implements ClassFinder
 {
-    public function __construct(private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())
+    public function __construct(private AstProvider $parser = new TolerantAstProvider())
     {
     }
 

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerSelectionRange;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -23,7 +24,7 @@ class LanguageServerSelectionRangeExtension implements Extension
             LanguageServerExtension::TAG_METHOD_HANDLER => [],
         ]);
         $container->register(RangeProvider::class, function (Container $container) {
-            return new RangeProvider(new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider());
+            return new RangeProvider(new TolerantAstProvider());
         });
     }
 

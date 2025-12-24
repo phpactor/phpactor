@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerSymbolProvider\Tests\Unit\Adapter;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
@@ -34,7 +35,7 @@ class TolerantDocumentSymbolProviderTest extends TestCase
     #[DataProvider('provideEnums')]
     public function testBuildDocumentSymbol(string $source, array $expected): void
     {
-        $actual = (new TolerantDocumentSymbolProvider(new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider()))->provideFor($source);
+        $actual = (new TolerantDocumentSymbolProvider(new TolerantAstProvider()))->provideFor($source);
         $this->assertTree($actual, $expected);
     }
 

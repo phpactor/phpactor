@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
@@ -34,7 +35,7 @@ class WorseSignatureHelper implements SignatureHelper
     public function __construct(
         private Reflector $reflector,
         private ObjectFormatter $formatter,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

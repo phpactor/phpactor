@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder\ClassMover;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\ClassMover\ClassMover;
@@ -44,7 +45,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             $converter,
             $finder,
             InMemoryDocumentLocator::fromTextDocuments([]),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+            new TolerantAstProvider(),
             new ClassMover()
         );
 
@@ -228,7 +229,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             $nameToUriConverter,
             $this->offsetsToReferenceFinder($textDocument, $references),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+            new TolerantAstProvider(),
             new ClassMover()
         );
     }

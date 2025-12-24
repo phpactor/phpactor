@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\AstProvider;
@@ -18,7 +19,7 @@ class ChainTolerantCompletor implements Completor
      */
     public function __construct(
         private array $tolerantCompletors,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

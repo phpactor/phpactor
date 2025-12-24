@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Integration\Adapter\ReferenceFinder;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Closure;
 use Generator;
 use Phpactor\TextDocument\FilesystemTextDocumentLocator;
@@ -39,7 +40,7 @@ class MemberRenamerTest extends RenamerTestCase
         return new MemberRenamer(
             $finder,
             new FilesystemTextDocumentLocator(),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+            new TolerantAstProvider(),
             new IndexedImplementationFinder($this->indexAgent->query(), $this->reflector)
         );
     }

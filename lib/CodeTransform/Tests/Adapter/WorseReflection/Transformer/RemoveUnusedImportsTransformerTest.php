@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
@@ -17,7 +18,7 @@ class RemoveUnusedImportsTransformerTest extends WorseTestCase
         $source = SourceCode::fromString($example);
         $transformer = new RemoveUnusedImportsTransformer(
             $this->reflectorForWorkspace($example),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider()
+            new TolerantAstProvider()
         );
         $transformed = wait($transformer->transform(SourceCode::fromString($source)));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));

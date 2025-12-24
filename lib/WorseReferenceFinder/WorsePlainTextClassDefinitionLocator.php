@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Exception;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
@@ -26,7 +27,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 
     public function __construct(private Reflector $reflector)
     {
-        $this->parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider();
+        $this->parser = new TolerantAstProvider();
     }
 
 

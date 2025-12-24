@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -26,7 +27,7 @@ class WorseExtractConstant implements ExtractConstant
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

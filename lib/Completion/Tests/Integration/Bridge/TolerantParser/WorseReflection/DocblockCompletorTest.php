@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
@@ -34,10 +35,10 @@ class DocblockCompletorTest extends TestCase
         ];
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
         $suggestions = iterator_to_array((new DocblockCompletor(
             new TypeSuggestionProvider(new PredefinedNameSearcher($results)),
-            new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+            new TolerantAstProvider(),
         ))->complete($node, TextDocumentBuilder::create($source)->build(), ByteOffset::fromInt((int)$offset)), false);
         $actualNames = array_map(fn (Suggestion $s) => $s->name(), $suggestions);
         foreach ($expected as $expectedName) {

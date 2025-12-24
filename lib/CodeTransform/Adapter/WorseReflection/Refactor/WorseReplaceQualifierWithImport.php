@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -21,7 +22,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

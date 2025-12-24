@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\CatchClause;
@@ -36,7 +37,7 @@ class WorseExtractMethod implements ExtractMethod
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        private AstProvider $parser = new \Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 
