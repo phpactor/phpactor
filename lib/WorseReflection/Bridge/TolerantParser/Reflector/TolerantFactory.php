@@ -3,14 +3,14 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
 use Phpactor\WorseReflection\Core\AstProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
 class TolerantFactory implements SourceCodeReflectorFactory
 {
-    public function __construct(private AstProvider $parser = new CachedParser())
+    public function __construct(private AstProvider $parser = new CachedAstProvider())
     {
     }
 

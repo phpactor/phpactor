@@ -39,7 +39,7 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Symfony\Component\Filesystem\Path;
 
@@ -156,7 +156,7 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(self::SERVICE_PARSER, function (Container $container) {
-            return new CachedParser(
+            return new CachedAstProvider(
                 $container->get(Cache::class),
                 $container->get(CacheForDocument::class),
             );

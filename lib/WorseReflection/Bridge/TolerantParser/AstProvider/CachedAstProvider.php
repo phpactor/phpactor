@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Bridge\TolerantParser\Parser;
+namespace Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider;
 
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 
-class CachedParser implements AstProvider
+class CachedAstProvider implements AstProvider
 {
     private CacheForDocument $cacheForDocument;
 
