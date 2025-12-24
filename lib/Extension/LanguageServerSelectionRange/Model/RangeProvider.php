@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerSelectionRange\Model;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\SelectionRange;
@@ -11,7 +11,7 @@ use Phpactor\TextDocument\ByteOffset;
 
 class RangeProvider
 {
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
     }
 

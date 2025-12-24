@@ -45,7 +45,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             $converter,
             $finder,
             InMemoryDocumentLocator::fromTextDocuments([]),
-            new Parser(),
+            new TolerantAstProvider(),
             new ClassMover()
         );
 
@@ -229,7 +229,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             $nameToUriConverter,
             $this->offsetsToReferenceFinder($textDocument, $references),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
-            new Parser(),
+            new TolerantAstProvider(),
             new ClassMover()
         );
     }

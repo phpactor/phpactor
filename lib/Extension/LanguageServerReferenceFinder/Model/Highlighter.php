@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Model;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Amp\CancellationTokenSource;
 use Amp\Promise;
 use Generator;
@@ -19,7 +20,6 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
-use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\LanguageServerProtocol\DocumentHighlight;
 use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
@@ -35,7 +35,7 @@ class Highlighter
 {
     private ?CancellationTokenSource $previousCancellationSource = null;
 
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
     }
 

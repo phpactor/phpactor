@@ -26,7 +26,7 @@ class HighlighterTest extends TestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $assertion(
-            wait((new Highlighter(new Parser()))->highlightsFor(
+            wait((new Highlighter(new TolerantAstProvider()))->highlightsFor(
                 TextDocumentBuilder::create($source)->build(),
                 ByteOffset::fromInt((int)$offset)
             ))

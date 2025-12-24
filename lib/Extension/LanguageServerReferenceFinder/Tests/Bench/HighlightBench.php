@@ -11,7 +11,7 @@ class HighlightBench
 {
     public function benchHighlights(): void
     {
-        $highlighter = new Highlighter(new Parser());
+        $highlighter = new Highlighter(new TolerantAstProvider());
         $highlights = $highlighter->highlightsFor(
             TextDocumentBuilder::fromUri(__DIR__ . '/../../../../../vendor/microsoft/tolerant-php-parser/src/Parser.php')->build(),
             ByteOffset::fromInt(176949)

@@ -2,12 +2,12 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Core\Suggestion;
@@ -48,7 +48,7 @@ class DocblockCompletor implements TolerantCompletor
 
     public function __construct(
         private TypeSuggestionProvider $typeSuggestionProvider,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 

@@ -25,7 +25,7 @@ class LanguageServerSymbolProviderExtension implements Extension
             LanguageServerExtension::TAG_METHOD_HANDLER => [],
         ]);
         $container->register(DocumentSymbolProvider::class, function (Container $container) {
-            return new TolerantDocumentSymbolProvider(new Parser());
+            return new TolerantDocumentSymbolProvider(new TolerantAstProvider());
         });
     }
 

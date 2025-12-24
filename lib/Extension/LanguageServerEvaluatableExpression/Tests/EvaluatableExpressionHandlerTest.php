@@ -65,7 +65,7 @@ class EvaluatableExpressionHandlerTest extends TestCase
     protected function createTester(): LanguageServerTester
     {
         $tester = LanguageServerTesterBuilder::create();
-        $tester->addHandler(new EvaluatableExpressionHandler($tester->workspace(), new Parser()));
+        $tester->addHandler(new EvaluatableExpressionHandler($tester->workspace(), new TolerantAstProvider()));
         return $tester->build();
     }
 }

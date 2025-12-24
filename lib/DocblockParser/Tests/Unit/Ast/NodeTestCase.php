@@ -49,7 +49,7 @@ class NodeTestCase extends TestCase
 
     private function parse(string $doc): Node
     {
-        $node = (new Parser())->parse((new Lexer())->lex($doc));
+        $node = (new TolerantAstProvider())->parse((new Lexer())->lex($doc));
         return $node;
     }
 }

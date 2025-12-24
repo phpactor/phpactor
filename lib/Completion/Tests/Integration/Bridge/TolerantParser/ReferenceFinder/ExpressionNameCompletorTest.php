@@ -36,7 +36,7 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
         );
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition($offset);
+        $node = (new TolerantAstProvider())->parseSourceFile($source)->getDescendantNodeAtPosition($offset);
         $results = new Suggestions(
             ...iterator_to_array(
                 $completor->complete(

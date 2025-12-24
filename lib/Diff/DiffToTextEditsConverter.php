@@ -14,7 +14,7 @@ class DiffToTextEditsConverter
 
     public function __construct()
     {
-        $this->parser = new Parser();
+        $this->parser = new TolerantAstProvider();
     }
 
     /**

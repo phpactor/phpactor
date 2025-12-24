@@ -90,7 +90,7 @@ class FrameResolverTest extends IntegrationTestCase
         $docblockFactory = $this->createMock(DocBlockFactory::class);
         $cache = new StaticCache();
 
-        $ast = (new Parser())->parseSourceFile($source, 'file:///test.php');
+        $ast = (new TolerantAstProvider())->parseSourceFile($source, 'file:///test.php');
 
         foreach ($offsets as $offset) {
             $nodeResolver = new NodeContextResolver(

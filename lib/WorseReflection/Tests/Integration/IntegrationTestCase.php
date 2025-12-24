@@ -60,7 +60,7 @@ class IntegrationTestCase extends TestCase
 
     protected function parseSource(string $source, ?string $uri = null): SourceFileNode
     {
-        $parser = new Parser();
+        $parser = new TolerantAstProvider();
 
         return $parser->parseSourceFile($source, $uri);
     }

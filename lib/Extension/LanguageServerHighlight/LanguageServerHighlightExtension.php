@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerHighlight;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -26,7 +26,7 @@ final class LanguageServerHighlightExtension implements Extension
 
             return new HighlightHandler(
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
-                new Highlighter($container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class)),
+                new Highlighter($container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class)),
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
     }

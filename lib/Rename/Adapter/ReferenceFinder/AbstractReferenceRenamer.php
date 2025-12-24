@@ -2,9 +2,9 @@
 
 namespace Phpactor\Rename\Adapter\ReferenceFinder;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\LocatedTextEdit;
@@ -23,7 +23,7 @@ abstract class AbstractReferenceRenamer implements Renamer
     public function __construct(
         private ReferenceFinder $referenceFinder,
         private TextDocumentLocator $locator,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 

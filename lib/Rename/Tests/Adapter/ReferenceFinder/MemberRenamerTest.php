@@ -47,7 +47,7 @@ class MemberRenamerTest extends TestCase
         $variableRenamer = new MemberRenamer(
             new PredefinedReferenceFinder(...[]),
             InMemoryDocumentLocator::fromTextDocuments([]),
-            new Parser(),
+            new TolerantAstProvider(),
             new PredefiniedImplementationFinder(new Locations([])),
         );
 
@@ -116,7 +116,7 @@ class MemberRenamerTest extends TestCase
                 );
             }, $references)),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
-            new Parser(),
+            new TolerantAstProvider(),
             new PredefiniedImplementationFinder(new Locations(array_map(function (ByteOffset $reference) use ($textDocument) {
                 return new Location($textDocument->uri(), ByteOffsetRange::fromByteOffset($reference));
             }, $implementations))),

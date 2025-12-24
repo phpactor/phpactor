@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Amp\Promise;
 use Amp\Success;
 use Microsoft\PhpParser\ClassLike;
@@ -14,7 +15,6 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\FilePath;
@@ -33,7 +33,7 @@ class ClassNameFixerTransformer implements Transformer
 {
     public function __construct(
         private FileToClass $fileToClass,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

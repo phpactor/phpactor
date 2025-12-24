@@ -24,7 +24,7 @@ class ContextSensitiveCompletorTest extends TestCase
     public function testComplete(array $suggestions, string $source, array $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new Parser())->parseSourceFile($source);
+        $node = (new TolerantAstProvider())->parseSourceFile($source);
         $node = $node->getDescendantNodeAtPosition($offset);
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $inner = new TolerantArrayCompletor(array_map(

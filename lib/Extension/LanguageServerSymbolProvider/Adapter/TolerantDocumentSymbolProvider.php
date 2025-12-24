@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerSymbolProvider\Adapter;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
@@ -24,7 +25,6 @@ use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitMembers;
-use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerSymbolProvider\Model\DocumentSymbolProvider;
 use Phpactor\LanguageServerProtocol\DocumentSymbol;
@@ -33,7 +33,7 @@ use Phpactor\LanguageServerProtocol\SymbolKind;
 
 class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
 {
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
     }
 

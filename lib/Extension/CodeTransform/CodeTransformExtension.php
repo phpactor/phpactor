@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer70;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer74;
@@ -283,14 +283,14 @@ class CodeTransformExtension implements Extension
         $container->register(ImportName::class, function (Container $container) {
             return new TolerantImportName(
                 $container->get(Updater::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
                 $container->parameter(self::PARAM_IMPORT_GLOBALS)->bool(),
             );
         });
         $container->register(WorseFillObject::class, function (Container $container) {
             return new WorseFillObject(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
                 $container->get(Updater::class),
                 $container->parameter(self::PARAM_OBJECT_FILL_NAMED)->bool(),
                 $container->parameter(self::PARAM_OBJECT_FILL_HINT)->bool(),
@@ -299,12 +299,12 @@ class CodeTransformExtension implements Extension
         $container->register(WorseFillMatchArms::class, function (Container $container) {
             return new WorseFillMatchArms(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
             );
         });
         $container->register(TolerantHereDoc::class, function (Container $container) {
             return new TolerantHereDoc(
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
             );
         });
 
@@ -354,7 +354,7 @@ class CodeTransformExtension implements Extension
             return new TolerantUpdater(
                 $container->get('code_transform.renderer'),
                 $container->get(TextFormat::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class)
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class)
             );
         });
         $container->register(BuilderFactory::class, function (Container $container) {
@@ -362,7 +362,7 @@ class CodeTransformExtension implements Extension
         });
 
         $container->register(DocBlockUpdater::class, function (Container $container) {
-            return new ParserDocblockUpdater(DocblockParser::create(), $container->get(TextFormat::class));
+            return new TolerantAstProviderDocblockUpdater(DocblockParser::create(), $container->get(TextFormat::class));
         });
     }
 

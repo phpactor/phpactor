@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser\Helper;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
@@ -9,18 +10,17 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\Helper\NodeQuery;
 use Phpactor\TestUtils\ExtractOffset;
 
 class NodeQueryTest extends TestCase
 {
-    private Parser $parser;
+    private AstProvider $parser;
 
     protected function setUp(): void
     {
-        $this->parser = new Parser();
+        $this->parser = new TolerantAstProvider();
     }
 
     #[DataProvider('provideFirstAncestorVia')]

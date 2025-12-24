@@ -13,7 +13,7 @@ class PhpactorParserBench extends AbstractParserBenchCase
 
     public function setUp(): void
     {
-        $this->parser = new Parser();
+        $this->parser = new TolerantAstProvider();
         $this->lexer = new Lexer();
     }
 

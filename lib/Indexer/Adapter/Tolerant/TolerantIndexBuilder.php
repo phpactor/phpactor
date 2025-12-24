@@ -2,8 +2,8 @@
 
 namespace Phpactor\Indexer\Adapter\Tolerant;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Parser;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassLikeReferenceIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ConstantDeclarationIndexer;
@@ -32,7 +32,7 @@ final class TolerantIndexBuilder implements IndexBuilder
         private Index $index,
         private array $indexers,
         private LoggerInterface $logger,
-        private Parser $parser = new Parser(),
+        private AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

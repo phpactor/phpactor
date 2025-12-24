@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\WorseReflection\Telemetry;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
-use Microsoft\PhpParser\Parser;
 use OpenTelemetry\API\Trace\SpanKind;
 use Phpactor\Extension\OpenTelemetry\Model\ClassHook;
 use Phpactor\Extension\OpenTelemetry\Model\HookProvider;
@@ -47,7 +47,7 @@ class WorseTelemetry implements HookProvider
             )->startSpan();
         });
 
-        yield new ClassHook(Parser::class, 'parseSourceFile', function (TracerContext $tracing, PreContext $context) {
+        yield new ClassHook(AstProvider::class, 'parseSourceFile', function (TracerContext $tracing, PreContext $context) {
             return $tracing
                 ->spanBuilder($context, 'tolerant-php-parser')
                 ->setSpanKind(SpanKind::KIND_INTERNAL)

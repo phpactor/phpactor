@@ -2,7 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Functional\Adapter\TolerantParser\Util;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
 use Phpactor\TestUtils\ExtractOffset;
@@ -10,11 +10,11 @@ use Microsoft\PhpParser\Node;
 
 class NodeHelperTest extends TestCase
 {
-    private Parser $parser;
+    private AstProvider $parser;
 
     protected function setUp(): void
     {
-        $this->parser = new Parser();
+        $this->parser = new TolerantAstProvider();
     }
 
     public function testSelf(): void

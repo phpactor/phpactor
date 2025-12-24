@@ -46,7 +46,7 @@ class TolerantVariableDefintionLocatorTest extends DefinitionLocatorTestCase
     protected function locator(): DefinitionLocator
     {
         return new TolerantVariableDefintionLocator(
-            new TolerantVariableReferenceFinder(new Parser(), true)
+            new TolerantVariableReferenceFinder(new TolerantAstProvider(), true)
         );
     }
 }

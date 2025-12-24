@@ -32,7 +32,7 @@ class RangesForDiffTest extends TestCase
     #[DataProvider('diffProvider')]
     public function testCreatingRanges(string $diff, array $expectedRanges): void
     {
-        $parser = new Parser();
+        $parser = new TolerantAstProvider();
         $diffObject = $parser->parse($diff)[0];
 
         $ranges = $this->rangesForDiff->createRangesForDiff($diffObject);

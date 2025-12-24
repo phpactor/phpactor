@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -29,7 +29,7 @@ class WorseGenerateConstructor implements GenerateConstructor
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        private Parser $parser
+        private AstProvider $parser
     ) {
     }
 

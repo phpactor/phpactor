@@ -25,7 +25,7 @@ class PrinterTest extends TestCase
         }
 
         $tokens = (new Lexer())->lex($parts[0]);
-        $node = (new Parser())->parse($tokens);
+        $node = (new TolerantAstProvider())->parse($tokens);
         $rendered = (new TestPrinter())->print($node);
 
         /**

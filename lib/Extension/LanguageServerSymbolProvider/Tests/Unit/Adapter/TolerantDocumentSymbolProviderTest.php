@@ -35,7 +35,7 @@ class TolerantDocumentSymbolProviderTest extends TestCase
     #[DataProvider('provideEnums')]
     public function testBuildDocumentSymbol(string $source, array $expected): void
     {
-        $actual = (new TolerantDocumentSymbolProvider(new Parser()))->provideFor($source);
+        $actual = (new TolerantDocumentSymbolProvider(new TolerantAstProvider()))->provideFor($source);
         $this->assertTree($actual, $expected);
     }
 

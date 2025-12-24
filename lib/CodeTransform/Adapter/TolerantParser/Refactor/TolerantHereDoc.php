@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
-use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
@@ -17,7 +17,7 @@ use Microsoft\PhpParser\TokenKind;
 
 class TolerantHereDoc implements ByteOffsetRefactor
 {
-    public function __construct(private Parser $parser)
+    public function __construct(private AstProvider $parser)
     {
     }
 
