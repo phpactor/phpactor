@@ -161,6 +161,6 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     private function parseSourceCode(TextDocument $sourceCode): SourceFileNode
     {
-        return $this->parser->get((string) $sourceCode, $sourceCode->uri()?->__toString());
+        return $this->parser->get($sourceCode);
     }
 }

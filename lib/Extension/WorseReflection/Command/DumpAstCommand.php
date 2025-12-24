@@ -3,9 +3,9 @@
 namespace Phpactor\Extension\WorseReflection\Command;
 
 use Microsoft\PhpParser\Node;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Token;
-use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -30,15 +30,9 @@ class DumpAstCommand extends Command
     {
         /** @var string $path */
         $path = $input->getArgument(self::ARG_PATH);
-        $contents = file_get_contents($path);
-        if (false === $contents) {
-            throw new RuntimeException(sprintf(
-                'Could not read file %s',
-                $path
-            ));
-        }
+
         $parseStart = microtime(true);
-        $rootNode = $this->parser->get($contents);
+        $rootNode = $this->parser->get(TextDocumentBuilder::fromUri($path)->build());
         $parseEnd = microtime(true);
 
         $traveralStart = microtime(true);

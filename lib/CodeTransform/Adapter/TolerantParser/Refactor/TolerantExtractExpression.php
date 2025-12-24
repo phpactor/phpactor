@@ -55,7 +55,7 @@ class TolerantExtractExpression implements ExtractExpression
         if ($offsetStart === $offsetEnd) {
             return null;
         }
-        $rootNode = $this->parser->get((string) $source);
+        $rootNode = $this->parser->get($source);
         $startNode = $rootNode->getDescendantNodeAtPosition($offsetStart);
 
         if ($offsetEnd) {

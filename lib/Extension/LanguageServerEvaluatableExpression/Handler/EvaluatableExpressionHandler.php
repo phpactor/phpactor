@@ -58,7 +58,7 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
             return new Success(null);
         }
 
-        $rootNode = $this->parser->get((string) $document, $document->uri()?->__toString());
+        $rootNode = $this->parser->get($document);
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
         return new Success($this->nodeToEvaluatable($node));
     }

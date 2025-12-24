@@ -50,7 +50,7 @@ class ClassNameFixerTransformer implements Transformer
         $correctClassName = $classFqn->name();
         $correctNamespace = $classFqn->namespace();
 
-        $rootNode = $this->parser->get((string) $code);
+        $rootNode = $this->parser->get($code);
         $edits = [];
 
         if ($textEdit = $this->fixNamespace($rootNode, $correctNamespace)) {
@@ -73,7 +73,7 @@ class ClassNameFixerTransformer implements Transformer
         if ($code->uri()->scheme() !== 'file') {
             return new Success(Diagnostics::none());
         }
-        $rootNode = $this->parser->get((string) $code);
+        $rootNode = $this->parser->get($code);
         try {
             $classFqn = $this->determineClassFqn($code);
         } catch (RuntimeException) {

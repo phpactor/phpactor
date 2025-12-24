@@ -36,12 +36,13 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
         );
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition($offset);
+        $document = TextDocumentBuilder::fromPathAndString(__DIR__, $source);
+        $node = (new TolerantAstProvider())->get($document)->getDescendantNodeAtPosition($offset);
         $results = new Suggestions(
             ...iterator_to_array(
                 $completor->complete(
                     $node,
-                    TextDocumentBuilder::fromUnknown($source),
+                    $document,
                     ByteOffset::fromInt($offset)
                 ),
                 false

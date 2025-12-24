@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
+use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Debug\DebugExtension;
@@ -108,7 +110,9 @@ class WorseReflectionExtension implements Extension
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $builder = ReflectorBuilder::create()
-                ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, AstProvider::class)))
+                ->withSourceReflectorFactory(
+                    new TolerantFactory($container->get(AstProvider::class))
+                )
                 ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
 
             if ($container->parameter(self::PARAM_ENABLE_CONTEXT_LOCATION)->bool()) {
@@ -157,11 +161,15 @@ class WorseReflectionExtension implements Extension
 
         $container->register(self::SERVICE_PARSER, function (Container $container) {
             return new CachedAstProvider(
+                $container->get(TolerantAstProvider::class),
                 $container->get(Cache::class),
                 $container->get(CacheForDocument::class),
             );
         });
 
+        $container->register(TolerantAstProvider::class, function (Container $container) {
+            return new TolerantAstProvider(new Parser(), LoggingExtension::channelLogger($container, 'wr'));
+        });
         $container->register(Cache::class, function (Container $container) {
             return new TtlCache($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
         });

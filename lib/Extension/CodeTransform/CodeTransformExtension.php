@@ -272,7 +272,8 @@ class CodeTransformExtension implements Extension
             return new WorseExtractMethod(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
-                $container->get(Updater::class)
+                $container->get(Updater::class),
+                $container->get(AstProvider::class),
             );
         });
 

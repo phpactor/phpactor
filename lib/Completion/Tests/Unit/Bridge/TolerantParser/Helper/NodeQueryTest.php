@@ -10,14 +10,13 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Phpactor\WorseReflection\Core\AstProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\Helper\NodeQuery;
 use Phpactor\TestUtils\ExtractOffset;
 
 class NodeQueryTest extends TestCase
 {
-    private AstProvider $parser;
+    private TolerantAstProvider $parser;
 
     protected function setUp(): void
     {
@@ -64,6 +63,6 @@ class NodeQueryTest extends TestCase
     private function nodeFromSource(string $source): Node
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        return $this->parser->get($source)->getDescendantNodeAtPosition($offset);
+        return $this->parser->parseString($source)->getDescendantNodeAtPosition($offset);
     }
 }

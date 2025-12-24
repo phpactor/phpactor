@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node;
@@ -46,7 +47,7 @@ class WorseExtractMethod implements ExtractMethod
         if ($offsetEnd == $offsetStart || $offsetEnd - $offsetStart === strlen($source->__toString())) {
             return false;
         }
-        $node = $this->parser->get($source->__toString());
+        $node = $this->parser->get($source);
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
         $startNode = $node->getDescendantNodeAtPosition($offsetStart);
 
@@ -424,7 +425,7 @@ class WorseExtractMethod implements ExtractMethod
 
     private function isSelectionAnExpression(SourceCode $source, int $offsetStart, int $offsetEnd): bool
     {
-        $node = $this->parser->get($source->__toString());
+        $node = $this->parser->get($source);
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
 
         // end node is in the statement body, get last child node
@@ -462,7 +463,7 @@ class WorseExtractMethod implements ExtractMethod
     private function parseSelection(string $source): SourceFileNode
     {
         $source = '<?php ' . $source;
-        $node = $this->parser->get($source);
+        $node = $this->parser->get(TextDocumentBuilder::create($source)->build());
         return $node;
     }
 }

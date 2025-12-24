@@ -29,7 +29,7 @@ abstract class AbstractReferenceRenamer implements Renamer
 
     public function getRenameRange(TextDocument $textDocument, ByteOffset $offset): ?ByteOffsetRange
     {
-        $node = $this->parser->get($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
+        $node = $this->parser->get($textDocument)->getDescendantNodeAtPosition($offset->toInt());
         return $this->getRenameRangeForNode($node);
     }
 

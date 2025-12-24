@@ -48,7 +48,7 @@ class DocblockCompletor implements TolerantCompletor
 
     public function __construct(
         private TypeSuggestionProvider $typeSuggestionProvider,
-        private AstProvider $parser
+        private AstProvider $provider
     ) {
     }
 
@@ -57,10 +57,7 @@ class DocblockCompletor implements TolerantCompletor
      */
     public function complete(Node $node, TextDocument $source, ByteOffset $byteOffset): Generator
     {
-        // we re-parse the document because the above node is for the truncated
-        // doc, which will often (if not always) result in a SourceFileNode
-        // with no namespace context
-        $node = $this->parser->get($source->__toString());
+        $node = $this->provider->get($source);
         $node = NodeUtil::firstDescendantNodeAfterOffset($node, $byteOffset->toInt());
 
         [$tag, $type, $var] = $this->extractTag($source, $byteOffset);

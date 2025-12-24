@@ -35,7 +35,7 @@ class DocblockCompletorTest extends TestCase
         ];
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new TolerantAstProvider())->get($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new TolerantAstProvider())->parseString($source)->getDescendantNodeAtPosition((int)$offset);
         $suggestions = iterator_to_array((new DocblockCompletor(
             new TypeSuggestionProvider(new PredefinedNameSearcher($results)),
             new TolerantAstProvider(),

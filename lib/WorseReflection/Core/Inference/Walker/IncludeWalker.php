@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
@@ -69,8 +70,7 @@ class IncludeWalker implements Walker
             return $frame;
         }
 
-        $sourceCode = (string)file_get_contents($includeUri);
-        $sourceNode = $this->parser->get($sourceCode);
+        $sourceNode = $this->parser->get(TextDocumentBuilder::fromUri($uri)->build());
         $includedFrame = $this->resolver->build($sourceNode);
         $frame->locals()->merge($includedFrame->locals());
 
