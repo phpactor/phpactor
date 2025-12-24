@@ -179,7 +179,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
 
             $diagnostics = [];
 
-            $diffParser = new TolerantAstProvider();
+            $diffParser = new Parser();
 
             foreach ($rules as $rule) {
                 // We treat non-fixable rules as 1 char range.

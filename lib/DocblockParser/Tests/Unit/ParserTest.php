@@ -16,7 +16,7 @@ class ParserTest extends TestCase
     #[DataProvider('provideParse')]
     public function testParse(string $text, Node $expected): void
     {
-        $node = (new TolerantAstProvider())->parse((new Lexer())->lex($text));
+        $node = (new Parser())->parse((new Lexer())->lex($text));
         self::assertEquals($expected, $node);
     }
 

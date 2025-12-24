@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Exception;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Parser;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\TypeLocation;
@@ -22,11 +22,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 {
-    private AstProvider $parser;
+    private Parser $parser;
 
     public function __construct(private Reflector $reflector)
     {
-        $this->parser = new TolerantAstProvider();
+        $this->parser = new Parser();
     }
 
 

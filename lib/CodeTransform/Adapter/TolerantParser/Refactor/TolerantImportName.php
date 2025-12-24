@@ -2,13 +2,13 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedException;
@@ -29,7 +29,7 @@ class TolerantImportName implements ImportName
 {
     public function __construct(
         private Updater $updater,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private Parser $parser = new Parser(),
         private bool $importGlobals = false,
     ) {
     }

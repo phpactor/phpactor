@@ -222,7 +222,7 @@ class VariableRenamerTest extends TestCase
                 new PredefinedReferenceFinder(...$references),
             ),
             InMemoryDocumentLocator::fromTextDocuments($textDocuments),
-            new TolerantAstProvider()
+            new Parser()
         );
         return $variableRenamer;
     }

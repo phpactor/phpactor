@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\LanguageServerEvaluatableExpression\Handler;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Amp\Success;
 use Amp\Promise;
+use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -26,7 +26,7 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
         private Workspace $workspace,
-        private AstProvider $parser,
+        private Parser $parser,
     ) {
     }
 

@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -28,7 +28,7 @@ class WorseFillObject implements ByteOffsetRefactor
 
     public function __construct(
         private Reflector $reflector,
-        private AstProvider $parser,
+        private Parser $parser,
         private Updater $updater,
         private bool $namedParameters = true,
         private bool $hint = true

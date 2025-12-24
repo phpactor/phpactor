@@ -2,7 +2,6 @@
 
 namespace Phpactor\ClassMover\Adapter\WorseTolerant;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\ConstElement;
@@ -16,6 +15,7 @@ use Microsoft\PhpParser\Node\PropertyElement;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
@@ -47,7 +47,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
     public function __construct(
         ?Reflector $reflector = null,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private Parser $parser = new Parser(),
         private LoggerInterface $logger = new NullLogger(),
     ) {
         $this->reflector = $reflector ?: ReflectorBuilder::create()->addSource(TextDocumentBuilder::empty());

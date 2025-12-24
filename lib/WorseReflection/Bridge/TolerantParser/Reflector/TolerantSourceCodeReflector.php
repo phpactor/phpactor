@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Amp\Promise;
 use Generator;
 use Microsoft\PhpParser\Node;
@@ -25,6 +24,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset as TolerantReflectionOffset;
 use Phpactor\WorseReflection\Core\Inference\NodeReflector;
 use Phpactor\WorseReflection\Core\ServiceLocator;
+use Microsoft\PhpParser\Parser;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as TolerantReflectionFunctionCollection;
 use function Amp\call;
 use function Amp\delay;
@@ -33,7 +33,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 {
     public function __construct(
         private ServiceLocator $serviceLocator,
-        private AstProvider $parser
+        private Parser $parser
     ) {
     }
 

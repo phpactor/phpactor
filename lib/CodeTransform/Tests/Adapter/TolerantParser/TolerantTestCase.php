@@ -2,13 +2,13 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
+use Microsoft\PhpParser\Parser;
 
 class TolerantTestCase extends AdapterTestCase
 {
-    public function parser(): AstProvider
+    public function parser(): Parser
     {
-        return new TolerantAstProvider();
+        return new Parser();
     }
 }

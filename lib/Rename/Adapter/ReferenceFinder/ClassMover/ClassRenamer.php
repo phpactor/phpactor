@@ -2,7 +2,6 @@
 
 namespace Phpactor\Rename\Adapter\ReferenceFinder\ClassMover;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
@@ -11,6 +10,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\Name\QualifiedName;
@@ -36,7 +36,7 @@ final class ClassRenamer implements Renamer
         private NameToUriConverter $newNameToUriConverter,
         private ReferenceFinder $referenceFinder,
         private TextDocumentLocator $locator,
-        private AstProvider $parser,
+        private Parser $parser,
         private ClassMover $classMover
     ) {
     }

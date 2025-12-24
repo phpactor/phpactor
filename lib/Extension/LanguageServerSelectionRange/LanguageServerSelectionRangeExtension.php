@@ -24,7 +24,7 @@ class LanguageServerSelectionRangeExtension implements Extension
             LanguageServerExtension::TAG_METHOD_HANDLER => [],
         ]);
         $container->register(RangeProvider::class, function (Container $container) {
-            return new RangeProvider(new TolerantAstProvider());
+            return new RangeProvider(new Parser());
         });
     }
 

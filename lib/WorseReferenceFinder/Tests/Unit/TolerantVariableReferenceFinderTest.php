@@ -28,7 +28,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
             ->language('php')
             ->build();
 
-        $finder = new TolerantVariableReferenceFinder(new TolerantAstProvider(), $includeDefinition);
+        $finder = new TolerantVariableReferenceFinder(new Parser(), $includeDefinition);
         $generator = $finder->findReferences($document, ByteOffset::fromInt($selectionOffset));
         $actualReferences = iterator_to_array($generator, false);
 

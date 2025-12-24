@@ -2,7 +2,6 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\CatchClause;
@@ -16,6 +15,7 @@ use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Reflector;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Microsoft\PhpParser\TokenKind;
@@ -36,7 +36,7 @@ class WorseExtractMethod implements ExtractMethod
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private Parser $parser = new Parser(),
     ) {
     }
 

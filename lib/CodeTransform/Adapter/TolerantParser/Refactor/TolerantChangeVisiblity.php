@@ -2,11 +2,11 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
@@ -16,7 +16,7 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantChangeVisiblity implements ChangeVisiblity
 {
-    public function __construct(private AstProvider $parser = new TolerantAstProvider())
+    public function __construct(private Parser $parser = new Parser())
     {
     }
 

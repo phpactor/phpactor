@@ -46,7 +46,7 @@ class WorseFillMatchArmsTest extends WorseTestCase
     {
         $fill = new WorseFillMatchArms(
             $this->reflectorForWorkspace($source),
-            new TolerantAstProvider(),
+            new Parser(),
         );
         return $fill;
     }

@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\FunctionLike;
@@ -17,6 +16,7 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\UseVariableName;
+use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
@@ -29,7 +29,7 @@ use Exception;
 class TolerantVariableReferenceFinder implements ReferenceFinder
 {
     public function __construct(
-        private AstProvider $parser,
+        private Parser $parser,
         private bool $includeDefinition = false
     ) {
     }

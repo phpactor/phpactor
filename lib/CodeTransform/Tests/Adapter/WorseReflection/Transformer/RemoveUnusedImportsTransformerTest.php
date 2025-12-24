@@ -18,7 +18,7 @@ class RemoveUnusedImportsTransformerTest extends WorseTestCase
         $source = SourceCode::fromString($example);
         $transformer = new RemoveUnusedImportsTransformer(
             $this->reflectorForWorkspace($example),
-            new TolerantAstProvider()
+            new Parser()
         );
         $transformed = wait($transformer->transform(SourceCode::fromString($source)));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));

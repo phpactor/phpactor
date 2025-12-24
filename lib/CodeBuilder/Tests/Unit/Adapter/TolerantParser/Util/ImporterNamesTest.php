@@ -46,7 +46,7 @@ class ImporterNamesTest extends TestCase
 
     private function parse($source): Node
     {
-        $parser = new TolerantAstProvider();
+        $parser = new Parser();
         return $parser->parseSourceFile($source);
     }
 }

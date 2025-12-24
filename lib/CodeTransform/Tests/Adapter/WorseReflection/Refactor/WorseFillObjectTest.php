@@ -72,7 +72,7 @@ class WorseFillObjectTest extends WorseTestCase
     {
         $fill = new WorseFillObject(
             $this->reflectorForWorkspace($source),
-            new TolerantAstProvider(),
+            new Parser(),
             $this->updater(),
             $named,
             $hint

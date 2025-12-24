@@ -1,13 +1,13 @@
 <?php
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\EnumUpdater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\UseStatementUpdater;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -38,7 +38,7 @@ class TolerantUpdater implements Updater
     public function __construct(
         private Renderer $renderer,
         private TextFormat $textFormat = new TextFormat(),
-        private AstProvider $parser = new TolerantAstProvider(),
+        private Parser $parser = new Parser(),
     ) {
         $this->classUpdater = new ClassUpdater($renderer);
         $this->interfaceUpdater = new InterfaceUpdater($renderer);

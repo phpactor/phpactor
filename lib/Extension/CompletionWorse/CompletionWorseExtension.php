@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\CompletionWorse;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Closure;
+use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\DebugTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\AttributeCompletor;
@@ -168,7 +168,7 @@ class CompletionWorseExtension implements Extension
                     }
                     return $container->get($serviceId) ?? false;
                 }, $container->get(self::SERVICE_COMPLETOR_MAP))),
-                $container->expect('worse_reflection.tolerant_parser', AstProvider::class)
+                $container->expect('worse_reflection.tolerant_parser', Parser::class)
             );
         }, [ CompletionExtension::TAG_COMPLETOR => []]);
 
@@ -272,7 +272,7 @@ class CompletionWorseExtension implements Extension
                     return new DoctrineAnnotationCompletor(
                         $container->get(NameSearcher::class),
                         $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                        $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class)
+                        $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class)
                     );
                 },
             ],

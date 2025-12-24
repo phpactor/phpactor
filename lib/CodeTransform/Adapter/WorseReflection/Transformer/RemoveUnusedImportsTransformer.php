@@ -2,12 +2,12 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Amp\Promise;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -27,7 +27,7 @@ class RemoveUnusedImportsTransformer implements Transformer
 
     public function __construct(
         private Reflector $reflector,
-        private AstProvider $parser
+        private Parser $parser
     ) {
     }
 

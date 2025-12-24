@@ -916,7 +916,7 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
             $reflector,
             $this->updater(),
             $this->builderFactory($reflector),
-            new TolerantAstProviderDocblockUpdater(DocblockParser::create(), new TextFormat())
+            new ParserDocblockUpdater(DocblockParser::create(), new TextFormat())
         );
     }
 }

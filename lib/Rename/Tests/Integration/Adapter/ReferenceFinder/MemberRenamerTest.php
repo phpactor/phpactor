@@ -40,7 +40,7 @@ class MemberRenamerTest extends RenamerTestCase
         return new MemberRenamer(
             $finder,
             new FilesystemTextDocumentLocator(),
-            new TolerantAstProvider(),
+            new Parser(),
             new IndexedImplementationFinder($this->indexAgent->query(), $this->reflector)
         );
     }

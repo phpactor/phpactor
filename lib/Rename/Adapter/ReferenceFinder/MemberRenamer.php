@@ -2,7 +2,6 @@
 
 namespace Phpactor\Rename\Adapter\ReferenceFinder;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
@@ -14,6 +13,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Parser;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\Rename\Model\LocatedTextEdit;
@@ -27,7 +27,7 @@ class MemberRenamer extends AbstractReferenceRenamer
     public function __construct(
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
-        AstProvider $parser,
+        Parser $parser,
         private ClassImplementationFinder $implementationFinder
     ) {
         parent::__construct($referenceFinder, $locator, $parser);

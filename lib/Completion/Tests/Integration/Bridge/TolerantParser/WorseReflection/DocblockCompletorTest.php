@@ -35,10 +35,10 @@ class DocblockCompletorTest extends TestCase
         ];
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = (new TolerantAstProvider())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
         $suggestions = iterator_to_array((new DocblockCompletor(
             new TypeSuggestionProvider(new PredefinedNameSearcher($results)),
-            new TolerantAstProvider(),
+            new Parser(),
         ))->complete($node, TextDocumentBuilder::create($source)->build(), ByteOffset::fromInt((int)$offset)), false);
         $actualNames = array_map(fn (Suggestion $s) => $s->name(), $suggestions);
         foreach ($expected as $expectedName) {

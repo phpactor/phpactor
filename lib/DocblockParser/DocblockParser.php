@@ -15,7 +15,7 @@ final class DocblockParser
 
     public static function create(): self
     {
-        return new self(new Lexer(), new TolerantAstProvider());
+        return new self(new Lexer(), new Parser());
     }
 
     public function parse(string $docblock): Docblock

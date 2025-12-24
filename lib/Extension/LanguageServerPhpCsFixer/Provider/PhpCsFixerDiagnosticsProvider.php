@@ -115,7 +115,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
             $diagnostics = [];
 
-            $diffParser = new TolerantAstProvider();
+            $diffParser = new Parser();
 
             foreach ($rules as $rule) {
                 $fileDiffText = yield $this->phpCsFixer->fix($textDocument->text, ['--dry-run', '--diff', '--using-cache', 'no', '--rules', $rule]);

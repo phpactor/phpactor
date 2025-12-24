@@ -64,7 +64,7 @@ class WorseGenerateConstructorTest extends WorseTestCase
             $reflector,
             $this->builderFactory($reflector),
             $this->updater(),
-            new TolerantAstProvider()
+            new Parser()
         );
     }
 }

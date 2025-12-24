@@ -36,7 +36,7 @@ class DocblockParserFactory implements DocBlockFactory
     public function __construct(
         private Reflector $reflector,
         private Lexer $lexer = new Lexer(),
-        private AstProvider $parser = new TolerantAstProvider(),
+        private Parser $parser = new Parser(),
     ) {
     }
 

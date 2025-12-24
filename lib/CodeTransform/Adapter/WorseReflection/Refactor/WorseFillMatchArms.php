@@ -2,11 +2,11 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\MatchArm;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
@@ -24,7 +24,7 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
 {
     public function __construct(
         private Reflector $reflector,
-        private AstProvider $parser,
+        private Parser $parser,
     ) {
     }
 

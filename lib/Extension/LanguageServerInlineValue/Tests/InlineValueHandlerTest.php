@@ -77,7 +77,7 @@ class InlineValueHandlerTest extends TestCase
     protected function createTester(): LanguageServerTester
     {
         $tester = LanguageServerTesterBuilder::create();
-        $tester->addHandler(new InlineValueHandler($tester->workspace(), new TolerantAstProvider()));
+        $tester->addHandler(new InlineValueHandler($tester->workspace(), new Parser()));
         return $tester->build();
     }
 }

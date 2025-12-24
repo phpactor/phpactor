@@ -140,6 +140,6 @@ class ParserDocblockUpdaterTest extends TestCase
 
     private function createUpdater(): ParserDocblockUpdater
     {
-        return (new TolerantAstProviderDocblockUpdater(DocblockParser::create(), new TextFormat()));
+        return (new ParserDocblockUpdater(DocblockParser::create(), new TextFormat()));
     }
 }

@@ -16,7 +16,7 @@ abstract class TolerantQualifierTestCase extends TestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
 
-        $parser = new TolerantAstProvider();
+        $parser = new Parser();
         $root = $parser->parseSourceFile($source);
         $node = $root->getDescendantNodeAtPosition($offset);
 

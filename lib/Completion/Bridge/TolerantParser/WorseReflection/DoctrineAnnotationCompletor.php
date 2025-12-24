@@ -2,10 +2,10 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
-use Phpactor\WorseReflection\Core\AstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -25,7 +25,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     public function __construct(
         NameSearcher $nameSearcher,
         private Reflector $reflector,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private Parser $parser = new Parser(),
     ) {
         parent::__construct($nameSearcher);
     }

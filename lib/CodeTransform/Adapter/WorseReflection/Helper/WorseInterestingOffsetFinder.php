@@ -2,7 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Helper;
 
-use Phpactor\WorseReflection\Core\AstProvider;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
@@ -13,7 +13,7 @@ class WorseInterestingOffsetFinder implements InterestingOffsetFinder
 {
     public function __construct(
         private SourceCodeReflector $reflector,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private Parser $parser = new Parser(),
     ) {
     }
 

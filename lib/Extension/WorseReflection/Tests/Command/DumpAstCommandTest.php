@@ -17,7 +17,7 @@ class DumpAstCommandTest extends TestCase
         $workspace = new Workspace(__DIR__ . '/../Workspace');
         $workspace->reset();
         $workspace->put('test.php', '<?php echo "hello";');
-        $exitCode = (new DumpAstCommand(new TolerantAstProvider()))->run(new ArrayInput([
+        $exitCode = (new DumpAstCommand(new Parser()))->run(new ArrayInput([
             'path' => $workspace->path('test.php')
         ]), $output);
         self::assertEquals(0, $exitCode);
