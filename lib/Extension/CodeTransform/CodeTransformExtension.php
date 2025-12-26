@@ -284,14 +284,14 @@ class CodeTransformExtension implements Extension
         $container->register(ImportName::class, function (Container $container) {
             return new TolerantImportName(
                 $container->get(Updater::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
+                $container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class),
                 $container->parameter(self::PARAM_IMPORT_GLOBALS)->bool(),
             );
         });
         $container->register(WorseFillObject::class, function (Container $container) {
             return new WorseFillObject(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
+                $container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class),
                 $container->get(Updater::class),
                 $container->parameter(self::PARAM_OBJECT_FILL_NAMED)->bool(),
                 $container->parameter(self::PARAM_OBJECT_FILL_HINT)->bool(),
@@ -300,12 +300,12 @@ class CodeTransformExtension implements Extension
         $container->register(WorseFillMatchArms::class, function (Container $container) {
             return new WorseFillMatchArms(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
+                $container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class),
             );
         });
         $container->register(TolerantHereDoc::class, function (Container $container) {
             return new TolerantHereDoc(
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
+                $container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class),
             );
         });
 
@@ -314,7 +314,7 @@ class CodeTransformExtension implements Extension
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
                 $container->get(Updater::class),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->get(WorseReflectionExtension::SERVICE_AST_PROVIDER),
             );
         });
 
@@ -355,7 +355,7 @@ class CodeTransformExtension implements Extension
             return new TolerantUpdater(
                 $container->get('code_transform.renderer'),
                 $container->get(TextFormat::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class)
+                $container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class)
             );
         });
         $container->register(BuilderFactory::class, function (Container $container) {
@@ -563,7 +563,7 @@ class CodeTransformExtension implements Extension
         $container->register('code_transform.transformer.remove_unused_imports', function (Container $container) {
             return new RemoveUnusedImportsTransformer(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->get(WorseReflectionExtension::SERVICE_AST_PROVIDER),
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'remove_unused_imports' ]]);
     }

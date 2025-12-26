@@ -2,7 +2,6 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
-use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
@@ -35,9 +34,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $truncatedSource = $this->truncateSource((string) $source, $byteOffset->toInt());
-
-        // gh-3001: this is potentially very inefficient
-        $sourceNodeFile = $this->parser->get(TextDocumentBuilder::create($source)->build());
+        $sourceNodeFile = $this->parser->get($source);
 
         $node = $this->findNodeForPhpdocAtPosition(
             $sourceNodeFile,

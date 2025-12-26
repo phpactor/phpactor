@@ -37,6 +37,7 @@ class CompletionExtension implements Extension
     public const PARAM_DEDUPE_MATCH_FQN = 'completion.dedupe_match_fqn';
     public const PARAM_LIMIT = 'completion.limit';
     public const PARAM_LABEL_FORMATTER = 'completion.label_formatter';
+    const LOGGER_CHANNEL = 'completion';
 
     public function configure(Resolver $schema): void
     {
@@ -87,7 +88,10 @@ class CompletionExtension implements Extension
             $mapped = [];
             /** @var Completor[] $completors */
             foreach ($completors as $type => $completors) {
-                $completors = new ChainCompletor($completors);
+                $completors = new ChainCompletor($completors, LoggingExtension::channelLogger(
+                    $container,
+                    self::LOGGER_CHANNEL
+                ));
                 if ($container->parameter(self::PARAM_DEDUPE)->bool()) {
                     $completors = new DedupeCompletor(
                         $completors,
@@ -95,8 +99,7 @@ class CompletionExtension implements Extension
                     );
                 }
 
-                /** @var int|null $limit */
-                $limit = $container->getParameter(self::PARAM_LIMIT);
+                $limit = $container->parameter(self::PARAM_LIMIT)->intOrNull();
                 if (is_int($limit)) {
                     $completors = new LimitingCompletor($completors, $limit);
                 }
@@ -156,7 +159,7 @@ class CompletionExtension implements Extension
             }
 
             return new ChainSignatureHelper(
-                LoggingExtension::channelLogger($container, 'CT'),
+                LoggingExtension::channelLogger($container, self::LOGGER_CHANNEL),
                 $helpers
             );
         });

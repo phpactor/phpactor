@@ -26,7 +26,7 @@ final class LanguageServerHighlightExtension implements Extension
 
             return new HighlightHandler(
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
-                new Highlighter($container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class)),
+                new Highlighter($container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class)),
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
     }
