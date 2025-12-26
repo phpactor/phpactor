@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseReflectionNavigatorTest extends IntegrationTestCase
 {
-    private Reflector $reflector;
+    private readonly Reflector $reflector;
 
     public function testNavigateToParent(): void
     {

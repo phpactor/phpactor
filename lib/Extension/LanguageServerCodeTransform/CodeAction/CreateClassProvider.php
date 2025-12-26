@@ -22,7 +22,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 {
     public const KIND = 'quickfix.create_class';
 
-    public function __construct(private Generators $generators)
+    public function __construct(private readonly Generators $generators)
     {
     }
 

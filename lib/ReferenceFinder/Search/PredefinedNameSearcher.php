@@ -10,7 +10,7 @@ class PredefinedNameSearcher implements NameSearcher
     /**
      * @param NameSearchResult[] $results
      */
-    public function __construct(private array $results)
+    public function __construct(private readonly array $results)
     {
     }
 

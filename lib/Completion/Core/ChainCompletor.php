@@ -11,7 +11,7 @@ class ChainCompletor implements Completor
     /**
      * @param Completor[] $completors
      */
-    public function __construct(private array $completors)
+    public function __construct(private readonly array $completors)
     {
     }
 

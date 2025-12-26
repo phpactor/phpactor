@@ -18,7 +18,7 @@ final class HookBootstrap
     /**
      * @param HookProvider[] $providers
      */
-    public function __construct(private array $providers)
+    public function __construct(private readonly array $providers)
     {
     }
 

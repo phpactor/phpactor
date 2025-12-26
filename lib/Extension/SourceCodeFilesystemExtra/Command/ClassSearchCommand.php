@@ -15,8 +15,8 @@ use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 class ClassSearchCommand extends Command
 {
     public function __construct(
-        private ClassSearch $search,
-        private DumperRegistry $dumperRegistry
+        private readonly ClassSearch $search,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

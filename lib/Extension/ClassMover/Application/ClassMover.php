@@ -19,10 +19,10 @@ use RuntimeException;
 class ClassMover
 {
     public function __construct(
-        private ClassFileNormalizer $classFileNormalizer,
-        private ClassMoverFacade $classMover,
-        private FilesystemRegistry $filesystemRegistry,
-        private PathFinder $pathFinder
+        private readonly ClassFileNormalizer $classFileNormalizer,
+        private readonly ClassMoverFacade $classMover,
+        private readonly FilesystemRegistry $filesystemRegistry,
+        private readonly PathFinder $pathFinder
     ) {
     }
 

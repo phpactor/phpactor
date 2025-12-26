@@ -5,10 +5,10 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 class TextInput implements Input
 {
     private function __construct(
-        private string $name,
-        private string $label,
-        private ?string $default = null,
-        private ?string $type = null
+        private readonly string $name,
+        private readonly string $label,
+        private readonly ?string $default = null,
+        private readonly ?string $type = null
     ) {
     }
 

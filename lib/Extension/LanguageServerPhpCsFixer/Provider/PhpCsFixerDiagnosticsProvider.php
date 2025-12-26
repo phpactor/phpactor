@@ -25,10 +25,10 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
     private array $ruleDescriptions = [];
 
     public function __construct(
-        private PhpCsFixerProcess $phpCsFixer,
-        private RangesForDiff $rangeForDiff,
-        private bool $showDiagnostics,
-        private LoggerInterface $logger,
+        private readonly PhpCsFixerProcess $phpCsFixer,
+        private readonly RangesForDiff $rangeForDiff,
+        private readonly bool $showDiagnostics,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Path;
 
 class PhpIndexerLister implements IndexLister
 {
-    public function __construct(private string $indexDirectory)
+    public function __construct(private readonly string $indexDirectory)
     {
     }
     public function list(): Generator

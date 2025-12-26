@@ -14,9 +14,9 @@ class PhpactorComposerSuggestor implements ChangeSuggestor
      * @param Closure(JsonConfig, ComposerInspector): Changes $suggestor
      */
     public function __construct(
-        private JsonConfig $phpactorConfig,
-        private ComposerInspector $composerInspector,
-        private Closure $suggestor,
+        private readonly JsonConfig $phpactorConfig,
+        private readonly ComposerInspector $composerInspector,
+        private readonly Closure $suggestor,
     ) {
     }
 

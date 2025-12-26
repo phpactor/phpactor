@@ -8,9 +8,9 @@ class SignatureHelp
      * @param SignatureInformation[] $signatures
      */
     public function __construct(
-        private array $signatures,
-        private ?int $activeSignature = null,
-        private ?int $activeParameter = null
+        private readonly array $signatures,
+        private readonly ?int $activeSignature = null,
+        private readonly ?int $activeParameter = null
     ) {
     }
 

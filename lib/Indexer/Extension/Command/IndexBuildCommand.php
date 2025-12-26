@@ -21,11 +21,11 @@ class IndexBuildCommand extends Command
     const OPT_RESET = 'reset';
     const OPT_WATCH = 'watch';
 
-    private MemoryUsage $usage;
+    private readonly MemoryUsage $usage;
 
     public function __construct(
-        private Indexer $indexer,
-        private Watcher $watcher
+        private readonly Indexer $indexer,
+        private readonly Watcher $watcher
     ) {
         parent::__construct();
         $this->usage = MemoryUsage::create();

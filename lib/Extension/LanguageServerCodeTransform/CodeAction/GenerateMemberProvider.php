@@ -23,7 +23,7 @@ class GenerateMemberProvider implements DiagnosticsProvider, CodeActionProvider
 {
     public const KIND = 'quickfix.generate_member';
 
-    public function __construct(private MissingMemberFinder $missingMethodFinder)
+    public function __construct(private readonly MissingMemberFinder $missingMethodFinder)
     {
     }
 

@@ -23,7 +23,7 @@ class TtlCache implements Cache
     /**
      * @var float $lifetime Lifetime in seconds
      */
-    public function __construct(private float $lifetime = 5.0)
+    public function __construct(private readonly float $lifetime = 5.0)
     {
     }
 

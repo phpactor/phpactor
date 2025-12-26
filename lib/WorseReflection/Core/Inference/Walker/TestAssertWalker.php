@@ -23,7 +23,7 @@ use RuntimeException;
 
 class TestAssertWalker implements Walker
 {
-    public function __construct(private TestCase $testCase)
+    public function __construct(private readonly TestCase $testCase)
     {
     }
 

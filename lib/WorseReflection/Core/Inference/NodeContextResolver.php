@@ -19,10 +19,10 @@ class NodeContextResolver
      * @param array<class-name,Resolver> $resolverMap
      */
     public function __construct(
-        private Reflector $reflector,
-        private DocBlockFactory $docblockFactory,
-        private LoggerInterface $logger,
-        private Cache $cache,
+        private readonly Reflector $reflector,
+        private readonly DocBlockFactory $docblockFactory,
+        private readonly LoggerInterface $logger,
+        private readonly Cache $cache,
         private array $resolverMap = []
     ) {
     }

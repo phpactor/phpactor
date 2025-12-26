@@ -20,8 +20,8 @@ class FileInfoPharExpandingIterator implements IteratorAggregate
      * @param list<string> $supportedExtensions
      */
     public function __construct(
-        private Iterator $innerIterator,
-        private array $supportedExtensions = ['php']
+        private readonly Iterator $innerIterator,
+        private readonly array $supportedExtensions = ['php']
     ) {
     }
 

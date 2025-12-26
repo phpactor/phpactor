@@ -7,8 +7,8 @@ use Phpactor\FilePathResolver\Expander;
 class SuffixExpanderDecorator implements Expander
 {
     public function __construct(
-        private Expander $innerExpander,
-        private string $suffix
+        private readonly Expander $innerExpander,
+        private readonly string $suffix
     ) {
     }
 

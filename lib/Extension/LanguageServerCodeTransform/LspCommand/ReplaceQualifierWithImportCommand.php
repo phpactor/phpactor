@@ -18,9 +18,9 @@ class ReplaceQualifierWithImportCommand implements Command
     public const NAME = 'replace_qualifier_with_import';
 
     public function __construct(
-        private ClientApi $clientApi,
-        private Workspace $workspace,
-        private ReplaceQualifierWithImport $replaceQualifierWithImport
+        private readonly ClientApi $clientApi,
+        private readonly Workspace $workspace,
+        private readonly ReplaceQualifierWithImport $replaceQualifierWithImport
     ) {
     }
 

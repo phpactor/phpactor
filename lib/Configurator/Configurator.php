@@ -15,8 +15,8 @@ class Configurator
      * @param list<ChangeApplicator> $applicators
      */
     public function __construct(
-        private array $suggestors,
-        private array $applicators
+        private readonly array $suggestors,
+        private readonly array $applicators
     ) {
     }
 

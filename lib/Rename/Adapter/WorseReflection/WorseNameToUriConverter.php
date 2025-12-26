@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseNameToUriConverter implements NameToUriConverter
 {
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
 

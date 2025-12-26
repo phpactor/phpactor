@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class Line
 {
-    private function __construct(private string $line)
+    private function __construct(private readonly string $line)
     {
     }
 

@@ -21,7 +21,7 @@ class RecordReferences implements IteratorAggregate
      * @param array<RecordReference> $references
      */
     public function __construct(
-        private FileRecord $file,
+        private readonly FileRecord $file,
         array $references
     ) {
         foreach ($references as $reference) {

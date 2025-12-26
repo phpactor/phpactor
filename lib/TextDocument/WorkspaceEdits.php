@@ -15,7 +15,7 @@ final class WorkspaceEdits implements IteratorAggregate, Countable
     /**
      * @var TextDocumentEdits[]
      */
-    private array $documentEdits;
+    private readonly array $documentEdits;
 
     public function __construct(TextDocumentEdits ...$documentEdits)
     {

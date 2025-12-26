@@ -14,9 +14,9 @@ final class FunctionCallContext extends NodeContext implements CallContext
 {
     public function __construct(
         Symbol $symbol,
-        private ByteOffsetRange $byteOffsetRange,
-        private ReflectionFunction $function,
-        private FunctionArguments $arguments,
+        private readonly ByteOffsetRange $byteOffsetRange,
+        private readonly ReflectionFunction $function,
+        private readonly FunctionArguments $arguments,
     ) {
         parent::__construct(
             $symbol,

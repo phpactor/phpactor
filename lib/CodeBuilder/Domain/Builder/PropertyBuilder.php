@@ -19,7 +19,7 @@ class PropertyBuilder extends AbstractBuilder implements NamedBuilder
     private ?Type $docType = null;
 
     public function __construct(
-        private ClassLikeBuilder $parent,
+        private readonly ClassLikeBuilder $parent,
         protected string $name
     ) {
     }

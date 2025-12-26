@@ -19,8 +19,8 @@ class ChainTolerantCompletor implements Completor
      * @param TolerantCompletor[] $tolerantCompletors
      */
     public function __construct(
-        private array $tolerantCompletors,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly array $tolerantCompletors,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

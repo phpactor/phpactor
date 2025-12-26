@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class FunctionReturnTypeResolver
 {
-    public function __construct(private ReflectionFunction $function)
+    public function __construct(private readonly ReflectionFunction $function)
     {
     }
 

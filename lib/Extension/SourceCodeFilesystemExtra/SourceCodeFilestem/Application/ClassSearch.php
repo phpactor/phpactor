@@ -12,9 +12,9 @@ use SplFileInfo;
 class ClassSearch
 {
     public function __construct(
-        private FilesystemRegistry $filesystemRegistry,
-        private FileToClass $fileToClass,
-        private Reflector $reflector
+        private readonly FilesystemRegistry $filesystemRegistry,
+        private readonly FileToClass $fileToClass,
+        private readonly Reflector $reflector
     ) {
     }
 

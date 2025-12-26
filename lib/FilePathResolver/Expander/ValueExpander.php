@@ -7,8 +7,8 @@ use Phpactor\FilePathResolver\Expander;
 class ValueExpander implements Expander
 {
     public function __construct(
-        private string $tokenName,
-        private string $value
+        private readonly string $tokenName,
+        private readonly string $value
     ) {
     }
 

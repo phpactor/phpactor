@@ -9,7 +9,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class Complete
 {
-    public function __construct(private TypedCompletorRegistry $registry)
+    public function __construct(private readonly TypedCompletorRegistry $registry)
     {
     }
 

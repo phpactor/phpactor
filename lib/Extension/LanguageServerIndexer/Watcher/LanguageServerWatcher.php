@@ -29,7 +29,7 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
 
     private bool $running = false;
 
-    public function __construct(private ?ClientCapabilities $clientCapabilities)
+    public function __construct(private readonly ?ClientCapabilities $clientCapabilities)
     {
         $this->deferred = new Deferred();
     }

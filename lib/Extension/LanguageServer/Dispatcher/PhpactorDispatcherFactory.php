@@ -22,7 +22,7 @@ use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 
 class PhpactorDispatcherFactory implements DispatcherFactory
 {
-    public function __construct(private Container $container)
+    public function __construct(private readonly Container $container)
     {
     }
 

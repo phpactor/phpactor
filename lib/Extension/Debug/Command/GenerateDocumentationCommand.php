@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateDocumentationCommand extends Command
 {
-    public function __construct(private DocumentorRegistry $documentorRegistry)
+    public function __construct(private readonly DocumentorRegistry $documentorRegistry)
     {
         parent::__construct();
     }

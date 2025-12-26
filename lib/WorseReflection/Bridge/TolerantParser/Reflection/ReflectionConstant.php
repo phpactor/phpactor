@@ -17,13 +17,13 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionConstant extends AbstractReflectionClassMember implements CoreReflectionConstant
 {
-    private DeclaredMemberTypeResolver $resolver;
+    private readonly DeclaredMemberTypeResolver $resolver;
 
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private ReflectionClassLike $class,
-        private ClassConstDeclaration $declaration,
-        private ConstElement $node
+        private readonly ServiceLocator $serviceLocator,
+        private readonly ReflectionClassLike $class,
+        private readonly ClassConstDeclaration $declaration,
+        private readonly ConstElement $node
     ) {
         $this->resolver = new DeclaredMemberTypeResolver($serviceLocator->reflector());
     }

@@ -8,9 +8,9 @@ use Psr\Log\LoggerInterface;
 class LoggingPathResolver implements PathResolver
 {
     public function __construct(
-        private PathResolver $pathResolver,
-        private LoggerInterface $logger,
-        private string $level = LogLevel::DEBUG
+        private readonly PathResolver $pathResolver,
+        private readonly LoggerInterface $logger,
+        private readonly string $level = LogLevel::DEBUG
     ) {
     }
 

@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class InterfacePrototype extends ClassLikePrototype
 {
-    private ExtendsInterfaces $extendsInterfaces;
+    private readonly ExtendsInterfaces $extendsInterfaces;
 
     public function __construct(
         string $name,

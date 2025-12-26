@@ -26,9 +26,9 @@ use Symfony\Component\Filesystem\Path;
 class IncludeWalker implements Walker
 {
     public function __construct(
-        private LoggerInterface $logger,
-        private FrameResolver $resolver,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly LoggerInterface $logger,
+        private readonly FrameResolver $resolver,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

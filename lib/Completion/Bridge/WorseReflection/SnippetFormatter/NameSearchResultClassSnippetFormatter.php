@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Reflector;
 
 class NameSearchResultClassSnippetFormatter implements Formatter
 {
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
 

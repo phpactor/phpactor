@@ -5,9 +5,9 @@ namespace Phpactor\Completion\Bridge\ObjectRenderer;
 class ItemDocumentation
 {
     public function __construct(
-        private string $name,
-        private string $docs,
-        private object $object
+        private readonly string $name,
+        private readonly string $docs,
+        private readonly object $object
     ) {
     }
 

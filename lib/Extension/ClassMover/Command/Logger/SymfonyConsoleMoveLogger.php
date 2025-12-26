@@ -10,7 +10,7 @@ use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 
 class SymfonyConsoleMoveLogger implements ClassMoverLogger
 {
-    public function __construct(private OutputInterface $output)
+    public function __construct(private readonly OutputInterface $output)
     {
     }
 

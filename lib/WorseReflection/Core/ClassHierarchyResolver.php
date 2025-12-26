@@ -19,7 +19,7 @@ final class ClassHierarchyResolver
      * @param int-mask-of<self::INCLUDE_*> $mode
      */
     public function __construct(
-        private int $mode = self::INCLUDE_TRAIT | self::INCLUDE_INTERFACE | self::INCLUDE_PARENT | self::INCLUDE_MIXIN
+        private readonly int $mode = self::INCLUDE_TRAIT | self::INCLUDE_INTERFACE | self::INCLUDE_PARENT | self::INCLUDE_MIXIN
     ) {
     }
 

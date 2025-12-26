@@ -31,7 +31,7 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
     protected MethodBodyBuilder $bodyBuilder;
 
     public function __construct(
-        private ClassLikeBuilder $parent,
+        private readonly ClassLikeBuilder $parent,
         protected string $name
     ) {
         $this->bodyBuilder = new MethodBodyBuilder($this);

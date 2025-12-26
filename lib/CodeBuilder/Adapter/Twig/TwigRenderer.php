@@ -13,11 +13,11 @@ use Twig\Error\LoaderError;
 
 final class TwigRenderer implements Renderer
 {
-    private Environment $twig;
+    private readonly Environment $twig;
 
     public function __construct(
         ?Environment $twig = null,
-        private TemplateNameResolver $templateNameResolver = new ClassShortNameResolver(),
+        private readonly TemplateNameResolver $templateNameResolver = new ClassShortNameResolver(),
     ) {
         $this->twig = $twig ?: $this->createTwig();
     }

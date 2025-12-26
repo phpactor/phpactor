@@ -31,7 +31,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class TolerantClassFinder implements ClassFinder
 {
-    public function __construct(private AstProvider $parser = new TolerantAstProvider())
+    public function __construct(private readonly AstProvider $parser = new TolerantAstProvider())
     {
     }
 

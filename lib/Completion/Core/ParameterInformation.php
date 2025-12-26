@@ -10,8 +10,8 @@ class ParameterInformation
      *      in the UI but can be omitted.
      */
     public function __construct(
-        private string $label,
-        private ?string $documentation = null
+        private readonly string $label,
+        private readonly ?string $documentation = null
     ) {
     }
 

@@ -20,7 +20,7 @@ class PlainDocblock implements DocBlock
     private const WHITESPACE = 4;
     private const WS_OR_TERMINATE = 5;
 
-    private string $raw;
+    private readonly string $raw;
 
     public function __construct(string $raw = '')
     {

@@ -11,7 +11,7 @@ class FileReferencesResponse implements Response
     /**
     * @param array<FileReferences> $references
     */
-    public function __construct(private array $references)
+    public function __construct(private readonly array $references)
     {
     }
 

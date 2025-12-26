@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core;
 
 final class CacheEntry
 {
-    public function __construct(private mixed $value)
+    public function __construct(private readonly mixed $value)
     {
     }
 

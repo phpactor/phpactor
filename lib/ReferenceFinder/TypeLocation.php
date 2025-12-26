@@ -8,8 +8,8 @@ use Phpactor\WorseReflection\Core\Type;
 class TypeLocation
 {
     public function __construct(
-        private Type $type,
-        private Location $location
+        private readonly Type $type,
+        private readonly Location $location
     ) {
     }
 

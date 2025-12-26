@@ -7,9 +7,9 @@ use Symfony\Component\Filesystem\Path;
 
 class CacheClear
 {
-    private string $cachePath;
+    private readonly string $cachePath;
 
-    private Filesystem $filesystem;
+    private readonly Filesystem $filesystem;
 
     public function __construct(string $cachePath)
     {

@@ -6,7 +6,7 @@ final class EnumPrototype extends ClassLikePrototype
 {
     public function __construct(
         string $name,
-        private Cases $cases,
+        private readonly Cases $cases,
         ?Methods $methods = null,
         ?UpdatePolicy $updatePolicy = null
     ) {

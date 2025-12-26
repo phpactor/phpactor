@@ -15,9 +15,9 @@ use InvalidArgumentException;
 class RpcCommand extends Command
 {
     public function __construct(
-        private RequestHandler $handler,
-        private string $replayPath,
-        private bool $storeReplay = false,
+        private readonly RequestHandler $handler,
+        private readonly string $replayPath,
+        private readonly bool $storeReplay = false,
         private $inputStream = STDIN
     ) {
         parent::__construct();

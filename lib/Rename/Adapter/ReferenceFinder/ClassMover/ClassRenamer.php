@@ -32,12 +32,12 @@ use RuntimeException;
 final class ClassRenamer implements Renamer
 {
     public function __construct(
-        private NameToUriConverter $oldNameToUriConverter,
-        private NameToUriConverter $newNameToUriConverter,
-        private ReferenceFinder $referenceFinder,
-        private TextDocumentLocator $locator,
-        private AstProvider $parser,
-        private ClassMover $classMover
+        private readonly NameToUriConverter $oldNameToUriConverter,
+        private readonly NameToUriConverter $newNameToUriConverter,
+        private readonly ReferenceFinder $referenceFinder,
+        private readonly TextDocumentLocator $locator,
+        private readonly AstProvider $parser,
+        private readonly ClassMover $classMover
     ) {
     }
 

@@ -8,8 +8,8 @@ use Psr\Log\LoggerInterface;
 class ChannelLogger extends AbstractLogger
 {
     public function __construct(
-        private string $name,
-        private LoggerInterface $innerLogger
+        private readonly string $name,
+        private readonly LoggerInterface $innerLogger
     ) {
     }
 

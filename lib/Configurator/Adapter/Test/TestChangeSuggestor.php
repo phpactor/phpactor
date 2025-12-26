@@ -11,7 +11,7 @@ class TestChangeSuggestor implements ChangeSuggestor
     /**
      * @param Closure(): Changes $closure
      */
-    public function __construct(private Closure $closure)
+    public function __construct(private readonly Closure $closure)
     {
     }
 

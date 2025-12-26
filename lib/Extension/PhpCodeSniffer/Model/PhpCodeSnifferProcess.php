@@ -23,11 +23,11 @@ class PhpCodeSnifferProcess
      * @param list<string> $additionalArgs
      */
     public function __construct(
-        private string $binPath,
-        private LoggerInterface $logger,
-        private array $env = [],
-        private array $additionalArgs = [],
-        private ?string $cwd = null
+        private readonly string $binPath,
+        private readonly LoggerInterface $logger,
+        private readonly array $env = [],
+        private readonly array $additionalArgs = [],
+        private readonly ?string $cwd = null
     ) {
     }
 

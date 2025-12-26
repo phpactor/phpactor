@@ -34,7 +34,7 @@ use Phpactor\LanguageServerProtocol\SymbolKind;
 
 class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
 {
-    public function __construct(private AstProvider $parser)
+    public function __construct(private readonly AstProvider $parser)
     {
     }
 

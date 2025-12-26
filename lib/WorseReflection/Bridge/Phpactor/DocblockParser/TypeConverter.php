@@ -71,8 +71,8 @@ use Phpactor\WorseReflection\Reflector;
 class TypeConverter
 {
     public function __construct(
-        private Reflector $reflector,
-        private ?ReflectionScope $scope
+        private readonly Reflector $reflector,
+        private readonly ?ReflectionScope $scope
     ) {
     }
 

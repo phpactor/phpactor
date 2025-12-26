@@ -14,8 +14,8 @@ use Throwable;
 final class TolerantCodeActionProvider implements CodeActionProvider
 {
     public function __construct(
-        private CodeActionProvider $provider,
-        private ClientApi $client
+        private readonly CodeActionProvider $provider,
+        private readonly ClientApi $client
     ) {
     }
 

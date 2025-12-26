@@ -10,7 +10,7 @@ use Exception;
 
 class ExceptionCatchingHandler implements RequestHandler
 {
-    public function __construct(private RequestHandler $innerHandler)
+    public function __construct(private readonly RequestHandler $innerHandler)
     {
     }
 

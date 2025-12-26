@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 final class WorseContextClassResolver implements ContextClassResolver
 {
-    public function __construct(private ClassReflector $reflector)
+    public function __construct(private readonly ClassReflector $reflector)
     {
     }
 

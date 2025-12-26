@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 
 class IsClassType extends Criteria
 {
-    public function __construct(private ?string $type)
+    public function __construct(private readonly ?string $type)
     {
     }
 

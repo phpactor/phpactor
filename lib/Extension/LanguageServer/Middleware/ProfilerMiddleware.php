@@ -14,8 +14,8 @@ use function Amp\call;
 class ProfilerMiddleware implements Middleware
 {
     public function __construct(
-        private LoggerInterface $logger,
-        private bool $trace = false
+        private readonly LoggerInterface $logger,
+        private readonly bool $trace = false
     ) {
     }
 

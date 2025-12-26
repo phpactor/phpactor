@@ -7,7 +7,7 @@ use Phpactor\DocblockParser\Ast\Token;
 
 class NullValue extends ValueNode
 {
-    public function __construct(private Token $null)
+    public function __construct(private readonly Token $null)
     {
     }
 

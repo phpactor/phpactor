@@ -11,8 +11,8 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 class BlackfireHandler implements Handler
 {
     public function __construct(
-        private BlackfireProfiler $profiler,
-        private ClientApi $client
+        private readonly BlackfireProfiler $profiler,
+        private readonly ClientApi $client
     ) {
     }
 

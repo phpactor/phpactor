@@ -53,10 +53,10 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
 {
 
     public function __construct(
-        private PhpCodeSnifferProcess $phpCodeSniffer,
-        private bool $showDiagnostics,
-        private RangesForDiff $rangeForDiff,
-        private LoggerInterface $logger,
+        private readonly PhpCodeSnifferProcess $phpCodeSniffer,
+        private readonly bool $showDiagnostics,
+        private readonly RangesForDiff $rangeForDiff,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

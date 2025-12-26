@@ -10,8 +10,8 @@ use RuntimeException;
 class RpcCommandDocumentor implements Documentor
 {
     public function __construct(
-        private HandlerRegistry $handlerRegistry,
-        private DefinitionDocumentor $definitionDocumentor
+        private readonly HandlerRegistry $handlerRegistry,
+        private readonly DefinitionDocumentor $definitionDocumentor
     ) {
     }
 

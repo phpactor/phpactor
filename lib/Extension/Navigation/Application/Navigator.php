@@ -11,10 +11,10 @@ class Navigator
 {
     /** @param array<string, string> $autoCreateConfig */
     public function __construct(
-        private NavigatorInterface $navigator,
-        private ClassNew $classNew,
+        private readonly NavigatorInterface $navigator,
+        private readonly ClassNew $classNew,
         private array $autoCreateConfig,
-        private string $absolutePath
+        private readonly string $absolutePath
     ) {
     }
 

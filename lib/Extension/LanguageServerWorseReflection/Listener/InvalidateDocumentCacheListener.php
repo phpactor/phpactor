@@ -11,7 +11,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 class InvalidateDocumentCacheListener implements ListenerProviderInterface
 {
-    public function __construct(private CacheForDocument $cache)
+    public function __construct(private readonly CacheForDocument $cache)
     {
     }
 

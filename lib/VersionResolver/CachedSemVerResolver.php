@@ -12,8 +12,8 @@ class CachedSemVerResolver implements SemVersionResolver
     private ?SemVersion $version;
 
     public function __construct(
-        private SemVersionResolver $resolver,
-        private LoggerInterface $logger,
+        private readonly SemVersionResolver $resolver,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

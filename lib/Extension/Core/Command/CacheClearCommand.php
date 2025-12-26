@@ -9,7 +9,7 @@ use Phpactor\Extension\Core\Application\CacheClear;
 
 class CacheClearCommand extends Command
 {
-    public function __construct(private CacheClear $cache)
+    public function __construct(private readonly CacheClear $cache)
     {
         parent::__construct();
     }

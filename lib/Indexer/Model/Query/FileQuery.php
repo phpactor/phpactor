@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\Record\FileRecord;
 
 class FileQuery implements IndexQuery
 {
-    public function __construct(private Index $index)
+    public function __construct(private readonly Index $index)
     {
     }
 

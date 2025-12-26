@@ -5,7 +5,7 @@ namespace Phpactor\Extension\Rpc\Response;
 class ReturnOption
 {
     private function __construct(
-        private string $name,
+        private readonly string $name,
         private $value
     ) {
     }

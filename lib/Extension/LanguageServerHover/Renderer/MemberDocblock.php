@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 
 class MemberDocblock
 {
-    public function __construct(private ReflectionMember $member)
+    public function __construct(private readonly ReflectionMember $member)
     {
     }
 

@@ -9,7 +9,7 @@ class ChainResolver implements PhpVersionResolver
     /**
      * @var PhpVersionResolver[]
      */
-    private array $versionResolvers;
+    private readonly array $versionResolvers;
 
     public function __construct(PhpVersionResolver ...$versionResolvers)
     {

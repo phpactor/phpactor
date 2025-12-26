@@ -10,8 +10,8 @@ use RuntimeException;
 final class SourceCode implements TextDocument
 {
     private function __construct(
-        private string $code,
-        private TextDocumentUri $uri
+        private readonly string $code,
+        private readonly TextDocumentUri $uri
     ) {
     }
 

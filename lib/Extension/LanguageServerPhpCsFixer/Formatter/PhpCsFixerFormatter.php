@@ -12,7 +12,7 @@ use function Amp\call;
 class PhpCsFixerFormatter implements Formatter
 {
     public function __construct(
-        private PhpCsFixerProcess $phpCsFixer
+        private readonly PhpCsFixerProcess $phpCsFixer
     ) {
     }
 

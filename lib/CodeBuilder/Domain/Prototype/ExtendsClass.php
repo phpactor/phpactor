@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class ExtendsClass extends Prototype
 {
-    public function __construct(private Type $class)
+    public function __construct(private readonly Type $class)
     {
         parent::__construct();
     }

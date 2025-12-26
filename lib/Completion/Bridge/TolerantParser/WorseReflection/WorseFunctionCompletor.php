@@ -21,9 +21,9 @@ use Phpactor\WorseReflection\Reflector;
 class WorseFunctionCompletor implements TolerantCompletor
 {
     public function __construct(
-        private Reflector $reflector,
-        private ObjectFormatter $formatter,
-        private ObjectFormatter $snippetFormatter
+        private readonly Reflector $reflector,
+        private readonly ObjectFormatter $formatter,
+        private readonly ObjectFormatter $snippetFormatter
     ) {
     }
 

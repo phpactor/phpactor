@@ -25,8 +25,8 @@ use Phpactor\LanguageServerProtocol\Range;
 class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private Workspace $workspace,
-        private AstProvider $parser,
+        private readonly Workspace $workspace,
+        private readonly AstProvider $parser,
     ) {
     }
 

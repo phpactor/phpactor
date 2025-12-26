@@ -29,8 +29,8 @@ use Phpactor\WorseReflection\Reflector;
 class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiable
 {
     public function __construct(
-        private TolerantCompletor $inner,
-        private Reflector $reflector
+        private readonly TolerantCompletor $inner,
+        private readonly Reflector $reflector
     ) {
     }
 

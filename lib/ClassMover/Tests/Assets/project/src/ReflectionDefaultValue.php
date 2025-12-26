@@ -6,7 +6,7 @@ final class ReflectionDefaultValue
 {
     private bool $undefined = false;
 
-    private function __construct(private mixed $value = null)
+    private function __construct(private readonly mixed $value = null)
     {
     }
 

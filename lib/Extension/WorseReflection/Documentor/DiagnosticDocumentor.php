@@ -20,8 +20,8 @@ class DiagnosticDocumentor implements Documentor
      * @param array<string,mixed> $providerIds
      */
     public function __construct(
-        private Container $container,
-        private array $providerIds
+        private readonly Container $container,
+        private readonly array $providerIds
     ) {
     }
 

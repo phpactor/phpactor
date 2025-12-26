@@ -5,8 +5,8 @@ namespace Phpactor\ClassMover\Domain\Reference;
 class Position
 {
     private function __construct(
-        private int $start,
-        private int $end
+        private readonly int $start,
+        private readonly int $end
     ) {
     }
 

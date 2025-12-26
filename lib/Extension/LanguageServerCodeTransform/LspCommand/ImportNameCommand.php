@@ -15,9 +15,9 @@ class ImportNameCommand implements Command
     public const NAME = 'name_import';
 
     public function __construct(
-        private NameImporter $nameImporter,
-        private Workspace $workspace,
-        private ClientApi $client
+        private readonly NameImporter $nameImporter,
+        private readonly Workspace $workspace,
+        private readonly ClientApi $client
     ) {
     }
 

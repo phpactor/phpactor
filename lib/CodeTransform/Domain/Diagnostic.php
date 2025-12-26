@@ -12,9 +12,9 @@ class Diagnostic
     public const HINT = 4;
 
     public function __construct(
-        private ByteOffsetRange $range,
-        private string $message,
-        private int $severity
+        private readonly ByteOffsetRange $range,
+        private readonly string $message,
+        private readonly int $severity
     ) {
     }
 

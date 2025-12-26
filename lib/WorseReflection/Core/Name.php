@@ -15,7 +15,7 @@ class Name
     /** @param array<string> $parts */
     final public function __construct(
         protected array $parts,
-        private bool $wasFullyQualified
+        private readonly bool $wasFullyQualified
     ) {
     }
 

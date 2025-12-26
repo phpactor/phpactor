@@ -11,9 +11,9 @@ class MemberReference
      * @param MemberRecord::TYPE_* $type
      */
     public function __construct(
-        private string $type,
-        private ?FullyQualifiedName $name,
-        private ?string $memberName
+        private readonly string $type,
+        private readonly ?FullyQualifiedName $name,
+        private readonly ?string $memberName
     ) {
     }
 

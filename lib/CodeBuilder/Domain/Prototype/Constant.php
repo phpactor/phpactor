@@ -5,9 +5,9 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 class Constant extends Prototype
 {
     public function __construct(
-        private string $name,
-        private Value $value,
-        private ?Visibility $visibility = null,
+        private readonly string $name,
+        private readonly Value $value,
+        private readonly ?Visibility $visibility = null,
         ?UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);

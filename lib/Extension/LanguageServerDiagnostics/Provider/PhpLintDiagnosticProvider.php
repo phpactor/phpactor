@@ -14,8 +14,8 @@ use function Amp\call;
 class PhpLintDiagnosticProvider implements DiagnosticsProvider
 {
     public function __construct(
-        private PhpLinter $linter,
-        private TextDocumentLocator $locator
+        private readonly PhpLinter $linter,
+        private readonly TextDocumentLocator $locator
     ) {
     }
 

@@ -26,13 +26,13 @@ class DebugHandler implements Handler
      * @param StatusProvider[] $statusProviders
      */
     public function __construct(
-        private Container $container,
-        private ClientApi $client,
-        private Workspace $workspace,
-        private ServerStats $stats,
-        private ServiceManager $serviceManager,
-        private DiagnosticsProvider $diagnosticProvider,
-        private array $statusProviders
+        private readonly Container $container,
+        private readonly ClientApi $client,
+        private readonly Workspace $workspace,
+        private readonly ServerStats $stats,
+        private readonly ServiceManager $serviceManager,
+        private readonly DiagnosticsProvider $diagnosticProvider,
+        private readonly array $statusProviders
     ) {
     }
 

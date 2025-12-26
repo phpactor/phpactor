@@ -11,7 +11,7 @@ class DocumentorRegistry
      * @param array<string> $documentors
      */
     public function __construct(
-        private Container $container,
+        private readonly Container $container,
         private array $documentors
     ) {
     }

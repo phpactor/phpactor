@@ -17,11 +17,11 @@ use Phpactor\WorseReflection\Reflector;
 class ClassMemberReferences
 {
     public function __construct(
-        private ClassFileNormalizer $classFileNormalizer,
-        private MemberFinder $memberFinder,
-        private MemberReplacer $memberReplacer,
-        private FilesystemRegistry $filesystemRegistry,
-        private Reflector $reflector
+        private readonly ClassFileNormalizer $classFileNormalizer,
+        private readonly MemberFinder $memberFinder,
+        private readonly MemberReplacer $memberReplacer,
+        private readonly FilesystemRegistry $filesystemRegistry,
+        private readonly Reflector $reflector
     ) {
     }
 

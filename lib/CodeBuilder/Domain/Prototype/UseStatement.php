@@ -10,9 +10,9 @@ class UseStatement
     const TYPE_FUNCTION = 'function';
 
     public function __construct(
-        private Type $className,
-        private ?string $alias = null,
-        private ?string $type = self::TYPE_CLASS
+        private readonly Type $className,
+        private readonly ?string $alias = null,
+        private readonly ?string $type = self::TYPE_CLASS
     ) {
         if (!in_array($type, [ self::TYPE_CLASS, self::TYPE_FUNCTION ])) {
             throw new RuntimeException(sprintf(

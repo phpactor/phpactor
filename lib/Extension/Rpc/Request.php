@@ -10,8 +10,8 @@ class Request
     const KEY_PARAMETERS = 'parameters';
 
     private function __construct(
-        private string $name,
-        private array $parameters
+        private readonly string $name,
+        private readonly array $parameters
     ) {
     }
 

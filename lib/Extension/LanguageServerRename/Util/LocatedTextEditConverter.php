@@ -15,8 +15,8 @@ use Phpactor\TextDocument\TextDocumentLocator;
 final class LocatedTextEditConverter
 {
     public function __construct(
-        private Workspace $workspace,
-        private TextDocumentLocator $locator
+        private readonly Workspace $workspace,
+        private readonly TextDocumentLocator $locator
     ) {
     }
 

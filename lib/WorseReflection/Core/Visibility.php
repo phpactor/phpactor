@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 final class Visibility
 {
     private function __construct(
-        private string $visibility
+        private readonly string $visibility
     ) {
     }
 

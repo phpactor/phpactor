@@ -15,8 +15,8 @@ use function Amp\call;
 class ProfilingCodeActionProvider implements CodeActionProvider
 {
     public function __construct(
-        private CodeActionProvider $innerProvider,
-        private LoggerInterface $logger
+        private readonly CodeActionProvider $innerProvider,
+        private readonly LoggerInterface $logger
     ) {
     }
 

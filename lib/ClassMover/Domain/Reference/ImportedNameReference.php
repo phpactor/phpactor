@@ -9,8 +9,8 @@ final class ImportedNameReference
     private bool $exists;
 
     private function __construct(
-        private ?Position $position = null,
-        private ?ImportedName $importedName = null
+        private readonly ?Position $position = null,
+        private readonly ?ImportedName $importedName = null
     ) {
     }
 

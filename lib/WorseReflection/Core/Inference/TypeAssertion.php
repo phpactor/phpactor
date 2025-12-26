@@ -12,11 +12,11 @@ final class TypeAssertion
     const VARIABLE_TYPE_PROPERTY = 'property';
     const VARIABLE_TYPE_VARIABLE = 'variable';
 
-    private string $name;
+    private readonly string $name;
 
-    private Closure $true;
+    private readonly Closure $true;
 
-    private Closure $false;
+    private readonly Closure $false;
 
     private bool $polarity = true;
 
@@ -24,12 +24,12 @@ final class TypeAssertion
      * @param self::VARIABLE_TYPE_* $variableType
      */
     private function __construct(
-        private string $variableType,
+        private readonly string $variableType,
         string $name,
-        private int $offset,
+        private readonly int $offset,
         Closure $true,
         Closure $false,
-        private ?Type $classType = null
+        private readonly ?Type $classType = null
     ) {
         $this->name = ltrim($name, '$');
         $this->true = $true;

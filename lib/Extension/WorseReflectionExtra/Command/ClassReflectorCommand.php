@@ -13,8 +13,8 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class ClassReflectorCommand extends Command
 {
     public function __construct(
-        private ClassReflector $reflector,
-        private DumperRegistry $dumperRegistry
+        private readonly ClassReflector $reflector,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

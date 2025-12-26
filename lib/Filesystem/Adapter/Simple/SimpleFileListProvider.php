@@ -13,8 +13,8 @@ use RecursiveIteratorIterator;
 final class SimpleFileListProvider implements FileListProvider
 {
     public function __construct(
-        private FilePath $path,
-        private bool $followSymlinks = false
+        private readonly FilePath $path,
+        private readonly bool $followSymlinks = false
     ) {
     }
 

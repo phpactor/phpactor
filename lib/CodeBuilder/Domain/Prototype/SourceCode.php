@@ -4,17 +4,17 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class SourceCode extends Prototype
 {
-    private QualifiedName $namespace;
+    private readonly QualifiedName $namespace;
 
-    private UseStatements $useStatements;
+    private readonly UseStatements $useStatements;
 
-    private Classes $classes;
+    private readonly Classes $classes;
 
-    private Interfaces $interfaces;
+    private readonly Interfaces $interfaces;
 
-    private Traits $traits;
+    private readonly Traits $traits;
 
-    private Enums $enums;
+    private readonly Enums $enums;
 
     public function __construct(
         ?QualifiedName $namespace = null,

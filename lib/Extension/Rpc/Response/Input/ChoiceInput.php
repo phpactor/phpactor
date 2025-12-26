@@ -5,11 +5,11 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 class ChoiceInput implements Input
 {
     private function __construct(
-        private string $name,
-        private string $label,
-        private array $choices,
-        private ?string $default = null,
-        private array $keyMap = []
+        private readonly string $name,
+        private readonly string $label,
+        private readonly array $choices,
+        private readonly ?string $default = null,
+        private readonly array $keyMap = []
     ) {
     }
 

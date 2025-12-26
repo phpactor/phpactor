@@ -27,9 +27,9 @@ class AddMissingProperties implements Transformer
     private const LENGTH_OF_THIS_PREFIX = 7;
 
     public function __construct(
-        private Reflector $reflector,
-        private Updater $updater,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly Reflector $reflector,
+        private readonly Updater $updater,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

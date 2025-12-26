@@ -17,10 +17,10 @@ use Psr\Log\LoggerInterface;
 class FormatCommand implements Command
 {
     public function __construct(
-        private PhpCodeSnifferProcess $phpCodeSniffer,
-        private ClientApi $clientApi,
-        private Workspace $workspace,
-        private LoggerInterface $logger
+        private readonly PhpCodeSnifferProcess $phpCodeSniffer,
+        private readonly ClientApi $clientApi,
+        private readonly Workspace $workspace,
+        private readonly LoggerInterface $logger
     ) {
     }
 

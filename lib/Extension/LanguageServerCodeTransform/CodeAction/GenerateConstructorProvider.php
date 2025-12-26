@@ -20,8 +20,8 @@ class GenerateConstructorProvider implements CodeActionProvider
     const KIND = CodeActionKind::REFACTOR;
 
     public function __construct(
-        private GenerateConstructor $generateConstructor,
-        private WorkspaceEditConverter $converter
+        private readonly GenerateConstructor $generateConstructor,
+        private readonly WorkspaceEditConverter $converter
     ) {
     }
 

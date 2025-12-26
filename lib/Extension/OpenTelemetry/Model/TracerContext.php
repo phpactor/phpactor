@@ -13,9 +13,9 @@ use RuntimeException;
 class TracerContext
 {
     public function __construct(
-        private TracerInterface $tracer,
-        private ContextInterface $context,
-        private ContextStorageInterface $storage,
+        private readonly TracerInterface $tracer,
+        private readonly ContextInterface $context,
+        private readonly ContextStorageInterface $storage,
     ) {
     }
 

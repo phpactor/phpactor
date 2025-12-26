@@ -14,8 +14,8 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class OffsetInfoCommand extends Command
 {
     public function __construct(
-        private OffsetInfo $infoForOffset,
-        private DumperRegistry $dumperRegistry
+        private readonly OffsetInfo $infoForOffset,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

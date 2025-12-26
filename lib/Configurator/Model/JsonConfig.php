@@ -10,7 +10,7 @@ class JsonConfig
 
     private stdClass $object;
 
-    private function __construct(private string $path)
+    private function __construct(private readonly string $path)
     {
         $this->object = new stdClass();
     }

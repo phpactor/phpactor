@@ -16,9 +16,9 @@ class UnresolvableNameDiagnostic implements Diagnostic
      * @param self::TYPE_* $type
      */
     private function __construct(
-        private ByteOffsetRange $range,
-        private string $type,
-        private Name $name
+        private readonly ByteOffsetRange $range,
+        private readonly string $type,
+        private readonly Name $name
     ) {
     }
 

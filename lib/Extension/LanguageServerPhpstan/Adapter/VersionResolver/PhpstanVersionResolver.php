@@ -10,7 +10,7 @@ use function Amp\call;
 
 class PhpstanVersionResolver implements SemVersionResolver
 {
-    public function __construct(private PhpstanProcess $process)
+    public function __construct(private readonly PhpstanProcess $process)
     {
     }
 

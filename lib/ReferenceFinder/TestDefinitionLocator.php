@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Type;
 
 class TestDefinitionLocator implements DefinitionLocator
 {
-    public function __construct(private ?TypeLocations $location)
+    public function __construct(private readonly ?TypeLocations $location)
     {
     }
 

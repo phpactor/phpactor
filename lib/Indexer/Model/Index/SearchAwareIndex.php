@@ -10,8 +10,8 @@ use SplFileInfo;
 class SearchAwareIndex implements Index
 {
     public function __construct(
-        private Index $innerIndex,
-        private SearchIndex $search
+        private readonly Index $innerIndex,
+        private readonly SearchIndex $search
     ) {
     }
 

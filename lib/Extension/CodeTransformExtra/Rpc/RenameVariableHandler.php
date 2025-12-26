@@ -21,7 +21,7 @@ class RenameVariableHandler extends AbstractHandler
     const INPUT_LABEL = 'New name: ';
     const PARAM_SCOPE = 'scope';
 
-    public function __construct(private RenameVariable $renameVariable)
+    public function __construct(private readonly RenameVariable $renameVariable)
     {
     }
 

@@ -11,10 +11,10 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 class DocblockIncorrectClassGenericDiagnostic implements Diagnostic
 {
     public function __construct(
-        private ByteOffsetRange $range,
-        private Type $givenType,
-        private GenericClassType $correctType,
-        private string $tagName,
+        private readonly ByteOffsetRange $range,
+        private readonly Type $givenType,
+        private readonly GenericClassType $correctType,
+        private readonly string $tagName,
     ) {
     }
 

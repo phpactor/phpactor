@@ -16,21 +16,21 @@ use Phpactor\WorseReflection\Core\Type\VoidType;
 
 class ConcreteFrame implements Frame
 {
-    private PropertyAssignments $properties;
+    private readonly PropertyAssignments $properties;
 
-    private LocalAssignments $locals;
+    private readonly LocalAssignments $locals;
 
-    private Problems $problems;
+    private readonly Problems $problems;
 
     private ?Type $returnType = null;
 
-    private VarDocBuffer $varDocBuffer;
+    private readonly VarDocBuffer $varDocBuffer;
 
     public function __construct(
         ?LocalAssignments $locals = null,
         ?PropertyAssignments $properties = null,
         ?Problems $problems = null,
-        private ?Frame $parent = null
+        private readonly ?Frame $parent = null
     ) {
         $this->properties = $properties ?: PropertyAssignments::create();
         $this->locals = $locals ?: LocalAssignments::create();

@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Reflector;
 
 class OverridableMethodFinder
 {
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
     /**

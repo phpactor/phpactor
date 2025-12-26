@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\Record\HasFlags as RecordWithFlags;
 
 class HasFlags extends Criteria
 {
-    public function __construct(private int $flag)
+    public function __construct(private readonly int $flag)
     {
     }
 

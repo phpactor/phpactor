@@ -4,9 +4,9 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class ClassPrototype extends ClassLikePrototype
 {
-    private ExtendsClass $extendsClass;
+    private readonly ExtendsClass $extendsClass;
 
-    private ImplementsInterfaces $implementsInterfaces;
+    private readonly ImplementsInterfaces $implementsInterfaces;
 
     public function __construct(
         string $name,

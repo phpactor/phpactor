@@ -20,9 +20,9 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 class ReflectionFunction extends AbstractReflectedNode implements CoreReflectionFunction
 {
     public function __construct(
-        private TextDocument $sourceCode,
-        private ServiceLocator $serviceLocator,
-        private FunctionDeclaration $node
+        private readonly TextDocument $sourceCode,
+        private readonly ServiceLocator $serviceLocator,
+        private readonly FunctionDeclaration $node
     ) {
     }
 

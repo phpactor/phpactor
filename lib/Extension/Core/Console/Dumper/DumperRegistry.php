@@ -10,7 +10,7 @@ final class DumperRegistry
 
     public function __construct(
         array $dumpers,
-        private string $default
+        private readonly string $default
     ) {
         foreach ($dumpers as $name => $dumper) {
             $this->add($name, $dumper);

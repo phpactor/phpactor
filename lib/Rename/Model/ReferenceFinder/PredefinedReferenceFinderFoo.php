@@ -13,7 +13,7 @@ class PredefinedReferenceFinderFoo implements ReferenceFinder
     /**
      * @var PotentialLocation[]
      */
-    private array $locations;
+    private readonly array $locations;
 
     public function __construct(PotentialLocation ...$locations)
     {

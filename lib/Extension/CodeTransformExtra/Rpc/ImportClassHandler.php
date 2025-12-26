@@ -30,9 +30,9 @@ class ImportClassHandler extends AbstractHandler
     const NAME = 'import_class';
 
     public function __construct(
-        private ImportName $nameImport,
-        private ClassSearch $classSearch,
-        private string $filesystem
+        private readonly ImportName $nameImport,
+        private readonly ClassSearch $classSearch,
+        private readonly string $filesystem
     ) {
     }
 

@@ -20,7 +20,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
 class ObjectCreationExpressionResolver implements Resolver
 {
-    public function __construct(private GenericMapResolver $resolver)
+    public function __construct(private readonly GenericMapResolver $resolver)
     {
     }
 

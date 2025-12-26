@@ -15,7 +15,7 @@ final class Changes implements IteratorAggregate, Countable
     /**
      * @param list<Change> $changes
      */
-    public function __construct(private array $changes)
+    public function __construct(private readonly array $changes)
     {
     }
 

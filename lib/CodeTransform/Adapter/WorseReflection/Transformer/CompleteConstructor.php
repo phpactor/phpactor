@@ -24,10 +24,10 @@ use Phpactor\CodeBuilder\Domain\Code;
 class CompleteConstructor implements Transformer
 {
     public function __construct(
-        private Reflector $reflector,
-        private Updater $updater,
-        private string $visibility,
-        private bool $promote = false
+        private readonly Reflector $reflector,
+        private readonly Updater $updater,
+        private readonly string $visibility,
+        private readonly bool $promote = false
     ) {
     }
 

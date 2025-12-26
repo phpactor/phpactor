@@ -19,7 +19,7 @@ class ExtractExpressionHandler extends AbstractHandler
     const PARAM_OFFSET_END = 'offset_end';
     const INPUT_LABEL_NAME = 'Variable name: ';
 
-    public function __construct(private ExtractExpression $extractExpression)
+    public function __construct(private readonly ExtractExpression $extractExpression)
     {
     }
 

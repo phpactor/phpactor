@@ -10,7 +10,7 @@ class AndCriteria extends Criteria
     /**
      * @var array<Criteria>
      */
-    private array $criterias;
+    private readonly array $criterias;
 
     public function __construct(Criteria ...$criterias)
     {

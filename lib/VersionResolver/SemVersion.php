@@ -7,7 +7,7 @@ use Composer\Semver\Comparator;
 final class SemVersion
 {
     private function __construct(
-        private string $version,
+        private readonly string $version,
     ) {
     }
 

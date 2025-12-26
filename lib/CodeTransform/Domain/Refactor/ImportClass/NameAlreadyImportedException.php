@@ -4,12 +4,12 @@ namespace Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 
 class NameAlreadyImportedException extends NameAlreadyUsedException
 {
-    private string $name;
+    private readonly string $name;
 
     public function __construct(
         NameImport $nameImport,
-        private string $existingName,
-        private string $existingFQN
+        private readonly string $existingName,
+        private readonly string $existingFQN
     ) {
         parent::__construct(sprintf(
             '%s "%s" is already imported',

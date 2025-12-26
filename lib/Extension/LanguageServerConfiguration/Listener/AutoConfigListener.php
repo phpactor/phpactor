@@ -18,9 +18,9 @@ class AutoConfigListener implements ListenerProviderInterface
 
 
     public function __construct(
-        private Configurator $configurator,
-        private ClientApi $clientApi,
-        private bool $trusted
+        private readonly Configurator $configurator,
+        private readonly ClientApi $clientApi,
+        private readonly bool $trusted
     ) {
     }
 

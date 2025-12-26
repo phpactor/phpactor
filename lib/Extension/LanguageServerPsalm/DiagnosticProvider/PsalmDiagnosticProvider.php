@@ -10,7 +10,7 @@ use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 
 class PsalmDiagnosticProvider implements DiagnosticsProvider
 {
-    public function __construct(private Linter $linter)
+    public function __construct(private readonly Linter $linter)
     {
     }
 

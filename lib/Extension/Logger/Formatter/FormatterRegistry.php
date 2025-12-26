@@ -9,7 +9,7 @@ use RuntimeException;
 class FormatterRegistry
 {
     public function __construct(
-        private ContainerInterface $container,
+        private readonly ContainerInterface $container,
         private array $serviceMap
     ) {
     }

@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 final class SelfType extends Type
 {
-    public function __construct(private ?Type $class = null)
+    public function __construct(private readonly ?Type $class = null)
     {
     }
 

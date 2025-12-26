@@ -9,8 +9,8 @@ class InMemorySymfonyContainerInspector implements SymfonyContainerInspector
      * @param SymfonyContainerParameter[] $parameters
      */
     public function __construct(
-        private array $services,
-        private array $parameters
+        private readonly array $services,
+        private readonly array $parameters
     ) {
     }
 

@@ -20,7 +20,7 @@ class DiagnosticsWalker implements Walker
     /**
      * @param DiagnosticProvider[] $providers
      */
-    public function __construct(private array $providers)
+    public function __construct(private readonly array $providers)
     {
     }
 

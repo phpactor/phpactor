@@ -9,7 +9,7 @@ use function str_starts_with;
 
 class FileAbsolutePathBeginsWith extends Criteria
 {
-    public function __construct(private string $prefix)
+    public function __construct(private readonly string $prefix)
     {
     }
 

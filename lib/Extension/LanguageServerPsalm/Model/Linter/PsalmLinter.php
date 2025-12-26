@@ -12,7 +12,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class PsalmLinter implements Linter
 {
-    public function __construct(private PsalmProcess $process)
+    public function __construct(private readonly PsalmProcess $process)
     {
     }
 

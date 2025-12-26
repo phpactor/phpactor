@@ -19,7 +19,7 @@ class ReplaceQualifierWithImportProvider implements CodeActionProvider
 {
     public const KIND = 'refactor.class.simplify';
 
-    public function __construct(private ReplaceQualifierWithImport $replaceQualifierWithImport)
+    public function __construct(private readonly ReplaceQualifierWithImport $replaceQualifierWithImport)
     {
     }
 

@@ -21,9 +21,9 @@ use Phpactor\TextDocument\TextEdit as PhpactorTextEdit;
 abstract class AbstractReferenceRenamer implements Renamer
 {
     public function __construct(
-        private ReferenceFinder $referenceFinder,
-        private TextDocumentLocator $locator,
-        private AstProvider $parser
+        private readonly ReferenceFinder $referenceFinder,
+        private readonly TextDocumentLocator $locator,
+        private readonly AstProvider $parser
     ) {
     }
 

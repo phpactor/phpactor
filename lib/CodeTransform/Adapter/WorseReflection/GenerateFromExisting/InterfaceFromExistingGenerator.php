@@ -16,8 +16,8 @@ use Phpactor\WorseReflection\Core\Visibility;
 final class InterfaceFromExistingGenerator implements GenerateFromExisting
 {
     public function __construct(
-        private Reflector $reflector,
-        private Renderer $renderer
+        private readonly Reflector $reflector,
+        private readonly Renderer $renderer
     ) {
     }
 

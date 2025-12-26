@@ -5,8 +5,8 @@ namespace Phpactor\WorseReflection\Core;
 class Deprecation
 {
     public function __construct(
-        private bool $isDefined,
-        private ?string $message = null
+        private readonly bool $isDefined,
+        private readonly ?string $message = null
     ) {
     }
 

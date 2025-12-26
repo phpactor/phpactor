@@ -21,8 +21,8 @@ class DiagnosticsCommand extends Command
 
 
     public function __construct(
-        private DiagnosticsProvider $provider,
-        private WorkspaceIndex $workspace,
+        private readonly DiagnosticsProvider $provider,
+        private readonly WorkspaceIndex $workspace,
     ) {
         parent::__construct();
     }

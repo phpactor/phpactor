@@ -12,7 +12,7 @@ use Phpactor\TextDocument\ByteOffset;
 
 class RangeProvider
 {
-    public function __construct(private AstProvider $parser)
+    public function __construct(private readonly AstProvider $parser)
     {
     }
 

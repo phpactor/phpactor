@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 
 class ReflectionMethodCall extends AbstractReflectionMethodCall
 {
-    private MemberAccessExpression $node;
+    private readonly MemberAccessExpression $node;
 
     public function __construct(
         ServiceLocator $locator,

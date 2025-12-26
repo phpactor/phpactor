@@ -11,10 +11,10 @@ use Throwable;
 class NameImporterResult
 {
     private function __construct(
-        private bool $success,
-        private ?NameImport $nameImport,
-        private ?array $textEdits,
-        private ?Throwable $error
+        private readonly bool $success,
+        private readonly ?NameImport $nameImport,
+        private readonly ?array $textEdits,
+        private readonly ?Throwable $error
     ) {
     }
 

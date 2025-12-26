@@ -18,7 +18,7 @@ class DirtyFileListProvider implements FileListProvider, DirtyDocumentTracker
      */
     private array $seen = [];
 
-    public function __construct(private string $dirtyPath)
+    public function __construct(private readonly string $dirtyPath)
     {
     }
 

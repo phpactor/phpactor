@@ -19,10 +19,10 @@ use Phpactor\WorseReflection\Reflector;
 class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 {
     public function __construct(
-        private Reflector $reflector,
-        private BuilderFactory $factory,
-        private Updater $updater,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly Reflector $reflector,
+        private readonly BuilderFactory $factory,
+        private readonly Updater $updater,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

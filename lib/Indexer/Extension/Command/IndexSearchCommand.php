@@ -26,7 +26,7 @@ class IndexSearchCommand extends Command
     const OPT_IS_CONSTANT = 'is-constant';
     const OPT_LIMIT = 'limit';
 
-    public function __construct(private SearchClient $searchClient)
+    public function __construct(private readonly SearchClient $searchClient)
     {
         parent::__construct();
     }

@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 
 class ClassStringType extends StringType
 {
-    public function __construct(private ?ClassName $className = null)
+    public function __construct(private readonly ?ClassName $className = null)
     {
     }
 

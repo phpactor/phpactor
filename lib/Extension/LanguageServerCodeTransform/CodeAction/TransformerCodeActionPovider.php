@@ -21,9 +21,9 @@ use function Amp\call;
 class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionProvider
 {
     public function __construct(
-        private Transformers $transformers,
-        private string $name,
-        private string $title
+        private readonly Transformers $transformers,
+        private readonly string $name,
+        private readonly string $title
     ) {
     }
 

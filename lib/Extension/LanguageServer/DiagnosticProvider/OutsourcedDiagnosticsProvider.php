@@ -22,10 +22,10 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
      * @param list<string> $command
      */
     public function __construct(
-        private array $command,
-        private string $cwd,
-        private LoggerInterface $logger,
-        private int $timeout = 5,
+        private readonly array $command,
+        private readonly string $cwd,
+        private readonly LoggerInterface $logger,
+        private readonly int $timeout = 5,
     ) {
     }
 

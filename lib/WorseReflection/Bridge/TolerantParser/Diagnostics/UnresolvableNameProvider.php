@@ -40,7 +40,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
      */
     private array $functionCache = [];
 
-    public function __construct(private bool $importGlobals)
+    public function __construct(private readonly bool $importGlobals)
     {
     }
 

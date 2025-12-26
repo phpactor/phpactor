@@ -7,7 +7,7 @@ use Phpactor\Extension\LanguageServer\Status\StatusProvider;
 
 class IndexerStatusProvider implements StatusProvider
 {
-    public function __construct(private Watcher $watcher)
+    public function __construct(private readonly Watcher $watcher)
     {
     }
 

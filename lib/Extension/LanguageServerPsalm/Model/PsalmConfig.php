@@ -5,12 +5,12 @@ namespace Phpactor\Extension\LanguageServerPsalm\Model;
 final class PsalmConfig
 {
     public function __construct(
-        private string $phpstanBin,
-        private bool $shouldShowInfo,
-        private bool $useCache,
-        private ?int $errorLevel = null,
-        private ?int $threads = null,
-        private ?string $config = null,
+        private readonly string $phpstanBin,
+        private readonly bool $shouldShowInfo,
+        private readonly bool $useCache,
+        private readonly ?int $errorLevel = null,
+        private readonly ?int $threads = null,
+        private readonly ?string $config = null,
     ) {
     }
 

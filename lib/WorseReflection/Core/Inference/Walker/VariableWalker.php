@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\Core\Type;
 
 class VariableWalker implements Walker
 {
-    public function __construct(private DocBlockFactory $docblockFactory)
+    public function __construct(private readonly DocBlockFactory $docblockFactory)
     {
     }
 

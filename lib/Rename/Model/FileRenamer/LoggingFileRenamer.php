@@ -11,8 +11,8 @@ use function Amp\call;
 class LoggingFileRenamer implements FileRenamer
 {
     public function __construct(
-        private FileRenamer $innerRenamer,
-        private LoggerInterface $logger
+        private readonly FileRenamer $innerRenamer,
+        private readonly LoggerInterface $logger
     ) {
     }
 

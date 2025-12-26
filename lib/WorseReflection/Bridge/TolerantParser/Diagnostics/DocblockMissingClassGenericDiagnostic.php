@@ -12,10 +12,10 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
 {
 
     public function __construct(
-        private ByteOffsetRange $range,
-        private ClassName $className,
-        private GenericClassType $missingGenericType,
-        private string $tagName,
+        private readonly ByteOffsetRange $range,
+        private readonly ClassName $className,
+        private readonly GenericClassType $missingGenericType,
+        private readonly string $tagName,
     ) {
     }
 

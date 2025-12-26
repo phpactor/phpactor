@@ -19,8 +19,8 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class ReferencesClassCommand extends Command
 {
     public function __construct(
-        private ClassReferences $referenceFinder,
-        private DumperRegistry $dumperRegistry
+        private readonly ClassReferences $referenceFinder,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

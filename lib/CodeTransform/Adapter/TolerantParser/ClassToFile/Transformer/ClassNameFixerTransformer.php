@@ -33,8 +33,8 @@ use RuntimeException;
 class ClassNameFixerTransformer implements Transformer
 {
     public function __construct(
-        private FileToClass $fileToClass,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly FileToClass $fileToClass,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

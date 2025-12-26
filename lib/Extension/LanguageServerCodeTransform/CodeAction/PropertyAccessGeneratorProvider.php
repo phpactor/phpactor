@@ -19,10 +19,10 @@ use function Amp\call;
 class PropertyAccessGeneratorProvider implements CodeActionProvider
 {
     public function __construct(
-        private string $kind,
-        private string $command,
-        private string $generatorRole,
-        private Reflector $reflector
+        private readonly string $kind,
+        private readonly string $command,
+        private readonly string $generatorRole,
+        private readonly Reflector $reflector
     ) {
     }
 

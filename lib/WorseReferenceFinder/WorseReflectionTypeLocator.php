@@ -19,7 +19,7 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionTypeLocator implements TypeLocator
 {
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
 

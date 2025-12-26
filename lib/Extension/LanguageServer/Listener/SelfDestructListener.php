@@ -10,7 +10,7 @@ use function Amp\delay;
 
 class SelfDestructListener implements ListenerProviderInterface
 {
-    public function __construct(private int $selfDestructTimeout)
+    public function __construct(private readonly int $selfDestructTimeout)
     {
     }
 

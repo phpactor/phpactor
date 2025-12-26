@@ -13,8 +13,8 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 class WorseInterestingOffsetFinder implements InterestingOffsetFinder
 {
     public function __construct(
-        private SourceCodeReflector $reflector,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly SourceCodeReflector $reflector,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

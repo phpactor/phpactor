@@ -43,11 +43,11 @@ class ReferencesHandler extends AbstractHandler
     const MESSAGE_NO_REFERENCES_FOUND = 'No references found';
 
     public function __construct(
-        private Reflector $reflector,
-        private ClassReferences $classReferences,
-        private ClassMemberReferences $classMemberReferences,
-        private FilesystemRegistry $registry,
-        private string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
+        private readonly Reflector $reflector,
+        private readonly ClassReferences $classReferences,
+        private readonly ClassMemberReferences $classMemberReferences,
+        private readonly FilesystemRegistry $registry,
+        private readonly string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
     ) {
     }
 

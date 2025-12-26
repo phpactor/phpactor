@@ -25,9 +25,9 @@ use Phpactor\WorseReflection\TypeUtil;
 class WorseExtractConstant implements ExtractConstant
 {
     public function __construct(
-        private Reflector $reflector,
-        private Updater $updater,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly Reflector $reflector,
+        private readonly Updater $updater,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

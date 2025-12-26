@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class QualifiedName
 {
-    protected function __construct(private string $name)
+    protected function __construct(private readonly string $name)
     {
     }
 

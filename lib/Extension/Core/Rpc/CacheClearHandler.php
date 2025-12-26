@@ -11,7 +11,7 @@ class CacheClearHandler implements Handler
 {
     const NAME = 'cache_clear';
 
-    public function __construct(private CacheClear $cacheClear)
+    public function __construct(private readonly CacheClear $cacheClear)
     {
     }
 

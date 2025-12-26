@@ -14,8 +14,8 @@ class TestLinter implements Linter
      * @param array<Diagnostic> $diagnostics
      */
     public function __construct(
-        private array $diagnostics,
-        private int $delay
+        private readonly array $diagnostics,
+        private readonly int $delay
     ) {
     }
 

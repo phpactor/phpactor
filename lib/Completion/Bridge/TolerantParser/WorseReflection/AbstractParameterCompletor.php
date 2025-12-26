@@ -28,7 +28,7 @@ abstract class AbstractParameterCompletor
 
     public function __construct(
         protected Reflector $reflector,
-        private ObjectFormatter $formatter,
+        private readonly ObjectFormatter $formatter,
         ?VariableCompletionHelper $variableCompletionHelper = null
     ) {
         $this->variableCompletionHelper = $variableCompletionHelper ?? new VariableCompletionHelper($reflector);

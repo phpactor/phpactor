@@ -10,7 +10,7 @@ class InMemoryIndex implements Index
 {
     private ?int $lastUpdate;
 
-    private InMemorySearchIndex $searchIndex;
+    private readonly InMemorySearchIndex $searchIndex;
 
     /**
      * @var array<Record>

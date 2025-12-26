@@ -8,7 +8,7 @@ use Phpactor\TextDocument\WorkspaceEdits;
 
 class WorkspaceEditConverter
 {
-    public function __construct(private TextDocumentLocator $locator)
+    public function __construct(private readonly TextDocumentLocator $locator)
     {
     }
 

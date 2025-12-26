@@ -24,18 +24,18 @@ use InvalidArgumentException;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {
-    private MethodTypeResolver $returnTypeResolver;
+    private readonly MethodTypeResolver $returnTypeResolver;
 
-    private DeclaredMemberTypeResolver $memberTypeResolver;
+    private readonly DeclaredMemberTypeResolver $memberTypeResolver;
 
     private ?string $name = null;
 
-    private MemberTypeContextualiser $typeContextualiser;
+    private readonly MemberTypeContextualiser $typeContextualiser;
 
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private ReflectionClassLike $class,
-        private MethodDeclaration $node
+        private readonly ServiceLocator $serviceLocator,
+        private readonly ReflectionClassLike $class,
+        private readonly MethodDeclaration $node
     ) {
         $this->returnTypeResolver = new MethodTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());

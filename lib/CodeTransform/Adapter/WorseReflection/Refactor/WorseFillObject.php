@@ -24,14 +24,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseFillObject implements ByteOffsetRefactor
 {
-    private EmptyValueRenderer $valueRenderer;
+    private readonly EmptyValueRenderer $valueRenderer;
 
     public function __construct(
-        private Reflector $reflector,
-        private AstProvider $parser,
-        private Updater $updater,
-        private bool $namedParameters = true,
-        private bool $hint = true
+        private readonly Reflector $reflector,
+        private readonly AstProvider $parser,
+        private readonly Updater $updater,
+        private readonly bool $namedParameters = true,
+        private readonly bool $hint = true
     ) {
         $this->valueRenderer = new EmptyValueRenderer();
     }

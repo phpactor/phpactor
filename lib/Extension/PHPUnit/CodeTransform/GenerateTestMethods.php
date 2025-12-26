@@ -22,8 +22,8 @@ class GenerateTestMethods
     ];
 
     public function __construct(
-        private Reflector $reflector,
-        private Updater $updater,
+        private readonly Reflector $reflector,
+        private readonly Updater $updater,
     ) {
     }
 

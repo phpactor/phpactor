@@ -7,8 +7,8 @@ use Phpactor\WorseReflection\Core\Type;
 final class DocBlockTypeAlias
 {
     public function __construct(
-        private string $alias,
-        private Type $type
+        private readonly string $alias,
+        private readonly Type $type
     ) {
     }
 

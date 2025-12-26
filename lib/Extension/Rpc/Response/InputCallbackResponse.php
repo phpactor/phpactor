@@ -11,7 +11,7 @@ class InputCallbackResponse implements Response
     private array $inputs = [];
 
     private function __construct(
-        private Request $callbackAction,
+        private readonly Request $callbackAction,
         array $inputs
     ) {
         foreach ($inputs as $input) {

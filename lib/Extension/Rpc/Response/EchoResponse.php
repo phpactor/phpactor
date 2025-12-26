@@ -6,7 +6,7 @@ use Phpactor\Extension\Rpc\Response;
 
 class EchoResponse implements Response
 {
-    private function __construct(private string $message)
+    private function __construct(private readonly string $message)
     {
     }
 

@@ -17,9 +17,9 @@ class ReflectionMatchExpression implements ReflectionNode
      * @param MatchExpression $node
      */
     public function __construct(
-        private ServiceLocator $services,
-        private Frame $frame,
-        private Node $node
+        private readonly ServiceLocator $services,
+        private readonly Frame $frame,
+        private readonly Node $node
     ) {
     }
 

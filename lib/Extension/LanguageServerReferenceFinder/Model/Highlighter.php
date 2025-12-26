@@ -35,7 +35,7 @@ class Highlighter
 {
     private ?CancellationTokenSource $previousCancellationSource = null;
 
-    public function __construct(private AstProvider $parser)
+    public function __construct(private readonly AstProvider $parser)
     {
     }
 

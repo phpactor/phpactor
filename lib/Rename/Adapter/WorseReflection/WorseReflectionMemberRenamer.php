@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\Reflector;
 class WorseReflectionMemberRenamer implements Renamer
 {
     public function __construct(
-        private Reflector $reflector,
+        private readonly Reflector $reflector,
     ) {
     }
 

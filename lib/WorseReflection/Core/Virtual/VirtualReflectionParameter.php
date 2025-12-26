@@ -14,15 +14,15 @@ use Phpactor\WorseReflection\Core\Type;
 class VirtualReflectionParameter implements ReflectionParameter
 {
     public function __construct(
-        private string $name,
-        private ReflectionFunctionLike $functionLike,
-        private Type $inferredType,
-        private Type $type,
-        private DefaultValue $default,
-        private bool $byReference,
-        private ReflectionScope $scope,
-        private ByteOffsetRange $position,
-        private int $index
+        private readonly string $name,
+        private readonly ReflectionFunctionLike $functionLike,
+        private readonly Type $inferredType,
+        private readonly Type $type,
+        private readonly DefaultValue $default,
+        private readonly bool $byReference,
+        private readonly ReflectionScope $scope,
+        private readonly ByteOffsetRange $position,
+        private readonly int $index
     ) {
     }
 

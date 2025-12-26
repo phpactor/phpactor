@@ -10,7 +10,7 @@ class ChainContextClassResolver implements ContextClassResolver
     /**
      * @param ContextClassResolver[] $contextClassResolvers
      */
-    public function __construct(private array $contextClassResolvers)
+    public function __construct(private readonly array $contextClassResolvers)
     {
     }
 

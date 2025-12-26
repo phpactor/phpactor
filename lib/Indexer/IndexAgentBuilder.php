@@ -85,8 +85,8 @@ final class IndexAgentBuilder
     private LoggerInterface $logger;
 
     private function __construct(
-        private string $indexRoot,
-        private string $projectRoot,
+        private readonly string $indexRoot,
+        private readonly string $projectRoot,
     ) {
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();

@@ -16,9 +16,9 @@ class AggregateDiagnosticsProvider implements DiagnosticsProvider
     /**
      * @var array<DiagnosticsProvider>
      */
-    private array $providers;
+    private readonly array $providers;
 
-    private LoggerInterface $logger;
+    private readonly LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger, DiagnosticsProvider ...$providers)
     {

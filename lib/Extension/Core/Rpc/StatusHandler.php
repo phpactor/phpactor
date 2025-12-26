@@ -18,8 +18,8 @@ class StatusHandler implements Handler
     const TYPE_DETAILED = 'detailed';
 
     public function __construct(
-        private Status $status,
-        private PathCandidates $paths
+        private readonly Status $status,
+        private readonly PathCandidates $paths
     ) {
     }
 

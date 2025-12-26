@@ -13,11 +13,11 @@ use Symfony\Component\Filesystem\Path;
 
 final class OffsetInfo
 {
-    private FilesystemHelper $filesystemHelper;
+    private readonly FilesystemHelper $filesystemHelper;
 
     public function __construct(
-        private Reflector $reflector,
-        private ClassFileNormalizer $classFileNormalizer
+        private readonly Reflector $reflector,
+        private readonly ClassFileNormalizer $classFileNormalizer
     ) {
         $this->filesystemHelper = new FilesystemHelper();
     }

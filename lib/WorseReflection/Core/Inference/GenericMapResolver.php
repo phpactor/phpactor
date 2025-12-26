@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class GenericMapResolver
 {
-    public function __construct(private ClassReflector $reflector)
+    public function __construct(private readonly ClassReflector $reflector)
     {
     }
 

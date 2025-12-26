@@ -15,8 +15,8 @@ class InMemoryRenamer implements Renamer
      * @param LocatedTextEdit[] $results
      */
     public function __construct(
-        private ?ByteOffsetRange $range,
-        private array $results = []
+        private readonly ?ByteOffsetRange $range,
+        private readonly array $results = []
     ) {
     }
 

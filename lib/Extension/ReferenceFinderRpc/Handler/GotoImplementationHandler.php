@@ -26,7 +26,7 @@ class GotoImplementationHandler extends AbstractHandler
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
 
-    public function __construct(private ClassImplementationFinder $finder)
+    public function __construct(private readonly ClassImplementationFinder $finder)
     {
     }
 

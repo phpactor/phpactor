@@ -23,7 +23,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
 {
     public function __construct(
         NameSearcher $nameSearcher,
-        private ObjectFormatter $snippetFormatter,
+        private readonly ObjectFormatter $snippetFormatter,
         ?DocumentPrioritizer $prioritizer = null
     ) {
         if ($prioritizer === null) {

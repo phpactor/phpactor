@@ -4,7 +4,7 @@ namespace Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 
 class AliasAlreadyUsedException extends NameAlreadyUsedException
 {
-    private string $name;
+    private readonly string $name;
 
     public function __construct(NameImport $nameImport)
     {

@@ -9,7 +9,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class PredefiniedImplementationFinder implements ClassImplementationFinder
 {
-    public function __construct(private Locations $locations)
+    public function __construct(private readonly Locations $locations)
     {
     }
 

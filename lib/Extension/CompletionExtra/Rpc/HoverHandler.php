@@ -24,8 +24,8 @@ class HoverHandler implements Handler
     const NAME = 'hover';
 
     public function __construct(
-        private Reflector $reflector,
-        private ObjectFormatter $formatter
+        private readonly Reflector $reflector,
+        private readonly ObjectFormatter $formatter
     ) {
     }
 

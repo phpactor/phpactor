@@ -18,7 +18,7 @@ class CompleteHandler implements Handler
     const PARAM_OFFSET = 'offset';
     const PARAM_TYPE = 'type';
 
-    public function __construct(private TypedCompletorRegistry $registry)
+    public function __construct(private readonly TypedCompletorRegistry $registry)
     {
     }
 

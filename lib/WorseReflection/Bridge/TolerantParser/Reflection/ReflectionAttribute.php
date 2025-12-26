@@ -17,9 +17,9 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope as
 class ReflectionAttribute implements PhpactorReflectionObjectCreationExpression, ClassInvocation
 {
     public function __construct(
-        private ServiceLocator $locator,
-        private Frame $frame,
-        private Attribute $node
+        private readonly ServiceLocator $locator,
+        private readonly Frame $frame,
+        private readonly Attribute $node
     ) {
     }
 

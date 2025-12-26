@@ -5,8 +5,8 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 class ConfirmInput implements Input
 {
     private function __construct(
-        private string $name,
-        private string $label
+        private readonly string $name,
+        private readonly string $label
     ) {
     }
 

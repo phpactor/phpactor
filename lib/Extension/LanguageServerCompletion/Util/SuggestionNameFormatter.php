@@ -6,7 +6,7 @@ use Phpactor\Completion\Core\Suggestion;
 
 class SuggestionNameFormatter
 {
-    public function __construct(private bool $trimLeadingDollar = false)
+    public function __construct(private readonly bool $trimLeadingDollar = false)
     {
     }
 

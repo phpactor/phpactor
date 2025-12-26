@@ -22,8 +22,8 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeColle
 class ContextualSourceCodeReflector implements SourceCodeReflector
 {
     public function __construct(
-        private SourceCodeReflector $innerReflector,
-        private TemporarySourceLocator $locator
+        private readonly SourceCodeReflector $innerReflector,
+        private readonly TemporarySourceLocator $locator
     ) {
     }
 

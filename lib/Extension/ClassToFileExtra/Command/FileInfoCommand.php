@@ -13,8 +13,8 @@ use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 class FileInfoCommand extends Command
 {
     public function __construct(
-        private FileInfo $infoForOffset,
-        private DumperRegistry $dumperRegistry
+        private readonly FileInfo $infoForOffset,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

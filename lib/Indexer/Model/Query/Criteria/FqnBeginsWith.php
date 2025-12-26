@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\Record\HasFullyQualifiedName;
 
 class FqnBeginsWith extends Criteria
 {
-    public function __construct(private string $name)
+    public function __construct(private readonly string $name)
     {
     }
 

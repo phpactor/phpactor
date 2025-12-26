@@ -15,9 +15,9 @@ class SignatureInformation
     private array $parameters = [];
 
     public function __construct(
-        private string $label,
+        private readonly string $label,
         array $parameters,
-        private ?string $documentation = null
+        private readonly ?string $documentation = null
     ) {
         foreach ($parameters as $parameter) {
             $this->add($parameter);

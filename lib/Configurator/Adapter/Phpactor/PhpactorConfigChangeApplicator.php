@@ -8,7 +8,7 @@ use Phpactor\Configurator\Model\ConfigManipulator;
 
 class PhpactorConfigChangeApplicator implements ChangeApplicator
 {
-    public function __construct(private ConfigManipulator $maipulator)
+    public function __construct(private readonly ConfigManipulator $maipulator)
     {
     }
 

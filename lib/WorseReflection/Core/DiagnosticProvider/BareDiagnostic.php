@@ -9,10 +9,10 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 class BareDiagnostic implements Diagnostic
 {
     public function __construct(
-        private ByteOffsetRange $range,
-        private DiagnosticSeverity $severity,
-        private string $message,
-        private string $code,
+        private readonly ByteOffsetRange $range,
+        private readonly DiagnosticSeverity $severity,
+        private readonly string $message,
+        private readonly string $code,
     ) {
     }
 

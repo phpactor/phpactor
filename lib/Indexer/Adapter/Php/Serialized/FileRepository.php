@@ -31,9 +31,9 @@ class FileRepository
     private int $counter = 0;
 
     public function __construct(
-        private string $path,
-        private RecordSerializer $serializer,
-        private LoggerInterface $logger = new NullLogger(),
+        private readonly string $path,
+        private readonly RecordSerializer $serializer,
+        private readonly LoggerInterface $logger = new NullLogger(),
     ) {
         $this->initializeLastUpdate();
     }

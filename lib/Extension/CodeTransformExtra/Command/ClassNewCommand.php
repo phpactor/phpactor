@@ -18,8 +18,8 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class ClassNewCommand extends Command
 {
     public function __construct(
-        private ClassNew $classNew,
-        private DumperRegistry $dumperRegistry
+        private readonly ClassNew $classNew,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

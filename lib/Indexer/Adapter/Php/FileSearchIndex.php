@@ -30,7 +30,7 @@ class FileSearchIndex implements SearchIndex
 
     private bool $dirty = false;
 
-    public function __construct(private string $path)
+    public function __construct(private readonly string $path)
     {
     }
 

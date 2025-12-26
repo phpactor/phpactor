@@ -19,8 +19,8 @@ final class ConfigManipulator
     public const ACTION_UPDATED = 'updated';
 
     public function __construct(
-        private string $schemaPath,
-        private string $configPath
+        private readonly string $schemaPath,
+        private readonly string $configPath
     ) {
     }
 

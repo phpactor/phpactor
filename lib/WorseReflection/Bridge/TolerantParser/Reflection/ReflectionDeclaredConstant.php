@@ -23,9 +23,9 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
     private ArgumentExpression $value;
 
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private TextDocument $sourceCode,
-        private CallExpression $node
+        private readonly ServiceLocator $serviceLocator,
+        private readonly TextDocument $sourceCode,
+        private readonly CallExpression $node
     ) {
         $this->bindArguments();
     }

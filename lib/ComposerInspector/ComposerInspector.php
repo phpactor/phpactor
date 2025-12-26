@@ -16,8 +16,8 @@ final class ComposerInspector
     private bool $loaded = false;
 
     public function __construct(
-        private string $lockFile,
-        private string $composerFile,
+        private readonly string $lockFile,
+        private readonly string $composerFile,
     ) {
     }
 

@@ -16,7 +16,7 @@ class GenerateMethodHandler extends AbstractHandler
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
 
-    public function __construct(private GenerateMember $generateMethod)
+    public function __construct(private readonly GenerateMember $generateMethod)
     {
     }
 

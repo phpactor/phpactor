@@ -7,7 +7,7 @@ use Psr\Log\LoggerInterface;
 
 class LoggerFactory
 {
-    public function __construct(private LoggerInterface $mainLogger)
+    public function __construct(private readonly LoggerInterface $mainLogger)
     {
     }
 

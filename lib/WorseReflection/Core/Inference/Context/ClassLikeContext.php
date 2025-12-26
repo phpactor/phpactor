@@ -11,8 +11,8 @@ class ClassLikeContext extends NodeContext
 {
     public function __construct(
         Symbol $symbol,
-        private ByteOffsetRange $byteOffsetRange,
-        private ReflectionClassLike $class
+        private readonly ByteOffsetRange $byteOffsetRange,
+        private readonly ReflectionClassLike $class
     ) {
         parent::__construct($symbol, $class->type());
     }

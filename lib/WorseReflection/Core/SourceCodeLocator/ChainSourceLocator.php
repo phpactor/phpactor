@@ -21,7 +21,7 @@ class ChainSourceLocator implements SourceCodeLocator
      */
     public function __construct(
         array $sourceLocators,
-        private LoggerInterface $logger = new NullLogger(),
+        private readonly LoggerInterface $logger = new NullLogger(),
     ) {
         foreach ($sourceLocators as $sourceLocator) {
             $this->add($sourceLocator);

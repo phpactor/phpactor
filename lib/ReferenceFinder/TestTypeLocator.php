@@ -7,7 +7,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class TestTypeLocator implements TypeLocator
 {
-    public function __construct(private TypeLocations $locations)
+    public function __construct(private readonly TypeLocations $locations)
     {
     }
 

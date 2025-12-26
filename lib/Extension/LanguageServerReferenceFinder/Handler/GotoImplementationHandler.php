@@ -17,9 +17,9 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class GotoImplementationHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private Workspace $workspace,
-        private ClassImplementationFinder $finder,
-        private LocationConverter $locationConverter
+        private readonly Workspace $workspace,
+        private readonly ClassImplementationFinder $finder,
+        private readonly LocationConverter $locationConverter
     ) {
     }
 

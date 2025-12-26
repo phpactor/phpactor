@@ -20,7 +20,7 @@ class TypeSuggestionProvider
         'never',
     ];
 
-    public function __construct(private NameSearcher $nameSearcher)
+    public function __construct(private readonly NameSearcher $nameSearcher)
     {
     }
 

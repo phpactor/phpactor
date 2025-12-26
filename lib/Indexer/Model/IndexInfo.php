@@ -11,11 +11,11 @@ class IndexInfo
     private const SECONDS_IN_DAY = 3600 * 24;
 
     public function __construct(
-        private string $absolutePath,
-        private string $directoryName,
+        private readonly string $absolutePath,
+        private readonly string $directoryName,
         private ?int $size,
-        private float $createdAt,
-        private float $updatedAt
+        private readonly float $createdAt,
+        private readonly float $updatedAt
     ) {
     }
 

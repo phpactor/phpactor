@@ -11,7 +11,7 @@ use RuntimeException;
 
 class SourceCode implements TextDocument
 {
-    public function __construct(private string $source)
+    public function __construct(private readonly string $source)
     {
     }
 

@@ -18,10 +18,10 @@ class FilesystemFileListProvider implements FileListProvider
      * @param list<string> $supportedExtensions
      */
     public function __construct(
-        private Filesystem $filesystem,
-        private array $includePatterns = [],
-        private array $excludePatterns = [],
-        private array $supportedExtensions = ['php', 'phar'],
+        private readonly Filesystem $filesystem,
+        private readonly array $includePatterns = [],
+        private readonly array $excludePatterns = [],
+        private readonly array $supportedExtensions = ['php', 'phar'],
     ) {
     }
 

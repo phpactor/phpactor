@@ -18,9 +18,9 @@ class TransformCommand implements Command
     public const NAME  = 'transform';
 
     public function __construct(
-        private ClientApi $clientApi,
-        private Workspace $workspace,
-        private Transformers $transformers
+        private readonly ClientApi $clientApi,
+        private readonly Workspace $workspace,
+        private readonly Transformers $transformers
     ) {
     }
 

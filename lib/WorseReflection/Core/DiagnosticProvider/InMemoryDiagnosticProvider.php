@@ -14,7 +14,7 @@ class InMemoryDiagnosticProvider implements DiagnosticProvider
     /**
      * @param Diagnostic[] $diagnostics
      */
-    public function __construct(private array $diagnostics)
+    public function __construct(private readonly array $diagnostics)
     {
     }
 

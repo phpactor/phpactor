@@ -17,10 +17,10 @@ use RuntimeException;
 
 class ClassTransformCommand extends Command
 {
-    private Differ $differ;
+    private readonly Differ $differ;
 
     public function __construct(
-        private Transformer $transformer
+        private readonly Transformer $transformer
     ) {
         parent::__construct();
         $this->differ = new Differ(new UnifiedDiffOutputBuilder());

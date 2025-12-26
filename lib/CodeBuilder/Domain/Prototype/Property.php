@@ -4,16 +4,16 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class Property extends Prototype
 {
-    private Visibility $visibility;
+    private readonly Visibility $visibility;
 
-    private DefaultValue $defaultValue;
+    private readonly DefaultValue $defaultValue;
 
-    private Type $type;
+    private readonly Type $type;
 
-    private Type $docType;
+    private readonly Type $docType;
 
     public function __construct(
-        private string $name,
+        private readonly string $name,
         ?Visibility $visibility = null,
         ?DefaultValue $defaultValue = null,
         ?Type $type = null,

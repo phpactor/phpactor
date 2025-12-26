@@ -22,9 +22,9 @@ class ProjectConfigTrustListener implements ListenerProviderInterface
      * @param list<string> $projectConfigCandidates
      */
     public function __construct(
-        private ClientApi $clientApi,
-        private array $projectConfigCandidates,
-        private Trust $trust,
+        private readonly ClientApi $clientApi,
+        private readonly array $projectConfigCandidates,
+        private readonly Trust $trust,
     ) {
     }
 

@@ -8,9 +8,9 @@ use Phpactor\TextDocument\TextDocumentUri;
 final class NameSearchResult
 {
     private function __construct(
-        private NameSearchResultType $type,
-        private FullyQualifiedName $name,
-        private ?TextDocumentUri $uri = null
+        private readonly NameSearchResultType $type,
+        private readonly FullyQualifiedName $name,
+        private readonly ?TextDocumentUri $uri = null
     ) {
     }
 

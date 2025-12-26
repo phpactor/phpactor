@@ -10,8 +10,8 @@ use Phpactor\WorseReflection\Core\DiagnosticTag;
 class UnusedImportDiagnostic implements Diagnostic
 {
     private function __construct(
-        private ByteOffsetRange $range,
-        private string $name
+        private readonly ByteOffsetRange $range,
+        private readonly string $name
     ) {
     }
 

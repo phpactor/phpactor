@@ -11,7 +11,7 @@ use Phpactor\TextDocument\TextDocument;
 class ChainRenamer implements Renamer
 {
     /** @param Renamer[] $renamers */
-    public function __construct(private array $renamers)
+    public function __construct(private readonly array $renamers)
     {
     }
 

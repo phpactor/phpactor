@@ -9,12 +9,12 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 class DocblockMissingReturnTypeDiagnostic implements Diagnostic
 {
     public function __construct(
-        private ByteOffsetRange $range,
-        private string $message,
-        private DiagnosticSeverity $severity,
-        private string $classType,
-        private string $methodName,
-        private string $actualReturnType
+        private readonly ByteOffsetRange $range,
+        private readonly string $message,
+        private readonly DiagnosticSeverity $severity,
+        private readonly string $classType,
+        private readonly string $methodName,
+        private readonly string $actualReturnType
     ) {
     }
 

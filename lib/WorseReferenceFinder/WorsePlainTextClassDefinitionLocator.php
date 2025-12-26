@@ -23,9 +23,9 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 {
-    private AstProvider $parser;
+    private readonly AstProvider $parser;
 
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
         $this->parser = new TolerantAstProvider();
     }

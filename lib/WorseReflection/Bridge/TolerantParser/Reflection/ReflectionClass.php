@@ -55,10 +55,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      * @param array<string,bool> $visited
      */
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private TextDocument $sourceCode,
-        private ClassDeclaration $node,
-        private array $visited = []
+        private readonly ServiceLocator $serviceLocator,
+        private readonly TextDocument $sourceCode,
+        private readonly ClassDeclaration $node,
+        private readonly array $visited = []
     ) {
     }
 

@@ -8,8 +8,8 @@ use Psr\Log\LoggerInterface;
 class ClientLogger implements LoggerInterface
 {
     public function __construct(
-        private ClientApi $client,
-        private LoggerInterface $innerLogger
+        private readonly ClientApi $client,
+        private readonly LoggerInterface $innerLogger
     ) {
     }
 

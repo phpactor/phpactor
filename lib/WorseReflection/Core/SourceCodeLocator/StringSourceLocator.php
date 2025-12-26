@@ -8,7 +8,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class StringSourceLocator implements SourceCodeLocator
 {
-    public function __construct(private TextDocument $source)
+    public function __construct(private readonly TextDocument $source)
     {
     }
 

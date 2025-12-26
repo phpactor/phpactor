@@ -31,13 +31,13 @@ class IndexerHandler implements Handler, ServiceProvider
     const SERVICE_INDEXER = 'indexer';
 
     public function __construct(
-        private Indexer $indexer,
-        private Watcher $watcher,
-        private ClientApi $clientApi,
-        private LoggerInterface $logger,
-        private EventDispatcherInterface $eventDispatcher,
-        private ProgressNotifier $progressNotifier,
-        private ?int $reindexTimeout = null,
+        private readonly Indexer $indexer,
+        private readonly Watcher $watcher,
+        private readonly ClientApi $clientApi,
+        private readonly LoggerInterface $logger,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ProgressNotifier $progressNotifier,
+        private readonly ?int $reindexTimeout = null,
     ) {
     }
 

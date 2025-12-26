@@ -21,7 +21,7 @@ final class ChainTypeLocator implements TypeLocator
      */
     public function __construct(
         array $locators,
-        private LoggerInterface $logger = new NullLogger(),
+        private readonly LoggerInterface $logger = new NullLogger(),
     ) {
         foreach ($locators as $locator) {
             $this->add($locator);

@@ -28,7 +28,7 @@ class MemberRenamer extends AbstractReferenceRenamer
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         AstProvider $parser,
-        private ClassImplementationFinder $implementationFinder
+        private readonly ClassImplementationFinder $implementationFinder
     ) {
         parent::__construct($referenceFinder, $locator, $parser);
     }

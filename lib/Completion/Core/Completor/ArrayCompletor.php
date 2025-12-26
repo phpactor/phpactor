@@ -13,7 +13,7 @@ class ArrayCompletor implements Completor
     /**
      * @param Suggestion[] $suggestions
      */
-    public function __construct(private array $suggestions)
+    public function __construct(private readonly array $suggestions)
     {
     }
 

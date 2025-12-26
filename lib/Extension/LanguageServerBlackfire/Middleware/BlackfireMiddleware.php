@@ -11,7 +11,7 @@ use function Amp\call;
 
 class BlackfireMiddleware implements Middleware
 {
-    public function __construct(private BlackfireProfiler $profiler)
+    public function __construct(private readonly BlackfireProfiler $profiler)
     {
     }
 

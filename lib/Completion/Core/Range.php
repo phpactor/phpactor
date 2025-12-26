@@ -7,8 +7,8 @@ use Phpactor\TextDocument\ByteOffset;
 class Range
 {
     public function __construct(
-        private ByteOffset $byteStart,
-        private ByteOffset $byteEnd
+        private readonly ByteOffset $byteStart,
+        private readonly ByteOffset $byteEnd
     ) {
     }
 

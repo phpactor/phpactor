@@ -19,13 +19,13 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionParameter extends AbstractReflectedNode implements CoreReflectionParameter
 {
-    private DeclaredMemberTypeResolver $memberTypeResolver;
+    private readonly DeclaredMemberTypeResolver $memberTypeResolver;
 
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private ReflectionFunctionLike $functionLike,
-        private Parameter $parameter,
-        private int $index
+        private readonly ServiceLocator $serviceLocator,
+        private readonly ReflectionFunctionLike $functionLike,
+        private readonly Parameter $parameter,
+        private readonly int $index
     ) {
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($serviceLocator->reflector());
     }

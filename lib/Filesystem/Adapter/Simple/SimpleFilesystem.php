@@ -15,12 +15,12 @@ use Symfony\Component\Filesystem\Path;
 
 class SimpleFilesystem implements Filesystem
 {
-    private FileListProvider $fileListProvider;
+    private readonly FileListProvider $fileListProvider;
 
     public function __construct(
-        private FilePath $path,
+        private readonly FilePath $path,
         ?FileListProvider $fileListProvider = null,
-        private SymfonyFilesystem $filesystem = new SymfonyFilesystem(),
+        private readonly SymfonyFilesystem $filesystem = new SymfonyFilesystem(),
     ) {
         $this->fileListProvider = $fileListProvider ?? new SimpleFileListProvider($this->path);
     }

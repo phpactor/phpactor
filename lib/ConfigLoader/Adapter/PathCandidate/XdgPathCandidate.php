@@ -9,10 +9,10 @@ use XdgBaseDir\Xdg;
 class XdgPathCandidate implements PathCandidate
 {
     public function __construct(
-        private string $appName,
-        private string $filename,
-        private string $loader,
-        private Xdg $xdg
+        private readonly string $appName,
+        private readonly string $filename,
+        private readonly string $loader,
+        private readonly Xdg $xdg
     ) {
     }
 

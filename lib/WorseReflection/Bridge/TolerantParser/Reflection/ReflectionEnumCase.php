@@ -20,9 +20,9 @@ use RuntimeException;
 class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreReflectionEnumCase
 {
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private ReflectionEnum $enum,
-        private EnumCaseDeclaration $node
+        private readonly ServiceLocator $serviceLocator,
+        private readonly ReflectionEnum $enum,
+        private readonly EnumCaseDeclaration $node
     ) {
     }
 

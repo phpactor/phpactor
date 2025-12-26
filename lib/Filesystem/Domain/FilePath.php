@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Path;
 
 final class FilePath
 {
-    private function __construct(private TextDocumentUri $uri)
+    private function __construct(private readonly TextDocumentUri $uri)
     {
     }
 

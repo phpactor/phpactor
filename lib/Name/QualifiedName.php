@@ -8,7 +8,7 @@ final class QualifiedName implements Name
 {
     private const NAMESPACE_SEPARATOR = '\\';
 
-    private array $parts;
+    private readonly array $parts;
 
     private function __construct(array $parts)
     {

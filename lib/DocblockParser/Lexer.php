@@ -61,7 +61,7 @@ final class Lexer
         '\s+',
     ];
 
-    private string $pattern;
+    private readonly string $pattern;
 
     public function __construct()
     {

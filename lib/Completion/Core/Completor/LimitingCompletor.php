@@ -11,8 +11,8 @@ use RuntimeException;
 class LimitingCompletor implements Completor
 {
     public function __construct(
-        private Completor $innerCompletor,
-        private int $limit = 32
+        private readonly Completor $innerCompletor,
+        private readonly int $limit = 32
     ) {
         if ($limit < 0) {
             throw new RuntimeException(sprintf(
