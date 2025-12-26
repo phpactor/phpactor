@@ -2,7 +2,6 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser;
 
-use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Generator;
 use Microsoft\PhpParser\Node;
@@ -12,6 +11,8 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class ChainTolerantCompletor implements Completor
 {
@@ -21,6 +22,7 @@ class ChainTolerantCompletor implements Completor
     public function __construct(
         private array $tolerantCompletors,
         private AstProvider $parser = new TolerantAstProvider(),
+        private LoggerInterface $logger = new NullLogger(),
     ) {
     }
 
@@ -34,23 +36,16 @@ class ChainTolerantCompletor implements Completor
 
         // gh-3001: this is potentially very inefficient
         $node = $this->parser
-            ->get(TextDocumentBuilder::create(
-                substr_replace((string) $source, ' ', $truncatedLength, 0)
-            )->build())
+            ->get($source)
             ->getDescendantNodeAtPosition(
                 // the parser requires the byte offset, not the char offset
                 $truncatedLength,
             );
 
-        if ($node->getEndPosition() > $truncatedLength) {
-            $node = $this->parser->get(
-                TextDocumentBuilder::create($truncatedSource)->build()
-            )->getDescendantNodeAtPosition($truncatedLength);
-        }
-
         $isComplete = true;
 
         foreach ($this->tolerantCompletors as $tolerantCompletor) {
+            $start = microtime(true);
             $completionNode = $node;
 
             if ($tolerantCompletor instanceof TolerantQualifiable) {
@@ -58,12 +53,23 @@ class ChainTolerantCompletor implements Completor
             }
 
             if (!$completionNode) {
+                $this->logger->info(sprintf(
+                    'COMP %s NOQ %s',
+                    number_format(microtime(true) - $start, 4),
+                    $tolerantCompletor::class,
+                ));
                 continue;
             }
 
             $suggestions = $tolerantCompletor->complete($completionNode, $source, $byteOffset);
 
             yield from $suggestions;
+
+            $this->logger->info(sprintf(
+                'COMP %s OKK %s',
+                number_format(microtime(true) - $start, 4),
+                $tolerantCompletor::class,
+            ));
 
             $isComplete = $isComplete && $suggestions->getReturn();
         }

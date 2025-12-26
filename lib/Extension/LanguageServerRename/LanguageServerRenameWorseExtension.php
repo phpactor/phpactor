@@ -64,7 +64,7 @@ class LanguageServerRenameWorseExtension implements Extension
             return new MemberRenamer(
                 $container->get(DefinitionAndReferenceFinder::class),
                 $container->get(TextDocumentLocator::class),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->get(WorseReflectionExtension::SERVICE_AST_PROVIDER),
                 $container->get(IndexedImplementationFinder::class),
             );
         }, [

@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\TextDocument\TextDocument;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Error;
 
 final class TolerantAstProvider implements AstProvider
 {
@@ -26,9 +27,9 @@ final class TolerantAstProvider implements AstProvider
             $document->uri()?->__toString(),
         );
         $this->logger->info(sprintf(
-            'parse %s (%s)',
-            microtime(true) - $start,
-            $document->uri()?->__toString() ?? '<anonymous>',
+            'PARS %s %s',
+            number_format(microtime(true) - $start, 6),
+            $document->uri()?->__toString() ?? '<anonymous>' . (new Error())->getTraceAsString(),
         ));
 
         return $node;

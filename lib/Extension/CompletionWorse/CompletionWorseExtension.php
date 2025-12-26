@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CompletionWorse;
 
 use Closure;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Completion\Bridge\TolerantParser\DebugTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
@@ -168,7 +169,8 @@ class CompletionWorseExtension implements Extension
                     }
                     return $container->get($serviceId) ?? false;
                 }, $container->get(self::SERVICE_COMPLETOR_MAP))),
-                $container->get(AstProvider::class)
+                $container->get(AstProvider::class),
+                LoggingExtension::channelLogger($container, 'completion'),
             );
         }, [ CompletionExtension::TAG_COMPLETOR => []]);
 
@@ -272,7 +274,7 @@ class CompletionWorseExtension implements Extension
                     return new DoctrineAnnotationCompletor(
                         $container->get(NameSearcher::class),
                         $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                        $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class)
+                        $container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class)
                     );
                 },
             ],
@@ -441,7 +443,7 @@ class CompletionWorseExtension implements Extension
                 function (Container $container) {
                     return new DocblockCompletor(
                         $container->get(TypeSuggestionProvider::class),
-                        $container->get(WorseReflectionExtension::SERVICE_PARSER)
+                        $container->get(WorseReflectionExtension::SERVICE_AST_PROVIDER)
                     );
                 },
             ],

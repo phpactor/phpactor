@@ -19,7 +19,7 @@ class LanguageServerInlineValueExtension implements Extension
         $container->register('language_server_inline_value.handler', function (Container $container) {
             return new InlineValueHandler(
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
-                $container->expect(WorseReflectionExtension::SERVICE_PARSER, AstProvider::class),
+                $container->expect(WorseReflectionExtension::SERVICE_AST_PROVIDER, AstProvider::class),
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
     }
