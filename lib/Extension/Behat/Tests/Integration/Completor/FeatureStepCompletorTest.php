@@ -7,6 +7,7 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
@@ -103,6 +104,8 @@ class FeatureStepCompletorTest extends TestCase
         ]);
 
 
-        return $container->get(CompletionExtension::SERVICE_REGISTRY)->completorForType('cucumber');
+        return $container
+            ->expect(CompletionExtension::SERVICE_REGISTRY, TypedCompletorRegistry::class)
+            ->completorForType('cucumber');
     }
 }
