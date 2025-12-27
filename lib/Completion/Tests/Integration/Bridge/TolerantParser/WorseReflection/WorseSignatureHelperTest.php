@@ -454,9 +454,6 @@ class WorseSignatureHelperTest extends IntegrationTestCase
      */
     public static function providePhp8(): Generator
     {
-        if (PHP_VERSION_ID < 80000) {
-            return;
-        }
         yield 'attribute 1' => [
             <<<'EOT'
                 <?php

@@ -6,7 +6,7 @@ Installation
 Requirements
 ------------
 
-Phpactor requires PHP 8.1.
+Phpactor requires PHP 8.2.
 
 .. _installation_phar:
 
