@@ -18,12 +18,11 @@ class AggregateDiagnosticsProvider implements DiagnosticsProvider
      */
     private readonly array $providers;
 
-    private readonly LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $logger, DiagnosticsProvider ...$providers)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger, 
+        DiagnosticsProvider ...$providers
+    ) {
         $this->providers = $providers;
-        $this->logger = $logger;
     }
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
@@ -69,12 +68,12 @@ class AggregateDiagnosticsProvider implements DiagnosticsProvider
     }
 
     /**
-     * @return list<string>
+     * @return array<string>
      */
     public function names(): array
     {
         return array_map(
-            fn (DiagnosticsProvider $provider) => $provider->name(),
+            fn (DiagnosticsProvider $provider): string => $provider->name(),
             $this->providers
         );
     }
