@@ -30,9 +30,9 @@ use Phpactor\WorseReflection\Reflector;
 class QualifiedNameResolver implements Resolver
 {
     public function __construct(
-        private Reflector $reflector,
-        private FunctionStubRegistry $registry,
-        private NodeToTypeConverter $nodeTypeConverter
+        private readonly Reflector $reflector,
+        private readonly FunctionStubRegistry $registry,
+        private readonly NodeToTypeConverter $nodeTypeConverter
     ) {
     }
 

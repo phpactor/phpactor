@@ -18,11 +18,11 @@ final class ClassMemberQuery
         self::TYPE_PROPERTY
     ];
 
-    private ?string $type;
+    private readonly ?string $type;
 
     private function __construct(
-        private ?Class_ $class = null,
-        private ?MemberName $memberName = null,
+        private readonly ?Class_ $class = null,
+        private readonly ?MemberName $memberName = null,
         ?string $type = null
     ) {
         if (null !== $type && false === in_array($type, $this->validTypes)) {

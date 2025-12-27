@@ -8,7 +8,7 @@ use function Amp\Promise\wait;
 
 class CodeTransform
 {
-    private function __construct(private Transformers $transformers)
+    private function __construct(private readonly Transformers $transformers)
     {
     }
 

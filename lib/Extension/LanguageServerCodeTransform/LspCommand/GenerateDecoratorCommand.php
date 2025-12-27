@@ -16,9 +16,9 @@ class GenerateDecoratorCommand implements Command
     public const NAME = 'generate_decorator';
 
     public function __construct(
-        private ClientApi $clientApi,
-        private Workspace $workspace,
-        private GenerateDecorator $generateDecorator
+        private readonly ClientApi $clientApi,
+        private readonly Workspace $workspace,
+        private readonly GenerateDecorator $generateDecorator
     ) {
     }
 

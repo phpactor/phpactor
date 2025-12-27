@@ -21,15 +21,15 @@ final class Symbol
     public const ARRAY = 'array';
     public const UNKNOWN = '<unknown>';
 
-    private string $name;
+    private readonly string $name;
 
     /**
      * @param Symbol::* $symbolType
      */
     private function __construct(
-        private string $symbolType,
+        private readonly string $symbolType,
         string $name,
-        private ByteOffsetRange $position
+        private readonly ByteOffsetRange $position
     ) {
         $this->name = ltrim($name, '$');
     }

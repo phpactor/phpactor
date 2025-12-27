@@ -17,7 +17,7 @@ class NavigatorElementCollection implements IteratorAggregate
     /**
      * @param array<T> $elements
      */
-    public function __construct(private array $elements)
+    public function __construct(private readonly array $elements)
     {
     }
 

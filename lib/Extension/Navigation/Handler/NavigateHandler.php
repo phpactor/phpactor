@@ -18,7 +18,7 @@ class NavigateHandler extends AbstractHandler
     const PARAM_DESTINATION = 'destination';
     const PARAM_CONFIRM_CREATE = 'confirm_create';
 
-    public function __construct(private Navigator $navigator)
+    public function __construct(private readonly Navigator $navigator)
     {
     }
 

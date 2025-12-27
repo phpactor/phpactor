@@ -23,9 +23,9 @@ use Phpactor\TextDocument\TextDocumentUri;
 final class WorkspaceSymbolProvider
 {
     public function __construct(
-        private SearchClient $client,
-        private TextDocumentLocator $locator,
-        private int $limit
+        private readonly SearchClient $client,
+        private readonly TextDocumentLocator $locator,
+        private readonly int $limit
     ) {
     }
 

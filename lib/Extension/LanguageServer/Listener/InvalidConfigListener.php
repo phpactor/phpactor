@@ -14,8 +14,8 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 class InvalidConfigListener implements ListenerProviderInterface
 {
     public function __construct(
-        private ClientApi $clientApi,
-        private ResolverErrors $errors
+        private readonly ClientApi $clientApi,
+        private readonly ResolverErrors $errors
     ) {
     }
 

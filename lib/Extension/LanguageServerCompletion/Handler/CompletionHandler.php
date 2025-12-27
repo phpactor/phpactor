@@ -41,12 +41,12 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     private array $resolve = [];
 
     public function __construct(
-        private Workspace $workspace,
-        private TypedCompletorRegistry $registry,
-        private SuggestionNameFormatter $suggestionNameFormatter,
-        private NameImporter $nameImporter,
-        private bool $supportSnippets,
-        private bool $provideTextEdit = false
+        private readonly Workspace $workspace,
+        private readonly TypedCompletorRegistry $registry,
+        private readonly SuggestionNameFormatter $suggestionNameFormatter,
+        private readonly NameImporter $nameImporter,
+        private readonly bool $supportSnippets,
+        private readonly bool $provideTextEdit = false
     ) {
     }
 

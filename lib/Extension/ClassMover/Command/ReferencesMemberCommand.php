@@ -19,8 +19,8 @@ use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 class ReferencesMemberCommand extends Command
 {
     public function __construct(
-        private ClassMemberReferences $memberReferences,
-        private DumperRegistry $dumperRegistry
+        private readonly ClassMemberReferences $memberReferences,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

@@ -105,13 +105,13 @@ use Phpactor\WorseReflection\Reflector;
 
 final class DefaultResolverFactory
 {
-    private FunctionStubRegistry $functionStubRegistry;
+    private readonly FunctionStubRegistry $functionStubRegistry;
 
     public function __construct(
-        private Reflector $reflector,
-        private NodeToTypeConverter $nodeTypeConverter,
-        private GenericMapResolver $genericResolver,
-        private NodeContextFromMemberAccess $nodeContextFromMemberAccess
+        private readonly Reflector $reflector,
+        private readonly NodeToTypeConverter $nodeTypeConverter,
+        private readonly GenericMapResolver $genericResolver,
+        private readonly NodeContextFromMemberAccess $nodeContextFromMemberAccess
     ) {
         $this->functionStubRegistry = $this->createStubRegistry();
     }

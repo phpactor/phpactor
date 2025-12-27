@@ -8,7 +8,7 @@ use Amp\Success;
 class ArbitrarySemVerResolver implements SemVersionResolver
 {
     public function __construct(
-        private ?string $version = null,
+        private readonly ?string $version = null,
     ) {
     }
 

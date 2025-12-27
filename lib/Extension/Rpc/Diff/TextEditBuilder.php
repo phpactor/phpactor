@@ -17,7 +17,7 @@ use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 class TextEditBuilder
 {
     public function __construct(
-        private BergmannDiffer $differ = new BergmannDiffer(new UnifiedDiffOutputBuilder()),
+        private readonly BergmannDiffer $differ = new BergmannDiffer(new UnifiedDiffOutputBuilder()),
     ) {
     }
 

@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFro
 
 class MemberAccessExpressionResolver implements Resolver
 {
-    public function __construct(private NodeContextFromMemberAccess $nodeContextFromMemberAccess)
+    public function __construct(private readonly NodeContextFromMemberAccess $nodeContextFromMemberAccess)
     {
     }
 

@@ -15,8 +15,8 @@ class TrustCommand extends Command
     const OPT_TRUST = 'trust';
 
     public function __construct(
-        private Trust $status,
-        private string $projectDir
+        private readonly Trust $status,
+        private readonly string $projectDir
     ) {
         parent::__construct();
     }

@@ -48,8 +48,8 @@ class NodeContextFromMemberAccess
      * @param MemberContextResolver[] $memberResolvers
      */
     public function __construct(
-        private GenericMapResolver $resolver,
-        private array $memberResolvers
+        private readonly GenericMapResolver $resolver,
+        private readonly array $memberResolvers
     ) {
     }
 

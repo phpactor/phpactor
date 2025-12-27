@@ -20,9 +20,9 @@ class ExtractConstantCommand implements Command
     public const DEFAULT_VARIABLE_NAME  = 'NEW_CONSTANT';
 
     public function __construct(
-        private ClientApi $clientApi,
-        private Workspace $workspace,
-        private ExtractConstant $extractConstant
+        private readonly ClientApi $clientApi,
+        private readonly Workspace $workspace,
+        private readonly ExtractConstant $extractConstant
     ) {
     }
 

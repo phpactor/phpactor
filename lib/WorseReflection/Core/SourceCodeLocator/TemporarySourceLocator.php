@@ -37,9 +37,9 @@ class TemporarySourceLocator implements SourceCodeLocator
     private array $sources = [];
 
     public function __construct(
-        private SourceCodeReflector $reflector,
-        private bool $locateFunctions = false,
-        private int $bufferSize = 10
+        private readonly SourceCodeReflector $reflector,
+        private readonly bool $locateFunctions = false,
+        private readonly int $bufferSize = 10
     ) {
     }
 

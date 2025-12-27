@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class IndexerClassSourceLocator implements SourceCodeLocator
 {
-    public function __construct(private IndexAccess $index)
+    public function __construct(private readonly IndexAccess $index)
     {
     }
 

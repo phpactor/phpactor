@@ -10,9 +10,9 @@ class NameImport
     private const TYPE_FUNCTION = 'function';
 
     private function __construct(
-        private string $type,
-        private FullyQualifiedName $name,
-        private ?string $alias = null
+        private readonly string $type,
+        private readonly FullyQualifiedName $name,
+        private readonly ?string $alias = null
     ) {
     }
 

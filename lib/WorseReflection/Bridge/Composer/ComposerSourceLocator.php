@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 
 class ComposerSourceLocator implements SourceCodeLocator
 {
-    public function __construct(private ClassLoader $classLoader)
+    public function __construct(private readonly ClassLoader $classLoader)
     {
     }
 

@@ -7,7 +7,7 @@ class FileReferences
     private array $references = [];
 
     private function __construct(
-        private string $filePath,
+        private readonly string $filePath,
         array $references
     ) {
         foreach ($references as $reference) {

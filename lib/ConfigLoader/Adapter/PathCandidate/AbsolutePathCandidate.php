@@ -8,11 +8,11 @@ use Symfony\Component\Filesystem\Path;
 
 class AbsolutePathCandidate implements PathCandidate
 {
-    private string $absolutePath;
+    private readonly string $absolutePath;
 
     public function __construct(
         string $absolutePath,
-        private string $loader
+        private readonly string $loader
     ) {
         $absolutePath = Path::canonicalize($absolutePath);
         $this->absolutePath = $absolutePath;

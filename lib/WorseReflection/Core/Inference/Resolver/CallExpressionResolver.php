@@ -28,7 +28,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CallExpressionResolver implements Resolver
 {
-    public function __construct(private GenericMapResolver $resolver)
+    public function __construct(private readonly GenericMapResolver $resolver)
     {
     }
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext

@@ -23,10 +23,10 @@ final class FrameResolver
      * @param array<class-string,Walker[]> $nodeWalkers
      */
     public function __construct(
-        private NodeContextResolver $nodeContextResolver,
+        private readonly NodeContextResolver $nodeContextResolver,
         private array $globalWalkers,
         private array $nodeWalkers,
-        private CacheForDocument $cache,
+        private readonly CacheForDocument $cache,
     ) {
     }
 

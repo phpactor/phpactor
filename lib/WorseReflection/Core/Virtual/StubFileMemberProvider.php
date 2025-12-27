@@ -21,7 +21,7 @@ class StubFileMemberProvider implements ReflectionMemberProvider
     /**
      * @param list<string> $stubFiles
      */
-    public function __construct(private array $stubFiles)
+    public function __construct(private readonly array $stubFiles)
     {
     }
 

@@ -15,11 +15,11 @@ final class NameWithByteOffset
         self::TYPE_FUNCTION
     ];
 
-    private string $type;
+    private readonly string $type;
 
     public function __construct(
-        private Name $name,
-        private ByteOffset $byteOffset,
+        private readonly Name $name,
+        private readonly ByteOffset $byteOffset,
         string $type = self::TYPE_CLASS
     ) {
         if (!in_array($type, self::VALID_TYPES)) {

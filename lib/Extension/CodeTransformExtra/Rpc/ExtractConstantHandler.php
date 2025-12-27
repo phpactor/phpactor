@@ -19,7 +19,7 @@ class ExtractConstantHandler extends AbstractHandler
     const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
     const INPUT_LABEL_NAME = 'Constant name: ';
 
-    public function __construct(private ExtractConstant $extractConstant)
+    public function __construct(private readonly ExtractConstant $extractConstant)
     {
     }
 

@@ -17,8 +17,8 @@ class ClassSearchHandler implements Handler
     const SHORT_NAME = 'short_name';
 
     public function __construct(
-        private ClassSearch $classSearch,
-        private string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
+        private readonly ClassSearch $classSearch,
+        private readonly string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
     ) {
     }
 

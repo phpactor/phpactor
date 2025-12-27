@@ -10,11 +10,11 @@ final class PhpstanConfig
      * @param DiagnosticSeverity::* $severity
      */
     public function __construct(
-        private string $phpstanBin,
-        private int $severity,
-        private ?string $level = null,
-        private ?string $config = null,
-        private ?string $memLimit = null
+        private readonly string $phpstanBin,
+        private readonly int $severity,
+        private readonly ?string $level = null,
+        private readonly ?string $config = null,
+        private readonly ?string $memLimit = null
     ) {
     }
 

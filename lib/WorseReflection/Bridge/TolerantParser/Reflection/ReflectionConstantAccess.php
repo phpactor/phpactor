@@ -13,7 +13,7 @@ class ReflectionConstantAccess
     /**
      * @param ScopedPropertyAccessExpression|MemberAccessExpression $node
      */
-    public function __construct(private Node $node)
+    public function __construct(private readonly Node $node)
     {
     }
 

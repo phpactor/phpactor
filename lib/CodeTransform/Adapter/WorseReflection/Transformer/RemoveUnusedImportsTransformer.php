@@ -26,8 +26,8 @@ class RemoveUnusedImportsTransformer implements Transformer
     private array $fixed = [];
 
     public function __construct(
-        private Reflector $reflector,
-        private AstProvider $parser
+        private readonly Reflector $reflector,
+        private readonly AstProvider $parser
     ) {
     }
 

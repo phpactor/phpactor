@@ -30,11 +30,11 @@ class ContextMenuHandler implements Handler
     const PARAMETER_CURRENT_PATH = 'current_path';
 
     public function __construct(
-        private Reflector $reflector,
-        private InterestingOffsetFinder $offsetFinder,
-        private ClassFileNormalizer $classFileNormalizer,
-        private ContextMenu $menu,
-        private Container $container
+        private readonly Reflector $reflector,
+        private readonly InterestingOffsetFinder $offsetFinder,
+        private readonly ClassFileNormalizer $classFileNormalizer,
+        private readonly ContextMenu $menu,
+        private readonly Container $container
     ) {
     }
 

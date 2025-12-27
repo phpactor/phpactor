@@ -16,9 +16,9 @@ use RuntimeException;
 class PhpstanLinter implements Linter
 {
     public function __construct(
-        private PhpstanProcess $phpstanProcess,
-        private SemVersionResolver $versionResolver,
-        private bool $disableTmpFile = false,
+        private readonly PhpstanProcess $phpstanProcess,
+        private readonly SemVersionResolver $versionResolver,
+        private readonly bool $disableTmpFile = false,
     ) {
     }
 

@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 
 class DebugTolerantCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    public function __construct(private TolerantCompletor $innerCompletor)
+    public function __construct(private readonly TolerantCompletor $innerCompletor)
     {
     }
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

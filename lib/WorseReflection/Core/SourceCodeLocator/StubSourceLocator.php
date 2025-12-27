@@ -21,9 +21,9 @@ final class StubSourceLocator implements SourceCodeLocator
     private ?array $map = null;
 
     public function __construct(
-        private Reflector $reflector,
-        private string $stubPath,
-        private string $cacheDir
+        private readonly Reflector $reflector,
+        private readonly string $stubPath,
+        private readonly string $cacheDir
     ) {
     }
 

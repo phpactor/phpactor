@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Type;
 
 class PropertyTypeResolver
 {
-    public function __construct(private ReflectionProperty $property)
+    public function __construct(private readonly ReflectionProperty $property)
     {
     }
 

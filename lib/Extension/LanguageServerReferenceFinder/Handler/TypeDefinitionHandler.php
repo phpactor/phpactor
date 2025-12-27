@@ -22,10 +22,10 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private Workspace $workspace,
-        private TypeLocator $typeLocator,
-        private LocationConverter $locationConverter,
-        private ClientApi $client
+        private readonly Workspace $workspace,
+        private readonly TypeLocator $typeLocator,
+        private readonly LocationConverter $locationConverter,
+        private readonly ClientApi $client
     ) {
     }
 

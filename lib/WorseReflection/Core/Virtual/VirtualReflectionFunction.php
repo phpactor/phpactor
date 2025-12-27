@@ -20,16 +20,16 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 final class VirtualReflectionFunction implements ReflectionFunction
 {
     public function __construct(
-        private ByteOffsetRange $range,
-        private NodeText $body,
-        private Frame $frame,
-        private DocBlock $docblock,
-        private ReflectionScope $scope,
-        private Type $inferredType,
-        private Type $type,
-        private TextDocument $source,
-        private Name $name,
-        private ReflectionParameterCollection $parameters,
+        private readonly ByteOffsetRange $range,
+        private readonly NodeText $body,
+        private readonly Frame $frame,
+        private readonly DocBlock $docblock,
+        private readonly ReflectionScope $scope,
+        private readonly Type $inferredType,
+        private readonly Type $type,
+        private readonly TextDocument $source,
+        private readonly Name $name,
+        private readonly ReflectionParameterCollection $parameters,
     ) {
     }
 

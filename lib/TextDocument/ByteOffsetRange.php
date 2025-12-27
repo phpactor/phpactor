@@ -5,8 +5,8 @@ namespace Phpactor\TextDocument;
 class ByteOffsetRange
 {
     public function __construct(
-        private ByteOffset $start,
-        private ByteOffset $end
+        private readonly ByteOffset $start,
+        private readonly ByteOffset $end
     ) {
     }
 

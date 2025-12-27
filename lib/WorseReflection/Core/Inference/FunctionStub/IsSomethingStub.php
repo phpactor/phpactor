@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 
 class IsSomethingStub implements FunctionStub
 {
-    public function __construct(private Type $isType)
+    public function __construct(private readonly Type $isType)
     {
     }
 

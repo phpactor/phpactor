@@ -18,7 +18,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    public function __construct(private ClassQualifier $qualifier = new ClassQualifier(0))
+    public function __construct(private readonly ClassQualifier $qualifier = new ClassQualifier(0))
     {
     }
 

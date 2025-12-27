@@ -10,10 +10,10 @@ use Phpactor\TextDocument\Location;
 class Step
 {
     public function __construct(
-        private Context $context,
-        private string $method,
-        private string $pattern,
-        private Location $location,
+        private readonly Context $context,
+        private readonly string $method,
+        private readonly string $pattern,
+        private readonly Location $location,
     ) {
     }
 

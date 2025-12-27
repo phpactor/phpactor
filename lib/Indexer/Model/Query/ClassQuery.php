@@ -13,7 +13,7 @@ use Phpactor\TextDocument\Location;
 
 class ClassQuery implements IndexQuery
 {
-    public function __construct(private Index $index)
+    public function __construct(private readonly Index $index)
     {
     }
 

@@ -8,8 +8,8 @@ use RuntimeException;
 final class DocblockParser
 {
     public function __construct(
-        private Lexer $lexer,
-        private Parser $parser
+        private readonly Lexer $lexer,
+        private readonly Parser $parser
     ) {
     }
 

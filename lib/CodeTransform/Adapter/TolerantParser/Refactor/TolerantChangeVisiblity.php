@@ -17,7 +17,7 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantChangeVisiblity implements ChangeVisiblity
 {
-    public function __construct(private AstProvider $parser = new TolerantAstProvider())
+    public function __construct(private readonly AstProvider $parser = new TolerantAstProvider())
     {
     }
 

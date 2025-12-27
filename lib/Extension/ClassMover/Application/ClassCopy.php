@@ -18,9 +18,9 @@ class ClassCopy
 {
     // rename compositetransformer => classToFileConverter
     public function __construct(
-        private ClassFileNormalizer $classFileNormalizer,
-        private ClassMoverFacade $classMover,
-        private Filesystem $filesystem
+        private readonly ClassFileNormalizer $classFileNormalizer,
+        private readonly ClassMoverFacade $classMover,
+        private readonly Filesystem $filesystem
     ) {
     }
 

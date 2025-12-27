@@ -15,7 +15,7 @@ class ChangeVisiblityHandler implements Handler
     const PARAM_SOURCE = 'source';
     const PARAM_OFFSET = 'offset';
 
-    public function __construct(private ChangeVisiblity $changeVisiblity)
+    public function __construct(private readonly ChangeVisiblity $changeVisiblity)
     {
     }
 

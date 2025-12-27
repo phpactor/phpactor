@@ -18,8 +18,8 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 class WorseLocalVariableCompletor implements TolerantCompletor
 {
     public function __construct(
-        private VariableCompletionHelper $variableCompletionHelper,
-        private ObjectFormatter $informationFormatter = new ObjectFormatter(),
+        private readonly VariableCompletionHelper $variableCompletionHelper,
+        private readonly ObjectFormatter $informationFormatter = new ObjectFormatter(),
     ) {
     }
 

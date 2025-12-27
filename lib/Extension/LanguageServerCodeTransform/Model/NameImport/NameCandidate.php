@@ -7,8 +7,8 @@ use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 class NameCandidate
 {
     public function __construct(
-        private NameWithByteOffset $unresolvedName,
-        private string $candidateFqn
+        private readonly NameWithByteOffset $unresolvedName,
+        private readonly string $candidateFqn
     ) {
     }
 

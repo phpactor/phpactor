@@ -14,7 +14,7 @@ final class DiagnosticSeverity
     /**
      * @param self::* $level
      */
-    private function __construct(private int $level)
+    private function __construct(private readonly int $level)
     {
         $validLevels = [
             self::INFORMATION,

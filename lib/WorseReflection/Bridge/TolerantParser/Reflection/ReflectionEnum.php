@@ -27,9 +27,9 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     private ?ReflectionTraitCollection $traits = null;
 
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private TextDocument $sourceCode,
-        private EnumDeclaration $node
+        private readonly ServiceLocator $serviceLocator,
+        private readonly TextDocument $sourceCode,
+        private readonly EnumDeclaration $node
     ) {
     }
 

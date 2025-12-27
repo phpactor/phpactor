@@ -7,8 +7,8 @@ use RuntimeException;
 class TextFormat
 {
     public function __construct(
-        private string $indentation = '    ',
-        private string $newLineChar = "\n"
+        private readonly string $indentation = '    ',
+        private readonly string $newLineChar = "\n"
     ) {
     }
 

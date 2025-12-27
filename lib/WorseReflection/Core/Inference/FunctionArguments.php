@@ -19,8 +19,8 @@ class FunctionArguments implements IteratorAggregate, Countable
      * @param ArgumentExpression[] $arguments
      */
     public function __construct(
-        private NodeContextResolver $resolver,
-        private Frame $frame,
+        private readonly NodeContextResolver $resolver,
+        private readonly Frame $frame,
         private array $arguments
     ) {
     }

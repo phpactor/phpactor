@@ -12,9 +12,9 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
 
 class EnumUpdater
 {
-    private ClassMethodUpdater $methodUpdater;
+    private readonly ClassMethodUpdater $methodUpdater;
 
-    public function __construct(private Renderer $renderer)
+    public function __construct(private readonly Renderer $renderer)
     {
         $this->methodUpdater = new ClassMethodUpdater($renderer);
     }

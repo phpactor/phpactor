@@ -7,7 +7,7 @@ final class WorseTypeRendererFactory
     /**
      * @param array<string,WorseTypeRenderer> $versionToRendererMap
      */
-    public function __construct(private array $versionToRendererMap)
+    public function __construct(private readonly array $versionToRendererMap)
     {
     }
 

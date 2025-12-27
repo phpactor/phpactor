@@ -16,8 +16,8 @@ class PathExcludingDiagnosticsProvider implements DiagnosticsProvider
      * @param list<string> $paths
      */
     public function __construct(
-        private DiagnosticsProvider $innerProvider,
-        private array $paths
+        private readonly DiagnosticsProvider $innerProvider,
+        private readonly array $paths
     ) {
     }
 

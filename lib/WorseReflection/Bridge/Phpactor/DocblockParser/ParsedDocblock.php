@@ -47,9 +47,9 @@ use function array_map;
 class ParsedDocblock implements DocBlock
 {
     public function __construct(
-        private ParserDocblock $node,
-        private TypeConverter $typeConverter,
-        private string $raw
+        private readonly ParserDocblock $node,
+        private readonly TypeConverter $typeConverter,
+        private readonly string $raw
     ) {
     }
 

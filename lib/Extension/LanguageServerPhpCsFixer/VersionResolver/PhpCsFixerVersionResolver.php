@@ -14,8 +14,8 @@ use function Amp\call;
 class PhpCsFixerVersionResolver implements SemVersionResolver
 {
     public function __construct(
-        private string $binPath,
-        private LoggerInterface $logger,
+        private readonly string $binPath,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

@@ -7,25 +7,25 @@ final class Method extends Prototype
     const IS_STATIC = 1;
     const IS_ABSTRACT = 2;
 
-    private Visibility $visibility;
+    private readonly Visibility $visibility;
 
-    private Parameters $parameters;
+    private readonly Parameters $parameters;
 
-    private ReturnType $returnType;
+    private readonly ReturnType $returnType;
 
     /*
      * @var Docblock
      */
     private $docblock;
 
-    private bool $isStatic;
+    private readonly bool $isStatic;
 
-    private bool $isAbstract;
+    private readonly bool $isAbstract;
 
-    private MethodBody $methodBody;
+    private readonly MethodBody $methodBody;
 
     public function __construct(
-        private string $name,
+        private readonly string $name,
         ?Visibility $visibility = null,
         ?Parameters $parameters = null,
         ?ReturnType $returnType = null,

@@ -29,10 +29,10 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
      * @param array<string,bool> $visited
      */
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private TextDocument $sourceCode,
-        private TraitDeclaration $node,
-        private array $visited = []
+        private readonly ServiceLocator $serviceLocator,
+        private readonly TextDocument $sourceCode,
+        private readonly TraitDeclaration $node,
+        private readonly array $visited = []
     ) {
     }
 

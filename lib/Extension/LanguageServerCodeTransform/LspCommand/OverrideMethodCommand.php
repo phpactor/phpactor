@@ -26,10 +26,10 @@ class OverrideMethodCommand implements Command
     public const NAME  = 'override_method';
 
     public function __construct(
-        private ClientApi $clientApi,
-        private OverrideMethod $overrideMethod,
-        private OverridableMethodFinder $finder,
-        private TextDocumentLocator $locator
+        private readonly ClientApi $clientApi,
+        private readonly OverrideMethod $overrideMethod,
+        private readonly OverridableMethodFinder $finder,
+        private readonly TextDocumentLocator $locator
     ) {
     }
 

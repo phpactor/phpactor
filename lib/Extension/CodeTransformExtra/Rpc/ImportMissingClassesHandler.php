@@ -20,8 +20,8 @@ class ImportMissingClassesHandler implements Handler
     public const PARAM_PATH = 'path';
 
     public function __construct(
-        private RequestHandler $handler,
-        private Reflector $reflector
+        private readonly RequestHandler $handler,
+        private readonly Reflector $reflector
     ) {
     }
 

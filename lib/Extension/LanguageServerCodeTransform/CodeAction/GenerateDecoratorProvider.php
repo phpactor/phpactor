@@ -19,7 +19,7 @@ class GenerateDecoratorProvider implements CodeActionProvider
 {
     public const KIND = 'quickfix.generate_decorator';
 
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
 

@@ -11,8 +11,8 @@ class PhpactorConfigChange implements Change
      * @param Closure(bool):array<string,mixed> $keyValues
      */
     public function __construct(
-        private string $prompt,
-        private Closure $keyValues
+        private readonly string $prompt,
+        private readonly Closure $keyValues
     ) {
     }
 

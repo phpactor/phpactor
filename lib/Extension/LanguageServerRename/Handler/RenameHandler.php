@@ -31,10 +31,10 @@ use function Amp\delay;
 class RenameHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private LocatedTextEditConverter $converter,
-        private TextDocumentLocator $documentLocator,
-        private Renamer $renamer,
-        private ClientApi $clientApi
+        private readonly LocatedTextEditConverter $converter,
+        private readonly TextDocumentLocator $documentLocator,
+        private readonly Renamer $renamer,
+        private readonly ClientApi $clientApi
     ) {
     }
 

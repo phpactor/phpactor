@@ -26,8 +26,8 @@ class IndexCleanCommand extends Command
     public const OPT_CLEAN_ALL = 'all';
 
     public function __construct(
-        private IndexLister $indexLister,
-        private Filesystem $filesystem
+        private readonly IndexLister $indexLister,
+        private readonly Filesystem $filesystem
     ) {
         parent::__construct();
     }

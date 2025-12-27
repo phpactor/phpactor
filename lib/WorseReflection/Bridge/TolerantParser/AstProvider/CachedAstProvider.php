@@ -11,11 +11,11 @@ use Phpactor\WorseReflection\Core\Cache\TtlCache;
 
 class CachedAstProvider implements AstProvider
 {
-    private CacheForDocument $cacheForDocument;
+    private readonly CacheForDocument $cacheForDocument;
 
     public function __construct(
-        private AstProvider $astProvider,
-        private Cache $cache = new TtlCache(),
+        private readonly AstProvider $astProvider,
+        private readonly Cache $cache = new TtlCache(),
         ?CacheForDocument $cacheForDocument = null
     ) {
         $this->cacheForDocument = $cacheForDocument ?? CacheForDocument::none();

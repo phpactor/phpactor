@@ -7,9 +7,9 @@ use Phpactor\WorseReflection\Core\Visibility;
 class TraitAlias
 {
     public function __construct(
-        private string $originalName,
-        private ?Visibility $visiblity,
-        private string $newName
+        private readonly string $originalName,
+        private readonly ?Visibility $visiblity,
+        private readonly string $newName
     ) {
     }
 

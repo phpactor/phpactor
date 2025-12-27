@@ -11,7 +11,7 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 class LocationConverter
 {
-    public function __construct(private TextDocumentLocator $locator)
+    public function __construct(private readonly TextDocumentLocator $locator)
     {
     }
 

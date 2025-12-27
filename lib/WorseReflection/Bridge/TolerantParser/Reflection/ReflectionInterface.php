@@ -36,10 +36,10 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
      * @param array<string,bool> $visited
      */
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private TextDocument $sourceCode,
-        private InterfaceDeclaration $node,
-        private array $visited = []
+        private readonly ServiceLocator $serviceLocator,
+        private readonly TextDocument $sourceCode,
+        private readonly InterfaceDeclaration $node,
+        private readonly array $visited = []
     ) {
     }
 

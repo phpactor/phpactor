@@ -9,9 +9,9 @@ use SplFileInfo;
 class IndexJob
 {
     public function __construct(
-        private IndexBuilder $indexBuilder,
-        private FileList $fileList,
-        private ?int $maxFileSizeToIndex,
+        private readonly IndexBuilder $indexBuilder,
+        private readonly FileList $fileList,
+        private readonly ?int $maxFileSizeToIndex,
     ) {
     }
 

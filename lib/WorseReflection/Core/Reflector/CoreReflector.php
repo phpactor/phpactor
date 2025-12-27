@@ -35,8 +35,8 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector, ConstantReflector
 {
     public function __construct(
-        private SourceCodeReflector $sourceReflector,
-        private SourceCodeLocator $sourceLocator
+        private readonly SourceCodeReflector $sourceReflector,
+        private readonly SourceCodeLocator $sourceLocator
     ) {
     }
 

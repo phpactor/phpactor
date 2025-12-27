@@ -10,8 +10,8 @@ use Phpactor\TextDocument\TextDocument;
 class DefinitionAndReferenceFinder implements ReferenceFinder
 {
     public function __construct(
-        private DefinitionLocator $locator,
-        private ReferenceFinder $referenceFinder
+        private readonly DefinitionLocator $locator,
+        private readonly ReferenceFinder $referenceFinder
     ) {
     }
 

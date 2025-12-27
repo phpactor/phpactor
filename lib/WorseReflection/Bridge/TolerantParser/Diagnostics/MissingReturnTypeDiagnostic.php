@@ -10,10 +10,10 @@ use Phpactor\WorseReflection\Core\Type;
 class MissingReturnTypeDiagnostic implements Diagnostic
 {
     public function __construct(
-        private ByteOffsetRange $range,
-        private string $classType,
-        private string $methodName,
-        private Type $returnType
+        private readonly ByteOffsetRange $range,
+        private readonly string $classType,
+        private readonly string $methodName,
+        private readonly Type $returnType
     ) {
     }
 

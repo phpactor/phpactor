@@ -16,12 +16,12 @@ use Phar;
 class Status
 {
     public function __construct(
-        private FilesystemRegistry $registry,
-        private PathCandidates $paths,
-        private string $workingDirectory,
-        private PhpVersionResolver $phpVersionResolver,
-        private Trust $trust,
-        private ExecutableFinder $executableFinder = new ExecutableFinder(),
+        private readonly FilesystemRegistry $registry,
+        private readonly PathCandidates $paths,
+        private readonly string $workingDirectory,
+        private readonly PhpVersionResolver $phpVersionResolver,
+        private readonly Trust $trust,
+        private readonly ExecutableFinder $executableFinder = new ExecutableFinder(),
     ) {
     }
 

@@ -15,8 +15,8 @@ class ClassReflector
 
     // rename compositetransformer => classToFileConverter
     public function __construct(
-        private ClassFileNormalizer $classFileNormalizer,
-        private Reflector $reflector
+        private readonly ClassFileNormalizer $classFileNormalizer,
+        private readonly Reflector $reflector
     ) {
     }
 

@@ -18,7 +18,7 @@ class FilterPhpVersionDirectoryIterator extends FilterIterator
      */
     public function __construct(
         Iterator $iterator,
-        private string $phpVersion
+        private readonly string $phpVersion
     ) {
         parent::__construct($iterator);
     }

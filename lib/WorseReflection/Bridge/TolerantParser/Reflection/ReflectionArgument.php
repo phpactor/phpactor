@@ -23,9 +23,9 @@ use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 class ReflectionArgument implements CoreReflectionArgument
 {
     public function __construct(
-        private ServiceLocator $services,
-        private Frame $frame,
-        private ArgumentExpression $node
+        private readonly ServiceLocator $services,
+        private readonly Frame $frame,
+        private readonly ArgumentExpression $node
     ) {
     }
 

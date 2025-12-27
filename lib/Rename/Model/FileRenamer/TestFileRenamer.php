@@ -12,10 +12,10 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class TestFileRenamer implements FileRenamer
 {
-    private LocatedTextEditsMap $workspaceEdits;
+    private readonly LocatedTextEditsMap $workspaceEdits;
 
     public function __construct(
-        private bool $throw = false,
+        private readonly bool $throw = false,
         ?LocatedTextEditsMap $workspaceEdits = null
     ) {
         $this->workspaceEdits = $workspaceEdits ?: LocatedTextEditsMap::create();

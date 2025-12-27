@@ -16,7 +16,7 @@ class IndexInfos implements IteratorAggregate, Countable
     /**
      * @param IndexInfo[] $infos
      */
-    public function __construct(private array $infos)
+    public function __construct(private readonly array $infos)
     {
     }
 

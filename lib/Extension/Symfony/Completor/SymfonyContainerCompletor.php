@@ -23,8 +23,8 @@ class SymfonyContainerCompletor implements TolerantCompletor
     const CONTAINER_CLASS = 'Symfony\\Component\\DependencyInjection\\ContainerInterface';
 
     public function __construct(
-        private Reflector $reflector,
-        private SymfonyContainerInspector $inspector
+        private readonly Reflector $reflector,
+        private readonly SymfonyContainerInspector $inspector
     ) {
     }
 

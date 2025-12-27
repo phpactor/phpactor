@@ -32,8 +32,8 @@ use function Amp\delay;
 class TolerantSourceCodeReflector implements SourceCodeReflector
 {
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private AstProvider $parser
+        private readonly ServiceLocator $serviceLocator,
+        private readonly AstProvider $parser
     ) {
     }
 

@@ -11,8 +11,8 @@ use Phpactor\TextDocument\TextDocument;
 class DocumentingCompletor implements Completor
 {
     public function __construct(
-        private Completor $innerCompletor,
-        private SuggestionDocumentor $documentor
+        private readonly Completor $innerCompletor,
+        private readonly SuggestionDocumentor $documentor
     ) {
     }
 

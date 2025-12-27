@@ -4,7 +4,7 @@ namespace Phpactor\Indexer\Model\Name;
 
 class FullyQualifiedName
 {
-    public function __construct(private string $fqn)
+    public function __construct(private readonly string $fqn)
     {
     }
 

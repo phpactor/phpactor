@@ -9,8 +9,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset as CoreReflectionO
 final class ReflectionOffset implements CoreReflectionOffset
 {
     private function __construct(
-        private Frame $frame,
-        private NodeContext $nodeContext
+        private readonly Frame $frame,
+        private readonly NodeContext $nodeContext
     ) {
     }
 

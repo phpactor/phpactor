@@ -22,7 +22,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
  */
 class DocblockMissingImplementsTagProvider implements DiagnosticProvider
 {
-    public function __construct(private ClassGenericDiagnosticHelper $helper = new ClassGenericDiagnosticHelper())
+    public function __construct(private readonly ClassGenericDiagnosticHelper $helper = new ClassGenericDiagnosticHelper())
     {
     }
 

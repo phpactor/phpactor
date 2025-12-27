@@ -12,7 +12,7 @@ use function Amp\call;
 
 class WorseMissingMemberFinder implements MissingMemberFinder
 {
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
 

@@ -20,9 +20,9 @@ use function Amp\call;
 class UpdateReturnTypeTransformer implements Transformer
 {
     public function __construct(
-        private Reflector $reflector,
-        private Updater $updater,
-        private BuilderFactory $builderFactory
+        private readonly Reflector $reflector,
+        private readonly Updater $updater,
+        private readonly BuilderFactory $builderFactory
     ) {
     }
 

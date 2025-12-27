@@ -11,8 +11,8 @@ class LocationConfidence
     public const CONFIDENCE_MAYBE = 'maybe';
 
     public function __construct(
-        private Location $location,
-        private string $confidence
+        private readonly Location $location,
+        private readonly string $confidence
     ) {
     }
 

@@ -45,12 +45,12 @@ use Psr\Log\NullLogger;
 
 class WorseTolerantMemberFinder implements MemberFinder
 {
-    private Reflector $reflector;
+    private readonly Reflector $reflector;
 
     public function __construct(
         ?Reflector $reflector = null,
-        private AstProvider $parser = new TolerantAstProvider(),
-        private LoggerInterface $logger = new NullLogger(),
+        private readonly AstProvider $parser = new TolerantAstProvider(),
+        private readonly LoggerInterface $logger = new NullLogger(),
     ) {
         $this->reflector = $reflector ?: ReflectorBuilder::create()->addSource(TextDocumentBuilder::empty());
     }

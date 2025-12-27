@@ -561,8 +561,8 @@ class CompletionHandlerTest extends TestCase
         return new class($suggestions, $isIncomplete) implements Completor {
             public function __construct(
                 /** @var Suggestion[] */
-                private array $suggestions,
-                private bool $isIncomplete
+                private readonly array $suggestions,
+                private readonly bool $isIncomplete
             ) {
             }
 

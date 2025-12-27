@@ -15,8 +15,8 @@ class LazyAggregateProvider implements ListenerProviderInterface
      * @param list<string> $serviceIds
      */
     public function __construct(
-        private ContainerInterface $container,
-        private array $serviceIds
+        private readonly ContainerInterface $container,
+        private readonly array $serviceIds
     ) {
     }
 

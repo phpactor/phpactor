@@ -35,10 +35,10 @@ use function substr;
 class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiable
 {
     public function __construct(
-        private Reflector $reflector,
-        private ObjectFormatter $formatter,
-        private ObjectFormatter $snippetFormatter,
-        private ObjectRenderer $objectRenderer
+        private readonly Reflector $reflector,
+        private readonly ObjectFormatter $formatter,
+        private readonly ObjectFormatter $snippetFormatter,
+        private readonly ObjectRenderer $objectRenderer
     ) {
     }
 

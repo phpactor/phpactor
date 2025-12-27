@@ -25,9 +25,9 @@ class PropertyAccessGeneratorHandler extends AbstractHandler
     const PARAM_OFFSET = 'offset';
 
     public function __construct(
-        private string $name,
-        private Reflector $reflector,
-        private PropertyAccessGenerator $propertyAccessGenerator
+        private readonly string $name,
+        private readonly Reflector $reflector,
+        private readonly PropertyAccessGenerator $propertyAccessGenerator
     ) {
     }
 

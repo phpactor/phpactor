@@ -29,8 +29,8 @@ use Exception;
 class TolerantVariableReferenceFinder implements ReferenceFinder
 {
     public function __construct(
-        private AstProvider $parser,
-        private bool $includeDefinition = false
+        private readonly AstProvider $parser,
+        private readonly bool $includeDefinition = false
     ) {
     }
 

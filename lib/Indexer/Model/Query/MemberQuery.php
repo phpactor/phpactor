@@ -14,8 +14,8 @@ use Phpactor\Indexer\Model\Record\MemberRecord;
 class MemberQuery implements IndexQuery
 {
     public function __construct(
-        private Index $index,
-        private RecordReferenceEnhancer $enhancer
+        private readonly Index $index,
+        private readonly RecordReferenceEnhancer $enhancer
     ) {
     }
 

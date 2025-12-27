@@ -16,9 +16,9 @@ use Phpactor\TextDocument\TextDocument;
 class FeatureStepCompletor implements Completor
 {
     public function __construct(
-        private StepGenerator $generator,
-        private StepParser $parser,
-        private StepScorer $stepSorter = new StepScorer(),
+        private readonly StepGenerator $generator,
+        private readonly StepParser $parser,
+        private readonly StepScorer $stepSorter = new StepScorer(),
     ) {
     }
 

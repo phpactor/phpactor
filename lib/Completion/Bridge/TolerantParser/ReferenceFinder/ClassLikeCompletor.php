@@ -20,8 +20,8 @@ use Phpactor\TextDocument\TextDocument;
 class ClassLikeCompletor implements TolerantCompletor
 {
     public function __construct(
-        private NameSearcher $nameSearcher,
-        private DocumentPrioritizer $prioritizer
+        private readonly NameSearcher $nameSearcher,
+        private readonly DocumentPrioritizer $prioritizer
     ) {
     }
 

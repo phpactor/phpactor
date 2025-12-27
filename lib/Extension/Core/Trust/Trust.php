@@ -6,7 +6,7 @@ use RuntimeException;
 
 class Trust
 {
-    private bool $unconditionalTrust;
+    private readonly bool $unconditionalTrust;
 
     /**
      * @param array<string,bool> $trust

@@ -14,7 +14,7 @@ class ConstantBuilder extends AbstractBuilder implements NamedBuilder
     private ?Visibility $visibility = null;
 
     public function __construct(
-        private ClassLikeBuilder $parent,
+        private readonly ClassLikeBuilder $parent,
         protected string $name,
         mixed $value
     ) {

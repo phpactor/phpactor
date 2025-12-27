@@ -9,7 +9,7 @@ use Phpactor\Phpactor;
 
 class ClassFileNormalizer
 {
-    public function __construct(private ClassToFileFileToClass $fileClassConverter)
+    public function __construct(private readonly ClassToFileFileToClass $fileClassConverter)
     {
     }
 

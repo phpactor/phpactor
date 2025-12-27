@@ -14,9 +14,9 @@ class Pattern
      * @param array<string> $tokenNames
      */
     public function __construct(
-        private string $regex,
-        private string $pattern,
-        private array $tokenNames
+        private readonly string $regex,
+        private readonly string $pattern,
+        private readonly array $tokenNames
     ) {
     }
 

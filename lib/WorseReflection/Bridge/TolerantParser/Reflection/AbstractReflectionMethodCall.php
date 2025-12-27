@@ -31,9 +31,9 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
      * @param ScopedPropertyAccessExpression|MemberAccessExpression $node
      */
     public function __construct(
-        private ServiceLocator $services,
-        private Frame $frame,
-        private Node $node
+        private readonly ServiceLocator $services,
+        private readonly Frame $frame,
+        private readonly Node $node
     ) {
     }
 

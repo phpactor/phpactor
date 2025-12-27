@@ -21,10 +21,10 @@ class GenerateMemberCommand implements Command
     public const NAME  = 'generate_member';
 
     public function __construct(
-        private ClientApi $clientApi,
-        private Workspace $workspace,
-        private GenerateMember $generateMember,
-        private TextDocumentLocator $locator
+        private readonly ClientApi $clientApi,
+        private readonly Workspace $workspace,
+        private readonly GenerateMember $generateMember,
+        private readonly TextDocumentLocator $locator
     ) {
     }
 

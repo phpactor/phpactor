@@ -24,11 +24,11 @@ class PhpCsFixerProcess
      * @param array<string,string> $env
      */
     public function __construct(
-        private string $binPath,
-        private LoggerInterface $logger,
-        private ?SemVersionResolver $versionResolver = null,
-        private array $env = [],
-        private ?string $configPath = null,
+        private readonly string $binPath,
+        private readonly LoggerInterface $logger,
+        private readonly ?SemVersionResolver $versionResolver = null,
+        private readonly array $env = [],
+        private readonly ?string $configPath = null,
     ) {
     }
 

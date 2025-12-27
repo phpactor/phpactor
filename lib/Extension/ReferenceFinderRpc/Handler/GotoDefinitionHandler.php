@@ -18,7 +18,7 @@ class GotoDefinitionHandler implements Handler
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
 
-    public function __construct(private DefinitionLocator $locator)
+    public function __construct(private readonly DefinitionLocator $locator)
     {
     }
 

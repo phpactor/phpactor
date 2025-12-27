@@ -24,9 +24,9 @@ use SplFileInfo;
 class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
 {
     public function __construct(
-        private Filesystem $filesystem,
-        private FileToClass $fileToClass,
-        private ClassQualifier $qualifier = new ClassQualifier(),
+        private readonly Filesystem $filesystem,
+        private readonly FileToClass $fileToClass,
+        private readonly ClassQualifier $qualifier = new ClassQualifier(),
     ) {
     }
 

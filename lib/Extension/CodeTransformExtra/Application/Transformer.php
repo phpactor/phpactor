@@ -9,10 +9,10 @@ use Symfony\Component\Filesystem\Path;
 
 class Transformer
 {
-    private FilesystemHelper $filesystemHelper;
+    private readonly FilesystemHelper $filesystemHelper;
 
     public function __construct(
-        private CodeTransform $transform
+        private readonly CodeTransform $transform
     ) {
         $this->filesystemHelper = new FilesystemHelper();
     }

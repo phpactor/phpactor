@@ -16,7 +16,7 @@ final class CacheForDocument
     /**
      * @param Closure(): Cache $cacheFactory
      */
-    public function __construct(private Closure $cacheFactory)
+    public function __construct(private readonly Closure $cacheFactory)
     {
     }
 

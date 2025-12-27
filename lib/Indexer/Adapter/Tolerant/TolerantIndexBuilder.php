@@ -30,10 +30,10 @@ final class TolerantIndexBuilder implements IndexBuilder
      * @param TolerantIndexer[] $indexers
      */
     public function __construct(
-        private Index $index,
-        private array $indexers,
-        private LoggerInterface $logger,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly Index $index,
+        private readonly array $indexers,
+        private readonly LoggerInterface $logger,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

@@ -7,9 +7,9 @@ use RuntimeException;
 class StandardTextDocument implements TextDocument
 {
     public function __construct(
-        private TextDocumentLanguage $language,
-        private string $text,
-        private ?TextDocumentUri $uri = null
+        private readonly TextDocumentLanguage $language,
+        private readonly string $text,
+        private readonly ?TextDocumentUri $uri = null
     ) {
     }
 

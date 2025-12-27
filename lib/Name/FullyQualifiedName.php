@@ -4,7 +4,7 @@ namespace Phpactor\Name;
 
 final class FullyQualifiedName implements Name
 {
-    private function __construct(private QualifiedName $qualifiedName)
+    private function __construct(private readonly QualifiedName $qualifiedName)
     {
     }
 

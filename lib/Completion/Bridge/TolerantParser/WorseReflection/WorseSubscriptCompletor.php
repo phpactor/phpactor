@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 
 class WorseSubscriptCompletor implements TolerantCompletor
 {
-    public function __construct(private SourceCodeReflector $reflector)
+    public function __construct(private readonly SourceCodeReflector $reflector)
     {
     }
 

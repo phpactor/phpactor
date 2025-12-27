@@ -21,8 +21,8 @@ class ClassMoveCommand extends Command
     const TYPE_FILE = 'file';
 
     public function __construct(
-        private ClassMover $mover,
-        private Prompt $prompt
+        private readonly ClassMover $mover,
+        private readonly Prompt $prompt
     ) {
         parent::__construct();
     }

@@ -23,16 +23,16 @@ use InvalidArgumentException;
 
 class ReflectionPromotedProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {
-    private PropertyTypeResolver $typeResolver;
+    private readonly PropertyTypeResolver $typeResolver;
 
-    private DeclaredMemberTypeResolver $memberTypeResolver;
+    private readonly DeclaredMemberTypeResolver $memberTypeResolver;
 
     private ?string $name = null;
 
     public function __construct(
-        private ServiceLocator $serviceLocator,
-        private ReflectionClassLike $class,
-        private Parameter $parameter
+        private readonly ServiceLocator $serviceLocator,
+        private readonly ReflectionClassLike $class,
+        private readonly Parameter $parameter
     ) {
         $this->typeResolver = new PropertyTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());

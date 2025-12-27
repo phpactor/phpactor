@@ -16,7 +16,7 @@ class SymfonyDiContextClassResolver implements ContextClassResolver
      */
     private ?array $index = null;
 
-    public function __construct(private string $xmlPath)
+    public function __construct(private readonly string $xmlPath)
     {
     }
 

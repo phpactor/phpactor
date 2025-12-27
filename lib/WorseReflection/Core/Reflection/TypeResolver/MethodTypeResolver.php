@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 
 class MethodTypeResolver
 {
-    public function __construct(private ReflectionMethod $method)
+    public function __construct(private readonly ReflectionMethod $method)
     {
     }
 

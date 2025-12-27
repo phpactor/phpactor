@@ -13,8 +13,8 @@ use Twig\TwigFunction;
 class TwigExtension extends AbstractExtension
 {
     public function __construct(
-        private TextFormat $textFormat,
-        private WorseTypeRenderer $typeRenderer
+        private readonly TextFormat $textFormat,
+        private readonly WorseTypeRenderer $typeRenderer
     ) {
     }
 

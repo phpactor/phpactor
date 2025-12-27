@@ -20,8 +20,8 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class SignatureHelpHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private Workspace $workspace,
-        private SignatureHelper $helper
+        private readonly Workspace $workspace,
+        private readonly SignatureHelper $helper
     ) {
     }
 

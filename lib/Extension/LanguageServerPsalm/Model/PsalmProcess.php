@@ -15,11 +15,11 @@ use Psr\Log\LoggerInterface;
 class PsalmProcess
 {
     public function __construct(
-        private string $cwd,
-        private PsalmConfig $config,
-        private LoggerInterface $logger,
-        private DiagnosticsParser $parser = new DiagnosticsParser(),
-        private int $timeoutSeconds = 10,
+        private readonly string $cwd,
+        private readonly PsalmConfig $config,
+        private readonly LoggerInterface $logger,
+        private readonly DiagnosticsParser $parser = new DiagnosticsParser(),
+        private readonly int $timeoutSeconds = 10,
     ) {
     }
 

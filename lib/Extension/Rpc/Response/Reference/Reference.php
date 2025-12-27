@@ -5,11 +5,11 @@ namespace Phpactor\Extension\Rpc\Response\Reference;
 class Reference
 {
     private function __construct(
-        private int $start,
-        private int $end,
-        private int $lineNumber,
-        private ?int $colNo = null,
-        private string $line = ''
+        private readonly int $start,
+        private readonly int $end,
+        private readonly int $lineNumber,
+        private readonly ?int $colNo = null,
+        private readonly string $line = ''
     ) {
     }
 

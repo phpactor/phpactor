@@ -8,9 +8,9 @@ use Phpactor\ClassMover\Domain\Model\Class_;
 class MemberReference
 {
     private function __construct(
-        private MemberName $method,
-        private Position $position,
-        private ?Class_ $class = null
+        private readonly MemberName $method,
+        private readonly Position $position,
+        private readonly ?Class_ $class = null
     ) {
     }
 

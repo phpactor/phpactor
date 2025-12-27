@@ -20,7 +20,7 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantRenameVariable implements RenameVariable
 {
-    public function __construct(private AstProvider $parser = new TolerantAstProvider())
+    public function __construct(private readonly AstProvider $parser = new TolerantAstProvider())
     {
     }
 

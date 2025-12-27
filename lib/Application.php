@@ -24,8 +24,8 @@ class Application extends SymfonyApplication
     private Container $container;
 
     public function __construct(
-        private string $vendorDir,
-        private ?string $phpactorBin = null
+        private readonly string $vendorDir,
+        private readonly ?string $phpactorBin = null
     ) {
         parent::__construct('Phpactor', Cast::toString(InstalledVersions::getVersion('phpactor/phpactor')));
     }

@@ -21,8 +21,8 @@ use RuntimeException;
 class ParserDocblockUpdater implements DocBlockUpdater
 {
     public function __construct(
-        private DocblockParser $parser,
-        private TextFormat $textFormat
+        private readonly DocblockParser $parser,
+        private readonly TextFormat $textFormat
     ) {
     }
 

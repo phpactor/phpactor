@@ -18,8 +18,8 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
     private ?DOMXPath $cache = null;
 
     public function __construct(
-        private string $xmlPath,
-        private bool $publicOnly = false
+        private readonly string $xmlPath,
+        private readonly bool $publicOnly = false
     ) {
     }
 

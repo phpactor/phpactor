@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class Docblock
 {
-    private function __construct(private ?string $docblock = null)
+    private function __construct(private readonly ?string $docblock = null)
     {
     }
 

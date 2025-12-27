@@ -29,13 +29,13 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class ReferencesHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private Workspace $workspace,
-        private ReferenceFinder $finder,
-        private DefinitionLocator $definitionLocator,
-        private LocationConverter $locationConverter,
-        private ClientApi $clientApi,
-        private float $timeoutSeconds = 30.0,
-        private float $softTimeoutSeconds = 10.0,
+        private readonly Workspace $workspace,
+        private readonly ReferenceFinder $finder,
+        private readonly DefinitionLocator $definitionLocator,
+        private readonly LocationConverter $locationConverter,
+        private readonly ClientApi $clientApi,
+        private readonly float $timeoutSeconds = 30.0,
+        private readonly float $softTimeoutSeconds = 10.0,
     ) {
     }
 

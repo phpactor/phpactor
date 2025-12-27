@@ -21,9 +21,9 @@ class MemberAccessContext extends NodeContext
         Symbol $symbol,
         Type $type,
         Type $containerType,
-        private ByteOffsetRange $memberNameRange,
+        private readonly ByteOffsetRange $memberNameRange,
         protected ReflectionMember $member,
-        private ?FunctionArguments $arguments,
+        private readonly ?FunctionArguments $arguments,
     ) {
         parent::__construct($symbol, $type, $containerType);
     }

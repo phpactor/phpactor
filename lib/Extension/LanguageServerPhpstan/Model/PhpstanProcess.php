@@ -12,10 +12,10 @@ use Psr\Log\LoggerInterface;
 class PhpstanProcess
 {
     public function __construct(
-        private string $cwd,
-        private PhpstanConfig $config,
-        private LoggerInterface $logger,
-        private DiagnosticsParser $parser = new DiagnosticsParser(),
+        private readonly string $cwd,
+        private readonly PhpstanConfig $config,
+        private readonly LoggerInterface $logger,
+        private readonly DiagnosticsParser $parser = new DiagnosticsParser(),
     ) {
     }
 

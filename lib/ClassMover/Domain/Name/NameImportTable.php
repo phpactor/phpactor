@@ -12,7 +12,7 @@ class NameImportTable
 
     /** @param ImportedNameReference[] $importedNamespaceNames */
     private function __construct(
-        private Namespace_ $namespace,
+        private readonly Namespace_ $namespace,
         array $importedNamespaceNames
     ) {
         foreach ($importedNamespaceNames as $importedNamespaceName) {

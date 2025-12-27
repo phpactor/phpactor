@@ -39,8 +39,8 @@ class InlayHintWalker implements Walker
     private array $hints = [];
 
     public function __construct(
-        private ByteOffsetRange $range,
-        private InlayHintOptions $options
+        private readonly ByteOffsetRange $range,
+        private readonly InlayHintOptions $options
     ) {
     }
 

@@ -10,8 +10,8 @@ use Phpactor\TextDocument\TextDocument;
 class DedupeCompletor implements Completor
 {
     public function __construct(
-        private Completor $innerCompletor,
-        private bool $matchNameImport = false
+        private readonly Completor $innerCompletor,
+        private readonly bool $matchNameImport = false
     ) {
     }
 

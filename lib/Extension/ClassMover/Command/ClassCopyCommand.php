@@ -19,8 +19,8 @@ class ClassCopyCommand extends Command
     const TYPE_FILE = 'file';
 
     public function __construct(
-        private ClassCopy $copier,
-        private Prompt $prompt
+        private readonly ClassCopy $copier,
+        private readonly Prompt $prompt
     ) {
         parent::__construct();
     }

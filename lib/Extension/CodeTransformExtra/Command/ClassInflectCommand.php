@@ -17,8 +17,8 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class ClassInflectCommand extends Command
 {
     public function __construct(
-        private ClassInflect $classInflect,
-        private DumperRegistry $dumperRegistry
+        private readonly ClassInflect $classInflect,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
     }

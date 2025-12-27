@@ -22,10 +22,10 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private Workspace $workspace,
-        private DefinitionLocator $definitionLocator,
-        private LocationConverter $locationConverter,
-        private ClientApi $clientApi
+        private readonly Workspace $workspace,
+        private readonly DefinitionLocator $definitionLocator,
+        private readonly LocationConverter $locationConverter,
+        private readonly ClientApi $clientApi
     ) {
     }
 

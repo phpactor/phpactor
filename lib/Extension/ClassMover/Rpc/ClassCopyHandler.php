@@ -15,7 +15,7 @@ class ClassCopyHandler extends AbstractHandler
     const PARAM_SOURCE_PATH = 'source_path';
     const PARAM_DEST_PATH = 'dest_path';
 
-    public function __construct(private ClassCopy $classCopy)
+    public function __construct(private readonly ClassCopy $classCopy)
     {
     }
 

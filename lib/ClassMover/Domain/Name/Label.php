@@ -4,7 +4,7 @@ namespace Phpactor\ClassMover\Domain\Name;
 
 class Label
 {
-    private function __construct(private string $label)
+    private function __construct(private readonly string $label)
     {
     }
 

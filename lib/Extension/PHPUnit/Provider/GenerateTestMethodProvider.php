@@ -17,7 +17,7 @@ use Phpactor\Extension\PHPUnit\LspCommand\GenerateTestMethodCommand;
 
 class GenerateTestMethodProvider implements CodeActionProvider
 {
-    public function __construct(private GenerateTestMethods $generateTestMethods)
+    public function __construct(private readonly GenerateTestMethods $generateTestMethods)
     {
     }
 

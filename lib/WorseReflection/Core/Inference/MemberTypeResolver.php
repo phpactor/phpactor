@@ -17,7 +17,7 @@ class MemberTypeResolver
     const TYPE_CONSTANTS = 'constants';
     const TYPE_PROPERTIES = 'properties';
 
-    public function __construct(private ClassReflector $reflector)
+    public function __construct(private readonly ClassReflector $reflector)
     {
     }
 

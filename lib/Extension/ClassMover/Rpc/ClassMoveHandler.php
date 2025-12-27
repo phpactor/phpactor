@@ -22,8 +22,8 @@ class ClassMoveHandler extends AbstractHandler
     private const PARAM_ADDITIONAL_MOVE_CONFIRM = 'move_related';
 
     public function __construct(
-        private ClassMover $classMove,
-        private string $defaultFilesystem
+        private readonly ClassMover $classMove,
+        private readonly string $defaultFilesystem
     ) {
     }
 

@@ -26,10 +26,10 @@ use Phpactor\WorseReflection\Reflector;
 class WorseGenerateConstructor implements GenerateConstructor
 {
     public function __construct(
-        private Reflector $reflector,
-        private BuilderFactory $factory,
-        private Updater $updater,
-        private AstProvider $parser
+        private readonly Reflector $reflector,
+        private readonly BuilderFactory $factory,
+        private readonly Updater $updater,
+        private readonly AstProvider $parser
     ) {
     }
 

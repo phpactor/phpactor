@@ -21,8 +21,8 @@ use function Amp\call;
 class CandidateFinder
 {
     public function __construct(
-        private Reflector $reflector,
-        private SearchClient $client
+        private readonly Reflector $reflector,
+        private readonly SearchClient $client
     ) {
     }
 

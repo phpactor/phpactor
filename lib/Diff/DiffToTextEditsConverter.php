@@ -10,7 +10,7 @@ use SebastianBergmann\Diff\Parser;
 
 class DiffToTextEditsConverter
 {
-    private Parser $parser;
+    private readonly Parser $parser;
 
     public function __construct()
     {

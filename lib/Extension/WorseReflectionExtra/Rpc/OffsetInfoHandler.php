@@ -15,7 +15,7 @@ class OffsetInfoHandler implements Handler
 {
     const NAME = 'offset_info';
 
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
 

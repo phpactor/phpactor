@@ -7,15 +7,15 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 
 final class Variable
 {
-    private string $name;
+    private readonly string $name;
 
     public function __construct(
         string $name,
-        private int $offset,
-        private Type $type,
-        private ?Type $classType = null,
-        private bool $wasAssigned = false,
-        private bool $wasDefined = false
+        private readonly int $offset,
+        private readonly Type $type,
+        private readonly ?Type $classType = null,
+        private readonly bool $wasAssigned = false,
+        private readonly bool $wasDefined = false
     ) {
         $this->name = ltrim($name, '$');
     }

@@ -21,9 +21,9 @@ class WorkspaceUpdateReferenceFinder implements ReferenceFinder
     private int $counter = 0;
 
     public function __construct(
-        private Workspace $workspace,
-        private Indexer $indexer,
-        private ReferenceFinder $innerReferenceFinder
+        private readonly Workspace $workspace,
+        private readonly Indexer $indexer,
+        private readonly ReferenceFinder $innerReferenceFinder
     ) {
     }
 

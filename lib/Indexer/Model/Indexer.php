@@ -8,11 +8,11 @@ use Phpactor\TextDocument\TextDocument;
 class Indexer
 {
     public function __construct(
-        private IndexBuilder $builder,
-        private Index $index,
-        private FileListProvider $provider,
-        private ?int $maxFileSizeToIndex,
-        private DirtyDocumentTracker $dirtyDocumentTracker = new NullDirtyDocumentTracker(),
+        private readonly IndexBuilder $builder,
+        private readonly Index $index,
+        private readonly FileListProvider $provider,
+        private readonly ?int $maxFileSizeToIndex,
+        private readonly DirtyDocumentTracker $dirtyDocumentTracker = new NullDirtyDocumentTracker(),
     ) {
     }
 

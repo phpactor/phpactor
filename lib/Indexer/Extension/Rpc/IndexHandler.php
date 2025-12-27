@@ -19,8 +19,8 @@ class IndexHandler implements Handler
     const PARAM_INTERVAL = 'interval';
 
     public function __construct(
-        private Indexer $indexer,
-        private Watcher $watcher
+        private readonly Indexer $indexer,
+        private readonly Watcher $watcher
     ) {
     }
 

@@ -8,13 +8,13 @@ use Phpactor\FilePathResolver\Expander;
 class CallbackExpander implements Expander
 {
     /** @var Closure():string */
-    private Closure $callback;
+    private readonly Closure $callback;
 
     /**
      * @param Closure():string $callback
     */
     public function __construct(
-        private string $tokenName,
+        private readonly string $tokenName,
         Closure $callback
     ) {
         $this->callback = $callback;

@@ -11,7 +11,7 @@ use Phpactor\MapResolver\Resolver;
 
 class TestLanguageServerSessionExtension implements Extension
 {
-    private LanguageServerSessionExtension $sessionExtension;
+    private readonly LanguageServerSessionExtension $sessionExtension;
 
     public function __construct()
     {

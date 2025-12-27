@@ -13,7 +13,7 @@ class BlackfireProfiler
 
     private bool $probing = false;
 
-    public function __construct(private Client $blackfire)
+    public function __construct(private readonly Client $blackfire)
     {
     }
 

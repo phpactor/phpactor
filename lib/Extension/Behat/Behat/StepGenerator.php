@@ -11,9 +11,9 @@ use IteratorAggregate;
 class StepGenerator implements IteratorAggregate
 {
     public function __construct(
-        private BehatConfig $config,
-        private StepFactory $factory,
-        private StepParser $parser
+        private readonly BehatConfig $config,
+        private readonly StepFactory $factory,
+        private readonly StepParser $parser
     ) {
     }
 

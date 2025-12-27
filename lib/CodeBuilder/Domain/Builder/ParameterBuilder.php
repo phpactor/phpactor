@@ -22,7 +22,7 @@ class ParameterBuilder extends AbstractBuilder
     protected ?Visibility $visibility = null;
 
     public function __construct(
-        private MethodBuilder $parent,
+        private readonly MethodBuilder $parent,
         protected string $name
     ) {
     }

@@ -15,8 +15,8 @@ use Phpactor\TextDocument\TextEdits;
 class ClassMover
 {
     public function __construct(
-        private ClassFinder $finder = new TolerantClassFinder(),
-        private ClassReplacer $replacer = new TolerantClassReplacer(new TolerantUpdater(new TwigRenderer())),
+        private readonly ClassFinder $finder = new TolerantClassFinder(),
+        private readonly ClassReplacer $replacer = new TolerantClassReplacer(new TolerantUpdater(new TwigRenderer())),
     ) {
     }
 

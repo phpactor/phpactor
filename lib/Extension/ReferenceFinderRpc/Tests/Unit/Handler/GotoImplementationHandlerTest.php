@@ -58,7 +58,7 @@ class GotoImplementationHandlerTest extends TestCase
             /**
              * @param Location[] $locations
              */
-            public function __construct(private array $locations)
+            public function __construct(private readonly array $locations)
             {
             }
 

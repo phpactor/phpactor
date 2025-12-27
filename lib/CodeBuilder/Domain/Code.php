@@ -9,7 +9,7 @@ use RuntimeException;
 
 class Code implements TextDocument
 {
-    private function __construct(private string $code)
+    private function __construct(private readonly string $code)
     {
     }
 

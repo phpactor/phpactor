@@ -33,9 +33,9 @@ use Phpactor\WorseReflection\Reflector;
 class WorseSignatureHelper implements SignatureHelper
 {
     public function __construct(
-        private Reflector $reflector,
-        private ObjectFormatter $formatter,
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly Reflector $reflector,
+        private readonly ObjectFormatter $formatter,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
     }
 

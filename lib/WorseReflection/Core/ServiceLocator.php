@@ -34,17 +34,17 @@ use Psr\Log\LoggerInterface;
 
 class ServiceLocator
 {
-    private SourceCodeLocator $sourceLocator;
+    private readonly SourceCodeLocator $sourceLocator;
 
-    private LoggerInterface $logger;
+    private readonly LoggerInterface $logger;
 
-    private Reflector $reflector;
+    private readonly Reflector $reflector;
 
     private DocBlockFactory $docblockFactory;
 
-    private Cache $cache;
+    private readonly Cache $cache;
 
-    private NodeToTypeConverter $nameResolver;
+    private readonly NodeToTypeConverter $nameResolver;
 
     /**
      * @param Walker[] $frameWalkers
@@ -56,12 +56,12 @@ class ServiceLocator
         SourceCodeLocator $sourceLocator,
         LoggerInterface $logger,
         SourceCodeReflectorFactory $reflectorFactory,
-        private array $frameWalkers,
-        private array $methodProviders,
-        private array $diagnosticProviders,
-        private array $memberContextResolvers,
+        private readonly array $frameWalkers,
+        private readonly array $methodProviders,
+        private readonly array $diagnosticProviders,
+        private readonly array $memberContextResolvers,
         Cache $cache,
-        private CacheForDocument $cacheForDocument,
+        private readonly CacheForDocument $cacheForDocument,
         bool $enableContextualLocation = false,
     ) {
         $sourceReflector = $reflectorFactory->create($this);

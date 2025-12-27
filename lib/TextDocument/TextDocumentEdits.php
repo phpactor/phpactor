@@ -13,8 +13,8 @@ use IteratorAggregate;
 class TextDocumentEdits implements IteratorAggregate
 {
     public function __construct(
-        private TextDocumentUri $uri,
-        private TextEdits $textEdits
+        private readonly TextDocumentUri $uri,
+        private readonly TextEdits $textEdits
     ) {
     }
 

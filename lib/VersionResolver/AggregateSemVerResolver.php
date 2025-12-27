@@ -8,7 +8,7 @@ use function Amp\call;
 class AggregateSemVerResolver implements SemVersionResolver
 {
     /** @var SemVersionResolver[] */
-    private array $resolvers;
+    private readonly array $resolvers;
 
     public function __construct(
         SemVersionResolver ...$resolvers,

@@ -13,8 +13,8 @@ class ExtensionDocumentor implements Documentor
      * @param array<string> $extensionFqns
      */
     public function __construct(
-        private array $extensionFqns,
-        private DefinitionDocumentor $definitionDocumentor
+        private readonly array $extensionFqns,
+        private readonly DefinitionDocumentor $definitionDocumentor
     ) {
     }
 

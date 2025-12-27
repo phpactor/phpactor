@@ -14,10 +14,10 @@ use Symfony\Component\Console\Terminal;
 class ConfigDumpCommand extends Command
 {
     public function __construct(
-        private array $config,
-        private DumperRegistry $registry,
-        private PathCandidates $paths,
-        private Expanders $expanders
+        private readonly array $config,
+        private readonly DumperRegistry $registry,
+        private readonly PathCandidates $paths,
+        private readonly Expanders $expanders
     ) {
         parent::__construct();
     }

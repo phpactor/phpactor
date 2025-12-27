@@ -19,7 +19,7 @@ class AnalyseCommand extends Command
     const OPT_IGNORE_FAILURE = 'ignore-failure';
     const OPT_FORMAT = 'format';
 
-    public function __construct(private Analyser $analyser)
+    public function __construct(private readonly Analyser $analyser)
     {
         parent::__construct();
     }

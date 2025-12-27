@@ -7,7 +7,7 @@ class ChainNavigator implements Navigator
     /**
      * @param Navigator[] $navigators
      */
-    public function __construct(private array $navigators)
+    public function __construct(private readonly array $navigators)
     {
     }
 

@@ -18,9 +18,9 @@ class GenerateTestMethodCommand implements Command
     public const NAME = 'generate_test_methods';
 
     public function __construct(
-        private ClientApi $clientApi,
-        private Workspace $workspace,
-        private GenerateTestMethods $generateTestMethods,
+        private readonly ClientApi $clientApi,
+        private readonly Workspace $workspace,
+        private readonly GenerateTestMethods $generateTestMethods,
     ) {
     }
 

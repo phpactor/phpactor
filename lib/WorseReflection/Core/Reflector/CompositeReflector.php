@@ -27,10 +27,10 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 class CompositeReflector implements Reflector
 {
     public function __construct(
-        private ClassReflector $classReflector,
-        private SourceCodeReflector $sourceCodeReflector,
-        private FunctionReflector $functionReflector,
-        private ConstantReflector $constantReflector
+        private readonly ClassReflector $classReflector,
+        private readonly SourceCodeReflector $sourceCodeReflector,
+        private readonly FunctionReflector $functionReflector,
+        private readonly ConstantReflector $constantReflector
     ) {
     }
 

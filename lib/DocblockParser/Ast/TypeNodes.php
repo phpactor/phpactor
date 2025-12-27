@@ -16,7 +16,7 @@ class TypeNodes implements IteratorAggregate, Countable
     /**
      * @var TypeNode[]
      */
-    private array $types;
+    private readonly array $types;
 
     public function __construct(TypeNode ...$types)
     {

@@ -6,7 +6,7 @@ class CachingPathResolver implements PathResolver
 {
     private array $cache = [];
 
-    public function __construct(private PathResolver $innerPathResolver)
+    public function __construct(private readonly PathResolver $innerPathResolver)
     {
     }
 

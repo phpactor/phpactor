@@ -19,7 +19,7 @@ use function preg_match;
 
 class TolerantExtractExpression implements ExtractExpression
 {
-    public function __construct(private AstProvider $parser = new TolerantAstProvider())
+    public function __construct(private readonly AstProvider $parser = new TolerantAstProvider())
     {
     }
 

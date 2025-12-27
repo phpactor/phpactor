@@ -25,10 +25,10 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class ClassReferences
 {
     public function __construct(
-        private ClassFileNormalizer $classFileNormalizerasd,
-        private ClassFinder $refFinder,
-        private ClassReplacer $refReplacer,
-        private FilesystemRegistry $filesystemRegistry
+        private readonly ClassFileNormalizer $classFileNormalizerasd,
+        private readonly ClassFinder $refFinder,
+        private readonly ClassReplacer $refReplacer,
+        private readonly FilesystemRegistry $filesystemRegistry
     ) {
     }
 

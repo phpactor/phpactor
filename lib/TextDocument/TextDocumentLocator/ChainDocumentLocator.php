@@ -12,7 +12,7 @@ class ChainDocumentLocator implements TextDocumentLocator
     /**
      * @param TextDocumentLocator[] $locators
      */
-    public function __construct(private array $locators)
+    public function __construct(private readonly array $locators)
     {
     }
 

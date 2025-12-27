@@ -10,10 +10,10 @@ use Phpactor\WorseReflection\Core\DiagnosticTag;
 class DeprecatedUsageDiagnostic implements Diagnostic
 {
     public function __construct(
-        private ByteOffsetRange $range,
-        private string $memberName,
-        private string $message,
-        private string $memberType
+        private readonly ByteOffsetRange $range,
+        private readonly string $memberName,
+        private readonly string $message,
+        private readonly string $memberType
     ) {
     }
 

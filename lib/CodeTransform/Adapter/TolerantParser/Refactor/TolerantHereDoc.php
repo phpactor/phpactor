@@ -17,7 +17,7 @@ use Microsoft\PhpParser\TokenKind;
 
 class TolerantHereDoc implements ByteOffsetRefactor
 {
-    public function __construct(private AstProvider $parser)
+    public function __construct(private readonly AstProvider $parser)
     {
     }
 

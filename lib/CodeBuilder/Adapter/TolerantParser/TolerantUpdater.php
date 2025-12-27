@@ -26,20 +26,20 @@ use Phpactor\WorseReflection\Core\AstProvider;
 
 class TolerantUpdater implements Updater
 {
-    private ClassUpdater $classUpdater;
+    private readonly ClassUpdater $classUpdater;
 
-    private InterfaceUpdater $interfaceUpdater;
+    private readonly InterfaceUpdater $interfaceUpdater;
 
-    private TraitUpdater $traitUpdater;
+    private readonly TraitUpdater $traitUpdater;
 
-    private EnumUpdater $enumUpdater;
+    private readonly EnumUpdater $enumUpdater;
 
-    private UseStatementUpdater $useStatementUpdater;
+    private readonly UseStatementUpdater $useStatementUpdater;
 
     public function __construct(
-        private Renderer $renderer,
-        private TextFormat $textFormat = new TextFormat(),
-        private AstProvider $parser = new TolerantAstProvider(),
+        private readonly Renderer $renderer,
+        private readonly TextFormat $textFormat = new TextFormat(),
+        private readonly AstProvider $parser = new TolerantAstProvider(),
     ) {
         $this->classUpdater = new ClassUpdater($renderer);
         $this->interfaceUpdater = new InterfaceUpdater($renderer);

@@ -11,7 +11,7 @@ class ChainFileListProvider implements FileListProvider
     /**
      * @var array<FileListProvider>
      */
-    private array $providers;
+    private readonly array $providers;
 
     public function __construct(FileListProvider ...$providers)
     {

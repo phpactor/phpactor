@@ -9,7 +9,7 @@ use Phpactor\Extension\Core\Application\Status;
 
 class StatusCommand extends Command
 {
-    public function __construct(private Status $status)
+    public function __construct(private readonly Status $status)
     {
         parent::__construct();
     }

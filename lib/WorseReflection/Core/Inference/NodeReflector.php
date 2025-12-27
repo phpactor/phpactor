@@ -22,7 +22,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMe
 
 class NodeReflector
 {
-    public function __construct(private ServiceLocator $services)
+    public function __construct(private readonly ServiceLocator $services)
     {
     }
 

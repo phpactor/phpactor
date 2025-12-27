@@ -22,9 +22,9 @@ use Phpactor\CodeBuilder\Domain\BuilderFactory;
 class WorseOverrideMethod implements OverrideMethod
 {
     public function __construct(
-        private Reflector $reflector,
-        private BuilderFactory $factory,
-        private Updater $updater
+        private readonly Reflector $reflector,
+        private readonly BuilderFactory $factory,
+        private readonly Updater $updater
     ) {
     }
 

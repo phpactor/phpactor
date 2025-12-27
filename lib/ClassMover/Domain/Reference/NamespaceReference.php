@@ -7,8 +7,8 @@ use Phpactor\ClassMover\Domain\Name\Namespace_;
 final class NamespaceReference
 {
     private function __construct(
-        private Namespace_ $namespace,
-        private Position $position,
+        private readonly Namespace_ $namespace,
+        private readonly Position $position,
     ) {
     }
 

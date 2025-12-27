@@ -4,18 +4,18 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class Parameter extends Prototype
 {
-    private Type $type;
+    private readonly Type $type;
 
-    private DefaultValue $defaultValue;
+    private readonly DefaultValue $defaultValue;
 
     public function __construct(
-        private string $name,
+        private readonly string $name,
         ?Type $type = null,
         ?DefaultValue $defaultValue = null,
-        private bool $byReference = false,
+        private readonly bool $byReference = false,
         ?UpdatePolicy $updatePolicy = null,
-        private bool $isVariadic = false,
-        private ?Visibility $visibility = null
+        private readonly bool $isVariadic = false,
+        private readonly ?Visibility $visibility = null
     ) {
         parent::__construct($updatePolicy);
         $this->type = $type ?: Type::none();

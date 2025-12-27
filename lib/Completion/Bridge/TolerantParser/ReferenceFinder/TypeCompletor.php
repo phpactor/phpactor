@@ -12,7 +12,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class TypeCompletor implements TolerantCompletor
 {
-    public function __construct(private TypeSuggestionProvider $provider)
+    public function __construct(private readonly TypeSuggestionProvider $provider)
     {
     }
 

@@ -13,9 +13,9 @@ use Psr\Log\LoggerInterface;
 class ValidatingSearchIndex implements SearchIndex
 {
     public function __construct(
-        private SearchIndex $innerIndex,
-        private IndexAccess $index,
-        private LoggerInterface $logger
+        private readonly SearchIndex $innerIndex,
+        private readonly IndexAccess $index,
+        private readonly LoggerInterface $logger
     ) {
     }
 

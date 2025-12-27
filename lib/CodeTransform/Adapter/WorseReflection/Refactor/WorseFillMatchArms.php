@@ -23,8 +23,8 @@ use Phpactor\WorseReflection\Reflector;
 final class WorseFillMatchArms implements ByteOffsetRefactor
 {
     public function __construct(
-        private Reflector $reflector,
-        private AstProvider $parser,
+        private readonly Reflector $reflector,
+        private readonly AstProvider $parser,
     ) {
     }
 

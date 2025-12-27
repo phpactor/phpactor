@@ -21,7 +21,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
  */
 class UndefinedVariableProvider implements DiagnosticProvider
 {
-    public function __construct(private int $suggestionLevensteinDistance = 4)
+    public function __construct(private readonly int $suggestionLevensteinDistance = 4)
     {
     }
 

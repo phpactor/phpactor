@@ -10,7 +10,7 @@ final class NameSearchResultType
     public const TYPE_FUNCTION = 'function';
     public const TYPE_CONSTANT = 'constant';
 
-    private string $type;
+    private readonly string $type;
 
     public function __construct(string $type)
     {

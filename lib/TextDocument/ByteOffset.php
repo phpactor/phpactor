@@ -6,7 +6,7 @@ use Phpactor\TextDocument\Exception\InvalidByteOffset;
 
 class ByteOffset
 {
-    private int $offset;
+    private readonly int $offset;
 
     private function __construct(int $offset)
     {

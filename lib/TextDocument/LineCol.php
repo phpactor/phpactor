@@ -16,9 +16,9 @@ final class LineCol
 {
     public const NEWLINE_PATTERN = '\\r\\n|\\n|\\r';
 
-    private int $line;
+    private readonly int $line;
 
-    private int $col;
+    private readonly int $col;
 
     public function __construct(int $line, int $col)
     {

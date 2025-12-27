@@ -4,9 +4,9 @@ namespace Phpactor\WorseReflection\Core;
 
 class Trinary
 {
-    private bool $maybe;
+    private readonly bool $maybe;
 
-    private function __construct(private ?bool $true)
+    private function __construct(private readonly ?bool $true)
     {
         // when using === comparison null and false equate
         // to the same thing :/

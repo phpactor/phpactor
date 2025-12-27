@@ -12,7 +12,7 @@ use Phpactor\ClassFileConverter\Domain\ClassName;
 
 class ClassToFileSourceLocator implements SourceCodeLocator
 {
-    public function __construct(private ClassToFile $converter)
+    public function __construct(private readonly ClassToFile $converter)
     {
     }
 

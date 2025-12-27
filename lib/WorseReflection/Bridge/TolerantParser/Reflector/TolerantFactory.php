@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 
 class TolerantFactory implements SourceCodeReflectorFactory
 {
-    public function __construct(private AstProvider $parser = new TolerantAstProvider())
+    public function __construct(private readonly AstProvider $parser = new TolerantAstProvider())
     {
     }
 

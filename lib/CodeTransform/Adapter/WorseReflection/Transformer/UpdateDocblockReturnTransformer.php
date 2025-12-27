@@ -20,10 +20,10 @@ use function Amp\call;
 class UpdateDocblockReturnTransformer implements Transformer
 {
     public function __construct(
-        private Reflector $reflector,
-        private Updater $updater,
-        private BuilderFactory $builderFactory,
-        private DocBlockUpdater $docblockUpdater,
+        private readonly Reflector $reflector,
+        private readonly Updater $updater,
+        private readonly BuilderFactory $builderFactory,
+        private readonly DocBlockUpdater $docblockUpdater,
     ) {
     }
 

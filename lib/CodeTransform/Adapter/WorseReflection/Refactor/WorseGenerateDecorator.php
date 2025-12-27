@@ -18,8 +18,8 @@ use Phpactor\WorseReflection\Reflector;
 class WorseGenerateDecorator implements GenerateDecorator
 {
     public function __construct(
-        private Reflector $reflector,
-        private Updater $updater
+        private readonly Reflector $reflector,
+        private readonly Updater $updater
     ) {
     }
 

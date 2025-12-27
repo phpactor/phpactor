@@ -13,7 +13,7 @@ use function get_debug_type;
 
 class DebugContainerCommand extends Command
 {
-    public function __construct(private Container $container)
+    public function __construct(private readonly Container $container)
     {
         parent::__construct();
     }

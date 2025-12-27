@@ -14,8 +14,8 @@ final class TrustHandler implements Handler
     const PARAM_TRUST = 'trust';
 
     public function __construct(
-        private Trust $status,
-        private string $projectDir
+        private readonly Trust $status,
+        private readonly string $projectDir
     ) {
     }
 

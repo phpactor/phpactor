@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Php\Model;
 
 class ConstantPhpVersionResolver implements PhpVersionResolver
 {
-    public function __construct(private ?string $version)
+    public function __construct(private readonly ?string $version)
     {
     }
 

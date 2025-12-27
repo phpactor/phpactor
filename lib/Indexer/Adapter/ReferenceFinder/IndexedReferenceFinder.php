@@ -24,13 +24,13 @@ use RuntimeException;
 
 class IndexedReferenceFinder implements ReferenceFinder
 {
-    private ContainerTypeResolver $containerTypeResolver;
+    private readonly ContainerTypeResolver $containerTypeResolver;
 
     public function __construct(
-        private QueryClient $query,
-        private Reflector $reflector,
+        private readonly QueryClient $query,
+        private readonly Reflector $reflector,
         ?ContainerTypeResolver $containerTypeResolver = null,
-        private bool $deepReferences = true
+        private readonly bool $deepReferences = true
     ) {
         $this->containerTypeResolver = $containerTypeResolver ?: new ContainerTypeResolver($reflector);
     }

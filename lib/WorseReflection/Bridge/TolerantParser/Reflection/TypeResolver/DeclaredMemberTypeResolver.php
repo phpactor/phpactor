@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Reflector;
 
 class DeclaredMemberTypeResolver
 {
-    public function __construct(private Reflector $reflector)
+    public function __construct(private readonly Reflector $reflector)
     {
     }
 

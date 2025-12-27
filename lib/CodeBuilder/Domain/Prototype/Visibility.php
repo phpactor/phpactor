@@ -15,7 +15,7 @@ final class Visibility
         self::PRIVATE
     ];
 
-    private string $visibility;
+    private readonly string $visibility;
 
     private function __construct(string $visibility)
     {

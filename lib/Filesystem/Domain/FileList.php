@@ -23,7 +23,7 @@ class FileList implements Iterator
     /**
      * @param Iterator<SplFileInfo> $iterator
      */
-    private function __construct(private Iterator $iterator)
+    private function __construct(private readonly Iterator $iterator)
     {
     }
 

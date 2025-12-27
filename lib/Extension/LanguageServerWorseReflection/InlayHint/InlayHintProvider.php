@@ -16,8 +16,8 @@ class InlayHintProvider
     private ?CancellationTokenSource $previousCancellationSource = null;
 
     public function __construct(
-        private SourceCodeReflector $reflector,
-        private InlayHintOptions $options
+        private readonly SourceCodeReflector $reflector,
+        private readonly InlayHintOptions $options
     ) {
     }
 

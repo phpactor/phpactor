@@ -29,9 +29,9 @@ use Phpactor\TextDocument\TextEdits;
 class TolerantImportName implements ImportName
 {
     public function __construct(
-        private Updater $updater,
-        private AstProvider $parser = new TolerantAstProvider(),
-        private bool $importGlobals = false,
+        private readonly Updater $updater,
+        private readonly AstProvider $parser = new TolerantAstProvider(),
+        private readonly bool $importGlobals = false,
     ) {
     }
 

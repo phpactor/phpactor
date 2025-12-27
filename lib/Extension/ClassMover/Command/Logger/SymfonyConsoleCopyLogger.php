@@ -10,7 +10,7 @@ use Phpactor\Extension\ClassMover\Application\Logger\ClassCopyLogger;
 
 class SymfonyConsoleCopyLogger implements ClassCopyLogger
 {
-    public function __construct(private OutputInterface $output)
+    public function __construct(private readonly OutputInterface $output)
     {
     }
 

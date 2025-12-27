@@ -5,8 +5,8 @@ namespace Phpactor\Extension\Behat\Behat;
 class Context
 {
     public function __construct(
-        private string $suite,
-        private string $class
+        private readonly string $suite,
+        private readonly string $class
     ) {
     }
 

@@ -8,8 +8,8 @@ use Exception;
 class ErrorResponse implements Response
 {
     private function __construct(
-        private string $message,
-        private string $details
+        private readonly string $message,
+        private readonly string $details
     ) {
     }
 

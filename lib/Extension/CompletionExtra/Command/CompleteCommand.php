@@ -14,11 +14,11 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class CompleteCommand extends Command
 {
-    private FilesystemHelper $helper;
+    private readonly FilesystemHelper $helper;
 
     public function __construct(
-        private Complete $complete,
-        private DumperRegistry $dumperRegistry
+        private readonly Complete $complete,
+        private readonly DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
         $this->helper = new FilesystemHelper();

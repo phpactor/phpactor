@@ -23,7 +23,7 @@ class CorrectUndefinedVariableCodeAction implements CodeActionProvider
 {
     public const KIND = 'quickfix.correct_variable_name';
 
-    public function __construct(private SourceCodeReflector $reflector)
+    public function __construct(private readonly SourceCodeReflector $reflector)
     {
     }
 

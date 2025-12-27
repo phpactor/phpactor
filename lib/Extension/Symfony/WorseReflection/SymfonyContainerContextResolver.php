@@ -18,7 +18,7 @@ class SymfonyContainerContextResolver implements MemberContextResolver
 {
     const CONTAINER_CLASS = 'Symfony\\Component\\DependencyInjection\\ContainerInterface';
 
-    public function __construct(private SymfonyContainerInspector $inspector)
+    public function __construct(private readonly SymfonyContainerInspector $inspector)
     {
     }
 

@@ -10,8 +10,8 @@ use Phpactor\WorseReflection\Core\Type;
 class GlobbedConstantUnionType extends Type
 {
     public function __construct(
-        private Type $classType,
-        private string $glob
+        private readonly Type $classType,
+        private readonly string $glob
     ) {
     }
 

@@ -12,8 +12,8 @@ use Psr\Log\NullLogger;
 final class TolerantAstProvider implements AstProvider
 {
     public function __construct(
-        private Parser $parser = new Parser(),
-        private LoggerInterface $logger = new NullLogger(
+        private readonly Parser $parser = new Parser(),
+        private readonly LoggerInterface $logger = new NullLogger(
         )
     ) {
     }

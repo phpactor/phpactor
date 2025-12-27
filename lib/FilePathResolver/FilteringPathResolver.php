@@ -7,7 +7,7 @@ class FilteringPathResolver implements PathResolver
     /**
      * @param Filter[] $filters
      */
-    public function __construct(private array $filters = [])
+    public function __construct(private readonly array $filters = [])
     {
     }
 

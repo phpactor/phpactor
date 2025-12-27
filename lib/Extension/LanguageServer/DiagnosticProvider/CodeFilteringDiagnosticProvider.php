@@ -14,13 +14,13 @@ class CodeFilteringDiagnosticProvider implements DiagnosticsProvider
     /**
      * @var array<string,int>
      */
-    private array $ignoreCodes;
+    private readonly array $ignoreCodes;
 
     /**
      * @param list<string> $ignoreCodes
      */
     public function __construct(
-        private DiagnosticsProvider $innerProvider,
+        private readonly DiagnosticsProvider $innerProvider,
         array $ignoreCodes
     ) {
         $this->ignoreCodes = array_flip($ignoreCodes);

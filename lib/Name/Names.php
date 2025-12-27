@@ -8,7 +8,7 @@ use IteratorAggregate;
 
 class Names implements Countable, IteratorAggregate
 {
-    private array $names;
+    private readonly array $names;
 
     private function __construct(Name ...$names)
     {

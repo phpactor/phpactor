@@ -13,7 +13,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ConfigSuggestCommand extends Command
 {
-    public function __construct(private Configurator $configurator)
+    public function __construct(private readonly Configurator $configurator)
     {
         parent::__construct();
     }

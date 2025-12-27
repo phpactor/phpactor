@@ -12,9 +12,9 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class IndexedReferenceFinderBench
 {
-    private IndexedReferenceFinder $finder;
+    private readonly IndexedReferenceFinder $finder;
 
-    private TextDocument $document;
+    private readonly TextDocument $document;
 
     public function __construct()
     {

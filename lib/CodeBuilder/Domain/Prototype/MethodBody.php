@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class MethodBody extends Prototype
 {
-    public function __construct(private Lines $lines)
+    public function __construct(private readonly Lines $lines)
     {
         parent::__construct();
     }
