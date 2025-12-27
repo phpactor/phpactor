@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\ChainSignatureHelper;
 use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Core\CompletorLogger;
 use Phpactor\Completion\Core\Completor\DedupeCompletor;
 use Phpactor\Completion\Core\Completor\DocumentingCompletor;
 use Phpactor\Completion\Core\Completor\LabelFormattingCompletor;
@@ -65,6 +66,11 @@ class CompletionExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $this->registerCompletion($container);
+        $container->register(CompletorLogger::class, function (Container $container) {
+            return new CompletorLogger(
+                LoggingExtension::channelLogger($container, 'completion'),
+            );
+        });
     }
 
     private function registerCompletion(ContainerBuilder $container): void
@@ -88,10 +94,10 @@ class CompletionExtension implements Extension
             $mapped = [];
             /** @var Completor[] $completors */
             foreach ($completors as $type => $completors) {
-                $completors = new ChainCompletor($completors, LoggingExtension::channelLogger(
-                    $container,
-                    self::LOGGER_CHANNEL
-                ));
+                $completors = new ChainCompletor(
+                    $completors,
+                    $container->get(CompletorLogger::class),
+                );
                 if ($container->parameter(self::PARAM_DEDUPE)->bool()) {
                     $completors = new DedupeCompletor(
                         $completors,

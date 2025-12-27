@@ -6,6 +6,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -63,7 +64,7 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
-        if (CompletionContext::classMembersBody($node->parent)) {
+        if (!$node instanceof MethodDeclaration && CompletionContext::classMembersBody($node->parent)) {
             yield from $this->keywords([
                 'function ',
                 'const ',

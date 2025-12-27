@@ -64,7 +64,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
         $this->serviceLocator->logger()->info(sprintf(
             'REFL %s node %s at offset %d (id: %s) resolved with %d cache misses',
-            number_format(microtime(true) - $start, 6),
+            number_format(microtime(true) - $start, 4),
             get_debug_type($node),
             $offset->toInt(),
             spl_object_id($node),

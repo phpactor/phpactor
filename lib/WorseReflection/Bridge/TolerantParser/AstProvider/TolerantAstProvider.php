@@ -28,7 +28,7 @@ final class TolerantAstProvider implements AstProvider
         );
         $this->logger->info(sprintf(
             'PARS %s %s',
-            number_format(microtime(true) - $start, 6),
+            number_format(microtime(true) - $start, 4),
             $document->uri()?->__toString() ?? '<anonymous>' . (new Error())->getTraceAsString(),
         ));
 

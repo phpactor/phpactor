@@ -3,7 +3,8 @@
 namespace Phpactor\Extension\CompletionWorse;
 
 use Closure;
-use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Completion\Bridge\TolerantParser\NodeAtCursorProvider;
+use Phpactor\Completion\Core\CompletorLogger;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Completion\Bridge\TolerantParser\DebugTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
@@ -84,6 +85,9 @@ class CompletionWorseExtension implements Extension
     {
         $this->registerCompletion($container);
         $this->registerSignatureHelper($container);
+        $container->register(NodeAtCursorProvider::class, function (Container $container) {
+            return new NodeAtCursorProvider($container->get(AstProvider::class));
+        });
     }
 
 
@@ -169,8 +173,8 @@ class CompletionWorseExtension implements Extension
                     }
                     return $container->get($serviceId) ?? false;
                 }, $container->get(self::SERVICE_COMPLETOR_MAP))),
-                $container->get(AstProvider::class),
-                LoggingExtension::channelLogger($container, 'completion'),
+                $container->get(NodeAtCursorProvider::class),
+                $container->get(CompletorLogger::class),
             );
         }, [ CompletionExtension::TAG_COMPLETOR => []]);
 

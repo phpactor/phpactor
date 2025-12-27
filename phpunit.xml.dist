@@ -5,6 +5,7 @@
     colors="true" 
     bootstrap="vendor/autoload.php" 
     displayDetailsOnPhpunitDeprecations="false"
+    displayDetailsOnTestsThatTriggerNotices="true"
     displayDetailsOnTestsThatTriggerDeprecations="true"
 
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"

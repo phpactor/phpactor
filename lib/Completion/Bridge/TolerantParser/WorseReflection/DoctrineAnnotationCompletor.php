@@ -33,8 +33,9 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
 
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
-        $truncatedSource = $this->truncateSource((string) $source, $byteOffset->toInt());
         $sourceNodeFile = $this->parser->get($source);
+
+        $truncatedSource = $this->truncateSource((string) $source, $byteOffset->toInt());
 
         $node = $this->findNodeForPhpdocAtPosition(
             $sourceNodeFile,

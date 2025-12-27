@@ -41,7 +41,7 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\CachedAstProvider;
+use Phpactor\WorseReflection\Core\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Symfony\Component\Filesystem\Path;
 

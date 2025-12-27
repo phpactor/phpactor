@@ -4,11 +4,12 @@ namespace Phpactor\Completion\Core\Completor;
 
 use Generator;
 use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Core\CompletorDecorator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use RuntimeException;
 
-class LimitingCompletor implements Completor
+class LimitingCompletor implements Completor, CompletorDecorator
 {
     public function __construct(
         private Completor $innerCompletor,
@@ -35,5 +36,10 @@ class LimitingCompletor implements Completor
         }
 
         return $suggestions->getReturn();
+    }
+
+    public function decorates(): string
+    {
+        return $this->innerCompletor::class;
     }
 }
