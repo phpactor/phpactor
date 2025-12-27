@@ -9,6 +9,7 @@ use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\Completion\Core\SignatureHelp;
 use Phpactor\Completion\Core\SignatureHelper;
 use Phpactor\Completion\Core\Suggestion;
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Completion\CompletionExtension;
@@ -51,7 +52,10 @@ class CompletionExtensionTest extends TestCase
             })();
         });
 
-        $completor = $this->createContainer()->get(CompletionExtension::SERVICE_REGISTRY)->completorForType('php');
+        $completor = $this
+            ->createContainer()
+            ->expect(CompletionExtension::SERVICE_REGISTRY, TypedCompletorRegistry::class)
+            ->completorForType('php');
         $results = iterator_to_array($completor->complete(
             $document,
             ByteOffset::fromInt(self::EXAMPLE_OFFSET)

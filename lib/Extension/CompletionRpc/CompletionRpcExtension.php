@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CompletionRpc;
 
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -20,7 +21,10 @@ class CompletionRpcExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register('completion_rpc.handler', function (Container $container) {
-            return new CompleteHandler($container->get(CompletionExtension::SERVICE_REGISTRY));
+            return new CompleteHandler($container->expect(
+                CompletionExtension::SERVICE_REGISTRY,
+                TypedCompletorRegistry::class,
+            ));
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => CompleteHandler::NAME] ]);
     }
 }

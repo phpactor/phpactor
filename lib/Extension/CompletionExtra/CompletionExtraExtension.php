@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CompletionExtra;
 
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
@@ -55,7 +56,7 @@ class CompletionExtraExtension implements Extension
     {
         $container->register('application.complete', function (Container $container) {
             return new Complete(
-                $container->get(CompletionExtension::SERVICE_REGISTRY)
+                $container->expect(CompletionExtension::SERVICE_REGISTRY, TypedCompletorRegistry::class)
             );
         });
     }

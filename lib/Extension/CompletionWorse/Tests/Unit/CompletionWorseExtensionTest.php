@@ -5,6 +5,7 @@ namespace Phpactor\Extension\CompletionWorse\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -28,8 +29,9 @@ class CompletionWorseExtensionTest extends TestCase
     {
         $container = $this->buildContainer();
 
-        $completor = $container->get(CompletionExtension::SERVICE_REGISTRY)->completorForType('php');
-        $this->assertInstanceOf(Completor::class, $completor);
+        $completor = $container
+            ->expect(CompletionExtension::SERVICE_REGISTRY, TypedCompletorRegistry::class)
+            ->completorForType('php');
         assert($completor instanceof Completor);
 
         $completor->complete(
