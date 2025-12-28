@@ -83,9 +83,9 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
         return new AlwaysQualfifier();
     }
 
-    public function decorates(): string
+    public function decorates(): object
     {
-        return $this->inner::class;
+        return $this->inner;
     }
 
     private function resolveFilterableType(Node $node, TextDocument $source, ByteOffset $offset): ?ClassLikeType

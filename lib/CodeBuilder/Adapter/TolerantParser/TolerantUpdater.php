@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\EnumUpdater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\UseStatementUpdater;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
 use Phpactor\CodeBuilder\Domain\Prototype\Prototype;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
@@ -20,6 +19,7 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\ClassUpdater;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\InterfaceUpdater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\TraitUpdater;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Core\AstProvider;
@@ -48,7 +48,7 @@ class TolerantUpdater implements Updater
         $this->useStatementUpdater = new UseStatementUpdater();
     }
 
-    public function textEditsFor(Prototype $prototype, Code $code): TextEdits
+    public function textEditsFor(Prototype $prototype, TextDocument $code): TextEdits
     {
         $edits = new Edits($this->textFormat);
         $node = $this->parser->get($code);

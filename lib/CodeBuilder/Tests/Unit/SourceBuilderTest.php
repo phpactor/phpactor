@@ -2,13 +2,13 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\SourceBuilder;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Prototype;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\TextDocument\TextEdits;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -43,7 +43,7 @@ class SourceBuilderTest extends TestCase
      */
     public function testGenerate(): void
     {
-        $expectedCode = Code::fromString('');
+        $expectedCode = TextDocumentBuilder::fromString('');
         $this->generator->render($this->prototype->reveal())->willReturn($expectedCode);
         $code = $this->builder->render($this->prototype->reveal());
 
@@ -55,7 +55,7 @@ class SourceBuilderTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $sourceCode = Code::fromString('');
+        $sourceCode = TextDocumentBuilder::fromString('');
         $this->updater->textEditsFor($this->prototype->reveal(), $sourceCode)->willReturn(TextEdits::none());
         $code = $this->builder->apply($this->prototype->reveal(), $sourceCode);
 

@@ -19,7 +19,6 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\CodeBuilder\Domain\Code;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Assignments;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -155,7 +154,7 @@ class WorseExtractMethod implements ExtractMethod
 
         return new TextDocumentEdits(
             TextDocumentUri::fromString($source->uri()->path()),
-            $this->updater->textEditsFor($prototype, Code::fromString((string) $source))
+            $this->updater->textEditsFor($prototype, $source)
                 ->add(TextEdit::create($offsetStart, $offsetEnd - $offsetStart, $replacement))
         );
     }

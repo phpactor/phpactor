@@ -6,7 +6,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvid
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -73,7 +72,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 
         return $this->updater->textEditsFor(
             $sourceBuilder->build(),
-            Code::fromString((string) $sourceCode)
+            $sourceCode
         );
     }
 }

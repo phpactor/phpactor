@@ -5,7 +5,7 @@ namespace Phpactor\CodeBuilder;
 use Phpactor\CodeBuilder\Domain\Prototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\TextDocument\TextDocument;
 
 class SourceBuilder
 {
@@ -15,12 +15,12 @@ class SourceBuilder
     ) {
     }
 
-    public function render(Prototype\Prototype $prototype): Code
+    public function render(Prototype\Prototype $prototype): TextDocument
     {
         return $this->generator->render($prototype);
     }
 
-    public function apply(Prototype\Prototype $prototype, Code $code): string
+    public function apply(Prototype\Prototype $prototype, TextDocument $code): string
     {
         return $this->updater->textEditsFor($prototype, $code)->apply($code);
     }

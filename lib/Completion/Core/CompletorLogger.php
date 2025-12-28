@@ -14,10 +14,20 @@ final class CompletorLogger
     public function timeTaken(object $completor, float $time): void
     {
         $this->logger->info(sprintf(
-            'COMP %s %s%s',
+            'COMP %s %s',
             number_format($time, 4),
-            substr($completor::class, strrpos($completor::class, '\\') + 1),
-            $completor instanceof CompletorDecorator ? '/' . $completor->decorates() : '',
+            self::format($completor),
         ));
+    }
+
+    private static function format(object $completor): string
+    {
+        $shortName =  substr($completor::class, strrpos($completor::class, '\\') + 1);
+
+        if (!$completor instanceof CompletorDecorator) {
+            return $shortName;
+        }
+
+        return $shortName . '/' . self::format($completor->decorates());
     }
 }

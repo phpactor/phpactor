@@ -38,8 +38,8 @@ class LimitingCompletor implements Completor, CompletorDecorator
         return $suggestions->getReturn();
     }
 
-    public function decorates(): string
+    public function decorates(): object
     {
-        return $this->innerCompletor::class;
+        return $this->innerCompletor;
     }
 }

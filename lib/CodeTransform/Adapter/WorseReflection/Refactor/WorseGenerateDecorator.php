@@ -3,7 +3,6 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -61,7 +60,7 @@ class WorseGenerateDecorator implements GenerateDecorator
             $method->body()->line($this->generateMethodBody($interfaceMethod));
         }
 
-        return $this->updater->textEditsFor($builder->build(), Code::fromString((string) $source));
+        return $this->updater->textEditsFor($builder->build(), $source);
     }
 
     /**

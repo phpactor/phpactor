@@ -14,7 +14,6 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -36,7 +35,7 @@ class WorseOverrideMethod implements OverrideMethod
         $methodBuilder = $this->getMethodPrototype($class, $method);
         $sourcePrototype = $this->getSourcePrototype($class, $method, $source, $methodBuilder);
 
-        return $this->updater->textEditsFor($sourcePrototype, Code::fromString((string) $source));
+        return $this->updater->textEditsFor($sourcePrototype, $source);
     }
 
     private function getReflectionClass(SourceCode $source, string $className): ReflectionClass

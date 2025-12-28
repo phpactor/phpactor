@@ -9,7 +9,6 @@ use Phpactor\ClassMover\Domain\ClassReplacer;
 use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
 use Phpactor\ClassMover\Domain\Reference\ClassReference;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
@@ -67,7 +66,6 @@ class TolerantClassReplacer implements ClassReplacer
         });
 
         $edits = TextEdits::fromTextEdits($edits);
-        $source = Code::fromString($source);
         if (true === $importClass) {
             $edits = $edits->merge($this->addUseStatement($source, $newName));
         }
@@ -112,12 +110,12 @@ class TolerantClassReplacer implements ClassReplacer
         return $classRef->isClassDeclaration() && $classRef->fullName()->equals($originalName);
     }
 
-    private function addUseStatement(Code $source, FullyQualifiedName $newName): TextEdits
+    private function addUseStatement(TextDocument $source, FullyQualifiedName $newName): TextEdits
     {
         return $this->updater->textEditsFor(SourceCodeBuilder::create()->use($newName->__toString())->build(), $source);
     }
 
-    private function addNamespace(Code $source, QualifiedName $qualifiedName): TextEdits
+    private function addNamespace(TextDocument $source, QualifiedName $qualifiedName): TextEdits
     {
         return $this->updater->textEditsFor(
             SourceCodeBuilder::create()->namespace($qualifiedName->__toString())->build(),

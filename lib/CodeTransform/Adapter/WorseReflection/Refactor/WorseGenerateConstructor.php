@@ -92,7 +92,7 @@ class WorseGenerateConstructor implements GenerateConstructor
                 $reflectionNode->class()->sourceCode()->uriOrThrow(),
                 $this->updater->textEditsFor(
                     $builder->build(),
-                    Code::fromString((string) $reflectionNode->class()->sourceCode()),
+                    $reflectionNode->class()->sourceCode(),
                 )
             )
         );

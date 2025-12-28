@@ -5,10 +5,11 @@ namespace Phpactor\Completion\Bridge\TolerantParser;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\AlwaysQualfifier;
+use Phpactor\Completion\Core\CompletorDecorator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 
-class LimitingCompletor implements TolerantCompletor, TolerantQualifiable
+class LimitingCompletor implements TolerantCompletor, TolerantQualifiable, CompletorDecorator
 {
     public function __construct(
         private TolerantCompletor $completor,
@@ -41,5 +42,10 @@ class LimitingCompletor implements TolerantCompletor, TolerantQualifiable
         }
 
         return $this->completor->qualifier();
+    }
+
+    public function decorates(): object
+    {
+        return $this->completor;
     }
 }
