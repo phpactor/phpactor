@@ -4,7 +4,6 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
 use Amp\Promise;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
@@ -60,7 +59,7 @@ class UpdateDocblockReturnTransformer implements Transformer
                 );
             }
 
-            return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
+            return $this->updater->textEditsFor($builder->build(), $code);
         });
     }
 

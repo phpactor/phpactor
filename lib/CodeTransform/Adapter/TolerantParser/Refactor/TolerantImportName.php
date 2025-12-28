@@ -17,7 +17,6 @@ use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Microsoft\PhpParser\Node;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassIsCurrentClassException;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyInNamespaceException;
@@ -143,7 +142,7 @@ class TolerantImportName implements ImportName
         $this->addUse($builder, $nameImport);
         $prototype = $builder->build();
 
-        return $this->updater->textEditsFor($prototype, Code::fromString((string) $source));
+        return $this->updater->textEditsFor($prototype, $source);
     }
 
     private function importClassInSameNamespace(Node $node, FullyQualifiedName $className): bool

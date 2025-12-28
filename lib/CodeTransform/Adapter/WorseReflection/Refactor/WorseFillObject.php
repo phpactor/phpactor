@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\EmptyValueRenderer;
 use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
@@ -97,7 +96,7 @@ class WorseFillObject implements ByteOffsetRefactor
         foreach ($imports as $import) {
             $sourceCode->use($import->__toString());
         }
-        $textEdits = $this->updater->textEditsFor($sourceCode->build(), Code::fromString($document->__toString()));
+        $textEdits = $this->updater->textEditsFor($sourceCode->build(), $document);
 
         $openParen = $closedParen = '';
         if ($node->openParen) {

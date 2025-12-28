@@ -18,7 +18,6 @@ use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\TraitBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use function Amp\call;
 
@@ -73,7 +72,7 @@ class AddMissingProperties implements Transformer
 
             return $this->updater->textEditsFor(
                 $sourceBuilder->build(),
-                Code::fromString((string) $code)
+                $code
             );
         });
     }

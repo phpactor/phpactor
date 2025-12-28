@@ -7,9 +7,9 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
 abstract class UpdaterTestCase extends TestCase
@@ -2014,7 +2014,7 @@ abstract class UpdaterTestCase extends TestCase
     private function assertUpdate(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $existingCode = '<?php'."\n".$existingCode;
-        $edits = $this->updater()->textEditsFor($prototype, Code::fromString($existingCode));
+        $edits = $this->updater()->textEditsFor($prototype, TextDocumentBuilder::fromString($existingCode));
         $this->assertEquals('<?php' . "\n" . $expectedCode, $edits->apply($existingCode));
     }
 }

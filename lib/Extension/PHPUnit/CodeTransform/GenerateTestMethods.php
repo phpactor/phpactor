@@ -4,7 +4,6 @@ namespace Phpactor\Extension\PHPUnit\CodeTransform;
 
 use Generator;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdits;
@@ -73,6 +72,6 @@ class GenerateTestMethods
 
         $classBuilder ->method($methodName) ->visibility('public') ->returnType('void') ;
 
-        return $this->updater->textEditsFor($builder->build(), Code::fromString($document->__toString()));
+        return $this->updater->textEditsFor($builder->build(), $document);
     }
 }

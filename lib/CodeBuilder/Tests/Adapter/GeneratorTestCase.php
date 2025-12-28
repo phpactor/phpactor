@@ -7,7 +7,6 @@ use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Classes;
 use Phpactor\CodeBuilder\Domain\Prototype\Constant;
@@ -38,6 +37,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
 use Phpactor\CodeBuilder\Domain\Prototype\Value;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Renderer;
+use Phpactor\TextDocument\TextDocumentBuilder;
 
 abstract class GeneratorTestCase extends TestCase
 {
@@ -46,7 +46,7 @@ abstract class GeneratorTestCase extends TestCase
     public function testRender(Prototype $prototype, string $expectedCode): void
     {
         $code = $this->renderer()->render($prototype);
-        $this->assertEquals(rtrim(Code::fromString($expectedCode), "\n"), rtrim($code, "\n"));
+        $this->assertEquals(rtrim(TextDocumentBuilder::fromString($expectedCode), "\n"), rtrim($code, "\n"));
     }
 
     /**

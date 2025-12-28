@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 
 class WorseGenerateMutator implements PropertyAccessGenerator
@@ -45,7 +44,7 @@ class WorseGenerateMutator implements PropertyAccessGenerator
 
         return $this->updater->textEditsFor(
             $prototype,
-            Code::fromString((string) $sourceCode)
+            $sourceCode
         );
     }
 

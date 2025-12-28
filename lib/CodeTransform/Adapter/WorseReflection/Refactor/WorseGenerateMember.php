@@ -50,7 +50,7 @@ class WorseGenerateMember implements GenerateMember
             $prototype = $this->addMethodCallToBuilder($memberAccess, $visibility, $memberAccess->isStatic(), $methodName);
             $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess->class(), $visibility);
 
-            $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
+            $textEdits = $this->updater->textEditsFor($prototype, $sourceCode);
 
             return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
         }
@@ -60,7 +60,7 @@ class WorseGenerateMember implements GenerateMember
             $prototype = $this->addMemberToBuilder($memberAccess, $visibility, $methodName);
             $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess->class(), $visibility);
 
-            $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
+            $textEdits = $this->updater->textEditsFor($prototype, $sourceCode);
 
             return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
         }

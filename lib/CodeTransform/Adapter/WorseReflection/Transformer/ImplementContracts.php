@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
@@ -104,7 +103,7 @@ class ImplementContracts implements Transformer
                 }
             }
 
-            return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
+            return $this->updater->textEditsFor($sourceCodeBuilder->build(), $source);
         })());
     }
 

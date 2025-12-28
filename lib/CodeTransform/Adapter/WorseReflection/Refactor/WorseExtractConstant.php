@@ -10,7 +10,6 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Microsoft\PhpParser\ClassLike;
@@ -54,7 +53,7 @@ class WorseExtractConstant implements ExtractConstant
         return true;
     }
 
-    private function addConstant(string $sourceCode, NodeContext $symbolInformation, string $constantName): TextEdits
+    private function addConstant(SourceCode $sourceCode, NodeContext $symbolInformation, string $constantName): TextEdits
     {
         $symbol = $symbolInformation->symbol();
 
@@ -81,7 +80,7 @@ class WorseExtractConstant implements ExtractConstant
                 ->constant($constantName, TypeUtil::valueOrNull($symbolInformation->type()))
             ->end();
 
-        return $this->updater->textEditsFor($builder->build(), Code::fromString($sourceCode));
+        return $this->updater->textEditsFor($builder->build(), $sourceCode);
     }
 
     private function replaceValues(SourceCode $sourceCode, int $offset, string $constantName): TextEdits

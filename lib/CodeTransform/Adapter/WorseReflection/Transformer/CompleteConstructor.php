@@ -19,7 +19,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 
 class CompleteConstructor implements Transformer
 {
@@ -127,7 +126,7 @@ class CompleteConstructor implements Transformer
             }
         }
 
-        return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
+        return $this->updater->textEditsFor($sourceCodeBuilder->build(), $source);
     }
 
     private function transformPromote(SourceCode $source): TextEdits

@@ -3,10 +3,11 @@
 namespace Phpactor\CodeBuilder\Adapter\Twig;
 
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer82;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\Prototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Util\TextFormat;
+use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Error\LoaderError;
@@ -22,7 +23,7 @@ final class TwigRenderer implements Renderer
         $this->twig = $twig ?: $this->createTwig();
     }
 
-    public function render(Prototype $prototype, ?string $variant = null): Code
+    public function render(Prototype $prototype, ?string $variant = null): TextDocument
     {
         $templateName = $baseTemplateName = $this->templateNameResolver->resolveName($prototype);
 
@@ -40,7 +41,7 @@ final class TwigRenderer implements Renderer
             $code = $this->twigRender($prototype, $baseTemplateName, $variant);
         }
 
-        return Code::fromString(rtrim($code));
+        return TextDocumentBuilder::fromString(rtrim($code));
     }
 
     private function createTwig(): Environment
