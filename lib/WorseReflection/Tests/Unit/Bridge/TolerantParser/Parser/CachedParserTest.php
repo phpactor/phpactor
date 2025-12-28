@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Parser;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\CachedAstProvider;
+use Phpactor\WorseReflection\Core\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 

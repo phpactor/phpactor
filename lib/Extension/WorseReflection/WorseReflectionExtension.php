@@ -41,7 +41,7 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\CachedAstProvider;
+use Phpactor\WorseReflection\Core\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Symfony\Component\Filesystem\Path;
 
@@ -56,7 +56,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_STUB_CACHE_DIR = 'worse_reflection.cache_dir';
     const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
-    const SERVICE_PARSER = AstProvider::class;
+    const SERVICE_AST_PROVIDER = AstProvider::class;
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
     const TAG_MEMBER_TYPE_RESOLVER = 'worse_reflection.member_type_resolver';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
@@ -159,7 +159,7 @@ class WorseReflectionExtension implements Extension
             return $builder->build();
         });
 
-        $container->register(self::SERVICE_PARSER, function (Container $container) {
+        $container->register(self::SERVICE_AST_PROVIDER, function (Container $container) {
             return new CachedAstProvider(
                 $container->get(TolerantAstProvider::class),
                 $container->get(Cache::class),
@@ -263,7 +263,7 @@ class WorseReflectionExtension implements Extension
     private function registerCommands(ContainerBuilder $container): void
     {
         $container->register(DumpAstCommand::class, function (Container $container) {
-            return new DumpAstCommand($container->expect(self::SERVICE_PARSER, AstProvider::class));
+            return new DumpAstCommand($container->expect(self::SERVICE_AST_PROVIDER, AstProvider::class));
         }, [
             ConsoleExtension::TAG_COMMAND => [
                 'name' => 'worse:dump-ast',

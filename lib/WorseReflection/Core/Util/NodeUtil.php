@@ -181,12 +181,29 @@ class NodeUtil
     /**
      * For debugging: pretty print the AST
      */
-    public static function dump(Node $node, int $level = 0): string
+    public static function dump(Node|Token|null $node, ?Node $referenceNode = null, int $level = 0, ?string $name = null): string
     {
+        if ($node === null) {
+            return 'null';
+        }
+        if ($node instanceof Token) {
+            return sprintf(
+                '%s%sToken<%s>: %d:%d - %s',
+                str_repeat('  ', $level),
+                $name ? '$' . $name . ':' :  '',
+                Token::getTokenKindNameFromValue($node->kind),
+                $node->getStartPosition(),
+                $node->getEndPosition(),
+                $referenceNode ? $node->getText($referenceNode->getFileContents()) : '<no reference text>',
+            );
+        }
         $out = [
             sprintf(
-                '%s %d:%d - %s',
-                str_repeat('  ', $level) . $node->getNodeKindName(),
+                '%s%s%s (%s) %d:%d - %s',
+                str_repeat('  ', $level),
+                $name ? '$'.$name . ':' :  '',
+                $node->getNodeKindName(),
+                spl_object_id($node),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
                 str_replace("\n", '\\n', $node->getText()),
@@ -194,8 +211,12 @@ class NodeUtil
         ];
 
         $level++;
-        foreach ($node->getChildNodes() as $child) {
-            $out[] = self::dump($child, $level);
+        foreach ($node->getChildNodesAndTokens() as $name => $child) {
+            assert(is_string($name));
+            if ($child instanceof Node) {
+                $referenceNode = $child;
+            }
+            $out[] = self::dump($child, $referenceNode, $level, $name);
         }
 
         return implode("\n", $out);

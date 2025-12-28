@@ -13,6 +13,7 @@ use Phpactor\Completion\Bridge\TolerantParser\Qualifier\AlwaysQualfifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
+use Phpactor\Completion\Core\CompletorDecorator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -26,7 +27,7 @@ use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
-class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiable
+class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiable, CompletorDecorator
 {
     public function __construct(
         private TolerantCompletor $inner,
@@ -80,6 +81,11 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
         }
 
         return new AlwaysQualfifier();
+    }
+
+    public function decorates(): string
+    {
+        return $this->inner::class;
     }
 
     private function resolveFilterableType(Node $node, TextDocument $source, ByteOffset $offset): ?ClassLikeType

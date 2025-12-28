@@ -63,12 +63,12 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $context = $resolver->resolveNode($frame, $node);
 
         $this->serviceLocator->logger()->info(sprintf(
-            'reflected node %s at offset %d (id: %s) resolved with %d cache misses in %s',
+            'REFL %s node %s at offset %d (id: %s) resolved with %d cache misses',
+            number_format(microtime(true) - $start, 4),
             get_debug_type($node),
             $offset->toInt(),
             spl_object_id($node),
             $resolver->cacheMisses,
-            number_format(microtime(true) - $start, 6),
         ));
 
         return TolerantReflectionOffset::fromFrameAndSymbolContext($frame, $context);
