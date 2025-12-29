@@ -67,6 +67,7 @@ class IndexerExtension implements Extension
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
     public const PARAM_SUPPORTED_EXTENSIONS = 'indexer.supported_extensions';
+    public const PARAM_SEARCHER_SEMI_FUZZY = 'indexer.searcher_semi_fuzzy';
     public const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
@@ -101,6 +102,7 @@ class IndexerExtension implements Extension
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
             self::PARAM_SUPPORTED_EXTENSIONS => ['php', 'phar'],
             self::PARAM_SEARCH_INCLUDE_PATTERNS => [],
+            self::PARAM_SEARCHER_SEMI_FUZZY => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLED_WATCHERS => 'List of allowed watchers. The first watcher that supports the current system will be used',
@@ -117,6 +119,7 @@ class IndexerExtension implements Extension
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
             self::PARAM_SUPPORTED_EXTENSIONS => 'File extensions (e.g. `php`) for files that should be indexed',
             self::PARAM_SEARCH_INCLUDE_PATTERNS => 'When searching the index exclude records whose fully qualified names match any of these regex patterns (use to exclude suggestions from search results). Namespace separators must be escaped as `\\\\\\\\` for example `^Foo\\\\\\\\` to include all namespaces whose first segment is `Foo`',
+            self::PARAM_SEARCHER_SEMI_FUZZY => 'How to match short names: by default only the leading part is matched (case insensitive). If true, the leading parts of subsequent subwords also match (camel/underscore, case sensitive). For example `InEx` and `index` match `IndexerExtension` but `inex` does not, `arw` matches `array_walk`.',
         ]);
         $schema->setTypes([
             self::PARAM_ENABLED_WATCHERS => 'array',
@@ -133,6 +136,7 @@ class IndexerExtension implements Extension
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'boolean',
             self::PARAM_SUPPORTED_EXTENSIONS => 'array',
             self::PARAM_SEARCH_INCLUDE_PATTERNS => 'array',
+            self::PARAM_SEARCHER_SEMI_FUZZY => 'boolean',
         ]);
     }
 
@@ -296,7 +300,8 @@ class IndexerExtension implements Extension
 
         $container->register(IndexedNameSearcher::class, function (Container $container) {
             return new IndexedNameSearcher(
-                $container->get(SearchClient::class)
+                $container->get(SearchClient::class),
+                $container->parameter(self::PARAM_SEARCHER_SEMI_FUZZY)->bool(),
             );
         }, [ ReferenceFinderExtension::TAG_NAME_SEARCHER => []]);
     }
