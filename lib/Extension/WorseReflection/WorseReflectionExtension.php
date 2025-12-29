@@ -3,6 +3,8 @@
 namespace Phpactor\Extension\WorseReflection;
 
 use Microsoft\PhpParser\Parser;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\IncrementalAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\Extension\Console\ConsoleExtension;
@@ -28,6 +30,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnType
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariableProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
+use Phpactor\WorseReflection\Core\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
@@ -41,7 +44,6 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\WorseReflection\Core\AstProvider\CachedAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Symfony\Component\Filesystem\Path;
 
@@ -62,6 +64,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     const PARAM_UNDEFINED_VAR_LEVENSHTEIN = 'worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance';
     const PARAM_ADDITIVE_STUBS = 'worse_reflection.additive_stubs';
+    const PARAM_AST_PROVIDER = 'worse_reflection.ast_provider_service';
 
     public function configure(Resolver $schema): void
     {
@@ -73,8 +76,15 @@ class WorseReflectionExtension implements Extension
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
             self::PARAM_ADDITIVE_STUBS => [],
+            self::PARAM_AST_PROVIDER => TolerantAstProvider::class,
             self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 4,
         ]);
+        $schema->setCallback(self::PARAM_AST_PROVIDER, function (array $config) {
+            if (($config[LanguageServerExtension::PARAM_INCREMENTAL] ?? false) === true) {
+                return IncrementalAstProvider::class;
+            }
+            return TolerantAstProvider::class;
+        });
         $schema->setDescriptions([
             self::PARAM_ENABLE_CACHE => 'If reflection caching should be enabled',
             self::PARAM_CACHE_LIFETIME => 'If caching is enabled, limit the amount of time a cache entry can stay alive',
@@ -161,9 +171,16 @@ class WorseReflectionExtension implements Extension
 
         $container->register(self::SERVICE_AST_PROVIDER, function (Container $container) {
             return new CachedAstProvider(
-                $container->get(TolerantAstProvider::class),
-                $container->get(Cache::class),
+                $container->expect($container->parameter(self::PARAM_AST_PROVIDER)->string(), AstProvider::class),
                 $container->get(CacheForDocument::class),
+            );
+        });
+
+        $container->register(IncrementalAstProvider::class, function (Container $container) {
+            return new IncrementalAstProvider(
+                $container->get(TolerantAstProvider::class),
+                $container->get(CacheForDocument::class),
+                LoggingExtension::channelLogger($container, 'WR'),
             );
         });
 

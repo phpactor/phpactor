@@ -1211,6 +1211,19 @@ LanguageServerExtension
 **Default**: ``true``
 
 
+.. _param_language_server.text_sync_incremental:
+
+
+``language_server.text_sync_incremental``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+Sync text documents incrementally (experimental)
+
+
+**Default**: ``false``
+
+
 .. _param_language_server.enable_workspace:
 
 

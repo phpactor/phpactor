@@ -42,6 +42,11 @@ class TextEdit
         return $this->start->add($this->length);
     }
 
+    public function range(): ByteOffsetRange
+    {
+        return ByteOffsetRange::fromByteOffsets($this->start, $this->end());
+    }
+
     public function start(): ByteOffset
     {
         return $this->start;

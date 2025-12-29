@@ -33,6 +33,7 @@ use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
+use Phpactor\LanguageServerProtocol\TextDocumentSyncKind;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
@@ -50,6 +51,7 @@ use Phpactor\LanguageServer\Core\Dispatcher\ArgumentResolver\ChainArgumentResolv
 use Phpactor\LanguageServer\Core\Dispatcher\ArgumentResolver;
 use Phpactor\LanguageServer\Handler\Workspace\DidChangeWatchedFilesHandler;
 use Phpactor\LanguageServer\Listener\DidChangeWatchedFilesListener;
+use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Middleware\HandlerMiddleware;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher;
 use Phpactor\LanguageServer\Middleware\ResponseHandlingMiddleware;
@@ -67,7 +69,6 @@ use Phpactor\LanguageServer\Handler\Workspace\CommandHandler;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Handler\System\ServiceHandler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
-use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
@@ -129,11 +130,13 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_EXCLUDE_PATHS = 'language_server.diagnostic_exclude_paths';
     public const PARAM_DIAGNOSTIC_IGNORE_CODES = 'language_server.diagnostic_ignore_codes';
     public const PARAM_ENABLE_TRUST_CHECK = 'language_server.enable_trust_check';
+    public const PARAM_INCREMENTAL = 'language_server.text_sync_incremental';
 
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_CATCH_ERRORS => true,
+            self::PARAM_INCREMENTAL => false,
             self::PARAM_ENABLE_WORKPACE => true,
             self::PARAM_SESSION_PARAMETERS => [],
             self::PARAM_METHOD_ALIAS_MAP => [],
@@ -158,6 +161,7 @@ class LanguageServerExtension implements Extension
         $schema->setDescriptions([
             self::PARAM_ENABLE_TRUST_CHECK => 'Check to see if project path is trusted before loading configurations from it',
             self::PARAM_TRACE => 'Log incoming and outgoing messages (needs log formatter to be set to ``json``)',
+            self::PARAM_INCREMENTAL => 'Sync text documents incrementally (experimental)',
             self::PARAM_PROFILE => 'Logs timing information for incoming LSP requests',
             self::PARAM_METHOD_ALIAS_MAP => 'Allow method names to be re-mapped. Useful for maintaining backwards compatibility',
             self::PARAM_SESSION_PARAMETERS => 'Phpactor parameters (config) that apply only to the language server session',
@@ -251,6 +255,10 @@ class LanguageServerExtension implements Extension
                 return null;
             }
 
+            if ($container->parameter(self::PARAM_INCREMENTAL)->bool() === true) {
+                return null;
+            }
+
             return new WorkspaceListener($this->workspace($container));
         }, [
             self::TAG_LISTENER_PROVIDER => [],
@@ -336,6 +344,7 @@ class LanguageServerExtension implements Extension
             );
 
             return new EventDispatcher($aggregate);
+
         });
     }
 
@@ -470,7 +479,10 @@ class LanguageServerExtension implements Extension
         });
 
         $container->register(TextDocumentHandler::class, function (Container $container) {
-            return new TextDocumentHandler($container->get(EventDispatcherInterface::class));
+            return new TextDocumentHandler(
+                $container->get(EventDispatcherInterface::class),
+                $container->parameter(self::PARAM_INCREMENTAL)->bool() ? TextDocumentSyncKind::INCREMENTAL : TextDocumentSyncKind::FULL,
+            );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(StatsHandler::class, function (Container $container) {
@@ -655,7 +667,11 @@ class LanguageServerExtension implements Extension
      */
     private function resolveListeners(Container $container): array
     {
-        return array_filter(array_keys($container->getServiceIdsForTag(self::TAG_LISTENER_PROVIDER)), function (string $service) use ($container) {
+        $serviceIds = $container->getServiceIdsForTag(self::TAG_LISTENER_PROVIDER);
+        uasort($serviceIds, function (array $a, array $b) {
+            return ($a['priority'] ?? 0) <=> ($b['priority'] ?? 0);
+        });
+        return array_filter(array_keys($serviceIds), function (string $service) use ($container) {
             if (false === $container->parameter(self::PARAM_FILE_EVENTS)->bool() && $service === DidChangeWatchedFilesListener::class) {
                 return false;
             }
