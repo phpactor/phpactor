@@ -20,13 +20,12 @@ final class NodeAtCursorProvider
     {
         $node = deep_copy($this->provider->get($document));
         assert($node instanceof Node);
+        $truncatedSourceCode = substr($document->__toString(), 0, $byteOffset->toInt());
 
-        $lastNonWhiteSpaceOffset = OffsetHelper::lastNonWhitespaceCharacterOffset($document->__toString());
+        $lastNonWhiteSpaceOffset = OffsetHelper::lastNonWhitespaceByteOffset($truncatedSourceCode);
 
         if ($byteOffset->toInt() > $lastNonWhiteSpaceOffset) {
-            $byteOffset = ByteOffset::fromInt(strlen(
-                mb_substr($document->__toString(), 0, $lastNonWhiteSpaceOffset)
-            ));
+            $byteOffset = ByteOffset::fromInt($lastNonWhiteSpaceOffset);
         }
 
         $node = $node->getDescendantNodeAtPosition($byteOffset->toInt());
