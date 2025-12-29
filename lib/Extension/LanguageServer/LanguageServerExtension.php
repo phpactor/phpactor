@@ -23,6 +23,7 @@ use Phpactor\Extension\LanguageServer\DiagnosticProvider\PathExcludingDiagnostic
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
+use Phpactor\Extension\LanguageServer\Listener\IncrementalUpdateListener;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Listener\ProjectConfigTrustListener;
 use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
@@ -36,6 +37,7 @@ use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
+use Phpactor\LanguageServerProtocol\TextDocumentSyncKind;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
@@ -312,6 +314,14 @@ class LanguageServerExtension implements Extension
             self::TAG_LISTENER_PROVIDER => [],
         ]);
 
+        $container->register(IncrementalUpdateListener::class, function (Container $container) {
+            return new IncrementalUpdateListener(
+                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
+            );
+        }, [
+            self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
         $container->register('language_server.session.handler.session', function (Container $container) {
             $providers = [];
             foreach ($container->getServiceIdsForTag(self::TAG_STATUS_PROVIDER) as $serviceId => $_) {
@@ -352,6 +362,7 @@ class LanguageServerExtension implements Extension
             );
 
             return new EventDispatcher($aggregate);
+
         });
     }
 
@@ -486,7 +497,10 @@ class LanguageServerExtension implements Extension
         });
 
         $container->register(TextDocumentHandler::class, function (Container $container) {
-            return new TextDocumentHandler($container->get(EventDispatcherInterface::class));
+            return new TextDocumentHandler(
+                $container->get(EventDispatcherInterface::class),
+                TextDocumentSyncKind::INCREMENTAL,
+            );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(StatsHandler::class, function (Container $container) {
