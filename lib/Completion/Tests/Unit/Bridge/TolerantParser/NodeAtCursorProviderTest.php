@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser;
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\CaseStatementNode;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
@@ -101,6 +102,15 @@ class NodeAtCursorProviderTest extends TestCase
                 PHP,
             function (Node $node): void {
                 self::assertInstanceOf(MemberAccessExpression::class, $node);
+            }
+        ];
+
+        yield [
+            <<<'PHP'
+                <?php namespace V; switch (true) { case 0: <> }
+                PHP,
+            function (Node $node): void {
+                self::assertInstanceOf(CaseStatementNode::class, $node);
             }
         ];
     }
