@@ -9,6 +9,7 @@ use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDia
 use Phpactor\Extension\LanguageServerWorseReflection\Handler\InlayHintHandler;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintOptions;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintProvider;
+use Phpactor\Extension\LanguageServerWorseReflection\Listener\IncrementalAstListener;
 use Phpactor\Extension\LanguageServerWorseReflection\Listener\InvalidateDocumentCacheListener;
 use Phpactor\Extension\LanguageServerWorseReflection\Listener\StubValidationListener;
 use Phpactor\Extension\LanguageServerWorseReflection\SourceLocator\WorkspaceSourceLocator;
@@ -20,6 +21,7 @@ use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\IncrementalAstProvider;
 use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Reflector;
@@ -43,6 +45,19 @@ class LanguageServerWorseReflectionExtension implements Extension
                 $container->parameter(WorseReflectionExtension::PARAM_ADDITIVE_STUBS)->listOfString(),
             );
         }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [] ]);
+
+        $container->register(IncrementalAstListener::class, function (Container $container) {
+            if ($container->parameter(LanguageServerExtension::PARAM_INCREMENTAL)->bool() === false) {
+                return null;
+            }
+
+            return new IncrementalAstListener(
+                $container->get(IncrementalAstProvider::class),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+            );
+        }, [
+            LanguageServerExtension::TAG_LISTENER_PROVIDER => [],
+        ]);
     }
 
     public function configure(Resolver $schema): void
@@ -81,7 +96,18 @@ class LanguageServerWorseReflectionExtension implements Extension
 
         $container->register(InvalidateDocumentCacheListener::class, function (Container $container) {
             return new InvalidateDocumentCacheListener($container->get(CacheForDocument::class));
-        }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [] ]);
+        }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [
+            'priority' => -100,
+        ] ]);
+
+        $container->register(IncrementalAstListener::class, function (Container $container) {
+            return new IncrementalAstListener(
+                $container->get(IncrementalAstProvider::class),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class)
+            );
+        }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [
+            'priority' => -100,
+        ] ]);
 
         $container->register(WorkspaceIndex::class, function (Container $container) {
             return new WorkspaceIndex(

@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Closure;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
+use Phpactor\WorseReflection\Core\Cache\StaticCache;
 
 final class CacheForDocument
 {
@@ -23,6 +24,11 @@ final class CacheForDocument
     public static function none(): self
     {
         return new self(fn () => new NullCache());
+    }
+
+    public static function static(): self
+    {
+        return new self(fn () => new StaticCache());
     }
 
     /**
