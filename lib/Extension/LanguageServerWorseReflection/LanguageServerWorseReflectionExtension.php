@@ -81,7 +81,9 @@ class LanguageServerWorseReflectionExtension implements Extension
 
         $container->register(InvalidateDocumentCacheListener::class, function (Container $container) {
             return new InvalidateDocumentCacheListener($container->get(CacheForDocument::class));
-        }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [] ]);
+        }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [
+            'priority' => -100,
+        ] ]);
 
         $container->register(WorkspaceIndex::class, function (Container $container) {
             return new WorkspaceIndex(
