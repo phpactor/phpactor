@@ -89,7 +89,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
 
             $title = 'Format with PHP Code Sniffer';
 
-            $actions = [
+            return [
                 CodeAction::fromArray([
                     'title' => $title,
                     'kind' => 'source.fixAll.phpactor.phpCodeSniffer',
@@ -103,8 +103,6 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
                     )
                 ])
             ];
-
-            return $actions;
         });
     }
 
