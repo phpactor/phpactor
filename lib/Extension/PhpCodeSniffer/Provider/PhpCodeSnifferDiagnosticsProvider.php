@@ -21,25 +21,24 @@ use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use SebastianBergmann\Diff\Parser;
-use ArrayIterator;
 
 /**
- * @phpstan-type PhpcsResult object{
+ * @phpstan-type PhpcsResult array{
  *     files: array<string, PhpcsFileResult>,
- *     totals: object{
+ *     totals: array{
  *         errors: int<0, max>,
  *         warnings: int<0, max>,
  *         fixable: int<0, max>
  *     }
  * }
  *
- * @phpstan-type PhpcsFileResult object{
+ * @phpstan-type PhpcsFileResult array{
  *     errors: int<0, max>,
  *     warnings: int<0, max>,
  *     messages: PhpcsRule[]
  * }
  *
- * @phpstan-type PhpcsRule object{
+ * @phpstan-type PhpcsRule array{
  *     message: string,
  *     source: string,
  *     severity: int,
@@ -70,9 +69,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         }
 
         return call(function () use ($textDocument, $cancel) {
-            $diagnostics = yield $this->findDiagnostics($textDocument, $cancel);
-
-            return $diagnostics ?: [];
+            return yield $this->findDiagnostics($textDocument, $cancel);
         });
     }
 
@@ -86,28 +83,26 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
 
             $diagnostics = yield $this->findDiagnostics($textDocument, $cancel);
 
-            if ($diagnostics === false) {
+            if ($diagnostics === []) {
                 return [];
             }
 
             $title = 'Format with PHP Code Sniffer';
 
-            $actions = [
-              CodeAction::fromArray([
-                'title' => $title,
-                'kind' => 'source.fixAll.phpactor.phpCodeSniffer',
-                'diagnostics' => $diagnostics,
-                'command' => new Command(
-                    $title,
-                    'php_code_sniffer.fix',
-                    [
-                    $textDocument->uri
-            ]
-                )
-              ])
+            return [
+                CodeAction::fromArray([
+                    'title' => $title,
+                    'kind' => 'source.fixAll.phpactor.phpCodeSniffer',
+                    'diagnostics' => $diagnostics,
+                    'command' => new Command(
+                        $title,
+                        'php_code_sniffer.fix',
+                        [
+                            $textDocument->uri
+                        ]
+                    )
+                ])
             ];
-
-            return $actions;
         });
     }
 
@@ -132,50 +127,31 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
     private function hasFixableDiagnostics(TextDocumentItem $textDocument): Promise
     {
         return call(function () use ($textDocument) {
+            /** @var string $outputJson */
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument, [ '-m' ]);
 
-            try {
-                /** @var PhpcsResult $output */
-                $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
-            } catch (JsonException $error) {
-                throw new RuntimeException(sprintf(
-                    'Could not decode JSON: %s',
-                    $outputJson
-                ));
-            }
-
-            return $output->totals->fixable > 0;
+            return $this->parseOutput($outputJson)['totals']['fixable'] > 0;
         });
     }
 
     /**
-     * @return Promise<Diagnostic[]|false> False when there are no diagnostics available for file, array othwerwise
-     *                                     Array containing diagnostics to show
+     * @return Promise<Diagnostic[]>
      */
     private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
+            /** @var string $outputJson */
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument);
 
-            try {
-                /** @var PhpcsResult $output */
-                $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
-            } catch (JsonException $error) {
-                throw new RuntimeException(sprintf(
-                    'Could not decode JSON: %s',
-                    $outputJson
-                ));
-            }
-
-            if (empty($output->files)) {
-                return false;
+            $files = $this->parseOutput($outputJson)['files'];
+            if (empty($files)) {
+                return [];
             }
 
             // phpcs return array indexed by file name,
             // but we only deal with one file, thus don't care about
             // actual key
-            $files = new ArrayIterator($output->files);
-            $rules = $files->current()->messages;
+            $rules = current($files)['messages'];
 
             $diagnostics = [];
 
@@ -183,17 +159,17 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
 
             foreach ($rules as $rule) {
                 // We treat non-fixable rules as 1 char range.
-                if ($rule->fixable === false) {
-                    $lineNo = $rule->line - 1;
+                if ($rule['fixable'] === false) {
+                    $lineNo = $rule['line'] - 1;
                     $range = new Range(
-                        new Position($lineNo, $rule->column),
-                        new Position($lineNo, $rule->column + 1)
+                        new Position($lineNo, $rule['column']),
+                        new Position($lineNo, $rule['column'] + 1)
                     );
                     $diagnostics[] = $this->createRuleDiagnostics($rule, $range);
                     continue;
                 }
 
-                $sniffWithoutSuffix = $this->getSniffGroup($rule->source);
+                $sniffWithoutSuffix = $this->getSniffGroup($rule['source']);
                 if ($sniffWithoutSuffix === null) {
                     continue;
                 }
@@ -224,14 +200,14 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
     /**
      * @param PhpcsRule $rule
      */
-    private function createRuleDiagnostics(object $rule, Range $range): Diagnostic
+    private function createRuleDiagnostics(array $rule, Range $range): Diagnostic
     {
         return new Diagnostic(
-            message: $rule->message,
+            message: $rule['message'],
             range: $range,
             severity: DiagnosticSeverity::WARNING,
             source: $this->name(),
-            code: $rule->source
+            code: $rule['source']
         );
     }
 
@@ -250,5 +226,18 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         }
         $sniffWithoutSuffix = $matches[1];
         return $sniffWithoutSuffix;
+    }
+
+    /** @return PhpcsResult */
+    private function parseOutput(string $rawOutput): array
+    {
+        try {
+            /** @var PhpcsResult $output */
+            $output = json_decode($rawOutput, associative: true, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException $error) {
+            throw new RuntimeException(sprintf('Could not decode JSON: %s', $rawOutput));
+        }
+
+        return $output;
     }
 }
