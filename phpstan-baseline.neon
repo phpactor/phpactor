@@ -3439,18 +3439,6 @@ parameters:
 			path: lib/Extension/Behat/Tests/Integration/Behat/BehatConfigTest.php
 
 		-
-			message: '#^Cannot call method completorForType\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Behat/Tests/Integration/Completor/FeatureStepCompletorTest.php
-
-		-
-			message: '#^Method Phpactor\\Extension\\Behat\\Tests\\Integration\\Completor\\FeatureStepCompletorTest\:\:completor\(\) should return Phpactor\\Completion\\Core\\Completor but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: lib/Extension/Behat/Tests/Integration/Completor/FeatureStepCompletorTest.php
-
-		-
 			message: '#^Method Phpactor\\Extension\\ClassMover\\Application\\ClassCopy\:\:copy\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -6247,32 +6235,8 @@ parameters:
 			path: lib/Extension/Completion/Tests/Unit/CompletionExtensionTest.php
 
 		-
-			message: '#^Cannot call method complete\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Completion/Tests/Unit/CompletionExtensionTest.php
-
-		-
-			message: '#^Cannot call method completorForType\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Completion/Tests/Unit/CompletionExtensionTest.php
-
-		-
-			message: '#^Cannot call method name\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Completion/Tests/Unit/CompletionExtensionTest.php
-
-		-
 			message: '#^Cannot call method signatureHelp\(\) on mixed\.$#'
 			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Completion/Tests/Unit/CompletionExtensionTest.php
-
-		-
-			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects Traversable, mixed given\.$#'
-			identifier: argument.type
 			count: 1
 			path: lib/Extension/Completion/Tests/Unit/CompletionExtensionTest.php
 
@@ -6337,12 +6301,6 @@ parameters:
 			path: lib/Extension/CompletionExtra/CompletionExtraExtension.php
 
 		-
-			message: '#^Parameter \#1 \$registry of class Phpactor\\Extension\\CompletionExtra\\Application\\Complete constructor expects Phpactor\\Completion\\Core\\TypedCompletorRegistry, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CompletionExtra/CompletionExtraExtension.php
-
-		-
 			message: '#^Parameter \#2 \$dumperRegistry of class Phpactor\\Extension\\CompletionExtra\\Command\\CompleteCommand constructor expects Phpactor\\Extension\\Core\\Console\\Dumper\\DumperRegistry, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -6383,12 +6341,6 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
-
-		-
-			message: '#^Parameter \#1 \$registry of class Phpactor\\Extension\\CompletionRpc\\Handler\\CompleteHandler constructor expects Phpactor\\Completion\\Core\\TypedCompletorRegistry, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/CompletionRpc/CompletionRpcExtension.php
 
 		-
 			message: '#^Parameter \#1 \$language of method Phpactor\\TextDocument\\TextDocumentBuilder\:\:language\(\) expects string, mixed given\.$#'
@@ -6639,12 +6591,6 @@ parameters:
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
-			count: 1
-			path: lib/Extension/CompletionWorse/Tests/Unit/CompletionWorseExtensionTest.php
-
-		-
-			message: '#^Cannot call method completorForType\(\) on mixed\.$#'
-			identifier: method.nonObject
 			count: 1
 			path: lib/Extension/CompletionWorse/Tests/Unit/CompletionWorseExtensionTest.php
 
@@ -10879,21 +10825,9 @@ parameters:
 			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
 
 		-
-			message: '#^Parameter \#1 \$json of function json_decode expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: lib/Extension/PhpCodeSniffer/Provider/PhpCodeSnifferDiagnosticsProvider.php
-
-		-
 			message: '#^Parameter \#1 \$string of method SebastianBergmann\\Diff\\Parser\:\:parse\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
-			path: lib/Extension/PhpCodeSniffer/Provider/PhpCodeSnifferDiagnosticsProvider.php
-
-		-
-			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 2
 			path: lib/Extension/PhpCodeSniffer/Provider/PhpCodeSnifferDiagnosticsProvider.php
 
 		-
