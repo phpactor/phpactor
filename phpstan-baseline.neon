@@ -2635,7 +2635,7 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
 
 		-
-			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects Traversable, mixed given\.$#'
+			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects iterable, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Completion/Bridge/WorseReflection/Completor/ContextSensitiveCompletor.php
@@ -2891,12 +2891,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseParameterCompletorTest.php
-
-		-
-			message: '#^Comparison operation "\<" between int\<80100, 80599\> and 80000 is always false\.$#'
-			identifier: smaller.alwaysFalse
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseSignatureHelperTest.php
 
 		-
 			message: '#^Binary operation "\." between ''got unexpected…'' and mixed results in an error\.$#'
@@ -6981,7 +6975,7 @@ parameters:
 		-
 			message: '#^Cannot call method key\(\) on mixed\.$#'
 			identifier: method.nonObject
-			count: 4
+			count: 1
 			path: lib/Extension/ContextMenu/Model/ContextMenu.php
 
 		-
@@ -8413,7 +8407,7 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Model/NameImport/CandidateFinder.php
 
 		-
-			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects Traversable, mixed given\.$#'
+			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects iterable, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Model/NameImport/CandidateFinder.php
@@ -10363,64 +10357,10 @@ parameters:
 			path: lib/Extension/Logger/Formatter/FormatterRegistry.php
 
 		-
-			message: '#^Cannot access offset ''channel'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
-			message: '#^Cannot call method format\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
-			message: '#^Method Phpactor\\Extension\\Logger\\Formatter\\PrettyFormatter\:\:format\(\) has parameter \$record with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
-			message: '#^Method Phpactor\\Extension\\Logger\\Formatter\\PrettyFormatter\:\:formatBatch\(\) has parameter \$records with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
-			message: '#^Parameter \#1 \$level of method Phpactor\\Extension\\Logger\\Formatter\\PrettyFormatter\:\:color\(\) expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
 			message: '#^Parameter \#1 \$string of function strtoupper expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
-			message: '#^Parameter \#1 \$string of function substr expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
-			message: '#^Parameter \#5 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/Logger/Formatter/PrettyFormatter.php
-
-		-
-			message: '#^Cannot call method get\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Logger/LoggingExtension.php
-
-		-
-			message: '#^Parameter \#1 \$formatter of method Monolog\\Handler\\AbstractHandler\:\:setFormatter\(\) expects Monolog\\Formatter\\FormatterInterface, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/Logger/LoggingExtension.php
 
 		-
 			message: '#^Parameter \#1 \$mainLogger of class Phpactor\\Extension\\Logger\\LoggerFactory constructor expects Psr\\Log\\LoggerInterface, mixed given\.$#'
@@ -10429,13 +10369,7 @@ parameters:
 			path: lib/Extension/Logger/LoggingExtension.php
 
 		-
-			message: '#^Parameter \#1 \$stream of class Monolog\\Handler\\StreamHandler constructor expects resource\|string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/Logger/LoggingExtension.php
-
-		-
-			message: '#^Parameter \#2 \$level of class Monolog\\Handler\\StreamHandler constructor expects int, mixed given\.$#'
+			message: '#^Parameter \#2 \$level of class Monolog\\Handler\\StreamHandler constructor expects 100\|200\|250\|300\|400\|500\|550\|600\|''ALERT''\|''alert''\|''CRITICAL''\|''critical''\|''DEBUG''\|''debug''\|''EMERGENCY''\|''emergency''\|''ERROR''\|''error''\|''INFO''\|''info''\|''NOTICE''\|''notice''\|''WARNING''\|''warning'', string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/Logger/LoggingExtension.php
@@ -10455,6 +10389,12 @@ parameters:
 		-
 			message: '#^Method Phpactor\\Extension\\Logger\\Tests\\Unit\\Formatter\\PrettyFormatterTest\:\:testFormat\(\) has parameter \$record with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
+			count: 1
+			path: lib/Extension/Logger/Tests/Unit/Formatter/PrettyFormatterTest.php
+
+		-
+			message: '#^Parameter \#1 \$record of method Phpactor\\Extension\\Logger\\Formatter\\PrettyFormatter\:\:format\(\) expects array\{message\: string, context\: array\<mixed\>, level\: 100\|200\|250\|300\|400\|500\|550\|600, level_name\: ''ALERT''\|''CRITICAL''\|''DEBUG''\|''EMERGENCY''\|''ERROR''\|''INFO''\|''NOTICE''\|''WARNING'', channel\: string, datetime\: DateTimeImmutable, extra\: array\<mixed\>\}, array\{level_name\: ''info'', context\: array\{\}, message\: ''hello'', datetime\: DateTime\} given\.$#'
+			identifier: argument.type
 			count: 1
 			path: lib/Extension/Logger/Tests/Unit/Formatter/PrettyFormatterTest.php
 
@@ -13861,7 +13801,7 @@ parameters:
 			path: lib/Rename/Tests/RenamerTestCase.php
 
 		-
-			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects Traversable, mixed given\.$#'
+			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects iterable, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Rename/Tests/RenamerTestCase.php
