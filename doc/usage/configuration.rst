@@ -6,12 +6,21 @@ Configuration
 **Trusted** configuration files are loaded from your current directory, and then
 from the XDG standard user and system directories, for example:
 
--  ``/home/daniel/www/phpactor/phpactor/.phpactor.yml``
--  ``/home/daniel/.config/phpactor/phpactor.yml``
--  ``/etc/xdg/phpactor/phpactor.yml``
+-  ``/home/daniel/www/phpactor/phpactor/.phpactor.json``
+-  ``/home/daniel/.config/phpactor/phpactor.json``
+-  ``/etc/xdg/phpactor/phpactor.json``
 
 Phpactor will merge configuration files, with more specific
 configurations overriding the less specific ones.
+
+Initializing
+------------
+
+To create a new configuration file with a reference to the JSON schema use:
+
+.. code:: bash
+
+    $ phpactor config:init
 
 Trusting Configuration
 ----------------------
@@ -33,8 +42,8 @@ configuration files and all of the current settings:
 
    $ phpactor config:dump
    Config files:               
-    [✔] /home/daniel/workspace/myproject/.phpactor.yml
-    [✔] /home/daniel/.config/phpactor/phpactor.yml
+    [✔] /home/daniel/workspace/myproject/.phpactor.json
+    [✔] /home/daniel/.config/phpactor/phpactor.json
     [𐄂] /etc/xdg/phpactor/phpactor.yml                                   
 
     code_transform.class_new.variants:
