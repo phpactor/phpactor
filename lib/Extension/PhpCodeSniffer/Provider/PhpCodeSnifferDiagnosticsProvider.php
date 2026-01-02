@@ -137,8 +137,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
     }
 
     /**
-     * @return Promise<Diagnostic[]> False when there are no diagnostics available for file, array otherwise
-     *                                     Array containing diagnostics to show
+     * @return Promise<Diagnostic[]>
      */
     private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
