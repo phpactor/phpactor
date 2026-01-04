@@ -20,6 +20,7 @@ use Phpactor\Extension\LanguageServer\DiagnosticProvider\PathExcludingDiagnostic
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
+use Phpactor\Extension\LanguageServer\Listener\IncrementalUpdateListener;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Listener\ProjectConfigTrustListener;
 use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
@@ -33,6 +34,7 @@ use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
+use Phpactor\LanguageServerProtocol\TextDocumentSyncKind;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
@@ -67,7 +69,6 @@ use Phpactor\LanguageServer\Handler\Workspace\CommandHandler;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Handler\System\ServiceHandler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
-use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
@@ -246,16 +247,6 @@ class LanguageServerExtension implements Extension
             return new Workspace($this->logger($container));
         });
 
-        $container->register(WorkspaceListener::class, function (Container $container) {
-            if ($container->parameter(self::PARAM_ENABLE_WORKPACE)->bool() === false) {
-                return null;
-            }
-
-            return new WorkspaceListener($this->workspace($container));
-        }, [
-            self::TAG_LISTENER_PROVIDER => [],
-        ]);
-
         $container->register(InvalidConfigListener::class, function (Container $container) {
             return new InvalidConfigListener(
                 $container->get(ClientApi::class),
@@ -291,6 +282,14 @@ class LanguageServerExtension implements Extension
                 /** @phpstan-ignore-next-line */
                 $container->parameter(self::PARAM_FILE_EVENT_GLOBS)->value(),
                 $container->get(ClientCapabilities::class),
+            );
+        }, [
+            self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
+        $container->register(IncrementalUpdateListener::class, function (Container $container) {
+            return new IncrementalUpdateListener(
+                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
             );
         }, [
             self::TAG_LISTENER_PROVIDER => [],
@@ -336,6 +335,7 @@ class LanguageServerExtension implements Extension
             );
 
             return new EventDispatcher($aggregate);
+
         });
     }
 
@@ -470,7 +470,10 @@ class LanguageServerExtension implements Extension
         });
 
         $container->register(TextDocumentHandler::class, function (Container $container) {
-            return new TextDocumentHandler($container->get(EventDispatcherInterface::class));
+            return new TextDocumentHandler(
+                $container->get(EventDispatcherInterface::class),
+                TextDocumentSyncKind::INCREMENTAL,
+            );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(StatsHandler::class, function (Container $container) {
@@ -655,7 +658,11 @@ class LanguageServerExtension implements Extension
      */
     private function resolveListeners(Container $container): array
     {
-        return array_filter(array_keys($container->getServiceIdsForTag(self::TAG_LISTENER_PROVIDER)), function (string $service) use ($container) {
+        $serviceIds = $container->getServiceIdsForTag(self::TAG_LISTENER_PROVIDER);
+        uasort($serviceIds, function (array $a, array $b) {
+            return ($a['priority'] ?? 0) <=> ($b['priority'] ?? 0);
+        });
+        return array_filter(array_keys($serviceIds), function (string $service) use ($container) {
             if (false === $container->parameter(self::PARAM_FILE_EVENTS)->bool() && $service === DidChangeWatchedFilesListener::class) {
                 return false;
             }

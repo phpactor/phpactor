@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerWorseReflection\Listener;
 
 use Phpactor\LanguageServer\Event\TextDocumentClosed;
+use Phpactor\LanguageServer\Event\TextDocumentIncrementallyUpdated;
 use Phpactor\LanguageServer\Event\TextDocumentSaved;
 use Phpactor\LanguageServer\Event\TextDocumentUpdated;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -20,7 +21,7 @@ class InvalidateDocumentCacheListener implements ListenerProviderInterface
      */
     public function getListenersForEvent($event): iterable
     {
-        if ($event instanceof TextDocumentUpdated) {
+        if ($event instanceof TextDocumentUpdated || $event instanceof TextDocumentIncrementallyUpdated) {
             yield function () use ($event): void {
                 $this->cache->purge(TextDocumentUri::fromString($event->identifier()->uri));
             };
