@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\AstUpdater;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\CacheForDocument;
 use Psr\Log\NullLogger;
@@ -76,7 +77,7 @@ final class IncrementalAstProvider implements AstProvider
         $start = microtime(true);
         foreach ($edits as $edit) {
 
-            $astResult = (new IncrementalAstUpdater($ast, $this->provider))->apply($edit, $uri);
+            $astResult = (new AstUpdater($ast, $this->provider))->apply($edit, $uri);
 
             if (false === $astResult->success) {
                 $this->logger->warning(sprintf('PARS fell back to full parse: %s', $astResult->failureReason));
