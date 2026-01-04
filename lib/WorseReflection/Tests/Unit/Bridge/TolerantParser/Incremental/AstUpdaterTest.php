@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\AstProvider;
+namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Incremental;
 
 use Generator;
 use Microsoft\PhpParser\Parser;
@@ -9,9 +9,9 @@ use Phpactor\ConfigLoader\Tests\TestCase;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\IncrementalAstUpdater;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\AstUpdater;
 
-class IncrementalAstUpdaterTest extends TestCase
+class AstUpdaterTest extends TestCase
 {
     #[DataProvider('provideEditInToken')]
     #[DataProvider('provideEditInCompoundStatementList')]
@@ -21,7 +21,7 @@ class IncrementalAstUpdaterTest extends TestCase
 
         $uri = 'file:///foo';
         $ast = (new Parser())->parseSourceFile($source, $uri);
-        $incrementalAstResult = (new IncrementalAstUpdater($ast))->apply($textEdit, TextDocumentUri::fromString($uri));
+        $incrementalAstResult = (new AstUpdater($ast))->apply($textEdit, TextDocumentUri::fromString($uri));
         $freshAst = (new Parser())->parseSourceFile($updatedSource, $uri);
 
         if ($sanityCheck !== null) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider;
+namespace Phpactor\WorseReflection\Bridge\TolerantParser\Incremental;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\SourceFileNode;
@@ -15,10 +15,12 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\AstUpdaterResult;
+use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Throwable;
 
-class IncrementalAstUpdater
+class AstUpdater
 {
     public function __construct(
         private SourceFileNode $node,
@@ -26,7 +28,7 @@ class IncrementalAstUpdater
     ) {
     }
 
-    public function apply(TextEdit $edit, TextDocumentUri $uri): IncrementalAstUpdaterResult
+    public function apply(TextEdit $edit, TextDocumentUri $uri): AstUpdaterResult
     {
         $ast = $this->node;
         $node = $ast->getDescendantNodeAtPosition($edit->start()->toInt());
@@ -40,10 +42,10 @@ class IncrementalAstUpdater
 
         if ($reason === null) {
             $ast->fileContents = $updatedSource;
-            return new IncrementalAstUpdaterResult($ast, true);
+            return new AstUpdaterResult($ast, true);
         }
 
-        return new IncrementalAstUpdaterResult($this->astProvider->get(
+        return new AstUpdaterResult($this->astProvider->get(
             TextDocumentBuilder::create($updatedSource)->uri($uri)->build()
         ), false, $reason);
     }

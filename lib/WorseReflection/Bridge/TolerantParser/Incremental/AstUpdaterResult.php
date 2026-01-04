@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider;
+namespace Phpactor\WorseReflection\Bridge\TolerantParser\Incremental;
 
 use Microsoft\PhpParser\Node\SourceFileNode;
 
-final class IncrementalAstUpdaterResult
+final class AstUpdaterResult
 {
     public function __construct(
         public SourceFileNode $ast,
