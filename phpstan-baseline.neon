@@ -9925,19 +9925,7 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/LanguageServerReferenceFinderExtensionTest.php
 
 		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
-
-		-
-			message: '#^Instanceof between Phpactor\\LanguageServerProtocol\\FileRename and Phpactor\\LanguageServerProtocol\\FileRename will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 1
-			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
-
-		-
-			message: '#^Parameter \#1 \$map of method Phpactor\\Rename\\Model\\LocatedTextEditsMap\:\:merge\(\) expects Phpactor\\Rename\\Model\\LocatedTextEditsMap, mixed given\.$#'
+			message: '#^Parameter \#1 \$workspaceEdits of method Phpactor\\Rename\\Model\\WorkspaceOperations\:\:merge\(\) expects Phpactor\\Rename\\Model\\WorkspaceOperations, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
@@ -9962,12 +9950,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$renamers of class Phpactor\\Rename\\Model\\Renamer\\ChainRenamer constructor expects array\<Phpactor\\Rename\\Model\\Renamer\>, list\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerRename/LanguageServerRenameExtension.php
-
-		-
-			message: '#^Parameter \#1 \$workspace of class Phpactor\\Extension\\LanguageServerRename\\Util\\LocatedTextEditConverter constructor expects Phpactor\\LanguageServer\\Core\\Workspace\\Workspace, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServerRename/LanguageServerRenameExtension.php
@@ -10058,12 +10040,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$map of class Phpactor\\Rename\\Model\\LocatedTextEditsMap constructor expects array\<string, Phpactor\\TextDocument\\TextEdits\>, array given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
-
-		-
-			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertCount\(\) expects Countable\|iterable, array\<Phpactor\\LanguageServerProtocol\\CreateFile\|Phpactor\\LanguageServerProtocol\\DeleteFile\|Phpactor\\LanguageServerProtocol\\RenameFile\|Phpactor\\LanguageServerProtocol\\TextDocumentEdit\>\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
@@ -13693,7 +13669,7 @@ parameters:
 			path: lib/ReferenceFinder/Tests/Unit/Search/NameSearchResultTest.php
 
 		-
-			message: '#^Method Phpactor\\Rename\\Adapter\\ClassMover\\FileRenamer\:\:renameFile\(\) should return Amp\\Promise\<Phpactor\\Rename\\Model\\LocatedTextEditsMap\> but returns Amp\\Promise\<mixed\>\.$#'
+			message: '#^Method Phpactor\\Rename\\Adapter\\ClassMover\\FileRenamer\:\:renameFile\(\) should return Amp\\Promise\<Phpactor\\Rename\\Model\\WorkspaceOperations\> but returns Amp\\Promise\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
 			path: lib/Rename/Adapter/ClassMover/FileRenamer.php
@@ -13735,13 +13711,13 @@ parameters:
 			path: lib/Rename/Adapter/Tolerant/TokenUtil.php
 
 		-
-			message: '#^Method Phpactor\\Rename\\Model\\FileRenamer\\LoggingFileRenamer\:\:renameFile\(\) should return Amp\\Promise\<Phpactor\\Rename\\Model\\LocatedTextEditsMap\> but returns Amp\\Promise\<mixed\>\.$#'
+			message: '#^Method Phpactor\\Rename\\Model\\FileRenamer\\LoggingFileRenamer\:\:renameFile\(\) should return Amp\\Promise\<Phpactor\\Rename\\Model\\WorkspaceOperations\> but returns Amp\\Promise\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
 			path: lib/Rename/Model/FileRenamer/LoggingFileRenamer.php
 
 		-
-			message: '#^Method Phpactor\\Rename\\Model\\FileRenamer\\TestFileRenamer\:\:renameFile\(\) should return Amp\\Promise\<Phpactor\\Rename\\Model\\LocatedTextEditsMap\> but returns Amp\\Failure\<mixed\>\.$#'
+			message: '#^Method Phpactor\\Rename\\Model\\FileRenamer\\TestFileRenamer\:\:renameFile\(\) should return Amp\\Promise\<Phpactor\\Rename\\Model\\WorkspaceOperations\> but returns Amp\\Failure\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
 			path: lib/Rename/Model/FileRenamer/TestFileRenamer.php
@@ -13749,24 +13725,12 @@ parameters:
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
-			count: 2
-			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
-
-		-
-			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Phpactor\\\\Rename\\\\Model\\\\LocatedTextEditsMap'' and Phpactor\\Rename\\Model\\LocatedTextEditsMap will always evaluate to true\.$#'
-			identifier: staticMethod.alreadyNarrowedType
 			count: 1
 			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
 
 		-
 			message: '#^Cannot call method path\(\) on Phpactor\\TextDocument\\TextDocumentUri\|null\.$#'
 			identifier: method.nonObject
-			count: 1
-			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
-
-		-
-			message: '#^Instanceof between Phpactor\\Rename\\Model\\LocatedTextEditsMap and Phpactor\\Rename\\Model\\LocatedTextEditsMap will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
 			count: 1
 			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
 
