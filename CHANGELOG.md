@@ -23,6 +23,12 @@ Bug fixes:
   - Fix scoped property access variable renaming #2968 @dantleech
   - Fix display of configuration warnings #2971 @dantleech
 
+## 2025.10.17.1
+
+Bug fix:
+
+- Includ Composer/SemVer as a production dependncy #3015 @dantleech
+
 ## 2025.10.17.0
 
 BREAKING
