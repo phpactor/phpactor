@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0da1491026f4d656da1eb690c8859e1a",
+    "content-hash": "1e5999f822ee6de4135970eb4c72f285",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1143,7 +1143,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/JetBrains/phpstorm-stubs.git",
+                "url": "https://github.com/JetBrains/phpstorm-stubs",
                 "reference": "4a38b62928bb95c29d3cd866ffc188c07d035e0a"
             },
             "dist": {
