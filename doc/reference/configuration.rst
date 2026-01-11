@@ -916,6 +916,19 @@ Additive stubs files relative to the project root. These stubs augment existing 
 **Default**: ``[]``
 
 
+.. _param_worse_reflection.ast_provider_service:
+
+
+``worse_reflection.ast_provider_service``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+(internal) service used to provide the AST
+
+
+**Default**: ``"Phpactor\\WorseReflection\\Bridge\\TolerantParser\\AstProvider\\TolerantAstProvider"``
+
+
 .. _param_worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance:
 
 
