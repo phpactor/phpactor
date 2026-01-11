@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\LanguageServerProtocol\Range;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 
@@ -27,4 +28,20 @@ class RangeConverterTest extends TestCase
             )
         );
     }
+
+    public function testPositionToByteOffsetOutOfRange(): void
+    {
+        self::assertEquals(
+            ByteOffsetRange::fromInts(25, 27),
+            RangeConverter::toPhpactorRange(
+                ProtocolFactory::range(1, 19, 1, 21),
+                <<<'EOT'
+                    <?php
+                            $this->update
+
+                    EOT
+            )
+        );
+    }
+
 }
