@@ -553,7 +553,9 @@ class LanguageServerExtension implements Extension
             );
         }, [
             self::TAG_SERVICE_PROVIDER => [],
-            self::TAG_LISTENER_PROVIDER => [],
+            self::TAG_LISTENER_PROVIDER => [
+                'priority' => 100,
+            ],
         ]);
     }
 
@@ -723,7 +725,7 @@ class LanguageServerExtension implements Extension
             $providers[$attrs[DiagnosticProviderTag::NAME] ?? $serviceId] = $provider;
         }
 
-        $enabled = $container->getParameter(self::PARAM_DIAGNOSTIC_PROVIDERS);
+        $enabled = $container->parameter(self::PARAM_DIAGNOSTIC_PROVIDERS)->value();
 
         if (null !== $enabled) {
             Assert::isArray($enabled);
