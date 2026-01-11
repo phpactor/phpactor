@@ -2,20 +2,11 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Incremental;
 
-use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\SourceFileNode;
-use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
-use Microsoft\PhpParser\Parser;
-use Microsoft\PhpParser\PhpTokenizer;
-use Microsoft\PhpParser\Token;
-use Microsoft\PhpParser\TokenKind;
-use Microsoft\PhpParser\TokenStreamProviderInterface;
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\AstUpdaterResult;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\Strategy\CompoundNodeStrategy;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\Strategy\TokenStrategy;

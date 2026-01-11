@@ -77,19 +77,21 @@ final class IncrementalAstProvider implements AstProvider
         $start = microtime(true);
         foreach ($edits as $edit) {
 
-            $astResult = (new AstUpdater($ast, $this->provider))->apply($edit, $uri);
+            $astResult = (AstUpdater::create($ast, $this->provider))->apply($edit, $uri);
 
             if (false === $astResult->success) {
-                $this->logger->warning(sprintf('PARS fell back to full parse: %s', $astResult->reason));
+                $this->logger->warning(sprintf('PARS incremental update failed: %s', $astResult->reason));
             }
 
             $ast = $astResult->ast;
+
+            $this->logger->info(sprintf(
+                'PARS %s incremental update with "%s" strategy',
+                number_format(microtime(true) - $start, 4),
+                $astResult->reason,
+            ));
         }
-        $this->logger->info(sprintf(
-            'PARS %s (incremental %d edits)',
-            number_format(microtime(true) - $start, 4),
-            count($edits),
-        ));
+
 
         $cache->set(self::PREVIOUS_AST, $ast);
 

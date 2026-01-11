@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Incremental\Strategy;
 
 use Generator;
-use Phpactor\ConfigLoader\Tests\TestCase;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\Strategy\TokenStrategy;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\UpdaterStrategy;

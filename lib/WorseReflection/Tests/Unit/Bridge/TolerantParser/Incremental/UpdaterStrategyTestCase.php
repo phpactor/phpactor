@@ -27,8 +27,7 @@ abstract class UpdaterStrategyTestCase extends TestCase
         TextEdit $textEdit,
         bool $expectedSuccess,
         ?string $sanityCheck = null
-    ): void
-    {
+    ): void {
         $updatedSource = TextEdits::one($textEdit)->apply($source);
 
         $uri = 'file:///foo';
