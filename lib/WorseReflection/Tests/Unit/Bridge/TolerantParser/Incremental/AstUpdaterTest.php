@@ -26,7 +26,7 @@ class AstUpdaterTest extends TestCase
 
         $uri = 'file:///foo';
         $ast = (new Parser())->parseSourceFile($source, $uri);
-        $incrementalAstResult = (new AstUpdater($ast))->apply($textEdit, TextDocumentUri::fromString($uri));
+        $incrementalAstResult = (AstUpdater::create($ast))->apply($textEdit, TextDocumentUri::fromString($uri));
         $freshAst = (new Parser())->parseSourceFile($updatedSource, $uri);
 
         if ($sanityCheck !== null) {

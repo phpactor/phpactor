@@ -17,15 +17,27 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\AstUpdaterResult;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\Strategy\CompoundNodeStrategy;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\Strategy\TokenStrategy;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Throwable;
 
-class AstUpdater
+final class AstUpdater
 {
     public function __construct(
         private SourceFileNode $node,
         private AstProvider $astProvider = new TolerantAstProvider(),
+        /** @var UpdaterStrategy[] */
+        private array $strategies = [],
     ) {
+    }
+
+    public static function create(SourceFileNode $node, AstProvider $provider = new TolerantAstProvider()): self
+    {
+        return new self($node, $provider, [
+            new TokenStrategy(),
+            new CompoundNodeStrategy(),
+        ]);
     }
 
     public function apply(TextEdit $edit, TextDocumentUri $uri): AstUpdaterResult
@@ -33,246 +45,29 @@ class AstUpdater
         $ast = $this->node;
         $node = $ast->getDescendantNodeAtPosition($edit->start()->toInt());
         $updatedSource = TextEdits::one($edit)->apply($this->node->getFileContents());
+        $tried = [];
 
-        try {
-            $result = $this->doApply($node, $edit);
-        } catch (Throwable $e) {
-            $result = new OperationResult('exception', false, $e->getMessage());
+        foreach ($this->strategies as $strategy) {
+            try {
+                $result = $strategy->apply($node, $edit);
+            } catch (Throwable $e) {
+                $result = new OperationResult('exception', false, $e->getMessage());
+            }
+
+            if ($result->success === true) {
+                $ast->fileContents = $updatedSource;
+                return new AstUpdaterResult($ast, true, $result->name);
+            }
+
+            $tried[] = $result;
         }
 
-        if ($result->success === true) {
-            $ast->fileContents = $updatedSource;
-            return new AstUpdaterResult($ast, true, $result->name);
-        }
+        $failureReason = implode(', ', array_map(function (OperationResult $result) {
+            return sprintf('[%s] %s', $result->name, $result->reason);
+        }, $tried));
 
         return new AstUpdaterResult($this->astProvider->get(
             TextDocumentBuilder::create($updatedSource)->uri($uri)->build()
-        ), false, $result->reason);
-    }
-
-    private function doApply(Node $node, TextEdit $edit): OperationResult
-    {
-        $result = $this->applyToken($node, $edit);
-        if ($result->success) {
-            return $result;
-        }
-        $result = $this->applyCompoundNode($node, $edit);
-        if ($result->success) {
-            return $result;
-        }
-        return $result;
-    }
-
-    private function applyToken(Node $node, TextEdit $edit): OperationResult
-    {
-        $operationResult = new OperationResult('token');
-
-        $token = self::tokenAtRange($node, $edit->range());
-
-        // the text edit is NOT contained in a token
-        if (null === $token) {
-            return $operationResult->fail('text edit not within a token');
-        }
-
-        // the range is in the token so align a new edit with the start
-        // position of the token text
-        $transposedEdit = TextEdit::create(
-            $edit->start()->toInt() - $token->getStartPosition(),
-            $edit->length(),
-            $edit->replacement()
-        );
-
-        $originalTokenText = (string)$token->getText($node->getFileContents());
-        $editedTokenText = TextEdits::one($transposedEdit)->apply($originalTokenText);
-        $tokenizer = $this->tokenizer($editedTokenText);
-
-        $newTokens = [];
-        do {
-            $newToken = $tokenizer->scanNextToken();
-
-            if ($newToken->kind === TokenKind::EndOfFileToken) {
-                break;
-            }
-            $newTokens[] = $newToken;
-        } while (true);
-
-        if (count($newTokens) === 0) {
-            return $operationResult->fail(sprintf(
-                'no token found (orig: %s, new: %s)',
-                $originalTokenText,
-                $editedTokenText
-            ));
-        }
-
-        // once we exclude the php start tag and the EOF. If we are left with
-        // a single token corresponding to the original then we can update the
-        // original. If we have more than one token then we cannot.
-        if (count($newTokens) !== 1) {
-            return $operationResult->fail(sprintf(
-                'more than one token found (%d, orig: %s, new: %s))',
-                count($newTokens),
-                $originalTokenText,
-                $editedTokenText
-            ));
-        }
-
-        $newToken = $newTokens[0];
-
-        // WHY?
-        if (strlen($editedTokenText) !== $newToken->length) {
-            return $operationResult->fail(
-                'edited token text no the same as new token length (???)'
-            );
-        }
-
-        // if the new token STARTS later than `<?php\n` then it has some
-        // leading-whitespace/doc-comment and it will corrupt things.
-        if ($newToken->start > 6) {
-            return $operationResult->fail(sprintf(
-                'new token has leading whitespace or doc comment: %s',
-                $editedTokenText
-            ));
-        }
-
-        // if the new token is different from the old one then we need to
-        // reparse as for example changing `$foo-` to `$foo->` is the
-        // difference between a binary expression ($foo-1) and a member access
-        // expression (`$foo->bar`).
-        if ($newToken->kind !== $token->kind) {
-            return $operationResult->fail(sprintf(
-                'new token is not of the same type (orig: %s, new: %s)',
-                $originalTokenText,
-                $editedTokenText
-            ));
-        }
-
-        $diff = $newToken->length - strlen($originalTokenText);
-
-        // the new token does not include the leading whitespace/docblocks, so add that _back_.
-        $token->length = $newToken->length + ($token->start - $token->fullStart);
-
-        foreach ($node->getRoot()->getDescendantTokens() as $rtoken) {
-            if ($rtoken->start <= $token->start) {
-                continue;
-            }
-            $rtoken->fullStart += $diff;
-            $rtoken->start += $diff;
-        }
-
-        return $operationResult;
-    }
-
-    /**
-     * If a token coverts the given offset range, then return it.
-     */
-    private static function tokenAtRange(Node $node, ByteOffsetRange $range): ?Token
-    {
-        foreach ($node->getDescendantTokens() as $token) {
-            if ($token->getStartPosition() <= $range->start()->toInt() && $token->getEndPosition() >= $range->end()->toInt()) {
-                return $token;
-            }
-        }
-
-        return null;
-    }
-
-    private function tokenizer(string $source): TokenStreamProviderInterface
-    {
-        $tokenizer = (new PhpTokenizer('<?php ' . $source));
-        $tokenizer->setCurrentPosition(1);
-        return $tokenizer;
-    }
-
-    private function applyCompoundNode(Node $node, TextEdit $edit): OperationResult
-    {
-        $result = new OperationResult('compound node');
-        $compoundNode = $node instanceof CompoundStatementNode ? $node : $node->getFirstAncestor(CompoundStatementNode::class);
-
-        if (null === $compoundNode) {
-            return $result->fail('no compound statement node found');
-        }
-
-        assert($compoundNode instanceof CompoundStatementNode);
-
-        $extractStartPosition = null;
-
-        // determine from where we want to extract the text to re-parse.
-        // this should be from the statement being edited or the position after
-        // the closing brace of the compound statement
-        $statementNb = 0;
-        foreach ($compoundNode->statements as $statementCandidate) {
-            // if the text edit is _contained_ in a statement
-            if ($statementCandidate->getFullStartPosition() < $edit->start()->toInt() && $statementCandidate->getEndPosition() > $edit->end()->toInt()) {
-                $extractStartPosition = $statementCandidate->getFullStartPosition();
-                break;
-            }
-            $statementNb++;
-        }
-
-        if (null === $extractStartPosition) {
-            $extractStartPosition = $compoundNode->openBrace->getStartPosition() + 1;
-            $statementNb = 0;
-        }
-
-        // extract the remaining textual content of the node
-        $textToEdit = substr(
-            $this->node->getFileContents(),
-            $extractStartPosition,
-            $compoundNode->getEndPosition() - $extractStartPosition
-        );
-
-        // transpose the text edit to the textToEdit
-        $transposedEdit = TextEdit::create(
-            $edit->start()->toInt() - $extractStartPosition,
-            $edit->length(),
-            $edit->replacement()
-        );
-
-        // apply the edit
-        $extractText = TextEdits::one($transposedEdit)->apply($textToEdit);
-
-        // parse the extract, prepending the starting brace to make it a compound node
-        $newCompoundNode = (new Parser())->parseSourceFile('<?php {' .$extractText)->statementList[1];
-
-        if (!$newCompoundNode instanceof CompoundStatementNode) {
-            return $result->fail('did not parse a compound statement node');
-        }
-
-        // align the tokens in the compound node
-        $diff = $extractStartPosition;
-        $lastToken = null;
-        foreach ($newCompoundNode->statements as $statement) {
-            foreach ($statement->getDescendantTokens() as $rtoken) {
-                $rtoken->fullStart += -7 + $diff;
-                $rtoken->start += -7 + $diff;
-                $lastToken = $rtoken;
-            }
-        }
-
-        // graft the node onto the original node
-        foreach ($newCompoundNode->statements as $rstatement) {
-            $rstatement->parent = $compoundNode;
-        }
-        $compoundNode->statements = array_merge(
-            array_slice($compoundNode->statements, 0, $statementNb),
-            $newCompoundNode->statements,
-        );
-        $diff = strlen($extractText) - strlen($textToEdit);
-
-        // align the remaining tokens
-        $found = false;
-        foreach ($node->getRoot()->getDescendantTokens() as $rtoken) {
-            if ($found === false && $rtoken === $lastToken) {
-                $found = true;
-                continue;
-            }
-            if (!$found) {
-                continue;
-            }
-            $rtoken->fullStart += $diff;
-            $rtoken->start += $diff;
-        }
-
-        return $result;
+        ), false, $failureReason);
     }
 }
