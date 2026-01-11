@@ -87,6 +87,7 @@ class WorseReflectionExtension implements Extension
         });
         $schema->setDescriptions([
             self::PARAM_ENABLE_CACHE => 'If reflection caching should be enabled',
+            self::PARAM_AST_PROVIDER => '(internal) service used to provide the AST',
             self::PARAM_CACHE_LIFETIME => 'If caching is enabled, limit the amount of time a cache entry can stay alive',
             self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 'Levenshtein distance to use when suggesting corrections for variable names',
             self::PARAM_ENABLE_CONTEXT_LOCATION => <<<'EOT'
