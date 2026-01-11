@@ -35,12 +35,13 @@ final class AstUpdater
     {
         $ast = $this->node;
         $node = $ast->getDescendantNodeAtPosition($edit->start()->toInt());
-        $updatedSource = TextEdits::one($edit)->apply($this->node->getFileContents());
+        $source = $this->node->getFileContents();
+        $updatedSource = TextEdits::one($edit)->apply($source);
         $tried = [];
 
         foreach ($this->strategies as $strategy) {
             try {
-                $result = $strategy->apply($node, $edit);
+                $result = $strategy->apply($node, $edit, $source);
             } catch (Throwable $e) {
                 $result = new OperationResult('exception', false, $e->getMessage());
             }

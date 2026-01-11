@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\UpdaterStrategy;
 
 class CompoundNodeStrategy implements UpdaterStrategy
 {
-    public function apply(Node $node, TextEdit $edit): OperationResult
+    public function apply(Node $node, TextEdit $edit, string $source): OperationResult
     {
         $result = new OperationResult('compound node');
         $compoundNode = $node instanceof CompoundStatementNode ? $node : $node->getFirstAncestor(CompoundStatementNode::class);

@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Incremental\UpdaterStrategy;
 
 class TokenStrategy implements UpdaterStrategy
 {
-    public function apply(Node $node, TextEdit $edit): OperationResult
+    public function apply(Node $node, TextEdit $edit, string $source): OperationResult
     {
         $operationResult = new OperationResult('token');
 

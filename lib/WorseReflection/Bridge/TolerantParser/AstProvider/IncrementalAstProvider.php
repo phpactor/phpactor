@@ -74,24 +74,28 @@ final class IncrementalAstProvider implements AstProvider
         $ast = $entry->expect(SourceFileNode::class);
         $content = $ast->fileContents;
 
-        $start = microtime(true);
         foreach ($edits as $edit) {
 
+            $start = microtime(true);
             $astResult = (AstUpdater::create($ast, $this->provider))->apply($edit, $uri);
+            $elapsed = microtime(true) - $start;
 
             if (false === $astResult->success) {
-                $this->logger->warning(sprintf('PARS incremental update failed: %s', $astResult->reason));
+                $this->logger->warning(sprintf(
+                    'PARS %s could not find increment strategy: %s',
+                    number_format($elapsed, 4),
+                    $astResult->reason
+                ));
+            } else {
+                $this->logger->info(sprintf(
+                    'PARS %s incremental update with "%s" strategy',
+                    number_format($elapsed, 4),
+                    $astResult->reason,
+                ));
             }
 
             $ast = $astResult->ast;
-
-            $this->logger->info(sprintf(
-                'PARS %s incremental update with "%s" strategy',
-                number_format(microtime(true) - $start, 4),
-                $astResult->reason,
-            ));
         }
-
 
         $cache->set(self::PREVIOUS_AST, $ast);
 

@@ -7,5 +7,5 @@ use Phpactor\TextDocument\TextEdit;
 
 interface UpdaterStrategy
 {
-    public function apply(Node $node, TextEdit $edit): OperationResult;
+    public function apply(Node $node, TextEdit $edit, string $source): OperationResult;
 }
