@@ -35,41 +35,43 @@ class AstUpdater
         $updatedSource = TextEdits::one($edit)->apply($this->node->getFileContents());
 
         try {
-            $reason = $this->doApply($node, $edit);
+            $result = $this->doApply($node, $edit);
         } catch (Throwable $e) {
-            $reason = $e->getMessage();
+            $result = new OperationResult('exception', false, $e->getMessage());
         }
 
-        if ($reason === null) {
+        if ($result->success === true) {
             $ast->fileContents = $updatedSource;
-            return new AstUpdaterResult($ast, true);
+            return new AstUpdaterResult($ast, true, $result->name);
         }
 
         return new AstUpdaterResult($this->astProvider->get(
             TextDocumentBuilder::create($updatedSource)->uri($uri)->build()
-        ), false, $reason);
+        ), false, $result->reason);
     }
 
-    private function doApply(Node $node, TextEdit $edit): ?string
+    private function doApply(Node $node, TextEdit $edit): OperationResult
     {
-        $reason = $this->applyToken($node, $edit);
-        if (null === $reason) {
-            return null;
+        $result = $this->applyToken($node, $edit);
+        if ($result->success) {
+            return $result;
         }
-        $reason = $this->applyCompoundNode($node, $edit);
-        if (null === $reason) {
-            return null;
+        $result = $this->applyCompoundNode($node, $edit);
+        if ($result->success) {
+            return $result;
         }
-        return $reason;
+        return $result;
     }
 
-    private function applyToken(Node $node, TextEdit $edit): ?string
+    private function applyToken(Node $node, TextEdit $edit): OperationResult
     {
+        $operationResult = new OperationResult('token');
+
         $token = self::tokenAtRange($node, $edit->range());
 
         // the text edit is NOT contained in a token
         if (null === $token) {
-            return 'text edit not within a token';
+            return $operationResult->fail('text edit not within a token');
         }
 
         // the range is in the token so align a new edit with the start
@@ -95,30 +97,41 @@ class AstUpdater
         } while (true);
 
         if (count($newTokens) === 0) {
-            return sprintf('no token found (orig: %s, new: %s)', $originalTokenText, $editedTokenText);
+            return $operationResult->fail(sprintf(
+                'no token found (orig: %s, new: %s)',
+                $originalTokenText,
+                $editedTokenText
+            ));
         }
 
         // once we exclude the php start tag and the EOF. If we are left with
         // a single token corresponding to the original then we can update the
         // original. If we have more than one token then we cannot.
         if (count($newTokens) !== 1) {
-            return sprintf('more than one token found (%d, orig: %s, new: %s))', count($newTokens), $originalTokenText, $editedTokenText);
+            return $operationResult->fail(sprintf(
+                'more than one token found (%d, orig: %s, new: %s))',
+                count($newTokens),
+                $originalTokenText,
+                $editedTokenText
+            ));
         }
 
         $newToken = $newTokens[0];
 
         // WHY?
         if (strlen($editedTokenText) !== $newToken->length) {
-            return 'edited token text no the same as new token length (???)';
+            return $operationResult->fail(
+                'edited token text no the same as new token length (???)'
+            );
         }
 
         // if the new token STARTS later than `<?php\n` then it has some
         // leading-whitespace/doc-comment and it will corrupt things.
         if ($newToken->start > 6) {
-            return sprintf(
+            return $operationResult->fail(sprintf(
                 'new token has leading whitespace or doc comment: %s',
                 $editedTokenText
-            );
+            ));
         }
 
         // if the new token is different from the old one then we need to
@@ -126,7 +139,11 @@ class AstUpdater
         // difference between a binary expression ($foo-1) and a member access
         // expression (`$foo->bar`).
         if ($newToken->kind !== $token->kind) {
-            return sprintf('new token is not of the same type (orig: %s, new: %s)', $originalTokenText, $editedTokenText);
+            return $operationResult->fail(sprintf(
+                'new token is not of the same type (orig: %s, new: %s)',
+                $originalTokenText,
+                $editedTokenText
+            ));
         }
 
         $diff = $newToken->length - strlen($originalTokenText);
@@ -142,7 +159,7 @@ class AstUpdater
             $rtoken->start += $diff;
         }
 
-        return null;
+        return $operationResult;
     }
 
     /**
@@ -166,12 +183,13 @@ class AstUpdater
         return $tokenizer;
     }
 
-    private function applyCompoundNode(Node $node, TextEdit $edit): ?string
+    private function applyCompoundNode(Node $node, TextEdit $edit): OperationResult
     {
+        $result = new OperationResult('compound node');
         $compoundNode = $node instanceof CompoundStatementNode ? $node : $node->getFirstAncestor(CompoundStatementNode::class);
 
         if (null === $compoundNode) {
-            return 'no compound statement node found';
+            return $result->fail('no compound statement node found');
         }
 
         assert($compoundNode instanceof CompoundStatementNode);
@@ -217,7 +235,7 @@ class AstUpdater
         $newCompoundNode = (new Parser())->parseSourceFile('<?php {' .$extractText)->statementList[1];
 
         if (!$newCompoundNode instanceof CompoundStatementNode) {
-            return 'did not parse a compound statement node';
+            return $result->fail('did not parse a compound statement node');
         }
 
         // align the tokens in the compound node
@@ -255,6 +273,6 @@ class AstUpdater
             $rtoken->start += $diff;
         }
 
-        return null;
+        return $result;
     }
 }

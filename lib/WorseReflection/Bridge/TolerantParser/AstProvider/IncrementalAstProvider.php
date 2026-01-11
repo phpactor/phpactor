@@ -80,7 +80,7 @@ final class IncrementalAstProvider implements AstProvider
             $astResult = (new AstUpdater($ast, $this->provider))->apply($edit, $uri);
 
             if (false === $astResult->success) {
-                $this->logger->warning(sprintf('PARS fell back to full parse: %s', $astResult->failureReason));
+                $this->logger->warning(sprintf('PARS fell back to full parse: %s', $astResult->reason));
             }
 
             $ast = $astResult->ast;

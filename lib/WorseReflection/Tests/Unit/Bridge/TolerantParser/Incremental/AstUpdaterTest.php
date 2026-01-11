@@ -15,7 +15,12 @@ class AstUpdaterTest extends TestCase
 {
     #[DataProvider('provideEditInToken')]
     #[DataProvider('provideEditInCompoundStatementList')]
-    public function testUpdate(string $source, TextEdit $textEdit, bool $expectedSuccess, ?string $sanityCheck = null): void
+    public function testUpdate(
+        string $source,
+        TextEdit $textEdit,
+        bool $expectedSuccess,
+        ?string $sanityCheck = null
+    ): void
     {
         $updatedSource = TextEdits::one($textEdit)->apply($source);
 
@@ -31,13 +36,8 @@ class AstUpdaterTest extends TestCase
         self::assertEquals($updatedSource, $incrementalAstResult->ast->fileContents);
         self::assertEquals($freshAst, $incrementalAstResult->ast, 'Incrementally updated AST is the same as fresh AST');
 
-        if ($expectedSuccess) {
-            self::assertNull($incrementalAstResult->failureReason);
-            self::assertTrue($incrementalAstResult->success);
-            return;
-        }
-
-        self::assertFalse($incrementalAstResult->success, 'Expect to fail');
+        self::assertSame($expectedSuccess, $incrementalAstResult->success, 'Expect to fail');
+        //self::assertNull($incrementalAstResult->reason);
     }
 
     /**
