@@ -8,8 +8,7 @@ final class OperationResult
         public string $name,
         public bool $success = true,
         public ?string $reason = null
-    )
-    {
+    ) {
     }
 
     public function fail(string $reason): self
