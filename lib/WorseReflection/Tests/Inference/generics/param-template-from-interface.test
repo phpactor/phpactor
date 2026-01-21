@@ -1,0 +1,27 @@
+<?php
+
+interface Node {}
+
+/** @template T of Node */
+interface NodeVisitor
+{
+    /** @param T $node */
+    public function enter(Node $node): void;
+}
+
+class SpecificNode implements Node
+{
+    public function specialMethod(): string
+    {
+        return 'special';
+    }
+}
+
+/** @implements NodeVisitor<SpecificNode> */
+class SpecificNodeVisitor implements NodeVisitor
+{
+    public function enter(Node $node): void
+    {
+        wrAssertType('string', $node->specialMethod());
+    }
+}
