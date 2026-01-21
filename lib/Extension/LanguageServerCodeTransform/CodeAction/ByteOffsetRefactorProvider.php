@@ -39,7 +39,7 @@ class ByteOffsetRefactorProvider implements CodeActionProvider
         return new Success([
             new CodeAction(
                 title: $this->title,
-                kind: $this->kind,
+                kind: $this->kinds()[0],
                 diagnostics: [],
                 isPreferred: false,
                 edit: new WorkspaceEdit([
@@ -51,7 +51,10 @@ class ByteOffsetRefactorProvider implements CodeActionProvider
 
     public function kinds(): array
     {
-        return [$this->kind];
+        return [
+            CodeActionKind::REFACTOR_REWRITE,
+            $this->kind
+        ];
     }
     public function describe(): string
     {

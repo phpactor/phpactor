@@ -4,6 +4,8 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use Amp\Success;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
@@ -27,10 +29,10 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     ) {
     }
 
-
     public function kinds(): array
     {
         return [
+            CodeActionKind::QUICK_FIX,
             $this->kind()
         ];
     }
@@ -52,7 +54,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
             return [
                 CodeAction::fromArray([
                     'title' =>  $this->title,
-                    'kind' => $this->kind(),
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => $diagnostics,
                     'command' => new Command(
                         $this->title,
@@ -95,10 +97,5 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
                 )
             ));
         });
-    }
-
-    private function kind(): string
-    {
-        return 'quickfix.'.$this->name;
     }
 }
