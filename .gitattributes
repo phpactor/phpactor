@@ -9,6 +9,7 @@
 /*.neon                 export-ignore
 /.github                export-ignore
 /.php-cs-fixer.dist.php export-ignore
+/.readthedocs.yaml      export-ignore
 /Makefile               export-ignore
 /box.json               export-ignore
 /doc/                   export-ignore
@@ -20,3 +21,4 @@
 /phpunit.xml.dist       export-ignore
 /test.php               export-ignore
 /tests/                 export-ignore
+/rector.php             export-ignore
