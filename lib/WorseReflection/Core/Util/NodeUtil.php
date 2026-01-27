@@ -216,7 +216,7 @@ class NodeUtil
             if ($child instanceof Node) {
                 $referenceNode = $child;
             }
-            $out[] = self::dump($child, $referenceNode, $level, $name);
+            $out[] = self::dump($child, $node, $level, $name);
         }
 
         return implode("\n", $out);

@@ -14,7 +14,7 @@ class PrettyFormatter implements FormatterInterface
             substr(strtoupper($record['context']['channel'] ?? '???'), 0, 7),
             $this->color($record['level_name']) . substr($record['level_name'], 0, 4)."\e[0;0m",
             "\e[1;37m".substr($record['datetime']->format('U.u'), 4)."\e[0;0m",
-            $record['message']
+            $record['message'],
         );
 
         return $message."\n";
