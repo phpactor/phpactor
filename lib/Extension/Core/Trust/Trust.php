@@ -72,7 +72,7 @@ class Trust
             throw new RuntimeException('Cannot write Trust as no trust file path was provided');
         }
         if (!file_exists(dirname($this->path))) {
-            $success = @mkdir(dirname($this->path), 0755);
+            $success = @mkdir(dirname($this->path), 0755, true);
             if (!$success) {
                 throw new RuntimeException(sprintf(
                     'Could not create directory: "%s"',
