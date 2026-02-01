@@ -25,6 +25,12 @@ final class CacheEntry
         return $this->value;
     }
 
+    public function string(): string
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->value;
+    }
+
     /**
      * This method is not safe: it does validate or cast
      * the value as/to an object.

@@ -1,0 +1,240 @@
+[
+  {
+    "text": "",
+    "rangeLength": 1,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 20
+      },
+      "start": {
+        "line": 1,
+        "character": 19
+      }
+    }
+  },
+  {
+    "text": "",
+    "rangeLength": 1,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 19
+      },
+      "start": {
+        "line": 1,
+        "character": 18
+      }
+    }
+  },
+  {
+    "text": "",
+    "rangeLength": 1,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 18
+      },
+      "start": {
+        "line": 1,
+        "character": 17
+      }
+    }
+  },
+  {
+    "text": "",
+    "rangeLength": 1,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 17
+      },
+      "start": {
+        "line": 1,
+        "character": 16
+      }
+    }
+  },
+  {
+    "text": "",
+    "rangeLength": 1,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 16
+      },
+      "start": {
+        "line": 1,
+        "character": 15
+      }
+    }
+  },
+  {
+    "text": "u",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 15
+      },
+      "start": {
+        "line": 1,
+        "character": 15
+      }
+    }
+  },
+  {
+    "text": "p",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 16
+      },
+      "start": {
+        "line": 1,
+        "character": 16
+      }
+    }
+  },
+  {
+    "text": "d",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 17
+      },
+      "start": {
+        "line": 1,
+        "character": 17
+      }
+    }
+  },
+  {
+    "text": "a",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 18
+      },
+      "start": {
+        "line": 1,
+        "character": 18
+      }
+    }
+  },
+  {
+    "text": "t",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 19
+      },
+      "start": {
+        "line": 1,
+        "character": 19
+      }
+    }
+  },
+  {
+    "text": "e",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 20
+      },
+      "start": {
+        "line": 1,
+        "character": 20
+      }
+    }
+  },
+  {
+    "text": "",
+    "rangeLength": 2,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 21
+      },
+      "start": {
+        "line": 1,
+        "character": 19
+      }
+    }
+  },
+  {
+    "text": "",
+    "rangeLength": 4,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 19
+      },
+      "start": {
+        "line": 1,
+        "character": 15
+      }
+    }
+  },
+  {
+    "text": "update(",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 15
+      },
+      "start": {
+        "line": 1,
+        "character": 15
+      }
+    }
+  },
+  {
+    "text": "$event",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 22
+      },
+      "start": {
+        "line": 1,
+        "character": 22
+      }
+    }
+  },
+  {
+    "text": ")",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 28
+      },
+      "start": {
+        "line": 1,
+        "character": 28
+      }
+    }
+  },
+  {
+    "text": "",
+    "rangeLength": 0,
+    "range": {
+      "end": {
+        "line": 1,
+        "character": 29
+      },
+      "start": {
+        "line": 1,
+        "character": 29
+      }
+    }
+  }
+]
