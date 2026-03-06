@@ -422,7 +422,8 @@ class NodeUtil
                 continue;
             }
 
-            if ($child->dotDotDotToken !== null) {
+
+            if ($child->dotDotDotToken !== null && $child->expression === null) {
                 return true;
             }
 

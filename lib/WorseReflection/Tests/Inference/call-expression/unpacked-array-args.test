@@ -1,0 +1,10 @@
+<?php
+
+function add(int $a, int $b): int
+{
+    return $a + $b;
+}
+
+$a = [1, 2];
+$type = add(...$a);
+wrAssertType('int', $type);
