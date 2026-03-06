@@ -124,15 +124,7 @@ class NodeContextFromMemberAccess
 
         if ($member instanceof ReflectionMember) {
             if ($member instanceof ReflectionMethod) {
-                if (NodeUtil::isFirstClassCallable($node->parent)) {
-                    return $context->withType(new ClosureType(
-                        $resolver->reflector(),
-                        $member->parameters()->types()->toArray(),
-                        $member->type(),
-                    ));
-                }
-
-                return new MethodCallContext(
+                $methodCallContext = new MethodCallContext(
                     $context->symbol(),
                     $memberType->reduce(),
                     $containerType,
@@ -140,6 +132,16 @@ class NodeContextFromMemberAccess
                     $member,
                     $arguments,
                 );
+
+                if (NodeUtil::isFirstClassCallable($node->parent)) {
+                    return $methodCallContext->withType(new ClosureType(
+                        $resolver->reflector(),
+                        $member->parameters()->types()->toArray(),
+                        $member->type(),
+                    ));
+                }
+
+                return $methodCallContext;
             }
             return new MemberAccessContext(
                 $context->symbol(),

@@ -140,9 +140,10 @@ class QualifiedNameResolver implements Resolver
 
         if (NodeUtil::isFirstClassCallable($parent)) {
             $context = NodeContextFactory::create(
-                $parent->getText(),
-                $parent->getStartPosition(),
-                $parent->getEndPosition(),
+                $node->getText(),
+                $node->getStartPosition(),
+                $node->getEndPosition(),
+                ['symbol_type' => Symbol::FUNCTION],
             );
 
             return $context->withType(new ClosureType(
