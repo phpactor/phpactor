@@ -1,0 +1,112 @@
+name: Benchmark
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          php-version: "8.1"
+          tools: composer:v2
+
+      - name: Composer install
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--no-scripts"
+
+      - name: Ensure gh-pages branch exists
+        run: |
+          if ! git ls-remote --exit-code --heads origin gh-pages > /dev/null 2>&1; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            empty_tree="$(git hash-object -t tree /dev/null)"
+            commit="$(git commit-tree "$empty_tree" -m 'Initial gh-pages branch')"
+            git push origin "$commit:refs/heads/gh-pages"
+          fi
+
+      - name: Run PHPBench
+        run: vendor/bin/phpbench run --progress=plain --dump-file=phpbench.xml
+
+      - name: Convert results to JSON
+        run: php .github/phpbench_to_json.php phpbench.xml > output.json
+
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Phpactor Benchmarks
+          tool: customSmallerIsBetter
+          output-file-path: output.json
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: dev/bench
+          auto-push: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  benchmark-pr:
+    name: Benchmark (PR comparison)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          php-version: "8.1"
+          tools: composer:v2
+
+      - name: Composer install
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--no-scripts"
+
+      - name: Check gh-pages branch exists
+        id: check-gh-pages
+        run: |
+          if git ls-remote --exit-code --heads origin gh-pages > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "⚠️ gh-pages branch does not exist yet — skipping PR benchmark comparison"
+          fi
+
+      - name: Run PHPBench
+        if: steps.check-gh-pages.outputs.exists == 'true'
+        run: vendor/bin/phpbench run --progress=plain --dump-file=phpbench.xml
+
+      - name: Convert results to JSON
+        if: steps.check-gh-pages.outputs.exists == 'true'
+        run: php .github/phpbench_to_json.php phpbench.xml > output.json
+
+      - name: Compare against baseline
+        if: steps.check-gh-pages.outputs.exists == 'true'
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Phpactor Benchmarks
+          tool: customSmallerIsBetter
+          output-file-path: output.json
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: dev/bench
+          auto-push: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-on-alert: true
+          alert-threshold: "130%"
+          fail-on-alert: true
