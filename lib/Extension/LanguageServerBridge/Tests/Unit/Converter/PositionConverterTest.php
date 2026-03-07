@@ -48,6 +48,7 @@ class PositionConverterTest extends TestCase
             )
         );
     }
+
     public function testWhenOutOfBoundsAssumeEndOfDocument(): void
     {
         self::assertEquals(
