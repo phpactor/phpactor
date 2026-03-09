@@ -10,7 +10,7 @@ class StepScorer
      */
     public function scoreSteps(array $steps, string $partial): array
     {
-        $items = array_filter(array_map('trim', explode(' ', $partial)));
+        $items = array_filter(array_map(trim(...), explode(' ', $partial)));
 
         $scored = [];
         foreach ($steps as $step) {

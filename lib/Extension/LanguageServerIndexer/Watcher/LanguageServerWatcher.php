@@ -62,7 +62,7 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof FilesChanged) {
-            return  [[$this, 'enqueue']];
+            return  [$this->enqueue(...)];
         }
 
         return [];

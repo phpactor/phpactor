@@ -58,7 +58,7 @@ final class TurnipPatternPolicy implements PatternPolicy
 
         return preg_replace_callback(
             self::PLACEHOLDER_REGEXP,
-            [$this, 'replaceTokenWithRegexCaptureGroup'],
+            $this->replaceTokenWithRegexCaptureGroup(...),
             $regex
         );
     }

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use Rector\CodingStyle\Rector\FuncCall\FunctionFirstClassCallableRector;
 use Rector\Config\RectorConfig;
-use Rector\PHPUnit\PHPUnit100\Rector\Class_\AddProphecyTraitRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
 use Rector\Php84\Rector\Param\ExplicitNullableParamTypeRector;
@@ -22,5 +22,6 @@ return RectorConfig::configure()
     ])
     ->withRules([
         ExplicitNullableParamTypeRector::class,
-        NewInInitializerRector::class
+        NewInInitializerRector::class,
+        FunctionFirstClassCallableRector::class,
     ]);
