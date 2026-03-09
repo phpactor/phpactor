@@ -21,7 +21,7 @@ class SelfDestructListener implements ListenerProviderInterface
     {
         if ($event instanceof WillShutdown) {
             return [
-                [$this, 'handleShutdown']
+                $this->handleShutdown(...),
             ];
         }
 

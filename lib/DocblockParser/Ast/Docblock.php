@@ -108,7 +108,7 @@ class Docblock extends Node
             $prose[] = $child->value;
         }
 
-        return implode("\n", array_map('trim', (explode("\n", implode('', $prose)))));
+        return implode("\n", array_map(trim(...), (explode("\n", implode('', $prose)))));
     }
 
     public function lastMultilineContentToken(): ?Token

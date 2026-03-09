@@ -34,7 +34,7 @@ class ProjectConfigTrustListener implements ListenerProviderInterface
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof Initialized) {
-            return [[$this, 'handleTrustConfig']];
+            return [$this->handleTrustConfig(...)];
         }
 
         return [];

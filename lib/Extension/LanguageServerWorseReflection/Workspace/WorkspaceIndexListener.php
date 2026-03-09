@@ -18,15 +18,15 @@ class WorkspaceIndexListener implements ListenerProviderInterface
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof TextDocumentUpdated) {
-            return [[$this, 'updated']];
+            return [$this->updated(...)];
         }
 
         if ($event instanceof TextDocumentClosed) {
-            return [[$this, 'closed']];
+            return [$this->closed(...)];
         }
 
         if ($event instanceof TextDocumentOpened) {
-            return [[$this, 'opened']];
+            return [$this->opened(...)];
         }
 
         return [];

@@ -25,7 +25,7 @@ class InvalidConfigListener implements ListenerProviderInterface
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof Initialized) {
-            return [[$this, 'handleInvalidConfig']];
+            return [$this->handleInvalidConfig(...)];
         }
 
         return [];

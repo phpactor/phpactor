@@ -56,7 +56,7 @@ class ReflectionArgument implements CoreReflectionArgument
                 return lcfirst($type->toPhpString());
             };
             if ($type instanceof AggregateType) {
-                return lcfirst(implode('', array_map('ucfirst', array_map($stringify, $type->types))));
+                return lcfirst(implode('', array_map(ucfirst(...), array_map($stringify, $type->types))));
             }
             return $stringify($type);
         }
