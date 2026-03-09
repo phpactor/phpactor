@@ -284,6 +284,10 @@ class BinaryExpressionResolver implements Resolver
 
     private function nullCoalesce(Type $left, Type $right): Type
     {
+        if ($left instanceof MissingType) {
+            return $right;
+        }
+
         if ($left->isNullable()) {
             return TypeFactory::union($left->stripNullable(), $right);
         }

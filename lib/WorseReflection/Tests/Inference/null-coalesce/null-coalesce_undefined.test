@@ -1,0 +1,5 @@
+<?php
+
+$baz = $foo ?? 123;
+
+wrAssertType('123', $baz, 'assumes right if left is undefined');
