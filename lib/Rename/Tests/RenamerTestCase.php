@@ -71,6 +71,8 @@ abstract class RenamerTestCase extends TestCase
         $this->indexAgent->indexer()->getJob()->run();
 
         $generator = $operation->bindTo($this)->__invoke($this->reflector, $this->createRenamer());
+        assert(is_iterable($generator));
+        /** @phpstan-ignore argument.type */
         $edits = LocatedTextEdits::fromLocatedEditsToCollection(iterator_to_array($generator, false));
         foreach ($edits as $documentEdits) {
             file_put_contents(

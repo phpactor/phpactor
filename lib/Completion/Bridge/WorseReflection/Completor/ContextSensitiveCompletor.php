@@ -110,7 +110,9 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
         } else {
             $argumentList = $node->parent?->parent;
             if ($argumentList instanceof ArgumentExpressionList) {
-                $argumentNb = max(0, count(iterator_to_array($argumentList->getValues())) - 1);
+                $values = $argumentList->getValues();
+                assert(is_iterable($values));
+                $argumentNb = max(0, count(iterator_to_array($values)) - 1);
                 $memberAccessOrObjectCreation = $argumentList->parent;
             }
         }
