@@ -12,7 +12,7 @@ use Phpactor\Indexer\Model\SearchClient;
  *
  * @Iterations(10)
  * @Revs(1)
- * @OutputTimeUnit("time")
+ * @OutputTimeUnit("milliseconds")
  */
 class SearchBench
 {
