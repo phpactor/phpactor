@@ -39,11 +39,7 @@ jobs:
 
       - name: Run PHPBench
         if: steps.check-gh-pages.outputs.exists == 'true'
-        run: vendor/bin/phpbench run --progress=plain --dump-file=phpbench.xml
-
-      - name: Convert results to JSON
-        if: steps.check-gh-pages.outputs.exists == 'true'
-        run: php .github/phpbench_to_json.php phpbench.xml > output.json
+        run: vendor/bin/phpbench run --progress=plain --report=github-action-benchmark --output=json > output.json
 
       - name: Compare against baseline
         if: steps.check-gh-pages.outputs.exists == 'true'

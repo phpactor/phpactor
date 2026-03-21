@@ -33,6 +33,7 @@ class CandidateFinder
     {
         return call(function () use ($item) {
             $diagnostics = (yield $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($item)))->byClass(UnresolvableNameDiagnostic::class);
+            assert(is_iterable($diagnostics));
 
             return new NameWithByteOffsets(...array_map(function (UnresolvableNameDiagnostic $diagnostic): NameWithByteOffset {
                 return new NameWithByteOffset($diagnostic->name(), $diagnostic->range()->start(), $diagnostic->type());

@@ -3,7 +3,7 @@
     "description": "PHP refactoring and intellisense tool for text editors",
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
         "composer/xdebug-handler": "^3.0",
@@ -42,7 +42,7 @@
         "open-telemetry/sdk": "^1.7",
         "php-http/guzzle7-adapter": "^1.1",
         "phpactor/test-utils": "^2.0.0",
-        "phpbench/phpbench": "^1.4",
+        "phpbench/phpbench": "dev-master",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^2",
@@ -89,7 +89,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.1.0"
+            "php": "8.2.0"
         },
         "allow-plugins": {
             "dantleech/what-changed": true,

@@ -13,5 +13,32 @@
     "runner.bootstrap": "vendor/autoload.php",
     "core.extensions": [
         "PhpBench\\Extensions\\XDebug\\XDebugExtension"
-    ]
+    ],
+    "report.generators": {
+        "github-action-benchmark": {
+            "cols": [
+                "name",
+                "unit",
+                "value",
+                "range",
+                "extra"
+            ],
+            "expressions": {
+                "name": "format('%s::%s#%d', first(benchmark_name),first(subject_name),first(variant_index))",
+                "unit": "'μs'",
+                "value": "mode(result_time_avg)",
+                "range": "format('± %.2f%%', rstdev(result_time_avg))",
+                "extra": "format('%d iterations, %d revs', first(variant_iterations), first(variant_revs))"
+            },
+            "aggregate": [
+                "suite_tag",
+                "benchmark_class",
+                "subject_name",
+                "variant_index"
+            ],
+            "break": [],
+            "include_baseline": false,
+            "generator": "expression"
+        }
+    }
 }
