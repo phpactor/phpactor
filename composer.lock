@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3824a8b71077cc5557425018c65bc563",
+    "content-hash": "f40f62928ffce1e5a5a49649b8f249ce",
     "packages": [
         {
             "name": "amphp/amp",
@@ -5665,16 +5665,16 @@
         },
         {
             "name": "phpbench/phpbench",
-            "version": "dev-master",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "9d164a0686945cdb22956b86f00d3ce8819e7197"
+                "reference": "fdeb35d0d277dd6b9e795df6cbbec9218f3b143e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/9d164a0686945cdb22956b86f00d3ce8819e7197",
-                "reference": "9d164a0686945cdb22956b86f00d3ce8819e7197",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/fdeb35d0d277dd6b9e795df6cbbec9218f3b143e",
+                "reference": "fdeb35d0d277dd6b9e795df6cbbec9218f3b143e",
                 "shasum": ""
             },
             "require": {
@@ -5714,7 +5714,6 @@
             "suggest": {
                 "ext-xdebug": "For Xdebug profiling extension."
             },
-            "default-branch": true,
             "bin": [
                 "bin/phpbench"
             ],
@@ -5753,7 +5752,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/master"
+                "source": "https://github.com/phpbench/phpbench/tree/1.6.0"
             },
             "funding": [
                 {
@@ -5761,7 +5760,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-21T16:28:06+00:00"
+            "time": "2026-03-21T18:08:17+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -9482,8 +9481,7 @@
     "stability-flags": {
         "dms/phpunit-arraysubset-asserts": 20,
         "jetbrains/phpstorm-stubs": 20,
-        "phpactor/tolerant-php-parser": 20,
-        "phpbench/phpbench": 20
+        "phpactor/tolerant-php-parser": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

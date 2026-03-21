@@ -42,7 +42,7 @@
         "open-telemetry/sdk": "^1.7",
         "php-http/guzzle7-adapter": "^1.1",
         "phpactor/test-utils": "^2.0.0",
-        "phpbench/phpbench": "dev-master",
+        "phpbench/phpbench": "^1.6.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^2",
