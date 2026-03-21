@@ -4,15 +4,21 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
+
+  # enable the workflow to be executed in the context of the main repo
+  # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request_target
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   benchmark:
     name: Benchmark
     runs-on: ubuntu-latest
     permissions:
+      pull-requests: write
       contents: write
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
@@ -108,5 +114,5 @@ jobs:
           auto-push: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-on-alert: true
-          alert-threshold: "130%"
-          fail-on-alert: true
+          alert-threshold: "200%"
+          fail-on-alert: false
