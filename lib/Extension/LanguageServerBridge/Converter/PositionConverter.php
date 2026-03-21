@@ -42,7 +42,7 @@ class PositionConverter
         }
         $rest = self::normalizeUtf16($rest);
         $seg = substr($rest, 0, $position->character * 2);
-        $utf8 = \mb_convert_encoding($seg, 'UTF-8', 'UTF-16');
+        $utf8 = \mb_convert_encoding($seg, 'UTF-8', 'UTF-16BE');
 
         return ByteOffset::fromInt($byteOffset->toInt() + strlen($utf8));
     }
@@ -52,7 +52,7 @@ class PositionConverter
      */
     private static function normalizeUtf16(string $string): string
     {
-        $utf16 = \mb_convert_encoding($string, 'UTF-16', 'UTF-8');
+        $utf16 = \mb_convert_encoding($string, 'UTF-16BE', 'UTF-8');
         if (!is_string($utf16)) {
             throw new RuntimeException('String cannot be converted to UTF-16');
         }
