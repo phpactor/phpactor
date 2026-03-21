@@ -24,7 +24,7 @@
                 "extra"
             ],
             "expressions": {
-                "name": "format('%s::%s#%d', first(benchmark_name),first(subject_name),first(variant_index))",
+                "name": "format('%s::%s %d', first(benchmark_name),first(subject_name),first(variant_index))",
                 "unit": "'μs'",
                 "value": "mode(result_time_avg)",
                 "range": "format('± %.2f%%', rstdev(result_time_avg))",
