@@ -18,9 +18,7 @@ jobs:
     name: Benchmark
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
       contents: write
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
