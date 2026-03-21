@@ -5669,12 +5669,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "7e7c7f795e85981893fc0765501b24aa4a15844d"
+                "reference": "9d164a0686945cdb22956b86f00d3ce8819e7197"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/7e7c7f795e85981893fc0765501b24aa4a15844d",
-                "reference": "7e7c7f795e85981893fc0765501b24aa4a15844d",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/9d164a0686945cdb22956b86f00d3ce8819e7197",
+                "reference": "9d164a0686945cdb22956b86f00d3ce8819e7197",
                 "shasum": ""
             },
             "require": {
@@ -5761,7 +5761,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-21T15:00:11+00:00"
+            "time": "2026-03-21T16:28:06+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
