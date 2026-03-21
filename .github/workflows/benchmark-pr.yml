@@ -1,16 +1,16 @@
-name: Benchmark
+name: Benchmark PR
 
 on:
-  push:
-    branches:
-      - master
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
-  benchmark:
-    name: Benchmark
+  benchmark-pr:
+    name: Benchmark (PR comparison)
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,23 +27,26 @@ jobs:
         with:
           composer-options: "--no-scripts"
 
-      - name: Ensure gh-pages branch exists
+      - name: Check gh-pages branch exists
+        id: check-gh-pages
         run: |
-          if ! git ls-remote --exit-code --heads origin gh-pages > /dev/null 2>&1; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            empty_tree="$(git hash-object -t tree /dev/null)"
-            commit="$(git commit-tree "$empty_tree" -m 'Initial gh-pages branch')"
-            git push origin "$commit:refs/heads/gh-pages"
+          if git ls-remote --exit-code --heads origin gh-pages > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "⚠️ gh-pages branch does not exist yet — skipping PR benchmark comparison"
           fi
 
       - name: Run PHPBench
+        if: steps.check-gh-pages.outputs.exists == 'true'
         run: vendor/bin/phpbench run --progress=plain --dump-file=phpbench.xml
 
       - name: Convert results to JSON
+        if: steps.check-gh-pages.outputs.exists == 'true'
         run: php .github/phpbench_to_json.php phpbench.xml > output.json
 
-      - name: Store benchmark result
+      - name: Compare against baseline
+        if: steps.check-gh-pages.outputs.exists == 'true'
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Phpactor Benchmarks
@@ -51,5 +54,9 @@ jobs:
           output-file-path: output.json
           gh-pages-branch: gh-pages
           benchmark-data-dir-path: dev/bench
-          auto-push: true
+          auto-push: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-on-alert: true
+          alert-threshold: "200%"
+          fail-on-alert: false
+
