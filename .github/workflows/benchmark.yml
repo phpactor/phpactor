@@ -38,10 +38,7 @@ jobs:
           fi
 
       - name: Run PHPBench
-        run: vendor/bin/phpbench run --progress=plain --dump-file=phpbench.xml
-
-      - name: Convert results to JSON
-        run: php .github/phpbench_to_json.php phpbench.xml > output.json
+        run: vendor/bin/phpbench run --progress=plain --report=github-action-benchmark --output=json > output.json
 
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
