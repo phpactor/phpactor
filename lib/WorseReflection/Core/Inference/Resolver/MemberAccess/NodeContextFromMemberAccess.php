@@ -286,7 +286,8 @@ class NodeContextFromMemberAccess
 
         foreach ($this->memberResolvers as $memberResolver) {
             if (null !== $customType = $memberResolver->resolveMemberContext($resolver->reflector(), $member, $inferredType, $arguments)) {
-                $inferredType = $customType;
+                // Use ONLY the custom type, don't merge with inferred type
+                return $customType;
             }
         }
 
