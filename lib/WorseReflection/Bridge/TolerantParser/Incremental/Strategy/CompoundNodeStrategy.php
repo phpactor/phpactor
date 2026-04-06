@@ -25,19 +25,6 @@ class CompoundNodeStrategy implements UpdaterStrategy
 
         $extractStartPosition = null;
 
-        // determine from where we want to extract the text to re-parse.
-        // this should be from the statement being edited or the position after
-        // the closing brace of the compound statement
-        $statementNb = 0;
-        foreach ($compoundNode->statements as $statementCandidate) {
-            // if the text edit is _contained_ in a statement
-            if ($statementCandidate->getFullStartPosition() < $edit->start()->toInt() && $statementCandidate->getEndPosition() > $edit->end()->toInt()) {
-                $extractStartPosition = $statementCandidate->getFullStartPosition();
-                break;
-            }
-            $statementNb++;
-        }
-
         if (null === $extractStartPosition) {
             $extractStartPosition = $compoundNode->openBrace->getStartPosition() + 1;
             $statementNb = 0;
@@ -60,6 +47,7 @@ class CompoundNodeStrategy implements UpdaterStrategy
         // apply the edit
         $extractText = TextEdits::one($transposedEdit)->apply($textToEdit);
 
+        dump($extractText);
         // parse the extract, prepending the starting brace to make it a compound node
         $newCompoundNode = (new Parser())->parseSourceFile('<?php {' .$extractText)->statementList[1];
 
