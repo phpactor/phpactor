@@ -1623,6 +1623,22 @@ Unconditionally reindex modified files every N seconds
 **Default**: ``300``
 
 
+.. _param_language_server_indexer.optimiser_timeout:
+
+
+``language_server_indexer.optimiser_timeout``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Optimise the index every N seconds
+
+
+**Default**: ``3600``
+
+
 .. _LanguageServerCodeTransformExtension:
 
 

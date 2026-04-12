@@ -7,6 +7,7 @@ use Phpactor\Indexer\Adapter\Php\Serialized\SerializedIndex;
 use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\RecordSerializer\PhpSerializer;
 use Phpactor\Indexer\Tests\Adapter\IndexTestCase;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 
 class SerializedIndexTest extends IndexTestCase
 {
@@ -14,7 +15,7 @@ class SerializedIndexTest extends IndexTestCase
     {
         return new SerializedIndex(new FileRepository(
             $this->workspace()->path('cache'),
-            new PhpSerializer()
-        ));
+            new PhpSerializer(),
+        ), new FilesystemTextDocumentLocator());
     }
 }

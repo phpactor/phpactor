@@ -2,11 +2,16 @@
 
 namespace Phpactor\Indexer\Adapter\Php\Serialized;
 
+use FilesystemIterator;
+use Generator;
 use Phpactor\Indexer\Model\RecordSerializer;
 use Phpactor\Indexer\Util\Filesystem;
 use Phpactor\Indexer\Model\Record;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 use Throwable;
 
 class FileRepository
@@ -142,6 +147,55 @@ class FileRepository
             file_put_contents($path, $this->serializer->serialize($record));
         }
         $this->buffer = [];
+    }
+    /**
+     * @return Generator<string,Record>
+     */
+    public function iterator(): Generator
+    {
+        $flags =
+            FilesystemIterator::KEY_AS_PATHNAME |
+            FilesystemIterator::CURRENT_AS_FILEINFO |
+            FilesystemIterator::SKIP_DOTS;
+
+        if (!file_exists($this->path)) {
+            return;
+        }
+
+        if (!is_dir($this->path)) {
+            return;
+        }
+
+        $files = new RecursiveDirectoryIterator($this->path, $flags);
+        $files = new RecursiveIteratorIterator(
+            $files,
+            RecursiveIteratorIterator::LEAVES_ONLY,
+            RecursiveIteratorIterator::CATCH_GET_CHILD
+        );
+
+        foreach ($files as $file) {
+            assert($file instanceof SplFileInfo);
+
+            if ($file->getExtension() !== 'cache') {
+                continue;
+            }
+
+            $contents = file_get_contents($file->getPathname());
+
+            if (false === $contents) {
+                continue;
+            }
+
+            $record = $this->serializer->deserialize(
+                $contents
+            );
+
+            if (null === $record) {
+                continue;
+            }
+
+            yield $file->getPathname() => $record;
+        }
     }
 
     private function ensureDirectoryExists(string $path): void

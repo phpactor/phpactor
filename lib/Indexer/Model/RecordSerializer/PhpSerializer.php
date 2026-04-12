@@ -14,6 +14,10 @@ class PhpSerializer implements RecordSerializer
 
     public function deserialize(string $data): ?Record
     {
-        return unserialize($data);
+        $unserialized = unserialize($data);
+        if (false === $unserialized) {
+            return null;
+        }
+        return $unserialized;
     }
 }

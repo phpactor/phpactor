@@ -31,6 +31,7 @@ use Phpactor\Indexer\Adapter\Worse\IndexerConstantSourceLocator;
 use Phpactor\Indexer\Adapter\Worse\IndexerFunctionSourceLocator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
+use Phpactor\Indexer\Extension\Command\IndexOptimiseCommand;
 use Phpactor\Indexer\Extension\Command\IndexSearchCommand;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
@@ -181,6 +182,12 @@ class IndexerExtension implements Extension
                 $container->get(Watcher::class)
             );
         }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:build']]);
+
+        $container->register(IndexOptimiseCommand::class, function (Container $container) {
+            return new IndexOptimiseCommand(
+                $container->get(Indexer::class),
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:optimise']]);
 
         $container->register(IndexCleanCommand::class, function (Container $container) {
             $indexPath = $container->get(

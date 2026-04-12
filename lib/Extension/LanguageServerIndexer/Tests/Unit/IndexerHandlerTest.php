@@ -6,6 +6,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\LanguageServerProtocol\WindowClientCapabilities;
+use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\Extension\LanguageServerIndexer\Tests\IntegrationTestCase;
@@ -71,6 +72,22 @@ class IndexerHandlerTest extends IntegrationTestCase
         ]);
 
         self::assertContains('indexer', $this->tester->services()->listRunning());
+    }
+
+    public function testOptimiseCommand(): void
+    {
+        $this->tester->notifyAndWait('phpactor/indexer/optimise', [
+        ]);
+
+        // shift off progress create
+        $this->tester->transmitter()->shift();
+
+        // test we started optimising the index
+        $message = $this->tester->transmitter()->shift();
+        self::assertInstanceOf(NotificationMessage::class, $message);
+        self::assertIsArray($message->params);
+        self::assertIsArray($message->params['value']);
+        self::assertEquals('optimising index', $message->params['value']['title'] ?? null);
     }
 
     public function testShowsMessageOnWatcherDied(): void

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Adapter\Php\Serialized;
 
+use Phpactor\Indexer\Model\Record;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
 use Phpactor\Indexer\Model\Exception\CorruptedRecord;
@@ -15,6 +16,19 @@ use Psr\Log\LoggerInterface;
 class FileRepositoryTest extends IntegrationTestCase
 {
     use ProphecyTrait;
+
+    public function testIterate(): void
+    {
+        $repo = $this->createFileRepository();
+        $repo->put(ClassRecord::fromName('Foobar'));
+        $repo->put(ClassRecord::fromName('Barfoo'));
+        $repo->flush();
+
+        /** @var list<Record> */
+        $records = iterator_to_array($repo->iterator());
+        self::assertCount(2, $records);
+        self::assertEquals('class', $records[array_key_first($records)]->recordType());
+    }
 
     public function testResetRemovesTheIndex(): void
     {

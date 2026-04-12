@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Model\Index;
 
+use Generator;
 use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\SearchIndex;
@@ -56,5 +57,10 @@ class SearchAwareIndex implements Index
     public function has(Record $record): bool
     {
         return $this->innerIndex->has($record);
+    }
+
+    public function optimise(bool $dryRun): Generator
+    {
+        yield from $this->innerIndex->optimise($dryRun);
     }
 }

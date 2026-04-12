@@ -28,7 +28,8 @@ use function Amp\delay;
 
 class IndexerHandler implements Handler, ServiceProvider
 {
-    const SERVICE_INDEXER = 'indexer';
+    public const SERVICE_INDEXER = 'indexer';
+    public const SERVICE_OPTIMISER = 'optimiser';
 
     public function __construct(
         private Indexer $indexer,
@@ -38,6 +39,7 @@ class IndexerHandler implements Handler, ServiceProvider
         private EventDispatcherInterface $eventDispatcher,
         private ProgressNotifier $progressNotifier,
         private ?int $reindexTimeout = null,
+        private int $optimiserTimeout = 3600,
     ) {
     }
 
@@ -48,6 +50,7 @@ class IndexerHandler implements Handler, ServiceProvider
     {
         return [
             'phpactor/indexer/reindex' => 'reindex',
+            'phpactor/indexer/optimise' => 'optimise',
         ];
     }
 
@@ -57,7 +60,8 @@ class IndexerHandler implements Handler, ServiceProvider
     public function services(): array
     {
         return [
-            self::SERVICE_INDEXER
+            self::SERVICE_INDEXER,
+            self::SERVICE_OPTIMISER,
         ];
     }
 
@@ -142,6 +146,53 @@ class IndexerHandler implements Handler, ServiceProvider
             }
 
             $this->eventDispatcher->dispatch(new IndexReset());
+        });
+    }
+
+    /**
+     * @return Promise<mixed>
+     */
+    public function optimiser(CancellationToken $cancel): Promise
+    {
+        return call(function () use ($cancel) {
+            while (true) {
+                yield delay($this->optimiserTimeout);
+
+                if ($cancel->isRequested()) {
+                    break;
+                }
+
+                yield $this->optimise($cancel);
+            }
+        });
+    }
+
+    /**
+     * @return Promise<void>
+     */
+    public function optimise(?CancellationToken $cancel = null): Promise
+    {
+        return call(function () use ($cancel) {
+            $token = WorkDoneToken::generate();
+            $this->clientApi->workDoneProgress()->create($token);
+            $this->clientApi->workDoneProgress()->begin(
+                $token,
+                'optimising index',
+            );
+            $optimised = 0;
+            foreach ($this->indexer->optimise(false) as $tick) {
+                if ($tick !== null) {
+                    $optimised++;
+                }
+                if ($cancel && $cancel->isRequested()) {
+                    break;
+                }
+                yield new Delayed(0);
+            }
+            $this->clientApi->workDoneProgress()->end($token, sprintf(
+                '%d files optimised',
+                $optimised
+            ));
         });
     }
 
