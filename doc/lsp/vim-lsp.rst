@@ -45,6 +45,7 @@ If you want to profile Phpactor for debugging purposes:
           autocmd Filetype php command! -nargs=0 LspPhpactorStatus lua LspPhpactorStatus()
           autocmd Filetype php command! -nargs=0 LspPhpactorBlackfireStart lua LspPhpactorBlackfireStart()
           autocmd Filetype php command! -nargs=0 LspPhpactorBlackfireFinish lua LspPhpactorBlackfireFinish()
+          autocmd Filetype php command! -nargs=0 LspPhpactorIndexOptimise lua vim.lsp.buf_notify(0, "phpactor/indexer/optimise",{})
         augroup END
     ]])
 

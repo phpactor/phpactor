@@ -30,6 +30,7 @@ class LanguageServerIndexerExtension implements Extension
 {
     public const WORKSPACE_SYMBOL_SEARCH_LIMIT = 'language_server_indexer.workspace_symbol_search_limit';
     public const PARAM_REINDEX_TIMEOUT = 'language_server_indexer.reindex_timeout';
+    public const PARAM_OPTIMISER_TIMEOUT = 'language_server_indexer.optimiser_timeout';
 
     public function load(ContainerBuilder $container): void
     {
@@ -68,9 +69,14 @@ class LanguageServerIndexerExtension implements Extension
         $schema->setDefaults([
             self::WORKSPACE_SYMBOL_SEARCH_LIMIT => 250,
             self::PARAM_REINDEX_TIMEOUT => 300,
+            self::PARAM_OPTIMISER_TIMEOUT => 3600,
+        ]);
+        $schema->setTypes([
+            self::PARAM_OPTIMISER_TIMEOUT => 'integer',
         ]);
         $schema->setDescriptions([
             self::PARAM_REINDEX_TIMEOUT => 'Unconditionally reindex modified files every N seconds',
+            self::PARAM_OPTIMISER_TIMEOUT => 'Optimise the index every N seconds',
         ]);
     }
 
@@ -86,7 +92,8 @@ class LanguageServerIndexerExtension implements Extension
                 $container->get(ProgressNotifier::class),
                 (fn (mixed $timeout) => is_int($timeout) ? $timeout * 1000 : null)(
                     $container->parameter(self::PARAM_REINDEX_TIMEOUT)->value()
-                )
+                ),
+                $container->parameter(self::PARAM_OPTIMISER_TIMEOUT)->int() * 1000
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => [],

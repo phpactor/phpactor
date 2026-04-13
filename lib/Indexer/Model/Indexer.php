@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Model;
 
+use Generator;
 use Phpactor\Indexer\Model\DirtyDocumentTracker\NullDirtyDocumentTracker;
 use Phpactor\TextDocument\TextDocument;
 
@@ -23,6 +24,13 @@ class Indexer
             $this->provider->provideFileList($this->index, $subPath),
             $this->maxFileSizeToIndex,
         );
+    }
+    /**
+     * @return Generator<string|null>
+     */
+    public function optimise(bool $dryRun): Generator
+    {
+        yield from $this->index->optimise($dryRun);
     }
 
     public function index(TextDocument $textDocument): void

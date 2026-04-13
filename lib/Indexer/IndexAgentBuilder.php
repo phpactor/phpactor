@@ -34,6 +34,8 @@ use Phpactor\Indexer\Model\SearchIndex\FilteredSearchIndex;
 use Phpactor\Indexer\Model\SearchIndex\SearchIncludeIndex;
 use Phpactor\Indexer\Model\SearchIndex\ValidatingSearchIndex;
 use Phpactor\Indexer\Model\TestIndexAgent;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
+use Phpactor\TextDocument\TextDocumentLocator;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -84,12 +86,21 @@ final class IndexAgentBuilder
 
     private LoggerInterface $logger;
 
+    private ?TextDocumentLocator $documentLocator = null;
+
     private function __construct(
         private string $indexRoot,
         private string $projectRoot,
     ) {
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();
+    }
+
+    public function setDocumentLocator(TextDocumentLocator $locator): self
+    {
+        $this->documentLocator = $locator;
+
+        return $this;
     }
 
     public static function create(string $indexRootPath, string $projectRoot): self
@@ -218,7 +229,10 @@ final class IndexAgentBuilder
             $this->logger
         );
 
-        return new SerializedIndex($repository);
+        return new SerializedIndex(
+            $repository,
+            $this->documentLocator ?? new FilesystemTextDocumentLocator(),
+        );
     }
 
     private function buildQuery(Index $index): QueryClient

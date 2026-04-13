@@ -72,6 +72,11 @@ class InMemoryIndex implements Index
         return isset($this->index[$this->recordKey($record)]);
     }
 
+    public function optimise(bool $dryRun): iterable
+    {
+        return [];
+    }
+
     private function recordKey(Record $record): string
     {
         return $record->recordType().$record->identifier();
