@@ -31,6 +31,8 @@ use function Amp\delay;
 
 class TolerantSourceCodeReflector implements SourceCodeReflector
 {
+    public const CACHE_KEY_DIAGNOSTICS = 'diagnostics';
+
     public function __construct(
         private ServiceLocator $serviceLocator,
         private AstProvider $parser
@@ -79,7 +81,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
      */
     public function diagnostics(TextDocument $sourceCode): Promise
     {
-        return $this->serviceLocator->cacheForDocument()->getOrSet($sourceCode->uriOrThrow(), 'diagnostics', function () use ($sourceCode) {
+        return $this->serviceLocator->cacheForDocument()->getOrSet($sourceCode->uriOrThrow(), self::CACHE_KEY_DIAGNOSTICS, function () use ($sourceCode) {
             return call(function () use ($sourceCode) {
                 $rootNode = $this->parseSourceCode($sourceCode);
                 $walker = $this->serviceLocator->newDiagnosticsWalker();
