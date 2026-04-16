@@ -1,4 +1,4 @@
-FROM php:8.1-cli
+FROM php:8.2-cli
 RUN apt-get update && apt-get install -y python3-pip wget git inotify-tools libzip-dev
 RUN echo "$(curl -sS https://composer.github.io/installer.sig) -" > composer-setup.php.sig \
         && curl -sS https://getcomposer.org/installer | tee composer-setup.php | sha384sum -c composer-setup.php.sig \
