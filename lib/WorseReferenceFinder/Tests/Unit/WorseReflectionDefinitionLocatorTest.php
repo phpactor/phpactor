@@ -83,6 +83,21 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->assertTypeLocation($location->first(), 'file1.php', 7, 28);
     }
 
+    public function testLocatesFunctionFromFirstClassCallable(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: file1.php
+            <?php
+
+            function foobar()
+            {
+            }
+            EOT
+            , '<?php $fb = foob<>ar(...);');
+
+        $this->assertTypeLocation($location->first(), 'file1.php', 7, 28);
+    }
+
     public function testExceptionForFunctionWithNoDefinition(): void
     {
         $this->expectException(CouldNotLocateDefinition::class);
@@ -123,6 +138,32 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $locationRange = $location->first()->location();
 
         $this->assertTypeLocation($location->first(), 'Foobar.php', 21, 45);
+    }
+
+    public function testLocatesToMethodFromFirstClassCallable(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar { public function bar() {} }
+            EOT
+            , '<?php $foo = new Foobar(); $bar = $foo->b<>ar(...);');
+
+        $locationRange = $location->first()->location();
+
+        $this->assertTypeLocation($location->first(), 'Foobar.php', 21, 45);
+    }
+
+    public function testLocatesToStaticMethodFromFirstClassCallable(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar { public static function bar() {} }
+            EOT
+            , '<?php $fb = Foobar::b<>ar(...)');
+
+        $locationRange = $location->first()->location();
+
+        $this->assertTypeLocation($location->first(), 'Foobar.php', 21, 52);
     }
 
     public function testLocatesToConstant(): void
