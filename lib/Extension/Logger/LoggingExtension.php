@@ -79,25 +79,26 @@ class LoggingExtension implements Extension
         $container->register(self::SERVICE_LOGGER, function (Container $container) {
             $logger = new Logger('phpactor');
 
-            if (false === $container->getParameter(self::PARAM_ENABLED)) {
+            if (false === $container->parameter(self::PARAM_ENABLED)->bool()) {
                 $logger->pushHandler(new NullHandler());
                 return $logger;
             }
 
             $handler = new StreamHandler(
-                $container->getParameter(self::PARAM_PATH),
-                $container->getParameter(self::PARAM_LEVEL)
+                $container->parameter(self::PARAM_PATH)->string(),
+                $container->parameter(self::PARAM_LEVEL)->string(),
             );
 
-            if ($formatter = $container->getParameter(self::PARAM_FORMATTER)) {
+            if ($formatter = $container->parameter(self::PARAM_FORMATTER)->stringOrNull()) {
                 $handler->setFormatter(
-                    $container->get(
-                        self::SERVICE_FORMATTER_REGISTRY
+                    $container->expect(
+                        self::SERVICE_FORMATTER_REGISTRY,
+                        FormatterRegistry::class
                     )->get($formatter)
                 );
             }
 
-            if ($container->getParameter(self::PARAM_FINGERS_CROSSED)) {
+            if ($container->parameter(self::PARAM_FINGERS_CROSSED)->bool()) {
                 $handler = new FingersCrossedHandler($handler);
             }
 

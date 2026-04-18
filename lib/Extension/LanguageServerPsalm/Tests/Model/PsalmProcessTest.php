@@ -15,6 +15,7 @@ use Phpactor\LanguageServerProtocol\Diagnostic;
 use Psr\Log\NullLogger;
 use Phpactor\Extension\LanguageServerPsalm\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
+
 use function Amp\Promise\wait;
 
 #[Group('slow')]
@@ -61,7 +62,8 @@ class PsalmProcessTest extends IntegrationTestCase
                 useCache: false,
                 errorLevel: $errorLevel,
             ),
-            new NullLogger()
+            new NullLogger(),
+            timeoutSeconds: 15,
         );
 
         $diagnostics = wait($linter->analyse($this->workspace()->path('src/test.php')));
@@ -77,7 +79,7 @@ class PsalmProcessTest extends IntegrationTestCase
             '<?php $foobar = "string"; echo $foobar;',
             function (array $diagnostics): void {
                 self::assertCount(0, $diagnostics);
-            }
+            },
         ];
 
         yield [
@@ -92,7 +94,7 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => 'Unable to determine the type that $foobar is being assigned to',
                             'severity' => DiagnosticSeverity::ERROR,
-                            'source' => 'psalm'
+                            'source' => 'psalm',
                         ]),
                         Diagnostic::fromArray([
                             'range' => new Range(
@@ -101,7 +103,7 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => '$foobar is never referenced or the value is not used',
                             'severity' => DiagnosticSeverity::ERROR,
-                            'source' => 'psalm'
+                            'source' => 'psalm',
                         ]),
                         Diagnostic::fromArray([
                             'range' => new Range(
@@ -110,12 +112,12 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => 'Cannot find referenced variable $barfoo in global scope',
                             'severity' => DiagnosticSeverity::ERROR,
-                            'source' => 'psalm'
-                        ])
+                            'source' => 'psalm',
+                        ]),
                     ],
                     $diagnostics
                 );
-            }
+            },
         ];
 
         yield [
@@ -130,7 +132,7 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => '$foobar is never referenced or the value is not used',
                             'severity' => DiagnosticSeverity::ERROR,
-                            'source' => 'psalm'
+                            'source' => 'psalm',
                         ]),
                         Diagnostic::fromArray([
                             'range' => new Range(
@@ -139,7 +141,7 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => 'Cannot find referenced variable $barfoo in global scope',
                             'severity' => DiagnosticSeverity::ERROR,
-                            'source' => 'psalm'
+                            'source' => 'psalm',
                         ]),
                         Diagnostic::fromArray([
                             'range' => new Range(
@@ -148,14 +150,14 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => 'Unable to determine the type that $foobar is being assigned to',
                             'severity' => DiagnosticSeverity::WARNING,
-                            'source' => 'psalm'
-                        ])
+                            'source' => 'psalm',
+                        ]),
                     ],
                     $diagnostics
                 );
             },
             2,
-            true
+            true,
         ];
 
         yield 'should not show info' => [
@@ -170,7 +172,7 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => '$foobar is never referenced or the value is not used',
                             'severity' => DiagnosticSeverity::ERROR,
-                            'source' => 'psalm'
+                            'source' => 'psalm',
                         ]),
                         Diagnostic::fromArray([
                             'range' => new Range(
@@ -179,14 +181,14 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => 'Cannot find referenced variable $barfoo in global scope',
                             'severity' => DiagnosticSeverity::ERROR,
-                            'source' => 'psalm'
-                        ])
+                            'source' => 'psalm',
+                        ]),
                     ],
                     $diagnostics
                 );
             },
             2,
-            false
+            false,
         ];
 
         yield 'do not override error level' => [
