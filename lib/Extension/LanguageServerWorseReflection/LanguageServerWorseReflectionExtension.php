@@ -40,7 +40,7 @@ class LanguageServerWorseReflectionExtension implements Extension
         $container->register(StubValidationListener::class, function (Container $container) {
             return new StubValidationListener(
                 $container->get(ClientApi::class),
-                $container->parameter(WorseReflectionExtension::PARAM_ADDITIVE_STUBS)->listOfString(),
+                WorseReflectionExtension::additiveStubPaths($container)
             );
         }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [] ]);
     }

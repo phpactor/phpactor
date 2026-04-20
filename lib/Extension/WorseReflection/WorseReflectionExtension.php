@@ -105,6 +105,20 @@ class WorseReflectionExtension implements Extension
         $this->registerTelemetry($container);
     }
 
+    /**
+     * @return list<string>
+     */
+    public static function additiveStubPaths(Container $container): array
+    {
+        $resolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
+        $stubPaths = array_map(function (string $path) use ($resolver) {
+            $projectRoot = $resolver->resolve('%project_root%');
+            return Path::join($projectRoot, $resolver->resolve($path));
+
+        }, $container->parameter(self::PARAM_ADDITIVE_STUBS)->listOfString());
+        return $stubPaths;
+    }
+
     private function registerReflection(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
@@ -206,11 +220,8 @@ class WorseReflectionExtension implements Extension
             return new DocblockMemberProvider();
         }, [ self::TAG_MEMBER_PROVIDER => []]);
         $container->register('worse_reflection.member_provider.stubs', function (Container $container) {
-            $resolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
-            return new StubFileMemberProvider(array_map(function (string $path) use ($resolver) {
-                $projectRoot = $resolver->resolve('%project_root%');
-                return Path::join($projectRoot, $resolver->resolve($path));
-            }, $container->parameter(self::PARAM_ADDITIVE_STUBS)->listOfString()));
+            $stubPaths = self::additiveStubPaths($container);
+            return new StubFileMemberProvider($stubPaths);
         }, [ self::TAG_MEMBER_PROVIDER => []]);
     }
 
