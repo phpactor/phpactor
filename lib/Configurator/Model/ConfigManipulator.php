@@ -96,6 +96,6 @@ final class ConfigManipulator
      */
     private function writeConfig($value): void
     {
-        file_put_contents($this->configPath, json_encode($value, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+        file_put_contents($this->configPath, json_encode($value, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES) . "\n");
     }
 }
