@@ -48,6 +48,7 @@ class LanguageServerTestCase extends TestCase
     {
         $builder = $this->createContainer(array_merge([
             LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+            LanguageServerExtension::PARAM_CODE_ACTION_OUTSOURCE => false,
         ], $config))->get(
             LanguageServerBuilder::class
         );
