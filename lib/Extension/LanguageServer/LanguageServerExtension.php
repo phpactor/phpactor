@@ -12,6 +12,7 @@ use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServer\CodeAction\OutsourcedCodeActionProvider;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
+use Phpactor\Extension\LanguageServer\CodeAction\ThereCanOnlyBeOneCodeActionProvider;
 use Phpactor\Extension\LanguageServer\CodeAction\TolerantCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\CodeActionsCommand;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
@@ -503,7 +504,7 @@ class LanguageServerExtension implements Extension
             }
 
             return new CodeActionHandler(
-                $provider,
+                new ThereCanOnlyBeOneCodeActionProvider($provider),
                 /** @phpstan-ignore-next-line */
                 $this->workspace($container),
                 $container->get(ProgressNotifier::class),
