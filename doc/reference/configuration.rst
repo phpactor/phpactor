@@ -1328,6 +1328,19 @@ If applicable diagnostics should be "outsourced" to a different process
 **Default**: ``true``
 
 
+.. _param_language_server.code_action_outsource:
+
+
+``language_server.code_action_outsource``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+Code actions will be "outsourced" to a different process
+
+
+**Default**: ``true``
+
+
 .. _param_language_server.diagnostic_exclude_paths:
 
 
@@ -1462,7 +1475,7 @@ Wait this amount of time (in milliseconds) after a shutdown request before self-
 """"""""""""""""""""""""""""""""""""""""""""""""
 
 
-Kill the diagnostics process if it outlives this timeout
+Kill the diagnostics or code action processes if they outlive this timeout
 
 
 **Default**: ``5``
