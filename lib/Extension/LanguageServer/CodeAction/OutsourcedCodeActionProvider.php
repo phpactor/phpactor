@@ -20,19 +20,18 @@ use RuntimeException;
 use function Amp\ByteStream\buffer;
 use function Amp\asyncCall;
 use function Amp\call;
-use function Amp\async;
 use function Amp\delay;
 
 class OutsourcedCodeActionProvider implements CodeActionProvider
 {
     /**
      * @param list<string> $command
-     * @param list<CodeActionProvider> $providers
      */
     public function __construct(
         private array $command,
         private string $cwd,
         private LoggerInterface $logger,
+        private CodeActionProvider $providerInfo,
         private int $timeout = 5,
     ) {
     }
@@ -40,14 +39,18 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument, $range, $cancel) {
-            $process = new Process(array_merge([PHP_BINARY], $this->command, [
+            $process = new Process(array_merge([
+                PHP_BINARY
+            ], $this->command, [
                 json_encode(new CodeActionParams(
                     ProtocolFactory::textDocumentIdentifier($textDocument->uri),
                     $range,
                     new CodeActionContext([]),
-                )),
+                ), JSON_THROW_ON_ERROR),
                 sprintf('--config-extra=%s', sprintf('{"%s": false}', WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION))
             ]), $this->cwd);
+
+            /** @var int $pid */
             $pid = yield $process->start();
 
             ProcessUtil::killAfter($this->logger, $process, $this->timeout);
@@ -63,25 +66,30 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
                             $pid,
                         ));
                     }
-                    yield delay(0.5);
+                    yield delay(500);
                 }
             });
 
             yield $stdin->write($textDocument->text);
             $stdin->close();
+            /** @var string $json */
             $json = yield buffer($process->getStdout());
 
             try {
+                /** @var int $exitCode */
                 $exitCode = yield $process->join();
             } catch (ProcessException $e) {
                 $this->logger->warning($e->getMessage());
                 return [];
             }
             if ($exitCode !== 0) {
+                /** @var string $stderr */
+                $stderr = yield buffer($process->getStderr());
+
                 throw new RuntimeException(sprintf(
                     'Phpactor code-action process exited with code "%s": %s',
                     $exitCode,
-                    yield buffer($process->getStderr())
+                    $stderr
                 ));
             }
             $array = json_decode($json, true);
@@ -92,21 +100,18 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
                 ));
             }
 
+            /** @phpstan-ignore-next-line */
             return array_map(fn (array $codeAction) => CodeAction::fromArray($codeAction), $array);
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function kinds(): array
     {
-        return [];
+        return $this->providerInfo->kinds();
     }
 
     public function describe(): string
     {
-        return sprintf('aggregate code action proivder with %s providers', count($this->providers));
+        return sprintf('outsourced: %s', $this->providerInfo->describe());
     }
 }
-

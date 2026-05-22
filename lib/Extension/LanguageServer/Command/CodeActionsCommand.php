@@ -7,13 +7,11 @@ use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use function Amp\Promise\wait;
 
@@ -21,8 +19,6 @@ class CodeActionsCommand extends Command
 {
     public const ARG_REQUEST = 'request';
     public const NAME = 'language-server:code-actions';
-    private const PARAM_URI = 'uri';
-
 
     public function __construct(
         private CodeActionProvider $provider,
@@ -34,7 +30,7 @@ class CodeActionsCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('Internal: resolve code-actions asynchronously');
-        $this->addArgument(self::ARG_REQUEST, null, InputArgument::REQUIRED, 'Code action LSP request');
+        $this->addArgument(self::ARG_REQUEST, InputArgument::REQUIRED, 'Code action LSP request');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -42,7 +38,15 @@ class CodeActionsCommand extends Command
         /** @var string $request */
         $request = $input->getArgument(self::ARG_REQUEST);
 
-        $request = CodeActionParams::fromArray(json_decode($request, true, JSON_THROW_ON_ERROR));
+        $array = json_decode($request, true, JSON_THROW_ON_ERROR);
+        if (!is_array($array)) {
+            throw new RuntimeException(sprintf(
+                'Expected json to decode to an array, got "%s"',
+                get_debug_type($array)
+            ));
+        }
+        /** @phpstan-ignore argument.type */
+        $request = CodeActionParams::fromArray($array);
         $textDocumentItem = ProtocolFactory::textDocumentItem($request->textDocument->uri, $this->stdin());
 
         // update the in-memory worse reflection workspace index so that we

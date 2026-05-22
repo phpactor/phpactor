@@ -237,10 +237,10 @@ class LanguageServerExtension implements Extension
 
         $container->register(DiagnosticsCommand::class, function (Container $container) {
             /** @var AggregateDiagnosticsProvider $provider */
-            $diagnosticsProvider = $container->get(AggregateDiagnosticsProvider::class . '.outsourced');
+            $provider = $container->get(AggregateDiagnosticsProvider::class . '.outsourced');
 
             return new DiagnosticsCommand(
-                $diagnosticsProvider,
+                $provider,
                 $container->get(WorkspaceIndex::class),
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => DiagnosticsCommand::NAME ]]);
@@ -511,6 +511,7 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(AggregateCodeActionProvider::class, function (Container $container) {
+            /** @var SplPriorityQueue<int,CodeActionProvider> $services */
             $services = new SplPriorityQueue();
             $profile = $container->parameter(self::PARAM_PROFILE)->bool();
             foreach ($container->getServiceIdsForTag(self::TAG_CODE_ACTION_PROVIDER) as $serviceId => $attributes) {
@@ -522,7 +523,9 @@ class LanguageServerExtension implements Extension
                     $provider = new ProfilingCodeActionProvider($provider, $this->logger($container));
                 }
 
-                $services->insert($provider, $attributes['priority'] ?? 0);
+                /** @var int $prio */
+                $prio = $attributes['priority'] ?? 0;
+                $services->insert($provider, $prio);
             }
 
             return new AggregateCodeActionProvider(...$services);
@@ -539,7 +542,8 @@ class LanguageServerExtension implements Extension
                 ],
                 $projectPath,
                 $this->logger($container),
-                $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int()
+                $container->get(AggregateCodeActionProvider::class),
+                $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int(),
             );
         }, [
         ]);

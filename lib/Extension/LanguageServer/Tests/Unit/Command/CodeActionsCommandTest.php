@@ -6,7 +6,6 @@ use Phpactor\Extension\LanguageServer\Tests\Unit\LanguageServerTestCase;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\CodeActionContext;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
-use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use RuntimeException;
 use Symfony\Component\Process\Process;
@@ -45,6 +44,7 @@ class CodeActionsCommandTest extends LanguageServerTestCase
             if (!is_array($array)) {
                 throw new RuntimeException('nope');
             }
+            /** @phpstan-ignore argument.type */
             return CodeAction::fromArray($array);
         }, (array)json_decode($process->getOutput(), true));
 
