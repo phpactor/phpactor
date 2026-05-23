@@ -25,6 +25,7 @@ final class TolerantCodeActionProvider implements CodeActionProvider
             try {
                 return yield $this->provider->provideActionsFor($textDocument, $range, $cancel);
             } catch (Throwable $error) {
+                // if we are running in the main process the LS client API will be available
                 if (null !== $this->client) {
                     $this->client->window()->showMessage()->error(sprintf(
                         'Provider %s (%s) failed: %s',
@@ -32,8 +33,11 @@ final class TolerantCodeActionProvider implements CodeActionProvider
                         $this->provider->describe(),
                         $error->getMessage(),
                     ));
+                    return [];
                 }
-                return [];
+
+                // otherwise we're probably running in a dedicated process, just throw an error and let it die.
+                throw $error;
             }
         });
     }

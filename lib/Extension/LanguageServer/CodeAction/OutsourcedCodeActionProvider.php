@@ -14,6 +14,7 @@ use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -31,6 +32,7 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
         private array $command,
         private string $cwd,
         private LoggerInterface $logger,
+        private ClientApi $client,
         private CodeActionProvider $providerInfo,
         private int $timeout = 5,
     ) {
@@ -71,7 +73,9 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
             });
 
             yield $stdin->write($textDocument->text);
+
             $stdin->close();
+
             /** @var string $json */
             $json = yield buffer($process->getStdout());
 
@@ -79,7 +83,10 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
                 /** @var int $exitCode */
                 $exitCode = yield $process->join();
             } catch (ProcessException $e) {
-                $this->logger->warning($e->getMessage());
+                $this->client->window()->showMessage()->warning(sprintf(
+                    'Code action took too long to analyse this file (timed-out after %s seconds)',
+                    $this->timeout,
+                ));
                 return [];
             }
             if ($exitCode !== 0) {
@@ -92,7 +99,9 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
                     $stderr
                 ));
             }
+
             $array = json_decode($json, true);
+
             if (!is_array($array)) {
                 throw new RuntimeException(sprintf(
                     'Could not decode JSON: %s',
