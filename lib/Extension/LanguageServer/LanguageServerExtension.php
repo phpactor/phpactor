@@ -10,8 +10,11 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\Core\CoreExtension as PhpactorCoreExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
+use Phpactor\Extension\LanguageServer\CodeAction\OutsourcedCodeActionProvider;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
+use Phpactor\Extension\LanguageServer\CodeAction\ThereCanOnlyBeOneCodeActionProvider;
 use Phpactor\Extension\LanguageServer\CodeAction\TolerantCodeActionProvider;
+use Phpactor\Extension\LanguageServer\Command\CodeActionsCommand;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\AggregateDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\CodeFilteringDiagnosticProvider;
@@ -117,6 +120,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_ON_OPEN = 'language_server.diagnostics_on_open';
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
     public const PARAM_DIAGNOSTIC_OUTSOURCE = 'language_server.diagnostic_outsource';
+    public const PARAM_CODE_ACTION_OUTSOURCE = 'language_server.code_action_outsource';
     public const PARAM_FILE_EVENTS = 'language_server.file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
     public const PARAM_PROFILE = 'language_server.profile';
@@ -143,6 +147,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
             self::PARAM_DIAGNOSTIC_OUTSOURCE => true,
+            self::PARAM_CODE_ACTION_OUTSOURCE => true,
             self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => [],
             self::PARAM_DIAGNOSTIC_IGNORE_CODES => [],
             self::PARAM_ENABLE_TRUST_CHECK => true,
@@ -171,7 +176,8 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_OPEN => 'Perform diagnostics when opening a text document',
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_DIAGNOSTIC_OUTSOURCE => 'If applicable diagnostics should be "outsourced" to a different process',
-            self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 'Kill the diagnostics process if it outlives this timeout',
+            self::PARAM_CODE_ACTION_OUTSOURCE => 'Code actions will be "outsourced" to a different process',
+            self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 'Kill the diagnostics or code action processes if they outlive this timeout',
             self::PARAM_DIAGNOSTIC_IGNORE_CODES => 'Ignore diagnostics that have the codes listed here, e.g. ["fix_namespace_class_name"]. The codes match those shown in the LSP client.',
             self::PARAM_FILE_EVENTS => 'Register to receive file events',
             self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => 'List of paths to exclude from diagnostics, e.g. `vendor/**/*`',
@@ -233,11 +239,21 @@ class LanguageServerExtension implements Extension
         $container->register(DiagnosticsCommand::class, function (Container $container) {
             /** @var AggregateDiagnosticsProvider $provider */
             $provider = $container->get(AggregateDiagnosticsProvider::class . '.outsourced');
+
             return new DiagnosticsCommand(
                 $provider,
                 $container->get(WorkspaceIndex::class),
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => DiagnosticsCommand::NAME ]]);
+
+        $container->register(CodeActionsCommand::class, function (Container $container) {
+            $provider = $container->get(AggregateCodeActionProvider::class);
+
+            return new CodeActionsCommand(
+                $provider,
+                $container->get(WorkspaceIndex::class),
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => CodeActionsCommand::NAME ]]);
     }
 
     private function registerSession(ContainerBuilder $container): void
@@ -481,27 +497,58 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {
+            if ($container->parameter(self::PARAM_CODE_ACTION_OUTSOURCE)->bool()) {
+                $provider = $container->get(OutsourcedCodeActionProvider::class);
+            } else {
+                $provider = $container->get(AggregateCodeActionProvider::class);
+            }
+
+            return new CodeActionHandler(
+                new ThereCanOnlyBeOneCodeActionProvider($provider),
+                /** @phpstan-ignore-next-line */
+                $this->workspace($container),
+                $container->get(ProgressNotifier::class),
+            );
+        }, [ self::TAG_METHOD_HANDLER => []]);
+
+        $container->register(AggregateCodeActionProvider::class, function (Container $container) {
+            /** @var SplPriorityQueue<int,CodeActionProvider> $services */
             $services = new SplPriorityQueue();
             $profile = $container->parameter(self::PARAM_PROFILE)->bool();
             foreach ($container->getServiceIdsForTag(self::TAG_CODE_ACTION_PROVIDER) as $serviceId => $attributes) {
                 $provider = new TolerantCodeActionProvider(
                     $container->expect($serviceId, CodeActionProvider::class),
-                    $container->get(ClientApi::class),
+                    $container->has(ClientApi::class) ? $container->get(ClientApi::class) : null,
                 );
                 if ($profile) {
                     $provider = new ProfilingCodeActionProvider($provider, $this->logger($container));
                 }
 
-                $services->insert($provider, $attributes['priority'] ?? 0);
+                /** @var int $prio */
+                $prio = $attributes['priority'] ?? 0;
+                $services->insert($provider, $prio);
             }
 
-            return new CodeActionHandler(
-                /** @phpstan-ignore-next-line */
-                new AggregateCodeActionProvider(...$services),
-                $this->workspace($container),
-                $container->get(ProgressNotifier::class),
+            return new AggregateCodeActionProvider(...$services);
+        });
+        $container->register(OutsourcedCodeActionProvider::class, function (Container $container) {
+            /** @var PathResolver $resolver */
+            $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
+            $projectPath = $resolver->resolve('%project_root%');
+
+            return new OutsourcedCodeActionProvider(
+                [
+                    $container->parameter(self::PARAM_PHPACTOR_BIN)->string(),
+                    'language-server:code-action'
+                ],
+                $projectPath,
+                $this->logger($container),
+                $container->get(ClientApi::class),
+                $container->get(AggregateCodeActionProvider::class),
+                $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int(),
             );
-        }, [ self::TAG_METHOD_HANDLER => []]);
+        }, [
+        ]);
 
         $container->register(FormattingHandler::class, function (Container $container) {
             $formatter = null;
