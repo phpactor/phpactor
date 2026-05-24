@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -27,7 +28,7 @@ class ExtractConstantProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND
+            CodeActionKind::REFACTOR_EXTRACT,
         ];
     }
 
@@ -44,7 +45,7 @@ class ExtractConstantProvider implements CodeActionProvider
             return [
                 CodeAction::fromArray([
                     'title' =>  'Extract constant',
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => [],
                     'command' => new Command(
                         'Extract constant',

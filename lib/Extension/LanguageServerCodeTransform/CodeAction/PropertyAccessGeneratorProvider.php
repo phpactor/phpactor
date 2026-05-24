@@ -14,6 +14,7 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use function Amp\call;
 
 class PropertyAccessGeneratorProvider implements CodeActionProvider
@@ -29,6 +30,7 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
+            CodeActionKind::REFACTOR_REWRITE,
             $this->kind,
         ];
     }
@@ -78,7 +80,7 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
             return [
                 CodeAction::fromArray([
                     'title' => $title,
-                    'kind' => $this->kind,
+                    'kind' => $this->kinds()[0],
                     'command' => new Command(
                         $title,
                         $this->command,
