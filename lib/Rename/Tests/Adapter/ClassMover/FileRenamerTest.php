@@ -58,6 +58,29 @@ class FileRenamerTest extends IntegrationTestCase
     }
 
     /**
+     * Tests that the definition is renamed on the original file as described
+     * in the LSP spec. Note that we use the "Simple" file-to-class name
+     * strategy which scans the contents of the destination file to get the
+     * class name. Therefore, despite having to save the renamed file, we do
+     * not add it to the InMemoryDocumentLocator to simulate the behavior when
+     * using Composer that has no reference to the new file, only the old one.
+     */
+    public function testRenameReferencesToNewFile(): void
+    {
+        $document1 = $this->createDocument('One.php', '<?php class One{}');
+        $document2 = $this->createDocument('Two.php', '<?php class Two{}; One::class;');
+
+        file_put_contents($document2->uri()->path(), $document2->__toString());
+        $renamer = $this->createRenamer([$document1], [(new ClassRecord('One'))->setType('class')]);
+
+        $edits = wait($renamer->renameFile($document1->uri(), $document2->uri()));
+
+        self::assertInstanceOf(LocatedTextEditsMap::class, $edits);
+        assert($edits instanceof LocatedTextEditsMap);
+        self::assertCount(1, $edits->toLocatedTextEdits(), 'Locates one reference');
+    }
+
+    /**
      * @param TextDocument[] $textDocuments
      * @param Record[] $records
      */
