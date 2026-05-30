@@ -1,7 +1,39 @@
 Changelog
 =========
 
-## master
+## 2026.05.30.0
+
+**NOTE** this relase drops support for PHP 8.1. The minium supported PHP version
+is now 8.2.
+
+Features:
+
+  - Index optimizer #3037 @dantleech
+
+Improvements:
+
+  - Code-action resolution in separate process (avoid code action stacking and
+    blocking) #3048 @dantleech
+  - Include new line at end of generated `phpactor.json` #3047 @cweiske
+  - Resolve stubs in way consistent with other configurable paths #3040
+    @dantleech
+  - Goto definition on first-class callable #3025 @przepompownia
+
+Bug fixes:
+
+  - Explicitly specify byte order #3033 @dantleech / @zobo
+  - Fix null coalesce behavior on undefinfed variable @przepompownia
+  - Fix function call with unpacked array #3026 @yohanson
+  - Create trust directory recursively #3021 @kneemund
+
+Meta:
+
+  - Bump to PHP 8.2 @dantleech
+  - Clean up since dropping 8.1 #3038 @przepompownia
+  - Introduce benchmark tracking / monitoring #3028 @ajenbo
+  - Ignore more unnecessary files with .gitattributes ~
+
+## 2025.12.21.0
 
 Features:
 
