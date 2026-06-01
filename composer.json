@@ -29,7 +29,8 @@
         "phpactor/tolerant-php-parser": "dev-phan-phactor-fixes",
         "phpactor/map-resolver": "^1.7.0",
         "webmozart/assert": "^1.11",
-        "composer/semver": "^3.4"
+        "composer/semver": "^3.4",
+        "myclabs/deep-copy": "^1.13"
     },
     "require-dev": {
         "blackfire/php-sdk": "^1.31",
