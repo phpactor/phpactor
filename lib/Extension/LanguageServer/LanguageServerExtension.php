@@ -543,7 +543,6 @@ class LanguageServerExtension implements Extension
                 ],
                 $projectPath,
                 $this->logger($container),
-                $container->get(ClientApi::class),
                 $container->get(AggregateCodeActionProvider::class),
                 $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int(),
             );

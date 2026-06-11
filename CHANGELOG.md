@@ -1,6 +1,16 @@
 Changelog
 =========
 
+## 2026.05.30.2
+
+- Do not show client warning when code action resolution process is killed
+  @dantleech #3051
+
+## 2026.05.30.1
+
+- Include missing prod depenency in composer `require` (deep-copy) @dantleech
+
+
 ## 2026.05.30.0
 
 **NOTE** this relase drops support for PHP 8.1. The minium supported PHP version

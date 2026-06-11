@@ -14,7 +14,6 @@ use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -32,7 +31,6 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
         private array $command,
         private string $cwd,
         private LoggerInterface $logger,
-        private ClientApi $client,
         private CodeActionProvider $providerInfo,
         private int $timeout = 5,
     ) {
@@ -83,8 +81,8 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
                 /** @var int $exitCode */
                 $exitCode = yield $process->join();
             } catch (ProcessException $e) {
-                $this->client->window()->showMessage()->warning(sprintf(
-                    'Code action took too long to analyse this file (timed-out after %s seconds)',
+                $this->logger->warning(sprintf(
+                    'Code action resolver took too long to analyse file or was culled to make way for a new request (timed-out after %s seconds)',
                     $this->timeout,
                 ));
                 return [];
