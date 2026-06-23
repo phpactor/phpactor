@@ -137,6 +137,47 @@ jobs:
                   php -dphar.readonly=0 \
                     -dzend.assertions=1 \
                     vendor/bin/phpunit --log-junit phpunit-junit.xml
+    mago:
+        name: "Mago integration (${{ matrix.php-version }})"
+
+        runs-on: "ubuntu-latest"
+
+        permissions:
+            contents: read
+
+        strategy:
+            matrix:
+                php-version:
+                    - '8.2'
+
+        steps:
+            -
+                name: "Checkout code"
+                uses: "actions/checkout@v4"
+            -
+                name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "none"
+                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
+                    php-version: "${{ matrix.php-version }}"
+                    tools: composer:v2
+
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v2"
+                with:
+                    composer-options: "--no-scripts"
+            -
+                name: "Install Mago"
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: |
+                    composer require --dev --no-interaction "carthage-software/mago:^1.30"
+                    vendor/bin/mago --version
+            -
+                name: "Run Mago integration tests"
+                run: 'PATH="$PWD/vendor/bin:$PATH" vendor/bin/phpunit --group language-server-mago'
     phpstan:
         name: "PHPStan (${{ matrix.php-version }})"
 

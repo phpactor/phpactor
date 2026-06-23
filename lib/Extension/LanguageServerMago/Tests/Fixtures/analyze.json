@@ -1,0 +1,106 @@
+{
+  "issues": [
+    {
+      "level": "Error",
+      "code": "invalid-argument",
+      "message": "Invalid argument type for argument #1 of `add`: expected `int`, but found `string('x')`.",
+      "notes": [
+        "The provided type `string('x')` is not compatible with the expected type `int`."
+      ],
+      "help": "Change the argument value to match `int`, or update the parameter's type declaration.",
+      "annotations": [
+        {
+          "message": "This has type `string('x')`",
+          "kind": "Primary",
+          "span": {
+            "file_id": {
+              "name": "src/Example.php",
+              "path": "/private/var/folders/p6/c8nqdy2s1vg1ps052xyq7zdw0000gn/T/tmp.egyt9o1cqA/src/Example.php",
+              "size": 81,
+              "file_type": "Host"
+            },
+            "start": {
+              "offset": 70,
+              "line": 7
+            },
+            "end": {
+              "offset": 73,
+              "line": 7
+            }
+          }
+        },
+        {
+          "message": "Arguments to this function are incorrect",
+          "kind": "Secondary",
+          "span": {
+            "file_id": {
+              "name": "src/Example.php",
+              "path": "/private/var/folders/p6/c8nqdy2s1vg1ps052xyq7zdw0000gn/T/tmp.egyt9o1cqA/src/Example.php",
+              "size": 81,
+              "file_type": "Host"
+            },
+            "start": {
+              "offset": 66,
+              "line": 7
+            },
+            "end": {
+              "offset": 69,
+              "line": 7
+            }
+          }
+        }
+      ]
+    },
+    {
+      "level": "Error",
+      "code": "invalid-argument",
+      "message": "Invalid argument type for argument #2 of `add`: expected `int`, but found `string('y')`.",
+      "notes": [
+        "The provided type `string('y')` is not compatible with the expected type `int`."
+      ],
+      "help": "Change the argument value to match `int`, or update the parameter's type declaration.",
+      "annotations": [
+        {
+          "message": "This has type `string('y')`",
+          "kind": "Primary",
+          "span": {
+            "file_id": {
+              "name": "src/Example.php",
+              "path": "/private/var/folders/p6/c8nqdy2s1vg1ps052xyq7zdw0000gn/T/tmp.egyt9o1cqA/src/Example.php",
+              "size": 81,
+              "file_type": "Host"
+            },
+            "start": {
+              "offset": 75,
+              "line": 7
+            },
+            "end": {
+              "offset": 78,
+              "line": 7
+            }
+          }
+        },
+        {
+          "message": "Arguments to this function are incorrect",
+          "kind": "Secondary",
+          "span": {
+            "file_id": {
+              "name": "src/Example.php",
+              "path": "/private/var/folders/p6/c8nqdy2s1vg1ps052xyq7zdw0000gn/T/tmp.egyt9o1cqA/src/Example.php",
+              "size": 81,
+              "file_type": "Host"
+            },
+            "start": {
+              "offset": 66,
+              "line": 7
+            },
+            "end": {
+              "offset": 69,
+              "line": 7
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
