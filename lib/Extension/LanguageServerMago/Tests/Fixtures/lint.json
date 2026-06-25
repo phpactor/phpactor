@@ -1,0 +1,113 @@
+{
+  "issues": [
+    {
+      "level": "Warning",
+      "code": "strict-types",
+      "message": "Missing `declare(strict_types=1);` statement at the beginning of the file.",
+      "notes": [
+        "The `strict_types` directive enforces strict type checking, which can prevent subtle bugs."
+      ],
+      "help": "Add `declare(strict_types=1);` at the top of your file.",
+      "annotations": [
+        {
+          "kind": "Primary",
+          "span": {
+            "file_id": {
+              "name": "src/Example.php",
+              "path": "/private/var/folders/p6/c8nqdy2s1vg1ps052xyq7zdw0000gn/T/tmp.egyt9o1cqA/src/Example.php",
+              "size": 81,
+              "file_type": "Host"
+            },
+            "start": {
+              "offset": 0,
+              "line": 0
+            },
+            "end": {
+              "offset": 5,
+              "line": 0
+            }
+          }
+        }
+      ],
+      "edits": [
+        [
+          {
+            "name": "src/Example.php",
+            "path": "/private/var/folders/p6/c8nqdy2s1vg1ps052xyq7zdw0000gn/T/tmp.egyt9o1cqA/src/Example.php",
+            "size": 81,
+            "file_type": "Host"
+          },
+          [
+            {
+              "range": {
+                "start": 5,
+                "end": 5
+              },
+              "new_text": [
+                10,
+                10,
+                100,
+                101,
+                99,
+                108,
+                97,
+                114,
+                101,
+                40,
+                115,
+                116,
+                114,
+                105,
+                99,
+                116,
+                95,
+                116,
+                121,
+                112,
+                101,
+                115,
+                61,
+                49,
+                41,
+                59,
+                10
+              ],
+              "safety": "potentiallyunsafe"
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "level": "Warning",
+      "code": "literal-named-argument",
+      "message": "Literal argument `'y'` should be passed as a named argument for clarity.",
+      "notes": [
+        "Passing literals positionally can make code less clear, especially with booleans, numbers, or `null`."
+      ],
+      "help": "Consider using a named argument instead: `function_name(param: 'y')`.",
+      "annotations": [
+        {
+          "message": "This literal is being passed positionally.",
+          "kind": "Primary",
+          "span": {
+            "file_id": {
+              "name": "src/Example.php",
+              "path": "/private/var/folders/p6/c8nqdy2s1vg1ps052xyq7zdw0000gn/T/tmp.egyt9o1cqA/src/Example.php",
+              "size": 81,
+              "file_type": "Host"
+            },
+            "start": {
+              "offset": 75,
+              "line": 7
+            },
+            "end": {
+              "offset": 78,
+              "line": 7
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

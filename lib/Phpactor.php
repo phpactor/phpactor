@@ -17,6 +17,8 @@ use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationEx
 use Phpactor\Extension\LanguageServerHighlight\LanguageServerHighlightExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerSuggestExtension;
+use Phpactor\Extension\LanguageServerMago\LanguageServerMagoExtension;
+use Phpactor\Extension\LanguageServerMago\LanguageServerMagoSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
@@ -191,6 +193,7 @@ class Phpactor
         }
 
 
+        /** @var list<class-string> $extensionNames */
         $extensionNames = [
             CoreExtension::class,
             ClassToFileExtraExtension::class,
@@ -244,6 +247,8 @@ class Phpactor
             LanguageServerPhpstanSuggestExtension::class,
             LanguageServerPsalmExtension::class,
             LanguageServerPsalmSuggestExtension::class,
+            LanguageServerMagoExtension::class,
+            LanguageServerMagoSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             LanguageServerPhpCsFixerSuggestExtension::class,
             LanguageServerHighlightExtension::class,
