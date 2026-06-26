@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 2026.06.25.0
+
+- Mago diagnostics and lint extension @marjovanlier #3052
+
 ## 2026.05.30.2
 
 - Do not show client warning when code action resolution process is killed
