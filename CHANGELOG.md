@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## Unreleased
+
+- Require the posix extension and fail early with a descriptive error when a
+  required extension is missing (instead of crashing mid-session) @fain182 #3053
+
 ## 2026.06.25.0
 
 - Mago diagnostics and lint extension @marjovanlier #3052

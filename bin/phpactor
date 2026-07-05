@@ -35,6 +35,19 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
     exit(255);
 }
 
+$missingExtensions = array_filter(['mbstring', 'posix', 'tokenizer'], function (string $extension) {
+    return !extension_loaded($extension);
+});
+
+if ($missingExtensions) {
+    fwrite(STDERR, sprintf(
+        'Phpactor requires the following PHP extension(s) which are not loaded: %s. ' .
+        'Install or enable them and try again (e.g. on Fedora the posix extension is provided by the php-process package).',
+        implode(', ', $missingExtensions)
+    ) . "\n");
+    exit(255);
+}
+
 require_once $autoloadFile;
 
 $phpactorBin = $argv[0];
