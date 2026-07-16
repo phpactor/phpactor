@@ -3,7 +3,7 @@ Phpactor
 
 > [!WARNING]
 > This language server may not be the one you're looking for.
-
+> 
 > I personally use it and will continue to maintain it until I don't use it
 > anymore. There are new and interesting open source language servers being
 > developed that can offer far more performant capabilities. I think Phpactor
