@@ -13,6 +13,7 @@ Phpactor
 >
 > But ultimately it has some major short-comings in regards to perforamnce,
 > accuracy and scalability that I'm not capable of addressing at this time.
+> [YMMV](https://en.wiktionary.org/wiki/your_mileage_may_vary).
 
 ![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
 
