@@ -1,6 +1,19 @@
 Phpactor
 ========
 
+> [!WARNING]
+> This language server may not be the one you're looking for.
+
+> I personally use it and will continue to maintain it until I don't use it
+> anymore. There are new and interesting open source language servers being
+> developed that can offer far more performant capabilities. I think Phpactor
+> still offers some great features, especially in regards to code actions and
+> I genuinely miss some functionality when using servers for Rust, Go and
+> Typescrript.
+>
+> But ultimately it has some major short-comings in regards to perforamnce,
+> accuracy and scalability that I'm not capable of addressing at this time.
+
 ![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
 
 ![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg?branch=master)
