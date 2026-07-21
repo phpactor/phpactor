@@ -24,6 +24,7 @@ class ParentClass
 
 class ChildClass extends ParentClass
 {
+    #[\Override]
     protected function barbar(string $foo = 'hello', int $int)
     {
     }

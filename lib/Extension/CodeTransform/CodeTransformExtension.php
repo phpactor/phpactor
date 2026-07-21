@@ -265,7 +265,8 @@ class CodeTransformExtension implements Extension
             return new WorseOverrideMethod(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
-                $container->get(Updater::class)
+                $container->get(Updater::class),
+                $container->get(PhpVersionResolver::class)->resolve() ?? PHP_VERSION,
             );
         });
 

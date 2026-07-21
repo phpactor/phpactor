@@ -28,6 +28,8 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
 
     protected bool $abstract = false;
 
+    protected bool $override = false;
+
     protected MethodBodyBuilder $bodyBuilder;
 
     public function __construct(
@@ -116,9 +118,16 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
             $this->returnType,
             $this->docblock,
             $modifiers,
+            $this->override,
             $methodBody,
             UpdatePolicy::fromModifiedState($this->isModified())
         );
+    }
+
+    public function override(): MethodBuilder
+    {
+        $this->override = true;
+        return $this;
     }
 
     public function static(): MethodBuilder

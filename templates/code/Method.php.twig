@@ -6,4 +6,7 @@
 {% endfor %}
  */
 {% endif %}
+{% if prototype.override %}
+#[\Override]
+{% endif %}
 {% if prototype.isAbstract %}abstract {%endif %}{{ prototype.visibility }} {% if prototype.isStatic %}static {%endif %}function {{ prototype.name}}({% for parameter in prototype.parameters %}{{ generator.render(parameter, variant)|raw }}{% if not loop.last %}, {% endif %}{% endfor %}){% if renderedType %}: {{ renderedType }}{% endif %}
