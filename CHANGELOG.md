@@ -7,8 +7,14 @@ Features:
 
 - Code action / transformer to add missing `#[\Override]` attributes #2966 @ajenbo
 
+Improvements:
+
+- Respect cancellation for outsourced diagnostic processes #3058 @dantleech
+
 Bug fixes:
 
+- Handle premature cancellation of code-action that caused regression in VS
+  code @dantleech @zobo #3058
 - Require the posix extension and fail early with a descriptive error when a
  required extension is missing (instead of crashing mid-session) @fain182 #3053
 
