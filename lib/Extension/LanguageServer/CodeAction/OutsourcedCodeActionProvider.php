@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServer\CodeAction;
 
+use Amp\ByteStream\StreamException;
 use Amp\CancellationToken;
 use Amp\Process\Process;
 use Amp\Process\ProcessException;
@@ -62,7 +63,7 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
                     if ($cancel->isRequested()) {
                         $process->kill();
                         $this->logger->info(sprintf(
-                            'Killing process code-action process "%s" as requested',
+                            'Killing code-action process "%s" as requested',
                             $pid,
                         ));
                     }
@@ -70,9 +71,17 @@ class OutsourcedCodeActionProvider implements CodeActionProvider
                 }
             });
 
-            yield $stdin->write($textDocument->text);
+            try {
+                yield $stdin->write($textDocument->text);
+                $stdin->close();
+            } catch (StreamException $exception) {
+                $this->logger->debug(sprintf(
+                    'Could not write to stdin: %s',
+                    $exception->getMessage(),
+                ));
 
-            $stdin->close();
+                return [];
+            }
 
             /** @var string $json */
             $json = yield buffer($process->getStdout());
