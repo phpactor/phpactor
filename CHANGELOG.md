@@ -1,10 +1,16 @@
 Changelog
 =========
 
-## Unreleased
+## master
+
+Features:
+
+- Code action / transformer to add missing `#[\Override]` attributes #2966 @ajenbo
+
+Bug fixes:
 
 - Require the posix extension and fail early with a descriptive error when a
-  required extension is missing (instead of crashing mid-session) @fain182 #3053
+ required extension is missing (instead of crashing mid-session) @fain182 #3053
 
 ## 2026.06.25.0
 
@@ -56,7 +62,6 @@ Meta:
 
 Features:
 
-  - Code action / transformer to add missing `#[\Override]` attributes #2966 @ajenbo
   - Additive stubs #2968 @dantleech
   - Support for 1st-class callables @dantleech
   - Support for the PHP 8.5 pipe operator @dantleech
