@@ -143,6 +143,33 @@ This refactoring add missing return types.
 
        Request code actions when there is a candidate
 
+.. _refactoring_add_override_attribute:
+
+Add Override Attribute
+----------------------
+
+Add the ``#[\Override]`` attribute to methods which override a method from a
+parent class or implemented interface. Only applies when the project's PHP
+version is 8.3 or higher.
+
+.. tabs::
+
+   .. tab:: CLI
+
+       .. code-block::
+
+           $ phpactor class:transform path/to/Class.php --transform=add_override_attribute
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorTransform
+
+   .. tab:: Language Server
+
+       Request code actions when there is a candidate
+
 Complete Constructor
 --------------------
 

@@ -40,6 +40,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseInterestingOffset
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMember;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddOverrideAttributeTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
@@ -559,6 +560,14 @@ class CodeTransformExtension implements Extension
                 $container->get(Updater::class)
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
+
+        $container->register(AddOverrideAttributeTransformer::class, function (Container $container) {
+            return new AddOverrideAttributeTransformer(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $container->get(PhpVersionResolver::class)->resolve() ?? PHP_VERSION,
+                $container->get(WorseReflectionExtension::SERVICE_AST_PROVIDER),
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_override_attribute' ]]);
 
         $container->register('code_transform.transformer.remove_unused_imports', function (Container $container) {
             return new RemoveUnusedImportsTransformer(
