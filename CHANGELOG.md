@@ -56,6 +56,7 @@ Meta:
 
 Features:
 
+  - Code action / transformer to add missing `#[\Override]` attributes #2966 @ajenbo
   - Additive stubs #2968 @dantleech
   - Support for 1st-class callables @dantleech
   - Support for the PHP 8.5 pipe operator @dantleech
@@ -168,7 +169,7 @@ Improvements:
     references @dantleech
   - Psalm: add `config` option to specify Psalm config @GDXbsv #2835
   - Completion for `@internal`  tag #2827 @mamazu
-  - Add documentation for Nova Language Client #2830 @EmranMR 
+  - Add documentation for Nova Language Client #2830 @EmranMR
   - Enable fill constructor code action on attributes #2810 @mamazu
   - Require `ext-mbstring` extension to avoid off-by-one issues #2838 @dantleech
 

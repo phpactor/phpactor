@@ -428,6 +428,16 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
+        $container->register(TransformerCodeActionPovider::class.'add_override_attribute', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->expect('code_transform.transformers', Transformers::class),
+                'add_override_attribute',
+                'Add missing #[\Override] attributes'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
         $container->register(TransformerCodeActionPovider::class.'remove_unused_imports', function (Container $container) {
             return new TransformerCodeActionPovider(
                 $container->expect('code_transform.transformers', Transformers::class),
