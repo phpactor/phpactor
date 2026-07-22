@@ -23,7 +23,8 @@ class WorseOverrideMethod implements OverrideMethod
     public function __construct(
         private Reflector $reflector,
         private BuilderFactory $factory,
-        private Updater $updater
+        private Updater $updater,
+        private string $phpVersion
     ) {
     }
 
@@ -58,6 +59,9 @@ class WorseOverrideMethod implements OverrideMethod
         );
 
         $methodBuilder = $builder->class($method->declaringClass()->name()->short())->method($method->name());
+        if (version_compare($this->phpVersion, '8.3', '>=')) {
+            $methodBuilder->override();
+        }
 
         return $methodBuilder;
     }
@@ -74,8 +78,12 @@ class WorseOverrideMethod implements OverrideMethod
         return $class->parent()->methods()->get($methodName);
     }
 
-    private function getSourcePrototype(ReflectionClass $class, ReflectionMethod $method, SourceCode $source, MethodBuilder $methodBuilder): PhpactorSourceCode
-    {
+    private function getSourcePrototype(
+        ReflectionClass $class,
+        ReflectionMethod $method,
+        SourceCode $source,
+        MethodBuilder $methodBuilder,
+    ): PhpactorSourceCode {
         $sourceBuilder = $this->factory->fromSource($source);
         $sourceBuilder->class($class->name()->short())->add($methodBuilder);
         $this->importClasses($class, $method, $sourceBuilder);

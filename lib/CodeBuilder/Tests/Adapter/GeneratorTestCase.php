@@ -224,6 +224,7 @@ abstract class GeneratorTestCase extends TestCase
                             ReturnType::none(),
                             Docblock::none(),
                             0,
+                            false,
                             MethodBody::fromLines([
                                 Line::fromString('$this->foobar = $barfoo;')
                             ])
@@ -480,6 +481,7 @@ abstract class GeneratorTestCase extends TestCase
                         ReturnType::none(),
                         Docblock::none(),
                         0,
+                        false,
                         MethodBody::fromLines([
                             Line::fromString('$this->foobar = $barfoo;'),
                         ])
