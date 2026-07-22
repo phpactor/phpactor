@@ -9,10 +9,10 @@ Phpactor
 > developed that can offer far more performant capabilities. I think Phpactor
 > still offers some great features, especially in regards to code actions and
 > I genuinely miss some functionality when using servers for Rust, Go and
-> Typescrript.
+> Typescript.
 >
 > There are many parts of this project that I'm proud of but ultimately it has
-> some major short-comings in regards to perforamnce, accuracy and scalability
+> some short-comings in regards to performance, accuracy and maintainability
 > that I'm not capable of addressing at this time.
 > [YMMV](https://en.wiktionary.org/wiki/your_mileage_may_vary).
 
