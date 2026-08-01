@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## master
+
+- Show the Phpactor version in the LSP `phpactor/status` response.
+
+
 ## 2026.06.22.0
 
 Features:

@@ -2192,6 +2192,94 @@ Kill the psalm process after this number of seconds
 **Default**: ``15``
 
 
+.. _LanguageServerMagoExtension:
+
+
+LanguageServerMagoExtension
+---------------------------
+
+
+.. _param_language_server_mago.enabled:
+
+
+``language_server_mago.enabled``
+""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_mago.bin:
+
+
+``language_server_mago.bin``
+""""""""""""""""""""""""""""
+
+
+Path to the Mago executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/mago"``
+
+
+.. _param_language_server_mago.config:
+
+
+``language_server_mago.config``
+"""""""""""""""""""""""""""""""
+
+
+Override the Mago configuration file (mago.toml)
+
+
+**Default**: ``null``
+
+
+.. _param_language_server_mago.timeout:
+
+
+``language_server_mago.timeout``
+""""""""""""""""""""""""""""""""
+
+
+Maximum time in milliseconds to wait for a Mago run
+
+
+**Default**: ``10000``
+
+
+.. _param_language_server_mago.analyze.enabled:
+
+
+``language_server_mago.analyze.enabled``
+""""""""""""""""""""""""""""""""""""""""
+
+
+Show diagnostics from `mago analyze` (static analysis)
+
+
+**Default**: ``true``
+
+
+.. _param_language_server_mago.lint.enabled:
+
+
+``language_server_mago.lint.enabled``
+"""""""""""""""""""""""""""""""""""""
+
+
+Show diagnostics from `mago lint` (style and code smells)
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerPhpCsFixerExtension:
 
 

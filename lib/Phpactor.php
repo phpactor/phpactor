@@ -2,6 +2,8 @@
 
 namespace Phpactor;
 
+use Composer\InstalledVersions;
+use Phpactor\Cast\Cast;
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\BootableExtension;
 use Phpactor\Container\Container;
@@ -380,6 +382,11 @@ class Phpactor
         }
 
         return file_exists($string);
+    }
+
+    public static function version(): string
+    {
+        return Cast::toString(InstalledVersions::getVersion('phpactor/phpactor'));
     }
 
     /**

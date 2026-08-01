@@ -15,6 +15,7 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\FilePathResolver\Expanders;
+use Phpactor\Phpactor;
 
 class DebugHandler implements Handler
 {
@@ -114,6 +115,7 @@ class DebugHandler implements Handler
             '',
             // '  connections: ' . $this->stats->connectionCount(),
             // '  requests: ' . $this->stats->requestCount(),
+            sprintf('  version: %s', Phpactor::version()),
             '  mem: ' . number_format(memory_get_peak_usage()) . 'b',
             '  documents: ' . $this->workspace->count(),
             '  services: ' . (string)json_encode($this->serviceManager->runningServices()),
