@@ -4,6 +4,11 @@ Changelog
 ## master
 
 - Show the Phpactor version in the LSP `phpactor/status` response.
+- Fix functions declared in the source code passed to the reflector being
+  reported as not found (e.g. every function declared and called in the same
+  file when running `worse:analyse`).
+- `worse:analyse` writes its progress to STDERR, and its `--format=json` output
+  now reports the line, column, diagnostic code and a readable severity.
 
 
 ## 2026.06.22.0

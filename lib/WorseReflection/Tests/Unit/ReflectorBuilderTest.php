@@ -114,4 +114,18 @@ class ReflectorBuilderTest extends TestCase
 
         $this->assertInstanceOf(Reflector::class, $reflector);
     }
+
+    public function testContextualSourceLocationLocatesFunctions(): void
+    {
+        $reflector = ReflectorBuilder::create()
+            ->enableContextualSourceLocation()
+            ->build();
+
+        $source = TextDocumentBuilder::create(
+            '<?php namespace Foobar; function barfoo(): void {}'
+        )->build();
+        $reflector->reflectFunctionsIn($source);
+
+        $this->assertEquals('Foobar\barfoo', $reflector->reflectFunction('Foobar\barfoo')->name()->__toString());
+    }
 }

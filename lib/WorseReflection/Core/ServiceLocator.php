@@ -67,7 +67,10 @@ class ServiceLocator
         $sourceReflector = $reflectorFactory->create($this);
 
         if ($enableContextualLocation) {
-            $temporarySourceLocator = new TemporarySourceLocator($sourceReflector);
+            // functions are located as well as classes, otherwise functions
+            // declared in the contextual source code (e.g. the file being
+            // analysed) are reported as not-found.
+            $temporarySourceLocator = new TemporarySourceLocator($sourceReflector, locateFunctions: true);
             $sourceLocator = new ChainSourceLocator([
                 $temporarySourceLocator,
                 $sourceLocator,
