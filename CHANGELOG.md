@@ -3,6 +3,11 @@ Changelog
 
 ## master
 
+- Fix `TextDocumentUri` not percent-encoding reserved characters (notably `#`,
+  which truncated `textDocument/definition` and other location-returning
+  responses when a directory or file name contained one) in `file://`/
+  `phar://` URIs, and not decoding percent-encoded characters back out of
+  incoming URIs, which broke linter/formatter integrations for such paths.
 - Show the Phpactor version in the LSP `phpactor/status` response.
 - Fix functions declared in the source code passed to the reflector being
   reported as not found (e.g. every function declared and called in the same

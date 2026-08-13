@@ -24,11 +24,10 @@ class TextDocumentUri
             return sprintf('%s:%s', $this->scheme, $this->path);
         }
         if ($this->scheme === self::SCHEME_PHAR) {
-            return sprintf('%s://%s', $this->scheme, $this->path);
+            return sprintf('%s://%s', $this->scheme, self::_encodePath($this->path));
         }
-        return sprintf('%s:///%s', $this->scheme, ltrim($this->path, '/'));
+        return sprintf('%s:///%s', $this->scheme, self::_encodePath(ltrim($this->path, '/')));
     }
-
     /**
      * Construct a TextDocumentUri from a URI string or a filesystem path.
      */
@@ -80,6 +79,8 @@ class TextDocumentUri
             ));
         }
 
+        $path = self::_decodePath($path);
+
         if ($scheme === self::SCHEME_FILE && !str_starts_with($path, '/')) {
             throw new InvalidUriException(sprintf(
                 'URI for file:// must be absolute, got "%s"',
@@ -102,5 +103,36 @@ class TextDocumentUri
     public function scheme(): string
     {
         return $this->scheme;
+    }
+
+    /**
+     * Percent encode each path segment.
+     *
+     * @param string $path the raw, unencoded filesystem path
+     *
+     * @return string the percent encoded path
+     */
+    private static function _encodePath(string $path): string
+    {
+        $encodeSegment = fn (string $segment) => strtr(rawurlencode($segment), [
+            '%21' => '!', '%24' => '$', '%26' => '&', '%27' => '\'',
+            '%28' => '(', '%29' => ')', '%2A' => '*', '%2B' => '+',
+            '%2C' => ',', '%3A' => ':', '%3B' => ';', '%3D' => '=',
+            '%40' => '@'
+        ]);
+        $encodedSegments = array_map($encodeSegment, explode('/', $path));
+        return implode('/', $encodedSegments);
+    }
+
+    /**
+     * Inverse of _encodePath(), percent decode each path segment.
+     *
+     * @param string $path the percent encoded path taken from a URI
+     *
+     * @return string unencoded filesystem path
+     */
+    private static function _decodePath(string $path): string
+    {
+        return implode('/', array_map('rawurldecode', explode('/', $path)));
     }
 }

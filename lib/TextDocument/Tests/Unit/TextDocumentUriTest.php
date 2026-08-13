@@ -105,4 +105,64 @@ class TextDocumentUriTest extends TestCase
         $uri = TextDocumentUri::fromString('file:///C:/foo/bar.php');
         $this->assertEquals('file', $uri->scheme());
     }
+
+    public function testEncodesHashInPathSegment(): void
+    {
+        $uri = TextDocumentUri::fromString('/foo/#bar/baz.php');
+        $this->assertEquals('file:///foo/%23bar/baz.php', (string) $uri);
+    }
+
+    public function testEncodesSpaceInPathSegment(): void
+    {
+        $uri = TextDocumentUri::fromString('/foo bar/baz qux.php');
+        $this->assertEquals('file:///foo%20bar/baz%20qux.php', (string) $uri);
+    }
+
+    public function testEncodesLiteralPercentInPathSegment(): void
+    {
+        $uri = TextDocumentUri::fromString('/foo/100% done.php');
+        $this->assertEquals('file:///foo/100%25%20done.php', (string) $uri);
+    }
+
+    public function testDoesNotEncodeColonInWindowsDriveLetter(): void
+    {
+        $uri = TextDocumentUri::fromString('C:/foo/bar.php');
+        $this->assertEquals('file:///C:/foo/bar.php', (string) $uri);
+    }
+
+    public function testEncodesHashInPharPath(): void
+    {
+        $uri = TextDocumentUri::fromString('phar:///foo/#bar/baz.php');
+        $this->assertEquals('phar:///foo/%23bar/baz.php', (string) $uri);
+    }
+
+    public function testDecodesHashFromIncomingUri(): void
+    {
+        $uri = TextDocumentUri::fromString('file:///foo/%23bar/baz.php');
+        $this->assertEquals('/foo/#bar/baz.php', $uri->path());
+    }
+
+    public function testDecodesSpaceFromIncomingUri(): void
+    {
+        $uri = TextDocumentUri::fromString('file:///foo%20bar/baz.php');
+        $this->assertEquals('/foo bar/baz.php', $uri->path());
+    }
+
+    public function testRoundTripsHashThroughUriAndBackToPath(): void
+    {
+        $original = 'file:///foo/#bar/baz.php';
+        $uri = TextDocumentUri::fromString($original);
+        $this->assertEquals('/foo/#bar/baz.php', $uri->path());
+        $roundTripped = TextDocumentUri::fromString((string) $uri);
+        $this->assertEquals($uri->path(), $roundTripped->path());
+        $this->assertEquals((string) $uri, (string) $roundTripped);
+    }
+
+    public function testRoundTripsLiteralPercentThroughUriAndBackToPath(): void
+    {
+        $uri = TextDocumentUri::fromString('/foo/100% done.php');
+        $roundTripped = TextDocumentUri::fromString((string) $uri);
+        $this->assertEquals($uri->path(), $roundTripped->path());
+        $this->assertEquals((string) $uri, (string) $roundTripped);
+    }
 }
