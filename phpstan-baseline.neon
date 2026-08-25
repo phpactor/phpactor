@@ -15169,12 +15169,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionParameterCollection.php
 
 		-
-			message: '#^Possibly invalid array key type mixed\.$#'
-			identifier: offsetAccess.invalidOffset
-			count: 2
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionParameterCollection.php
-
-		-
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 3

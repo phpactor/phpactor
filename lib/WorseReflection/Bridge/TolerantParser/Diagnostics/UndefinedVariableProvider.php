@@ -305,6 +305,22 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'pass by reference with duplicate parameter names',
+            source: <<<'PHP'
+                <?php
+                function parse_str(
+                    string $string,
+                    #[\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] &$result = [],
+                    #[\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable(from: '8.0')] &$result
+                ): void {}
+                parse_str('a=1&b=2', $result);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'super globals',
             source: <<<'PHP'
                 <?php

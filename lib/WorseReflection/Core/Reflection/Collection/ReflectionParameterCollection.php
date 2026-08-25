@@ -39,11 +39,16 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
         if ($method->parameters) {
             $index = 0;
             foreach ($method->parameters->getElements() as $parameter) {
-                $items[$parameter->getName()] = new ReflectionParameter(
+                $name = $parameter->getName();
+                if (!is_string($name)) {
+                    $name = '';
+                }
+
+                $items[$name] = new ReflectionParameter(
                     $serviceLocator,
                     $reflectionMethod,
                     $parameter,
-                    $index++
+                    isset($items[$name]) ? $items[$name]->index() : $index++
                 );
             }
         }
@@ -62,11 +67,16 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
         if ($functionDeclaration->parameters) {
             $index = 0;
             foreach ($functionDeclaration->parameters->getElements() as $parameter) {
-                $items[$parameter->getName()] = new ReflectionParameter(
+                $name = $parameter->getName();
+                if (!is_string($name)) {
+                    $name = '';
+                }
+
+                $items[$name] = new ReflectionParameter(
                     $serviceLocator,
                     $reflectionFunction,
                     $parameter,
-                    $index++
+                    isset($items[$name]) ? $items[$name]->index() : $index++
                 );
             }
         }

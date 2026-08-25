@@ -40,5 +40,23 @@ class ReflectionParameterCollectionTest extends IntegrationTestCase
                 $this->assertEquals(2, $collection->promoted()->count());
             },
         ];
+
+        yield 'keeps the index of the first parameter when stubs declare duplicate names' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function bar(string $string, &$result = [], &$result) {}
+                }
+                EOT
+            ,
+            function (ReflectionParameterCollection $collection): void {
+                $this->assertEquals(2, $collection->count());
+                $this->assertEquals(0, $collection->get('string')->index());
+                $this->assertEquals(1, $collection->get('result')->index());
+                $this->assertEquals(1, $collection->passedByReference()->first()?->index());
+            },
+        ];
     }
 }
