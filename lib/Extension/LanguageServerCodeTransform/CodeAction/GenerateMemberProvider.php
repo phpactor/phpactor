@@ -10,6 +10,7 @@ use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMemberCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
@@ -31,8 +32,9 @@ class GenerateMemberProvider implements DiagnosticsProvider, CodeActionProvider
     public function kinds(): array
     {
         return [
-             self::KIND
-         ];
+            CodeActionKind::QUICK_FIX,
+            self::KIND,
+        ];
     }
 
 
@@ -50,7 +52,7 @@ class GenerateMemberProvider implements DiagnosticsProvider, CodeActionProvider
             return array_map(function (Diagnostic $diagnostic) use ($textDocument) {
                 return CodeAction::fromArray([
                     'title' => sprintf('Fix "%s"', $diagnostic->message),
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => [
                         $diagnostic
                     ],

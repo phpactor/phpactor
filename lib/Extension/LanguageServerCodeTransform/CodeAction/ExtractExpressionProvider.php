@@ -9,6 +9,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -27,7 +28,7 @@ class ExtractExpressionProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND
+            CodeActionKind::REFACTOR_EXTRACT,
         ];
     }
 
@@ -46,7 +47,7 @@ class ExtractExpressionProvider implements CodeActionProvider
             return [
                 CodeAction::fromArray([
                     'title' =>  'Extract expression',
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => [],
                     'command' => new Command(
                         'Extract method',
