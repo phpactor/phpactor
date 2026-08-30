@@ -40,4 +40,21 @@ class SymfonyConsoleMoveLogger implements ClassMoverLogger
             ));
         }
     }
+
+    public function import(FilePath $path, FoundReferences $references): void
+    {
+        if ($references->references()->isEmpty()) {
+            return;
+        }
+        $this->output->writeln('<info>[USE]</> <comment>'.$path.'</>');
+
+        foreach ($references->references() as $reference) {
+            $this->output->writeln(sprintf(
+                '       %s:%s <comment>=></> use %s',
+                $reference->position()->start(),
+                $reference->position()->end(),
+                (string) $reference->fullName()
+            ));
+        }
+    }
 }
