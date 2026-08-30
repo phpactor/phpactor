@@ -23,29 +23,29 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string,array<string,mixed>[]}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'member keywords' => [
             '<?php class Foobar { p<>',
-            $this->expect(['private ', 'protected ', 'public ']),
+            self::expect(['private ', 'protected ', 'public ']),
         ];
 
         yield 'member keyword postfix' => [
             '<?php class Foobar { private <>',
-            $this->expect(['const ', 'function ']),
+            self::expect(['const ', 'function ']),
         ];
         yield 'member keyword postfix 2' => [
             '<?php class Foobar { private func<>',
-            $this->expect(['const ', 'function ']),
+            self::expect(['const ', 'function ']),
         ];
 
         yield '__construct' => [
             '<?php class Foobar { public function __c<>',
-            [...$this->expectMagicMethods()],
+            [...self::expectMagicMethods()],
         ];
         yield '__construct 2' => [
             '<?php class Foo extends Bar implements One {    public function __c<> }',
-            [...$this->expectMagicMethods()],
+            [...self::expectMagicMethods()],
         ];
 
         yield 'no magic methods here' => [
@@ -55,41 +55,69 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
 
         yield 'class implements 1' => [
             '<?php class Foobar <>',
-            $this->expect(['extends ', 'implements ']),
+            self::expect(['extends ', 'implements ']),
         ];
         yield 'class implements 2' => [
             '<?php class Foobar impl<>',
-            $this->expect(['extends ', 'implements ']),
+            self::expect(['extends ', 'implements ']),
         ];
 
         yield 'class keyword' => [
             '<?php cl<>',
-            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
+            self::expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
         yield 'class keyword 2' => [
             '<?php class F {} cl<>',
-            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
+            self::expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
         yield 'class keyword 3' => [
             '<?php class F {function fo() {}} cl<>',
-            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
+            self::expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
+        ];
+        yield 'match keyword' => [
+            '<?php class F { public function foo() { $x = mat<> }}',
+            [...self::expectExpressions()],
+        ];
+        yield 'match unexpected' => [
+            '<?php class F { public function foo() { $this->mat<> }}',
+            [],
+        ];
+        yield 'match unexpected 2' => [
+            '<?php class F { public function foo() { $this->foo(<>) }}',
+            [...self::expectExpressions()],
+        ];
+        yield 'match unexpected 3' => [
+            '<?php class F { public function foo() { $this->foo(self::<>) }}',
+            [],
+        ];
+        yield 'match unexpected 4' => [
+            '<?php if (1)<> {}',
+            [],
+        ];
+        yield 'match unexpected in string' => [
+            '<?php strlen(\'<>',
+            [],
+        ];
+        yield 'match unexpected 5' => [
+            '<?php $<>',
+            [],
         ];
 
         yield 'if condition classes' => [
             '<?php class Stuff { public function testing() { if ($this i<>} }',
-            $this->expect(['instanceof ']),
+            self::expect(['instanceof ']),
         ];
         yield 'if condition' => [
             '<?php if ($test i<>',
-            $this->expect(['instanceof ']),
+            self::expect(['instanceof ']),
         ];
         yield 'while with empty expression' => [
             '<?php while (<>',
-            $this->expect([]),
+            self::expect([]),
         ];
         yield 'while condition' => [
             '<?php while ($test i<>',
-            $this->expect(['instanceof ']),
+            self::expect(['instanceof ']),
         ];
         yield 'while condition (without variable)' => [
             '<?php while (<>',
@@ -97,7 +125,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ];
         yield 'while condition (with expression)' => [
             '<?php while ($node->getParent() i<>',
-            $this->expect(['instanceof ']),
+            self::expect(['instanceof ']),
         ];
     }
 
@@ -110,7 +138,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
      * @return array<array<string,mixed>>
      * @param array<string> $array
      */
-    private function expect(array $array): array
+    private static function expect(array $array): array
     {
         return array_map(fn (string $keyword) => [
             'name' => $keyword,
@@ -120,7 +148,22 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<array{name:string,snippet:string}>
      */
-    private function expectMagicMethods(): Generator
+    private static function expectExpressions(): Generator
+    {
+        $expressions = [
+            'match' => " (\$1) {\$0\n}",
+            'throw' => ' $1',
+        ];
+
+        foreach ($expressions as $name => $snippet) {
+            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
+        }
+    }
+
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+    private static function expectMagicMethods(): Generator
     {
         $methods = [
             '__construct' => "(\$1)\n{\$0\n}",
