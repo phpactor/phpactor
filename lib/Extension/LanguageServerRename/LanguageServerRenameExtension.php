@@ -10,9 +10,10 @@ use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\Renamer\ChainRenamer;
 use Phpactor\Extension\LanguageServerRename\Handler\RenameHandler;
 use Phpactor\Rename\Model\Renamer;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\WorkspaceOperationsConverter;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentLocator;
 
@@ -31,7 +32,7 @@ class LanguageServerRenameExtension implements Extension
 
         $container->register(RenameHandler::class, function (Container $container) {
             return new RenameHandler(
-                $container->get(LocatedTextEditConverter::class),
+                $container->get(WorkspaceOperationsConverter::class),
                 $container->get(TextDocumentLocator::class),
                 $container->get(Renamer::class),
                 $container->get(ClientApi::class)
@@ -43,15 +44,16 @@ class LanguageServerRenameExtension implements Extension
         $container->register(FileRenameHandler::class, function (Container $container) {
             return new FileRenameHandler(
                 $container->get(FileRenamer::class),
-                $container->get(LocatedTextEditConverter::class),
+                $container->get(WorkspaceOperationsConverter::class),
+                $container->get(ClientApi::class)
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => []
         ]);
 
-        $container->register(LocatedTextEditConverter::class, function (Container $container) {
-            return new LocatedTextEditConverter(
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+        $container->register(WorkspaceOperationsConverter::class, function (Container $container) {
+            return new WorkspaceOperationsConverter(
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(TextDocumentLocator::class),
             );
         });

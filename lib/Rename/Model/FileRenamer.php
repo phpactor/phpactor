@@ -10,7 +10,7 @@ interface FileRenamer
     /**
      * Promise can throw a CouldNotRename exception
      *
-     * @return Promise<LocatedTextEditsMap>
+     * @return Promise<WorkspaceOperations>
      */
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise;
 }

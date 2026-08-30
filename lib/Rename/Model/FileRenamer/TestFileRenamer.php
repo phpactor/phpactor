@@ -8,17 +8,20 @@ use Amp\Success;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\WorkspaceOperations;
 use Phpactor\TextDocument\TextDocumentUri;
 
 class TestFileRenamer implements FileRenamer
 {
-    private LocatedTextEditsMap $workspaceEdits;
+    private WorkspaceOperations $workspaceOperations;
 
     public function __construct(
         private bool $throw = false,
-        ?LocatedTextEditsMap $workspaceEdits = null
+        ?WorkspaceOperations $workspaceOperations = null,
     ) {
-        $this->workspaceEdits = $workspaceEdits ?: LocatedTextEditsMap::create();
+        $this->workspaceOperations = $workspaceOperations ?: new WorkspaceOperations(
+            LocatedTextEditsMap::create()->toLocatedTextEdits(),
+        );
     }
 
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
@@ -26,6 +29,7 @@ class TestFileRenamer implements FileRenamer
         if ($this->throw) {
             return new Failure(new CouldNotRename('There was a problem'));
         }
-        return new Success($this->workspaceEdits);
+
+        return new Success($this->workspaceOperations);
     }
 }
