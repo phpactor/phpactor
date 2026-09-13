@@ -32,6 +32,7 @@ use Phpactor\Indexer\Adapter\Worse\IndexerFunctionSourceLocator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\Extension\Command\IndexOptimiseCommand;
+use Phpactor\Indexer\Extension\Command\IndexWorkerCommand;
 use Phpactor\Indexer\Extension\Command\IndexSearchCommand;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
@@ -68,6 +69,9 @@ class IndexerExtension implements Extension
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
     public const PARAM_SUPPORTED_EXTENSIONS = 'indexer.supported_extensions';
+    public const PARAM_PARALLEL_WORKERS = 'indexer.parallel_workers';
+    public const PARAM_PARALLEL_MIN_FILES = 'indexer.parallel_min_files';
+    public const PARAM_WORKER_BIN = 'indexer.worker_bin';
     public const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
@@ -102,6 +106,9 @@ class IndexerExtension implements Extension
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
             self::PARAM_SUPPORTED_EXTENSIONS => ['php', 'phar'],
             self::PARAM_SEARCH_INCLUDE_PATTERNS => [],
+            self::PARAM_PARALLEL_WORKERS => 0,
+            self::PARAM_PARALLEL_MIN_FILES => 500,
+            self::PARAM_WORKER_BIN => '%application_root%/bin/phpactor',
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLED_WATCHERS => 'List of allowed watchers. The first watcher that supports the current system will be used',
@@ -117,6 +124,9 @@ class IndexerExtension implements Extension
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'Recurse over class implementations to resolve all references',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
             self::PARAM_SUPPORTED_EXTENSIONS => 'File extensions (e.g. `php`) for files that should be indexed',
+            self::PARAM_PARALLEL_WORKERS => 'Number of child processes to parse files with while building the index. `0` picks a number based on the available CPUs, `1` indexes everything in the main process',
+            self::PARAM_PARALLEL_MIN_FILES => 'Only index in parallel when at least this many files need indexing - starting a pool of workers does not pay for itself on a handful of changed files',
+            self::PARAM_WORKER_BIN => 'Internal use only - path to the Phpactor binary used to spawn index workers',
             self::PARAM_SEARCH_INCLUDE_PATTERNS => 'When searching the index exclude records whose fully qualified names match any of these regex patterns (use to exclude suggestions from search results). Namespace separators must be escaped as `\\\\\\\\` for example `^Foo\\\\\\\\` to include all namespaces whose first segment is `Foo`',
         ]);
         $schema->setTypes([
@@ -134,6 +144,9 @@ class IndexerExtension implements Extension
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'boolean',
             self::PARAM_SUPPORTED_EXTENSIONS => 'array',
             self::PARAM_SEARCH_INCLUDE_PATTERNS => 'array',
+            self::PARAM_PARALLEL_WORKERS => 'integer',
+            self::PARAM_PARALLEL_MIN_FILES => 'integer',
+            self::PARAM_WORKER_BIN => 'string',
         ]);
     }
 
@@ -182,6 +195,13 @@ class IndexerExtension implements Extension
                 $container->get(Watcher::class)
             );
         }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:build']]);
+
+        $container->register(IndexWorkerCommand::class, function (Container $container) {
+            return new IndexWorkerCommand(
+                $container->get(IndexAgentBuilder::class),
+                $container->parameter(self::PARAM_INDEXER_MAX_FILESIZE_TO_INDEX)->int(),
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:worker']]);
 
         $container->register(IndexOptimiseCommand::class, function (Container $container) {
             return new IndexOptimiseCommand(
@@ -242,6 +262,7 @@ class IndexerExtension implements Extension
             $stubPaths = array_map(fn (string $path): string => $resolver->resolve($path), $stubPaths);
 
             return IndexAgentBuilder::create($indexPath, $this->projectRoot($container))
+                ->setLogger($this->logger($container))
                 /** @phpstan-ignore-next-line */
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
                 /** @phpstan-ignore-next-line */
@@ -251,6 +272,15 @@ class IndexerExtension implements Extension
                 ->setSupportedExtensions($container->parameter(self::PARAM_SUPPORTED_EXTENSIONS)->value())
                 ->setFollowSymlinks($container->parameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS)->bool())
                 ->setMaxFileSizeToIndex($container->parameter(self::PARAM_INDEXER_MAX_FILESIZE_TO_INDEX)->int())
+                ->setWorkerCommand([
+                    PHP_BINARY,
+                    $resolver->resolve($container->parameter(self::PARAM_WORKER_BIN)->string()),
+                    'index:worker',
+                    '--working-dir',
+                    $this->projectRoot($container),
+                ])
+                ->setParallelWorkers($container->parameter(self::PARAM_PARALLEL_WORKERS)->int())
+                ->setParallelMinimumFiles($container->parameter(self::PARAM_PARALLEL_MIN_FILES)->int())
                 ->setStubPaths($stubPaths);
         });
 

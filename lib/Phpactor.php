@@ -145,6 +145,8 @@ class Phpactor
 
         if ($phpactorBin) {
             $config[LanguageServerExtension::PARAM_PHPACTOR_BIN] = $phpactorBin;
+            // Workers do not share the CWD with the main process so we must resolve relative paths.
+            $config[IndexerExtension::PARAM_WORKER_BIN] = realpath($phpactorBin) ?: $phpactorBin;
         }
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);

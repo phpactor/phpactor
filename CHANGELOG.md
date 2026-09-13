@@ -3,6 +3,15 @@ Changelog
 
 ## 2026.06.23.0
 
+Features:
+
+- Build the index with a pool of worker processes. Larger indexing runs (by
+  default anything over `indexer.parallel_min_files` files, so first indexes
+  and `--reset` rebuilds) now parse files in parallel while the main process
+  remains the only writer. Configure with `indexer.parallel_workers`, set it to
+  `1` to index everything in a single process as before. Adds
+  `fidry/cpu-core-counter` as a dependency to size the pool @ajenbo
+
 Improvements:
 
 - Show the Phpactor version in the LSP `phpactor/status` response @dantleech
@@ -12,6 +21,9 @@ Improvements:
 
 Bug fixes:
 
+- Records written to the search index after it had been read back from disk
+  were appended to it rather than replacing the existing entry, so the same
+  class could be offered twice by workspace symbol search @ajenbo
 - Fix false positives in analyser ]#3063 @ajenbo
 - Fix functions declared in the source code passed to the reflector being
   reported as not found (e.g. every function declared and called in the same

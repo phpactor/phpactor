@@ -51,6 +51,30 @@ also be used with RPC if run manually.
        Make a request to `indexer/reindex`.
 
 
+.. _indexer_parallel:
+
+Parallel indexing
+-----------------
+
+Processing files in parrallel trades memory usage for performance.
+
+This happens automatically for larger indexing runs. Whenever at least
+:ref:`param_indexer.parallel_min_files` files need indexing, which in
+practice means the first index of a project and explicit ``--reset`` rebuilds.
+Re-indexing a handful of changed files stays in the main process, where
+starting a pool of workers would cost more than it saves.
+
+By default Phpactor uses up to 8 workers, past that the main process becomes the
+limiting factor and extra workers mostly cost memory. Set
+:ref:`param_indexer.parallel_workers` to pick a number yourself, or to ``1`` to
+turn parallel indexing off:
+
+.. code-block:: bash
+
+   $ phpactor config:set indexer.parallel_workers 4
+
+Each worker is a PHP process holding the records for the chunk it is working on.
+
 .. _watcher:
 
 Watching
@@ -78,7 +102,7 @@ Installation
 .. tabs::
 
     .. tab:: Debian/Ubuntu
-       
+
         .. code-block:: bash
 
             apt install inotify-tools
@@ -95,13 +119,13 @@ Installation:
 .. tabs::
 
     .. tab:: Debian/Ubuntu
-       
+
         .. code-block:: bash
 
             apt install watchman
 
     .. tab:: MacOS
-       
+
         .. code-block:: bash
 
             brew install watchman
@@ -164,6 +188,10 @@ indexer``, explanations of some important ones:
 - :ref:`param_indexer.poll_time`: Poll time used for polling watchers (e.g. ``find``, ``php``)
 - :ref:`param_indexer.buffer_time`: Time to wait to collect batch messages from
   "realtime" watchers (e.g. ``inotify``)
+- :ref:`param_indexer.parallel_workers`: Number of child processes used to
+  parse files, see :ref:`indexer_parallel`
+- :ref:`param_indexer.parallel_min_files`: How many files an indexing run needs
+  before it is worth starting those child processes
 
 Troubleshooting
 ---------------

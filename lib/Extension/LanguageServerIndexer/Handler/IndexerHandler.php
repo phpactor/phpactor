@@ -81,6 +81,13 @@ class IndexerHandler implements Handler, ServiceProvider
             $start = microtime(true);
             $index = 0;
             foreach ($job->generator() as $file) {
+                if (null === $file) {
+                    // Hand control back to the server while waiting for the job to finish
+                    yield new Delayed(0);
+
+                    continue;
+                }
+
                 $index++;
 
                 if ($index % 500 === 0) {

@@ -2,10 +2,12 @@
 
 namespace Phpactor\Indexer;
 
+use Fidry\CpuCoreCounter\CpuCoreCounter;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFileListProvider;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Indexer\Adapter\Filesystem\FilesystemFileListProvider;
+use Phpactor\Indexer\Adapter\Parallel\ParallelIndexJobFactory;
 use Phpactor\Indexer\Adapter\Php\FileSearchIndex;
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
 use Phpactor\Indexer\Adapter\Php\Serialized\SerializedIndex;
@@ -41,6 +43,11 @@ use Psr\Log\NullLogger;
 
 final class IndexAgentBuilder
 {
+    /**
+     * Based on testing the scaling starts to deminish around 6.
+     */
+    private const MAX_AUTO_WORKERS = 8;
+
     private RecordReferenceEnhancer $enhancer;
 
     /**
@@ -87,6 +94,22 @@ final class IndexAgentBuilder
     private LoggerInterface $logger;
 
     private ?TextDocumentLocator $documentLocator = null;
+
+    /**
+     * Command used to spawn an index worker. Parallel indexing is disabled
+     * while this is NULL.
+     *
+     * @var list<string>|null
+     */
+    private ?array $workerCommand = null;
+
+    /**
+     * Number of index workers to run, where 0 means "one per CPU" and 1 means
+     * "do not parallelise".
+     */
+    private int $parallelWorkers = 0;
+
+    private int $parallelMinimumFiles = 500;
 
     private function __construct(
         private string $indexRoot,
@@ -221,6 +244,35 @@ final class IndexAgentBuilder
         return $this;
     }
 
+    /**
+     * @param list<string> $command
+     */
+    public function setWorkerCommand(array $command): self
+    {
+        $this->workerCommand = $command;
+
+        return $this;
+    }
+
+    public function setParallelWorkers(int $parallelWorkers): self
+    {
+        $this->parallelWorkers = $parallelWorkers;
+
+        return $this;
+    }
+
+    public function setParallelMinimumFiles(int $parallelMinimumFiles): self
+    {
+        $this->parallelMinimumFiles = $parallelMinimumFiles;
+
+        return $this;
+    }
+
+    public function buildIndexBuilder(Index $index): IndexBuilder
+    {
+        return $this->buildBuilder($index);
+    }
+
     private function buildIndex(): Index
     {
         $repository = new FileRepository(
@@ -275,6 +327,39 @@ final class IndexAgentBuilder
             $this->buildFileListProvider(),
             $this->maxFileSizeToIndex,
             $this->buildDirtyTracker(),
+            $this->buildParallelJobFactory($builder, $index),
+        );
+    }
+
+    private function buildParallelJobFactory(IndexBuilder $builder, Index $index): ?ParallelIndexJobFactory
+    {
+        if (null === $this->workerCommand) {
+            return null;
+        }
+
+        $workers = $this->parallelWorkers > 0 ? $this->parallelWorkers : self::autoWorkerCount();
+
+        if ($workers < 2) {
+            return null;
+        }
+
+        return new ParallelIndexJobFactory(
+            $index,
+            $builder,
+            $this->workerCommand,
+            $this->projectRoot,
+            $workers,
+            $this->parallelMinimumFiles,
+            $this->maxFileSizeToIndex,
+            $this->logger,
+        );
+    }
+
+    private static function autoWorkerCount(): int
+    {
+        return min(
+            (new CpuCoreCounter())->getCountWithFallback(1),
+            self::MAX_AUTO_WORKERS
         );
     }
 
