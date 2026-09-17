@@ -12,9 +12,10 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
- * Collects method calls (MemberAccessExpression) and function calls
- * (CallExpression) that fall within a given byte-offset range (the body of a
- * method or function).
+ * Collects outgoing calls (method calls and function calls) that fall within
+ * a given byte-offset range (the body of a method or function). A method
+ * call is a CallExpression whose callable is a MemberAccessExpression; a
+ * function call is a CallExpression whose callable is a plain name.
  */
 class OutgoingCallsWalker implements Walker
 {
@@ -30,7 +31,6 @@ class OutgoingCallsWalker implements Walker
     public function nodeFqns(): array
     {
         return [
-            MemberAccessExpression::class,
             CallExpression::class,
         ];
     }
@@ -42,12 +42,8 @@ class OutgoingCallsWalker implements Walker
 
     public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
-        if ($node instanceof MemberAccessExpression) {
-            $this->collectMemberAccess($node);
-        }
-
         if ($node instanceof CallExpression) {
-            $this->collectFunctionCall($node);
+            $this->collectCall($node);
         }
 
         return $frame;
@@ -61,9 +57,11 @@ class OutgoingCallsWalker implements Walker
         return $this->calls;
     }
 
-    private function collectMemberAccess(MemberAccessExpression $node): void
+    private function collectCall(CallExpression $node): void
     {
-        $name = NodeUtil::nameFromTokenOrNode($node, $node->memberName);
+        $callable = $node->callableExpression;
+        $isMethod = $callable instanceof MemberAccessExpression;
+        $name = NodeUtil::nameFromTokenOrNode($node, $callable);
         if ($name === '' || !$this->inRange($node)) {
             return;
         }
@@ -71,23 +69,8 @@ class OutgoingCallsWalker implements Walker
         $this->calls[] = [
             'node' => $node,
             'name' => $name,
-            'kind' => 'method',
-            'offset' => $node->memberName->getStartPosition(),
-        ];
-    }
-
-    private function collectFunctionCall(CallExpression $node): void
-    {
-        $name = NodeUtil::nameFromTokenOrNode($node, $node->callableExpression);
-        if ($name === '' || !$this->inRange($node)) {
-            return;
-        }
-
-        $this->calls[] = [
-            'node' => $node,
-            'name' => $name,
-            'kind' => 'function',
-            'offset' => $node->callableExpression->getStartPosition(),
+            'kind' => $isMethod ? 'method' : 'function',
+            'offset' => $callable->getStartPosition(),
         ];
     }
 

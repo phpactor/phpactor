@@ -94,7 +94,7 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
         $doc = TextDocumentConverter::fromLspTextItem($lspDoc);
         $offset = PositionConverter::positionToByteOffset($item->selectionRange->start, $lspDoc->text);
 
-        return call(function () use ($doc, $offset) {
+        $promise = call(function () use ($doc, $offset) {
             $incomingCalls = [];
             foreach ($this->referenceFinder->findReferences($doc, $offset) as $potentialLocation) {
                 if (!$potentialLocation->isSurely()) {
@@ -109,6 +109,8 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
             }
             return $incomingCalls;
         });
+        /** @var \Amp\Promise<CallHierarchyIncomingCall[]> $promise */
+        return $promise;
     }
 
     /**
@@ -151,9 +153,22 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
     private function buildItem(Symbol $symbol, string $uri, string $text): CallHierarchyItem
     {
         $range = RangeConverter::toLspRange($symbol->position(), $text);
+        $kind = match ($symbol->symbolType()) {
+            Symbol::CLASS_ => SymbolKind::CLASS_,
+            Symbol::METHOD => SymbolKind::METHOD,
+            Symbol::FUNCTION => SymbolKind::FUNCTION,
+            Symbol::PROPERTY => SymbolKind::PROPERTY,
+            Symbol::CONSTANT, Symbol::DECLARED_CONSTANT, Symbol::CASE => SymbolKind::CONSTANT,
+            Symbol::VARIABLE => SymbolKind::VARIABLE,
+            Symbol::STRING => SymbolKind::STRING,
+            Symbol::NUMBER => SymbolKind::NUMBER,
+            Symbol::BOOLEAN => SymbolKind::BOOLEAN,
+            Symbol::ARRAY => SymbolKind::ARRAY,
+            default => SymbolKind::FUNCTION,
+        };
         return new CallHierarchyItem(
             $symbol->name(),
-            $this->symbolKind($symbol->symbolType()),
+            $kind,
             $uri,
             $range,
             $range,
@@ -199,7 +214,6 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
     private function buildCalleeItem(string $name, string $kind, int $offset, string $uri, string $text): CallHierarchyItem
     {
         $doc = TextDocumentConverter::fromLspTextItem($this->workspace->get($uri));
-        $calleeKind = $kind === 'method' ? SymbolKind::METHOD : SymbolKind::FUNCTION;
 
         try {
             $locations = $this->definitionLocator->locateDefinition($doc, ByteOffset::fromInt($offset));
@@ -209,31 +223,14 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
                 $targetText = $this->workspace->get($targetUri)->text;
             } catch (UnknownDocument) {
                 $range = RangeConverter::toLspRange(ByteOffsetRange::fromInts($offset, $offset), $text);
-                return new CallHierarchyItem($name, $calleeKind, $uri, $range, $range);
+                return new CallHierarchyItem($name, $kind === 'method' ? SymbolKind::METHOD : SymbolKind::FUNCTION, $uri, $range, $range);
             }
             $range = RangeConverter::toLspRange($location->range(), $targetText);
-            return new CallHierarchyItem($name, $calleeKind, $targetUri, $range, $range);
+            return new CallHierarchyItem($name, $kind === 'method' ? SymbolKind::METHOD : SymbolKind::FUNCTION, $targetUri, $range, $range);
         } catch (CouldNotLocateDefinition) {
             $range = RangeConverter::toLspRange(ByteOffsetRange::fromInts($offset, $offset), $text);
-            return new CallHierarchyItem($name, $calleeKind, $uri, $range, $range);
+            return new CallHierarchyItem($name, $kind === 'method' ? SymbolKind::METHOD : SymbolKind::FUNCTION, $uri, $range, $range);
         }
-    }
-
-    private function symbolKind(string $symbolType): int
-    {
-        return match ($symbolType) {
-            Symbol::CLASS_ => SymbolKind::CLASS_,
-            Symbol::METHOD => SymbolKind::METHOD,
-            Symbol::FUNCTION => SymbolKind::FUNCTION,
-            Symbol::PROPERTY => SymbolKind::PROPERTY,
-            Symbol::CONSTANT, Symbol::DECLARED_CONSTANT, Symbol::CASE => SymbolKind::CONSTANT,
-            Symbol::VARIABLE => SymbolKind::VARIABLE,
-            Symbol::STRING => SymbolKind::STRING,
-            Symbol::NUMBER => SymbolKind::NUMBER,
-            Symbol::BOOLEAN => SymbolKind::BOOLEAN,
-            Symbol::ARRAY => SymbolKind::ARRAY,
-            default => SymbolKind::FUNCTION,
-        };
     }
 
     /**

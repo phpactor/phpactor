@@ -31,6 +31,11 @@ use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Cache\NullCache;
+use Phpactor\WorseReflection\Core\CacheForDocument;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
+use Psr\Log\NullLogger;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -78,10 +83,7 @@ class CallHierarchyHandlerTest extends TestCase
      */
     private ObjectProphecy $locator;
 
-    /**
-     * @var ObjectProphecy<FrameResolver>
-     */
-    private ObjectProphecy $frameResolver;
+    private FrameResolver $frameResolver;
 
     protected function setUp(): void
     {
@@ -89,7 +91,17 @@ class CallHierarchyHandlerTest extends TestCase
         $this->finder = $this->prophesize(ReferenceFinder::class);
         $this->astProvider = $this->prophesize(AstProvider::class);
         $this->locator = $this->prophesize(DefinitionLocator::class);
-        $this->frameResolver = $this->prophesize(FrameResolver::class);
+        $this->frameResolver = new FrameResolver(
+            new NodeContextResolver(
+                $this->reflector->reveal(),
+                $this->prophesize(DocBlockFactory::class)->reveal(),
+                new NullLogger(),
+                new NullCache()
+            ),
+            [],
+            [],
+            CacheForDocument::none()
+        );
     }
 
     public function testPrepareCallHierarchyReturnsItemWhenSymbolKnown(): void
@@ -165,6 +177,10 @@ class CallHierarchyHandlerTest extends TestCase
             ])
             ->shouldBeCalled();
 
+        $ast = (new TolerantAstProvider())->get($doc);
+        $this->astProvider->get(Argument::any())
+            ->willReturn($ast);
+
         $tester = $this->createTester();
         $response = $tester->requestAndWait(CallHierarchyIncomingCallsRequest::METHOD, [
             'item' => $item,
@@ -200,12 +216,12 @@ class CallHierarchyHandlerTest extends TestCase
             ->willReturn($ast)
             ->shouldBeCalled();
 
+        $resolver = $this->frameResolver;
         $this->reflector->walk(Argument::any(), Argument::any())
-            ->will(function (array $args) use ($ast) {
+            ->will(function (array $args) use ($ast, $resolver) {
                 /** @var Walker $walker */
                 $walker = $args[1];
                 $frame = new ConcreteFrame();
-                $resolver = $this->frameResolver->reveal();
                 foreach ($ast->getDescendantNodes() as $node) {
                     $walker->enter($resolver, $frame, $node);
                     $walker->exit($resolver, $frame, $node);
@@ -263,7 +279,7 @@ class CallHierarchyHandlerTest extends TestCase
             if (!$node instanceof MethodDeclaration) {
                 continue;
             }
-            if (null === $node->name || 'processMessages' !== $node->name->getText()) {
+            if (null === $node->name || 'processMessages' !== $node->name->getText((string) $doc)) {
                 continue;
             }
             $body = $node->compoundStatementOrSemicolon;
