@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServerCallHierarchy\Tests\Unit\Handler;
 
-use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
@@ -22,7 +21,6 @@ use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -30,7 +28,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvid
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -44,22 +41,20 @@ use PHPUnit\Framework\TestCase;
 class CallHierarchyHandlerTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_URI = 'file:///test';
-
     const EXAMPLE_TEXT_PHP = <<<'PHP'
-<?php
+        <?php
 
-class MessageProcessor
-{
-    public function processMessages(array $messages): void
-    {
-        $this->validate($messages);
-        $this->send($messages);
-        log('processed');
-    }
-}
-PHP;
+        class MessageProcessor
+        {
+            public function processMessages(array $messages): void
+            {
+                $this->validate($messages);
+                $this->send($messages);
+                log('processed');
+            }
+        }
+        PHP;
 
     /**
      * @var ObjectProphecy<Reflector>

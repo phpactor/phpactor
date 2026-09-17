@@ -12,7 +12,6 @@ use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\WorseReflection\Core\AstProvider;
-use Phpactor\WorseReflection\Reflector;
 
 class LanguageServerCallHierarchyExtension implements Extension
 {
