@@ -10,7 +10,7 @@ use Phpactor\LanguageServerProtocol\CallHierarchyItem;
 use Phpactor\LanguageServerProtocol\CallHierarchyOutgoingCall;
 use Phpactor\LanguageServerProtocol\CallHierarchyIncomingCallsRequest;
 use Phpactor\LanguageServerProtocol\CallHierarchyOutgoingCallsRequest;
-use Phpactor\LanguageServerProtocol\PrepareCallHierarchyRequest;
+use Phpactor\LanguageServerProtocol\CallHierarchyPrepareRequest;
 use Phpactor\LanguageServerProtocol\SymbolKind;
 use Phpactor\Extension\LanguageServerCallHierarchy\Handler\CallHierarchyHandler;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
@@ -106,7 +106,7 @@ class CallHierarchyHandlerTest extends TestCase
             ->shouldBeCalled();
 
         $tester = $this->createTester();
-        $response = $tester->requestAndWait(PrepareCallHierarchyRequest::METHOD, [
+        $response = $tester->requestAndWait(CallHierarchyPrepareRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
             'position' => ProtocolFactory::position(0, 0),
         ]);
@@ -133,7 +133,7 @@ class CallHierarchyHandlerTest extends TestCase
             ->shouldBeCalled();
 
         $tester = $this->createTester();
-        $response = $tester->requestAndWait(PrepareCallHierarchyRequest::METHOD, [
+        $response = $tester->requestAndWait(CallHierarchyPrepareRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
             'position' => ProtocolFactory::position(0, 0),
         ]);

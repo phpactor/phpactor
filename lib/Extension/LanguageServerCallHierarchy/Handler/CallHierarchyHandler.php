@@ -17,10 +17,11 @@ use Phpactor\Extension\LanguageServerCallHierarchy\Inference\OutgoingCallsWalker
 use Phpactor\LanguageServerProtocol\CallHierarchyIncomingCall;
 use Phpactor\LanguageServerProtocol\CallHierarchyItem;
 use Phpactor\LanguageServerProtocol\CallHierarchyOutgoingCall;
-use Phpactor\LanguageServerProtocol\CallHierarchyParams;
+use Phpactor\LanguageServerProtocol\CallHierarchyIncomingCallsParams;
 use Phpactor\LanguageServerProtocol\CallHierarchyIncomingCallsRequest;
+use Phpactor\LanguageServerProtocol\CallHierarchyOutgoingCallsParams;
 use Phpactor\LanguageServerProtocol\CallHierarchyOutgoingCallsRequest;
-use Phpactor\LanguageServerProtocol\PrepareCallHierarchyRequest;
+use Phpactor\LanguageServerProtocol\CallHierarchyPrepareRequest;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\SymbolKind;
 use Phpactor\LanguageServerProtocol\TextDocumentPositionParams;
@@ -53,7 +54,7 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
     public function methods(): array
     {
         return [
-            PrepareCallHierarchyRequest::METHOD => 'prepareCallHierarchy',
+            CallHierarchyPrepareRequest::METHOD => 'prepareCallHierarchy',
             CallHierarchyIncomingCallsRequest::METHOD => 'incomingCalls',
             CallHierarchyOutgoingCallsRequest::METHOD => 'outgoingCalls',
         ];
@@ -86,7 +87,7 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
     /**
      * @return Promise<CallHierarchyIncomingCall[]>
      */
-    public function incomingCalls(CallHierarchyParams $params): Promise
+    public function incomingCalls(CallHierarchyIncomingCallsParams $params): Promise
     {
         $item = $params->item;
         $lspDoc = $this->workspace->get($item->uri);
@@ -113,7 +114,7 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
     /**
      * @return Promise<CallHierarchyOutgoingCall[]>
      */
-    public function outgoingCalls(CallHierarchyParams $params): Promise
+    public function outgoingCalls(CallHierarchyOutgoingCallsParams $params): Promise
     {
         $item = $params->item;
         $lspDoc = $this->workspace->get($item->uri);
