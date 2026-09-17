@@ -24,7 +24,7 @@ use Phpactor\LanguageServerProtocol\PrepareCallHierarchyRequest;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\SymbolKind;
 use Phpactor\LanguageServerProtocol\TextDocumentPositionParams;
-use Phpactor\LanguageServer\Core\Exception\UnknownDocument;
+use Phpactor\LanguageServer\Core\Workspace\Exception\UnknownDocument;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
@@ -182,14 +182,16 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
 
         $name = NodeUtil::nameFromTokenOrNode($enclosing, $enclosing->name);
         $kind = $enclosing instanceof MethodDeclaration ? SymbolKind::METHOD : SymbolKind::FUNCTION;
-        $nameRange = RangeConverter::toLspRange(
-            ByteOffsetRange::fromInts($enclosing->name->getStartPosition(), $enclosing->name->getEndPosition()),
-            $lspDoc->text
-        );
         $fullRange = RangeConverter::toLspRange(
             ByteOffsetRange::fromInts($enclosing->getStartPosition(), $enclosing->getEndPosition()),
             $lspDoc->text
         );
+        $nameRange = $enclosing->name
+            ? RangeConverter::toLspRange(
+                ByteOffsetRange::fromInts($enclosing->name->getStartPosition(), $enclosing->name->getEndPosition()),
+                $lspDoc->text
+            )
+            : $fullRange;
         return new CallHierarchyItem($name, $kind, $uri, $fullRange, $nameRange);
     }
 

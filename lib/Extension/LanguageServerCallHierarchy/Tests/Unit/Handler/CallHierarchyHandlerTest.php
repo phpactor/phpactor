@@ -23,14 +23,16 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\AstProvider;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
 use Prophecy\Argument;
@@ -109,6 +111,7 @@ class CallHierarchyHandlerTest extends TestCase
             'position' => ProtocolFactory::position(0, 0),
         ]);
 
+        self::assertNotNull($response);
         $items = $response->result;
         $this->assertIsArray($items);
         $this->assertCount(1, $items);
@@ -135,6 +138,7 @@ class CallHierarchyHandlerTest extends TestCase
             'position' => ProtocolFactory::position(0, 0),
         ]);
 
+        self::assertNotNull($response);
         $this->assertNull($response->result);
     }
 
@@ -166,6 +170,7 @@ class CallHierarchyHandlerTest extends TestCase
             'item' => $item,
         ]);
 
+        self::assertNotNull($response);
         $calls = $response->result;
         $this->assertIsArray($calls);
         $this->assertCount(1, $calls);
@@ -190,14 +195,15 @@ class CallHierarchyHandlerTest extends TestCase
             $selectionRange
         );
 
+        $ast = (new TolerantAstProvider())->get($doc);
         $this->astProvider->get(Argument::any())
-            ->willReturn((new TolerantAstProvider())->get($doc))
+            ->willReturn($ast)
             ->shouldBeCalled();
 
         $this->reflector->walk(Argument::any(), Argument::any())
-            ->will(function (array $args) {
+            ->will(function (array $args) use ($ast) {
+                /** @var Walker $walker */
                 $walker = $args[1];
-                $ast = (new TolerantAstProvider())->get($doc);
                 $frame = new ConcreteFrame();
                 $resolver = $this->frameResolver->reveal();
                 foreach ($ast->getDescendantNodes() as $node) {
@@ -224,6 +230,7 @@ class CallHierarchyHandlerTest extends TestCase
             'item' => $item,
         ]);
 
+        self::assertNotNull($response);
         $calls = $response->result;
         $this->assertIsArray($calls);
         $this->assertCount(3, $calls);
@@ -249,7 +256,7 @@ class CallHierarchyHandlerTest extends TestCase
         return $tester;
     }
 
-    private function methodBodyRange($doc): ByteOffsetRange
+    private function methodBodyRange(TextDocument $doc): ByteOffsetRange
     {
         $ast = (new TolerantAstProvider())->get($doc);
         foreach ($ast->getDescendantNodes() as $node) {

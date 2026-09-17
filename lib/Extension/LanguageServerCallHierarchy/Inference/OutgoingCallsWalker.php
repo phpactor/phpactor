@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerCallHierarchy\Inference;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
-use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
@@ -73,7 +72,7 @@ class OutgoingCallsWalker implements Walker
             'node' => $node,
             'name' => $name,
             'kind' => 'method',
-            'offset' => $node->memberName instanceof Token ? $node->memberName->getStartPosition() : $node->getStartPosition(),
+            'offset' => $node->memberName->getStartPosition(),
         ];
     }
 
@@ -88,7 +87,7 @@ class OutgoingCallsWalker implements Walker
             'node' => $node,
             'name' => $name,
             'kind' => 'function',
-            'offset' => $node->callableExpression instanceof Node ? $node->callableExpression->getStartPosition() : $node->getStartPosition(),
+            'offset' => $node->callableExpression->getStartPosition(),
         ];
     }
 
