@@ -246,11 +246,7 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
             if (!$node instanceof MethodDeclaration && !$node instanceof FunctionDeclaration) {
                 continue;
             }
-            $body = $node->compoundStatementOrSemicolon;
-            if (!$body instanceof CompoundStatementNode) {
-                continue;
-            }
-            if ($body->getStartPosition() <= $offset && $offset <= $body->getEndPosition()) {
+            if ($node->getStartPosition() <= $offset && $offset <= $node->getEndPosition()) {
                 $enclosing = $node;
             }
         }
