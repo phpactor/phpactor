@@ -11,7 +11,6 @@ use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\ChainReferenceFinder;
-use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\WorseReferenceFinder\MethodCallReferenceFinder;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
 use Phpactor\WorseReflection\Core\AstProvider;
