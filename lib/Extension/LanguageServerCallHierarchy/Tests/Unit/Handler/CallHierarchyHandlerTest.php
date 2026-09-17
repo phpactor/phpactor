@@ -16,38 +16,22 @@ use Phpactor\Extension\LanguageServerCallHierarchy\Handler\CallHierarchyHandler;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Phpactor\ReferenceFinder\DefinitionLocator;
-use Phpactor\ReferenceFinder\PotentialLocation;
-use Phpactor\ReferenceFinder\ReferenceFinder;
-use Phpactor\ReferenceFinder\TypeLocation;
-use Phpactor\ReferenceFinder\TypeLocations;
+use Phpactor\ReferenceFinder\ChainReferenceFinder;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset;
-use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
-use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
-use Phpactor\WorseReflection\Core\CacheForDocument;
-use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
-use Psr\Log\NullLogger;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\Walker;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Reflector;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
+use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\WorseReferenceFinder\MethodCallReferenceFinder;
+use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
+use Phpactor\WorseReferenceFinder\WorseReflectionDefinitionLocator;
 use PHPUnit\Framework\TestCase;
 
 class CallHierarchyHandlerTest extends TestCase
 {
-    use ProphecyTrait;
     const EXAMPLE_URI = 'file:///test';
+    const CONSUMER_URI = 'file:///consumer.php';
     const EXAMPLE_TEXT_PHP = <<<'PHP'
         <?php
 
@@ -61,62 +45,24 @@ class CallHierarchyHandlerTest extends TestCase
             }
         }
         PHP;
+    const CONSUMER_TEXT_PHP = <<<'PHP'
+        <?php
 
-    /**
-     * @var ObjectProphecy<Reflector>
-     */
-    private ObjectProphecy $reflector;
-
-    /**
-     * @var ObjectProphecy<ReferenceFinder>
-     */
-    private ObjectProphecy $finder;
-
-    private TolerantAstProvider $astProvider;
-
-    /**
-     * @var ObjectProphecy<DefinitionLocator>
-     */
-    private ObjectProphecy $locator;
-
-    private FrameResolver $frameResolver;
-
-    protected function setUp(): void
-    {
-        $this->reflector = $this->prophesize(Reflector::class);
-        $this->finder = $this->prophesize(ReferenceFinder::class);
-        $this->astProvider = new TolerantAstProvider();
-        $this->locator = $this->prophesize(DefinitionLocator::class);
-        $this->frameResolver = new FrameResolver(
-            new NodeContextResolver(
-                $this->reflector->reveal(),
-                $this->prophesize(DocBlockFactory::class)->reveal(),
-                new NullLogger(),
-                new NullCache()
-            ),
-            [],
-            [],
-            CacheForDocument::none()
-        );
-    }
+        class MessageConsumer
+        {
+            public function consume(): void
+            {
+                $processor->processMessages([]);
+            }
+        }
+        PHP;
 
     public function testPrepareCallHierarchyReturnsItemWhenSymbolKnown(): void
     {
-        $doc = TextDocumentBuilder::create(self::EXAMPLE_TEXT_PHP)
-            ->language('php')
-            ->uri(self::EXAMPLE_URI)
-            ->build();
-
-        $symbol = Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'processMessages', ByteOffsetRange::fromInts(0, 0));
-        $reflection = ReflectionOffset::fromFrameAndSymbolContext(new ConcreteFrame(), NodeContext::for($symbol));
-        $this->reflector->reflectOffset(Argument::any(), Argument::any())
-            ->willReturn($reflection)
-            ->shouldBeCalled();
-
         $tester = $this->createTester();
         $response = $tester->requestAndWait(CallHierarchyPrepareRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
-            'position' => ProtocolFactory::position(0, 0),
+            'position' => ProtocolFactory::position(4, 20),
         ]);
 
         self::assertNotNull($response);
@@ -130,16 +76,6 @@ class CallHierarchyHandlerTest extends TestCase
 
     public function testPrepareCallHierarchyReturnsNullWhenSymbolUnknown(): void
     {
-        $doc = TextDocumentBuilder::create(self::EXAMPLE_TEXT_PHP)
-            ->language('php')
-            ->uri(self::EXAMPLE_URI)
-            ->build();
-
-        $reflection = ReflectionOffset::fromFrameAndSymbolContext(new ConcreteFrame(), NodeContext::for(Symbol::unknown()));
-        $this->reflector->reflectOffset(Argument::any(), Argument::any())
-            ->willReturn($reflection)
-            ->shouldBeCalled();
-
         $tester = $this->createTester();
         $response = $tester->requestAndWait(CallHierarchyPrepareRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
@@ -152,113 +88,82 @@ class CallHierarchyHandlerTest extends TestCase
 
     public function testIncomingCalls(): void
     {
-        $doc = TextDocumentBuilder::create(self::EXAMPLE_TEXT_PHP)
-            ->language('php')
-            ->uri(self::EXAMPLE_URI)
-            ->build();
-
-        $bodyRange = $this->methodBodyRange($doc);
-        $selectionRange = RangeConverter::toLspRange($bodyRange, self::EXAMPLE_TEXT_PHP);
-        $item = new CallHierarchyItem(
-            'processMessages',
-            SymbolKind::METHOD,
-            self::EXAMPLE_URI,
-            $selectionRange,
-            $selectionRange
-        );
-
-        $this->finder->findReferences(Argument::any(), Argument::any())
-            ->willYield([
-                PotentialLocation::surely(new Location($doc->uriOrThrow(), ByteOffsetRange::fromInts(10, 10)))
-            ])
-            ->shouldBeCalled();
-
         $tester = $this->createTester();
-        $response = $tester->requestAndWait(CallHierarchyIncomingCallsRequest::METHOD, [
-            'item' => $item,
-        ]);
+        $tester->textDocument()->open(self::CONSUMER_URI, self::CONSUMER_TEXT_PHP);
+
+        $item = $this->processMessagesItem();
+        $response = $tester->requestAndWait(CallHierarchyIncomingCallsRequest::METHOD, ['item' => $item]);
 
         self::assertNotNull($response);
         $calls = $response->result;
         self::assertIsArray($calls);
         self::assertCount(1, $calls);
         self::assertInstanceOf(CallHierarchyIncomingCall::class, $calls[0]);
-        self::assertSame('unknown', $calls[0]->from->name);
+        self::assertSame('consume', $calls[0]->from->name);
+        self::assertSame(self::CONSUMER_URI, $calls[0]->from->uri);
     }
 
     public function testOutgoingCalls(): void
+    {
+        $tester = $this->createTester();
+        $item = $this->processMessagesItem();
+        $response = $tester->requestAndWait(CallHierarchyOutgoingCallsRequest::METHOD, ['item' => $item]);
+
+        self::assertNotNull($response);
+        $calls = $response->result;
+        self::assertIsArray($calls);
+        self::assertCount(3, $calls);
+        $names = [];
+        $kinds = [];
+        foreach ($calls as $call) {
+            self::assertInstanceOf(CallHierarchyOutgoingCall::class, $call);
+            $names[] = $call->to->name;
+            $kinds[] = $call->to->kind;
+        }
+        self::assertSame(['$this->validate', '$this->send', 'log'], $names);
+        self::assertSame([SymbolKind::METHOD, SymbolKind::METHOD, SymbolKind::FUNCTION], $kinds);
+    }
+
+    private function createTester(): LanguageServerTester
+    {
+        $builder = LanguageServerTesterBuilder::create();
+        $workspace = $builder->workspace();
+        $astProvider = new TolerantAstProvider();
+        $reflector = ReflectorBuilder::create()->build();
+        $referenceFinder = new ChainReferenceFinder([
+            new TolerantVariableReferenceFinder($astProvider),
+            new MethodCallReferenceFinder($astProvider, $workspace),
+        ]);
+        $definitionLocator = new WorseReflectionDefinitionLocator($reflector, new NullCache());
+        $builder->addHandler(
+            new CallHierarchyHandler(
+                $workspace,
+                $reflector,
+                $referenceFinder,
+                $astProvider,
+                $definitionLocator,
+            )
+        );
+        $tester = $builder->build();
+        $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_TEXT_PHP);
+        return $tester;
+    }
+
+    private function processMessagesItem(): CallHierarchyItem
     {
         $doc = TextDocumentBuilder::create(self::EXAMPLE_TEXT_PHP)
             ->language('php')
             ->uri(self::EXAMPLE_URI)
             ->build();
-
         $bodyRange = $this->methodBodyRange($doc);
         $selectionRange = RangeConverter::toLspRange($bodyRange, self::EXAMPLE_TEXT_PHP);
-        $item = new CallHierarchyItem(
+        return new CallHierarchyItem(
             'processMessages',
             SymbolKind::METHOD,
             self::EXAMPLE_URI,
             $selectionRange,
             $selectionRange
         );
-
-        $ast = (new TolerantAstProvider())->get($doc);
-
-        $resolver = $this->frameResolver;
-        $this->reflector->walk(Argument::any(), Argument::any())
-            ->will(function (array $args) use ($ast, $resolver) {
-                /** @var Walker $walker */
-                $walker = $args[1];
-                $frame = new ConcreteFrame();
-                foreach ($ast->getDescendantNodes() as $node) {
-                    $walker->enter($resolver, $frame, $node);
-                    $walker->exit($resolver, $frame, $node);
-                    yield null;
-                }
-            })
-            ->shouldBeCalled();
-
-        $this->locator->locateDefinition(Argument::any(), Argument::any())
-            ->willReturn(
-                TypeLocations::forLocation(
-                    new TypeLocation(
-                        TypeFactory::class('validate'),
-                        new Location($doc->uriOrThrow(), ByteOffsetRange::fromInts(0, 0))
-                    )
-                )
-            )
-            ->shouldBeCalledTimes(3);
-
-        $tester = $this->createTester();
-        $response = $tester->requestAndWait(CallHierarchyOutgoingCallsRequest::METHOD, [
-            'item' => $item,
-        ]);
-
-        self::assertNotNull($response);
-        $calls = $response->result;
-        self::assertIsArray($calls);
-        self::assertCount(3, $calls);
-        foreach ($calls as $call) {
-            self::assertInstanceOf(CallHierarchyOutgoingCall::class, $call);
-        }
-    }
-
-    private function createTester(): LanguageServerTester
-    {
-        $builder = LanguageServerTesterBuilder::create();
-        $builder->addHandler(
-            new CallHierarchyHandler(
-                $builder->workspace(),
-                $this->reflector->reveal(),
-                $this->finder->reveal(),
-                $this->astProvider,
-                $this->locator->reveal(),
-            )
-        );
-        $tester = $builder->build();
-        $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_TEXT_PHP);
-        return $tester;
     }
 
     private function methodBodyRange(TextDocument $doc): ByteOffsetRange
