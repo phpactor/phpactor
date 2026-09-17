@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\CompletionWorse\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Container;
@@ -32,12 +31,12 @@ class CompletionWorseExtensionTest extends TestCase
         $completor = $container
             ->expect(CompletionExtension::SERVICE_REGISTRY, TypedCompletorRegistry::class)
             ->completorForType('php');
-        assert($completor instanceof Completor);
 
-        $completor->complete(
+        $completions = iterator_to_array($completor->complete(
             TextDocumentBuilder::create('<?php array')->build(),
             ByteOffset::fromInt(8)
-        );
+        ), false);
+        self::assertCount(0, $completions);
     }
 
     public function testDisableCompletors(): void

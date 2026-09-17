@@ -7962,23 +7962,6 @@ parameters:
 			count: 1
 			path: lib/Extension/LanguageServerBridge/Tests/Converter/TextEditConverterTest.php
 
-		-
-			message: '#^Parameter \#1 \$workspace of class Phpactor\\Extension\\LanguageServerCallHierarchy\\Handler\\CallHierarchyHandler constructor expects Phpactor\\LanguageServer\\Core\\Workspace\\Workspace, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerCallHierarchy/LanguageServerCallHierarchyExtension.php
-
-		-
-			message: '#^Parameter \#2 \$reflector of class Phpactor\\Extension\\LanguageServerCallHierarchy\\Handler\\CallHierarchyHandler constructor expects Phpactor\\WorseReflection\\Reflector, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerCallHierarchy/LanguageServerCallHierarchyExtension.php
-
-		-
-			message: '#^Parameter \#5 \$definitionLocator of class Phpactor\\Extension\\LanguageServerCallHierarchy\\Handler\\CallHierarchyHandler constructor expects Phpactor\\ReferenceFinder\\DefinitionLocator, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerCallHierarchy/LanguageServerCallHierarchyExtension.php
 
 		-
 			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'

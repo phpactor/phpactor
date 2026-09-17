@@ -27,7 +27,6 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\AstProvider\TolerantAstProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset;
-use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -73,10 +72,7 @@ class CallHierarchyHandlerTest extends TestCase
      */
     private ObjectProphecy $finder;
 
-    /**
-     * @var ObjectProphecy<AstProvider>
-     */
-    private ObjectProphecy $astProvider;
+    private TolerantAstProvider $astProvider;
 
     /**
      * @var ObjectProphecy<DefinitionLocator>
@@ -89,7 +85,7 @@ class CallHierarchyHandlerTest extends TestCase
     {
         $this->reflector = $this->prophesize(Reflector::class);
         $this->finder = $this->prophesize(ReferenceFinder::class);
-        $this->astProvider = $this->prophesize(AstProvider::class);
+        $this->astProvider = new TolerantAstProvider();
         $this->locator = $this->prophesize(DefinitionLocator::class);
         $this->frameResolver = new FrameResolver(
             new NodeContextResolver(
@@ -125,11 +121,11 @@ class CallHierarchyHandlerTest extends TestCase
 
         self::assertNotNull($response);
         $items = $response->result;
-        $this->assertIsArray($items);
-        $this->assertCount(1, $items);
-        $this->assertInstanceOf(CallHierarchyItem::class, $items[0]);
-        $this->assertSame('processMessages', $items[0]->name);
-        $this->assertSame(SymbolKind::METHOD, $items[0]->kind);
+        self::assertIsArray($items);
+        self::assertCount(1, $items);
+        self::assertInstanceOf(CallHierarchyItem::class, $items[0]);
+        self::assertSame('processMessages', $items[0]->name);
+        self::assertSame(SymbolKind::METHOD, $items[0]->kind);
     }
 
     public function testPrepareCallHierarchyReturnsNullWhenSymbolUnknown(): void
@@ -151,7 +147,7 @@ class CallHierarchyHandlerTest extends TestCase
         ]);
 
         self::assertNotNull($response);
-        $this->assertNull($response->result);
+        self::assertNull($response->result);
     }
 
     public function testIncomingCalls(): void
@@ -177,10 +173,6 @@ class CallHierarchyHandlerTest extends TestCase
             ])
             ->shouldBeCalled();
 
-        $ast = (new TolerantAstProvider())->get($doc);
-        $this->astProvider->get(Argument::any())
-            ->willReturn($ast);
-
         $tester = $this->createTester();
         $response = $tester->requestAndWait(CallHierarchyIncomingCallsRequest::METHOD, [
             'item' => $item,
@@ -188,10 +180,10 @@ class CallHierarchyHandlerTest extends TestCase
 
         self::assertNotNull($response);
         $calls = $response->result;
-        $this->assertIsArray($calls);
-        $this->assertCount(1, $calls);
-        $this->assertInstanceOf(CallHierarchyIncomingCall::class, $calls[0]);
-        $this->assertSame('unknown', $calls[0]->from->name);
+        self::assertIsArray($calls);
+        self::assertCount(1, $calls);
+        self::assertInstanceOf(CallHierarchyIncomingCall::class, $calls[0]);
+        self::assertSame('unknown', $calls[0]->from->name);
     }
 
     public function testOutgoingCalls(): void
@@ -212,9 +204,6 @@ class CallHierarchyHandlerTest extends TestCase
         );
 
         $ast = (new TolerantAstProvider())->get($doc);
-        $this->astProvider->get(Argument::any())
-            ->willReturn($ast)
-            ->shouldBeCalled();
 
         $resolver = $this->frameResolver;
         $this->reflector->walk(Argument::any(), Argument::any())
@@ -248,10 +237,10 @@ class CallHierarchyHandlerTest extends TestCase
 
         self::assertNotNull($response);
         $calls = $response->result;
-        $this->assertIsArray($calls);
-        $this->assertCount(3, $calls);
+        self::assertIsArray($calls);
+        self::assertCount(3, $calls);
         foreach ($calls as $call) {
-            $this->assertInstanceOf(CallHierarchyOutgoingCall::class, $call);
+            self::assertInstanceOf(CallHierarchyOutgoingCall::class, $call);
         }
     }
 
@@ -263,7 +252,7 @@ class CallHierarchyHandlerTest extends TestCase
                 $builder->workspace(),
                 $this->reflector->reveal(),
                 $this->finder->reveal(),
-                $this->astProvider->reveal(),
+                $this->astProvider,
                 $this->locator->reveal(),
             )
         );

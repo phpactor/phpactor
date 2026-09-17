@@ -137,10 +137,10 @@ class CallHierarchyHandler implements Handler, CanRegisterCapabilities
 
             $outgoingCalls = [];
             foreach ($walker->calls() as $call) {
-                $toItem = $this->buildCalleeItem($call['name'], $call['kind'], $call['offset'], $item->uri, $lspDoc->text);
+                $toItem = $this->buildCalleeItem($call->name, $call->kind, $call->offset, $item->uri, $lspDoc->text);
                 $fromRanges = [
                     RangeConverter::toLspRange(
-                        ByteOffsetRange::fromInts($call['node']->getStartPosition(), $call['node']->getEndPosition()),
+                        ByteOffsetRange::fromInts($call->node->getStartPosition(), $call->node->getEndPosition()),
                         $lspDoc->text
                     ),
                 ];

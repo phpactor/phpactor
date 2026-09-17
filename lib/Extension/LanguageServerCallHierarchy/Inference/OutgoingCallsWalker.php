@@ -20,7 +20,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 class OutgoingCallsWalker implements Walker
 {
     /**
-     * @var list<array{node: Node, name: string, kind: string, offset: int}>
+     * @var list<Call>
      */
     private array $calls = [];
 
@@ -50,7 +50,7 @@ class OutgoingCallsWalker implements Walker
     }
 
     /**
-     * @return list<array{node: Node, name: string, kind: string, offset: int}>
+     * @return list<Call>
      */
     public function calls(): array
     {
@@ -66,12 +66,12 @@ class OutgoingCallsWalker implements Walker
             return;
         }
 
-        $this->calls[] = [
-            'node' => $node,
-            'name' => $name,
-            'kind' => $isMethod ? 'method' : 'function',
-            'offset' => $callable->getStartPosition(),
-        ];
+        $this->calls[] = new Call(
+            $node,
+            $name,
+            $isMethod ? 'method' : 'function',
+            $callable->getStartPosition(),
+        );
     }
 
     private function inRange(Node $node): bool

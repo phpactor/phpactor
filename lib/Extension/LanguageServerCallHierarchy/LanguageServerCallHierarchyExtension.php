@@ -8,19 +8,22 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerCallHierarchy\Handler\CallHierarchyHandler;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\ChainReferenceFinder;
+use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\WorseReferenceFinder\MethodCallReferenceFinder;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
 use Phpactor\WorseReflection\Core\AstProvider;
+use Phpactor\WorseReflection\Reflector;
 
 class LanguageServerCallHierarchyExtension implements Extension
 {
     public function load(ContainerBuilder $container): void
     {
         $container->register(CallHierarchyHandler::class, function (Container $container) {
-            $workspace = $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE);
+            $workspace = $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class);
             $astProvider = $container->get(AstProvider::class);
             $variableFinder = new TolerantVariableReferenceFinder($astProvider);
             $methodCallFinder = new MethodCallReferenceFinder($astProvider, $workspace);
@@ -28,10 +31,10 @@ class LanguageServerCallHierarchyExtension implements Extension
 
             return new CallHierarchyHandler(
                 $workspace,
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $referenceFinder,
                 $astProvider,
-                $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR),
+                $container->expect(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR, DefinitionLocator::class),
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => [],

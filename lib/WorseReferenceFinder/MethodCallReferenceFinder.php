@@ -47,7 +47,7 @@ class MethodCallReferenceFinder implements ReferenceFinder
         foreach ($this->workspace as $uri => $lspDoc) {
             $doc = \Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter::fromLspTextItem($lspDoc);
             $sourceNode = $this->astProvider->get($doc);
-            yield from $this->walkForCalls($sourceNode, $methodName, $doc->uri());
+            yield from $this->walkForCalls($sourceNode, $methodName, (string)$doc->uriOrThrow());
         }
     }
 
@@ -62,7 +62,7 @@ class MethodCallReferenceFinder implements ReferenceFinder
             if ($current instanceof MethodDeclaration || $current instanceof FunctionDeclaration) {
                 $nameToken = $current->name;
                 if ($nameToken instanceof Token) {
-                    return $nameToken->getText($current->getFileContents());
+                    return (string)$nameToken->getText($current->getFileContents());
                 }
                 return null;
             }
@@ -71,12 +71,12 @@ class MethodCallReferenceFinder implements ReferenceFinder
 
         // If the node is a MemberAccessExpression, get the member name
         if ($node instanceof MemberAccessExpression) {
-            return $node->memberName->getText($node->getFileContents());
+            return (string)$node->memberName->getText($node->getFileContents());
         }
 
         // If the node is a ScopedPropertyAccessExpression, get the member name
         if ($node instanceof ScopedPropertyAccessExpression) {
-            return $node->memberName->getText($node->getFileContents());
+            return (string)$node->memberName->getText($node->getFileContents());
         }
 
         return null;

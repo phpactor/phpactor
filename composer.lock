@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce37ef692b689fcf157fc2e665060a14",
+    "content-hash": "b20e7275efd725450f1532224b46ec6c",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1789,16 +1789,16 @@
         },
         {
             "name": "phpactor/language-server-protocol",
-            "version": "3.17.4",
+            "version": "3.17.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
-                "reference": "1f7d7218db2cc77223bbb4e03961d0bceea50e60"
+                "reference": "d5bfa9258b27c9dd0215e22ebd00e65c1905c89e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/1f7d7218db2cc77223bbb4e03961d0bceea50e60",
-                "reference": "1f7d7218db2cc77223bbb4e03961d0bceea50e60",
+                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/d5bfa9258b27c9dd0215e22ebd00e65c1905c89e",
+                "reference": "d5bfa9258b27c9dd0215e22ebd00e65c1905c89e",
                 "shasum": ""
             },
             "require": {
@@ -1835,9 +1835,9 @@
             "description": "Langauge Server Protocol for PHP (transpiled)",
             "support": {
                 "issues": "https://github.com/phpactor/language-server-protocol/issues",
-                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.4"
+                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.6"
             },
-            "time": "2024-11-21T20:07:12+00:00"
+            "time": "2026-09-17T19:57:24+00:00"
         },
         {
             "name": "phpactor/map-resolver",
