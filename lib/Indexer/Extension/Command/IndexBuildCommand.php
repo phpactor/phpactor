@@ -71,7 +71,7 @@ class IndexBuildCommand extends Command
         $output->write('<info>Building job</info>...');
         $job = $this->indexer->getJob($subPath);
         $output->writeln('done');
-        $output->writeln('<info>Building index:</info>');
+        $output->writeln(sprintf('<info>Building index</info> %s:', $job->describe()));
         $output->write("\n");
 
         if ($job->size() === 0) {
@@ -85,6 +85,10 @@ class IndexBuildCommand extends Command
             return MemoryUsage::create()->memoryUsageFormatted();
         });
         foreach ($job->generator() as $filePath) {
+            if (null === $filePath) {
+                continue;
+            }
+
             if ($output->isVerbose()) {
                 $output->writeln(sprintf('Updated %s', $filePath));
                 continue;
@@ -123,6 +127,10 @@ class IndexBuildCommand extends Command
             while (null !== $file = yield $process->wait()) {
                 $job = $this->indexer->getJob($file->path());
                 foreach ($job->generator() as $filePath) {
+                    if (null === $filePath) {
+                        continue;
+                    }
+
                     $output->writeln(sprintf('Updating %s', $filePath));
                 }
             }

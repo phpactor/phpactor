@@ -1926,6 +1926,54 @@ When searching the index exclude records whose fully qualified names match any o
 **Default**: ``[]``
 
 
+.. _param_indexer.parallel_workers:
+
+
+``indexer.parallel_workers``
+""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Number of child processes to parse files with while building the index. `0` picks a number based on the available CPU threads, `1` indexes everything in the main process
+
+
+**Default**: ``0``
+
+
+.. _param_indexer.parallel_min_files:
+
+
+``indexer.parallel_min_files``
+""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Only index in parallel when at least this many files need indexing.
+
+
+**Default**: ``500``
+
+
+.. _param_indexer.worker_bin:
+
+
+``indexer.worker_bin``
+""""""""""""""""""""""
+
+
+Type: string
+
+
+Internal use only. Path to the Phpactor binary used to spawn index workers
+
+
+**Default**: ``"%application_root%\/bin\/phpactor"``
+
+
 .. _ObjectRendererExtension:
 
 
@@ -2677,4 +2725,3 @@ Enable or disable this extension
 
 
 **Default**: ``false``
-

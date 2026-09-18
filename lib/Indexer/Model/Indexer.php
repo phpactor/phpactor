@@ -3,7 +3,9 @@
 namespace Phpactor\Indexer\Model;
 
 use Generator;
+use Phpactor\Indexer\Adapter\Parallel\ParallelIndexJobFactory;
 use Phpactor\Indexer\Model\DirtyDocumentTracker\NullDirtyDocumentTracker;
+use Phpactor\Indexer\Model\IndexJob\SerialIndexJob;
 use Phpactor\TextDocument\TextDocument;
 
 class Indexer
@@ -14,14 +16,21 @@ class Indexer
         private FileListProvider $provider,
         private ?int $maxFileSizeToIndex,
         private DirtyDocumentTracker $dirtyDocumentTracker = new NullDirtyDocumentTracker(),
+        private ?ParallelIndexJobFactory $parallelJobFactory = null,
     ) {
     }
 
     public function getJob(?string $subPath = null): IndexJob
     {
-        return new IndexJob(
+        $fileList = $this->provider->provideFileList($this->index, $subPath);
+
+        if ($this->parallelJobFactory && $this->parallelJobFactory->supports($fileList)) {
+            return $this->parallelJobFactory->create($fileList);
+        }
+
+        return new SerialIndexJob(
             $this->builder,
-            $this->provider->provideFileList($this->index, $subPath),
+            $fileList,
             $this->maxFileSizeToIndex,
         );
     }

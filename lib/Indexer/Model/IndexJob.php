@@ -3,54 +3,20 @@
 namespace Phpactor\Indexer\Model;
 
 use Generator;
-use Phpactor\TextDocument\TextDocumentBuilder;
-use SplFileInfo;
 
-class IndexJob
+interface IndexJob
 {
-    public function __construct(
-        private IndexBuilder $indexBuilder,
-        private FileList $fileList,
-        private ?int $maxFileSizeToIndex,
-    ) {
-    }
-
     /**
-     * @return Generator<string>
+     * Yields null is used to indicate when the job has nothing to report,
+     * so that it doesn't block, letting the controller move on to other tasks.
+     *
+     * @return Generator<string|null>
      */
-    public function generator(): Generator
-    {
-        foreach ($this->fileList as $fileInfo) {
-            assert($fileInfo instanceof SplFileInfo);
-            if ($fileInfo->isLink()) {
-                continue;
-            }
+    public function generator(): Generator;
 
-            if (($fileInfo->getSize() ?: 0) >= $this->maxFileSizeToIndex) {
-                continue;
-            }
+    public function run(): void;
 
-            $contents = @file_get_contents($fileInfo->getPathname());
+    public function size(): int;
 
-            if (false === $contents) {
-                continue;
-            }
-
-            $this->indexBuilder->index(
-                TextDocumentBuilder::create($contents)->uri($fileInfo->getPathname())->build()
-            );
-            yield $fileInfo->getPathname();
-        }
-        $this->indexBuilder->done();
-    }
-
-    public function run(): void
-    {
-        iterator_to_array($this->generator());
-    }
-
-    public function size(): int
-    {
-        return $this->fileList->count();
-    }
+    public function describe(): string;
 }

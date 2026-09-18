@@ -31,7 +31,8 @@
         "phpactor/map-resolver": "^1.7.0",
         "webmozart/assert": "^1.11",
         "composer/semver": "^3.4",
-        "myclabs/deep-copy": "^1.13"
+        "myclabs/deep-copy": "^1.13",
+        "fidry/cpu-core-counter": "^1.1"
     },
     "require-dev": {
         "blackfire/php-sdk": "^1.31",

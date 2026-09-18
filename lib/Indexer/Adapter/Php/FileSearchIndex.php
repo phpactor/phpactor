@@ -114,11 +114,22 @@ class FileSearchIndex implements SearchIndex
             return;
         }
 
-        $this->subjects = array_filter(array_map(function (string $line) {
+        $subjects = [];
+
+        foreach (explode("\n", (string)file_get_contents($this->path)) as $line) {
             $parts = explode(self::DELIMITER, $line);
 
-            return [$parts[0], $parts[1], $parts[2] ?? null, $parts[3] ?? null];
-        }, explode("\n", (string)file_get_contents($this->path))));
+            if (!isset($parts[1])) {
+                continue;
+            }
+
+            // key the subjects exactly as `write()` does, otherwise a record
+            // that is written again after the index has been read back gets a
+            // second entry rather than replacing the first
+            $subjects[$parts[0] . $parts[1]] = [$parts[0], $parts[1], $parts[2] ?? null, $parts[3] ?? null];
+        }
+
+        $this->subjects = $subjects;
 
         $this->initialized = true;
     }

@@ -33,3 +33,7 @@ The following command (run in the project root) will update ``.phpactor.json`` t
 
    $ phpactor config:set indexer.exclude_patterns '["/vendor/**/Tests/**/*","/vendor/**/tests/**/*","/var/cache/**/*","/vendor/composer/**/*"]'
 
+Larger indexing runs are :ref:`spread over several processes<indexer_parallel>`
+automatically. If you would rather Phpactor did not start child processes at
+all, set :ref:`param_indexer.parallel_workers` to ``1``.
+
