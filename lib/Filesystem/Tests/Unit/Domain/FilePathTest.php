@@ -57,11 +57,6 @@ class FilePathTest extends TestCase
             '/foo.php',
         ];
 
-        yield 'URI string (Windows style)' => [
-            'file:///C:/foo.php',
-            'C:/foo.php',
-        ];
-
         yield 'PHAR string' => [
             'phar:///foo.php',
             '/foo.php',

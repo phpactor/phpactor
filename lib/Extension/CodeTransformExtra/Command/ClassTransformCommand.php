@@ -19,9 +19,8 @@ class ClassTransformCommand extends Command
 {
     private Differ $differ;
 
-    public function __construct(
-        private Transformer $transformer
-    ) {
+    public function __construct(private Transformer $transformer)
+    {
         parent::__construct();
         $this->differ = new Differ(new UnifiedDiffOutputBuilder());
     }

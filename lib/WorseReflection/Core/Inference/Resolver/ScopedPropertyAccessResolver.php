@@ -16,9 +16,8 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class ScopedPropertyAccessResolver implements Resolver
 {
-    public function __construct(
-        private NodeContextFromMemberAccess $nodeContextFromMemberAccess
-    ) {
+    public function __construct(private NodeContextFromMemberAccess $nodeContextFromMemberAccess)
+    {
     }
 
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext

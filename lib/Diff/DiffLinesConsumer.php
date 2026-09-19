@@ -11,9 +11,8 @@ class DiffLinesConsumer
 
     private int $position = 0;
 
-    public function __construct(
-        private Chunk $chunk
-    ) {
+    public function __construct(private Chunk $chunk)
+    {
         $this->origLine = $chunk->getStart();
     }
 

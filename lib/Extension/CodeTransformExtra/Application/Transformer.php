@@ -11,9 +11,8 @@ class Transformer
 {
     private FilesystemHelper $filesystemHelper;
 
-    public function __construct(
-        private CodeTransform $transform
-    ) {
+    public function __construct(private CodeTransform $transform)
+    {
         $this->filesystemHelper = new FilesystemHelper();
     }
 

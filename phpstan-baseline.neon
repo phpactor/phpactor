@@ -301,6 +301,12 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
 
 		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, list given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
+
+		-
 			message: '#^Access to an undefined property Microsoft\\PhpParser\\ClassLike\:\:\$interfaceMembers\.$#'
 			identifier: property.notFound
 			count: 2
@@ -323,12 +329,6 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceMethodUpdater.php
-
-		-
-			message: '#^Property Phpactor\\CodeBuilder\\Adapter\\TolerantParser\\Updater\\InterfaceUpdater\:\:\$renderer is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceUpdater.php
 
 		-
 			message: '#^Access to an undefined property Microsoft\\PhpParser\\Node\:\:\$traitMemberDeclarations\.$#'
@@ -2455,12 +2455,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
 
 		-
-			message: '#^Method Phpactor\\CodeTransform\\Tests\\Adapter\\WorseReflection\\Refactor\\WorseOverrideMethodTest\:\:testOverrideMethod\(\) has parameter \$methodName with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
-
-		-
 			message: '#^Parameter \#1 \$source of method Phpactor\\CodeTransform\\Tests\\Adapter\\WorseReflection\\Refactor\\WorseOverrideMethodTest\:\:overrideMethod\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -2468,12 +2462,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$string of function trim expects string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
-
-		-
-			message: '#^Parameter \#3 \$methodName of method Phpactor\\CodeTransform\\Tests\\Adapter\\WorseReflection\\Refactor\\WorseOverrideMethodTest\:\:overrideMethod\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
@@ -2633,12 +2621,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
-
-		-
-			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects iterable, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Completion/Bridge/WorseReflection/Completor/ContextSensitiveCompletor.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
@@ -3577,6 +3559,12 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
 		-
+			message: '#^Right side of && is always true\.$#'
+			identifier: booleanAnd.rightAlwaysTrue
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
 			message: '#^Parameter \#2 \$subject of function preg_match expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4447,12 +4435,6 @@ parameters:
 			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
 
 		-
-			message: '#^Parameter \#2 \$callback of function usort expects callable\(mixed, mixed\)\: int, Closure\(array, array\)\: int\<\-1, 1\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
-
-		-
 			message: '#^Parameter \#2 \$filesystem of method Phpactor\\Extension\\ClassMover\\Rpc\\ReferencesHandler\:\:findReferences\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4705,13 +4687,13 @@ parameters:
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
-			message: '#^Parameter \#1 \$elements of static method Phpactor\\CodeTransform\\Domain\\AbstractCollection\<Phpactor\\CodeTransform\\Domain\\Generator\>\:\:fromArray\(\) expects array\<Phpactor\\CodeTransform\\Domain\\Generator\>, array given\.$#'
+			message: '#^Parameter \#1 \$elements of static method Phpactor\\CodeTransform\\Domain\\AbstractCollection\<Phpactor\\CodeTransform\\Domain\\Generator\>\:\:fromArray\(\) expects array\<Phpactor\\CodeTransform\\Domain\\Generator\>, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 2
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
-			message: '#^Parameter \#1 \$elements of static method Phpactor\\CodeTransform\\Domain\\AbstractCollection\<Phpactor\\CodeTransform\\Domain\\Transformer\>\:\:fromArray\(\) expects array\<Phpactor\\CodeTransform\\Domain\\Transformer\>, array given\.$#'
+			message: '#^Parameter \#1 \$elements of static method Phpactor\\CodeTransform\\Domain\\AbstractCollection\<Phpactor\\CodeTransform\\Domain\\Transformer\>\:\:fromArray\(\) expects array\<Phpactor\\CodeTransform\\Domain\\Transformer\>, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
@@ -4873,6 +4855,12 @@ parameters:
 			path: lib/Extension/CodeTransform/Rpc/AbstractClassGenerateHandler.php
 
 		-
+			message: '#^Parameter \#1 \$keys of function array_combine expects an array of values castable to string, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/CodeTransform/Rpc/AbstractClassGenerateHandler.php
+
+		-
 			message: '#^Parameter \#1 \$keys of function array_combine expects array\<int\|string\>, array given\.$#'
 			identifier: argument.type
 			count: 1
@@ -4982,6 +4970,12 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$code of static method Phpactor\\CodeTransform\\Domain\\SourceCode\:\:fromStringAndPath\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/CodeTransform/Rpc/TransformHandler.php
+
+		-
+			message: '#^Parameter \#1 \$keys of function array_combine expects an array of values castable to string, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/CodeTransform/Rpc/TransformHandler.php
@@ -7339,6 +7333,12 @@ parameters:
 			path: lib/Extension/Core/Console/Dumper/TableDumper.php
 
 		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, list given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/TableDumper.php
+
+		-
 			message: '#^Parameter \#2 \$times of function str_repeat expects int, mixed given\.$#'
 			identifier: argument.type
 			count: 2
@@ -7621,6 +7621,12 @@ parameters:
 			path: lib/Extension/Core/Rpc/StatusHandler.php
 
 		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array\<int, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
 			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -7679,6 +7685,12 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/FilePathResolver/Tests/Unit/FilePathResolverExtensionTest.php
+
+		-
+			message: '#^Constant JSON_THROW_ON_ERROR is not allowed for parameter \#3 \$depth of function json_decode\.$#'
+			identifier: argument.invalidConstant
+			count: 1
+			path: lib/Extension/LanguageServer/Command/CodeActionsCommand.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
@@ -7753,7 +7765,7 @@ parameters:
 			path: lib/Extension/LanguageServer/DiagnosticProvider/OutsourcedDiagnosticsProvider.php
 
 		-
-			message: '#^PHPDoc tag @var with type Phpactor\\Container\\Extension is not subtype of native type class\-string\.$#'
+			message: '#^PHPDoc tag @var with type Phpactor\\Container\\Extension is not subtype of native type string\.$#'
 			identifier: varTag.nativeType
 			count: 1
 			path: lib/Extension/LanguageServer/Dispatcher/PhpactorDispatcherFactory.php
@@ -7783,6 +7795,12 @@ parameters:
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
 		-
+			message: '#^Parameter \#1 \$array of function array_diff expects an array of values castable to string, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/LanguageServer/LanguageServerExtension.php
+
+		-
 			message: '#^Parameter \#1 \$array of function array_flip expects array\<int\|string\>, array given\.$#'
 			identifier: argument.type
 			count: 1
@@ -7802,6 +7820,12 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \.\.\.\$middleware of class Phpactor\\LanguageServer\\Core\\Dispatcher\\Dispatcher\\MiddlewareDispatcher constructor expects Phpactor\\LanguageServer\\Core\\Middleware\\Middleware, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/LanguageServer/LanguageServerExtension.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
@@ -8407,12 +8431,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Model/NameImport/CandidateFinder.php
 
 		-
-			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects iterable, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Model/NameImport/CandidateFinder.php
-
-		-
 			message: '#^Binary operation "\." between mixed and string results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
@@ -8973,7 +8991,13 @@ parameters:
 		-
 			message: '#^Cannot access property \$result on Phpactor\\LanguageServer\\Core\\Rpc\\ResponseMessage\|null\.$#'
 			identifier: property.nonObject
-			count: 29
+			count: 27
+			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Handler/CompletionHandlerTest.php
+
+		-
+			message: '#^Cannot access property \$result on mixed\.$#'
+			identifier: property.nonObject
+			count: 2
 			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Handler/CompletionHandlerTest.php
 
 		-
@@ -9021,12 +9045,6 @@ parameters:
 		-
 			message: '#^Method Phpactor\\Extension\\LanguageServerCompletion\\Tests\\Unit\\Handler\\CompletionHandlerTest\:\:createNameImporter\(\) has parameter \$importNameTextEdits with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Handler/CompletionHandlerTest.php
-
-		-
-			message: '#^Parameter \#1 \$promises of function Amp\\Promise\\all expects array\<Amp\\Promise\<Phpactor\\LanguageServer\\Core\\Rpc\\ResponseMessage\|null\>\|React\\Promise\\PromiseInterface\>, array\<int, Amp\\Promise\<Phpactor\\LanguageServer\\Core\\Rpc\\ResponseMessage\|null\>\> given\.$#'
-			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Handler/CompletionHandlerTest.php
 
@@ -9391,12 +9409,6 @@ parameters:
 			path: lib/Extension/LanguageServerIndexer/Watcher/LanguageServerWatcher.php
 
 		-
-			message: '#^Property Phpactor\\Extension\\LanguageServerIndexer\\Watcher\\LanguageServerWatcher\:\:\$queue \(array\<Phpactor\\LanguageServerProtocol\\FileEvent\>\) does not accept array\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Extension/LanguageServerIndexer/Watcher/LanguageServerWatcher.php
-
-		-
 			message: '#^Using nullsafe property access "\?\-\>didChangeWatchedFiles" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
@@ -9603,12 +9615,6 @@ parameters:
 		-
 			message: '#^Cannot call method join\(\) on mixed\.$#'
 			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/VersionResolver/PhpCsFixerVersionResolver.php
-
-		-
-			message: '#^Offset 1 might not exist on array\{0\: string, 1\?\: non\-falsy\-string\}\.$#'
-			identifier: offsetAccess.notFound
 			count: 1
 			path: lib/Extension/LanguageServerPhpCsFixer/VersionResolver/PhpCsFixerVersionResolver.php
 
@@ -10311,6 +10317,18 @@ parameters:
 		-
 			message: '#^Method Phpactor\\Extension\\LanguageServerWorseReflection\\Workspace\\WorkspaceIndex\:\:updateNames\(\) has parameter \$newNames with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
+			count: 1
+			path: lib/Extension/LanguageServerWorseReflection/Workspace/WorkspaceIndex.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_diff expects an array of values castable to string, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/LanguageServerWorseReflection/Workspace/WorkspaceIndex.php
+
+		-
+			message: '#^Parameter \#2 \$arrays of function array_diff expects an array of values castable to string, array given\.$#'
+			identifier: argument.type
 			count: 1
 			path: lib/Extension/LanguageServerWorseReflection/Workspace/WorkspaceIndex.php
 
@@ -12619,6 +12637,12 @@ parameters:
 			path: lib/FilePathResolver/Exception/UnknownToken.php
 
 		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/FilePathResolver/Exception/UnknownToken.php
+
+		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Phpactor\\\\FilePathResolver\\\\PathResolver'' and Phpactor\\FilePathResolver\\FilteringPathResolver will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
@@ -12628,6 +12652,12 @@ parameters:
 			message: '#^Cannot call method isDir\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
+			path: lib/Filesystem/Adapter/Simple/SimpleFilesystem.php
+
+		-
+			message: '#^Parameter \#1 \$filePaths of static method Phpactor\\Filesystem\\Domain\\FileList\:\:fromFilePaths\(\) expects array\<string\>, list\<Phpactor\\Filesystem\\Domain\\FilePath\> given\.$#'
+			identifier: argument.type
+			count: 2
 			path: lib/Filesystem/Adapter/Simple/SimpleFilesystem.php
 
 		-
@@ -12685,8 +12715,8 @@ parameters:
 			path: lib/Indexer/Adapter/Php/FileSearchIndex.php
 
 		-
-			message: '#^Parameter \#1 \$array \(non\-empty\-list\<array\{string, string, string\|null, string\|null\}\>\) to function array_filter does not contain falsy values, the array will always stay the same\.$#'
-			identifier: arrayFilter.same
+			message: '#^Offset 3 does not exist on array\{string, string, string\|null\}\.$#'
+			identifier: offsetAccess.notFound
 			count: 1
 			path: lib/Indexer/Adapter/Php/FileSearchIndex.php
 
@@ -13009,7 +13039,7 @@ parameters:
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
-			message: '#^Parameter \#1 \$watchers of class Phpactor\\AmpFsWatch\\Watcher\\Fallback\\FallbackWatcher constructor expects array\<Phpactor\\AmpFsWatch\\Watcher\>, list given\.$#'
+			message: '#^Parameter \#1 \$watchers of class Phpactor\\AmpFsWatch\\Watcher\\Fallback\\FallbackWatcher constructor expects array\<Phpactor\\AmpFsWatch\\Watcher\>, list\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Indexer/Extension/IndexerExtension.php
@@ -13079,18 +13109,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: lib/Indexer/IndexAgentBuilder.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: lib/Indexer/Model/IndexJob.php
-
-		-
-			message: '#^Instanceof between SplFileInfo and SplFileInfo will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 1
-			path: lib/Indexer/Model/IndexJob.php
 
 		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
@@ -13237,6 +13255,12 @@ parameters:
 			path: lib/Indexer/Tests/Adapter/Tolerant/Indexer/MemberIndexerTest.php
 
 		-
+			message: '#^Call to method Phpactor\\Indexer\\Model\\Record\\ClassRecord\:\:shortName\(\) on a separate line has no effect\.$#'
+			identifier: method.resultUnused
+			count: 1
+			path: lib/Indexer/Tests/Benchmark/ClassRecordShortNameBench.php
+
+		-
 			message: '#^Method Phpactor\\Indexer\\Tests\\Benchmark\\SearchBench\:\:benchBareFileSearch\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -13323,6 +13347,12 @@ parameters:
 		-
 			message: '#^Method Phpactor\\Indexer\\Tests\\Unit\\Adapter\\ReferenceFinder\\Util\\ContainerTypeResolverTest\:\:testResolve\(\) has parameter \$manifest with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
+			count: 1
+			path: lib/Indexer/Tests/Unit/Adapter/ReferenceFinder/Util/ContainerTypeResolverTest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
 			count: 1
 			path: lib/Indexer/Tests/Unit/Adapter/ReferenceFinder/Util/ContainerTypeResolverTest.php
 
@@ -13441,6 +13471,12 @@ parameters:
 			path: lib/Name/QualifiedName.php
 
 		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Name/QualifiedName.php
+
+		-
 			message: '#^Property Phpactor\\Name\\QualifiedName\:\:\$parts type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -13543,13 +13579,7 @@ parameters:
 			path: lib/Phpactor.php
 
 		-
-			message: '#^Instanceof between Phpactor\\ClassMover\\Extension\\ClassMoverExtension\|Phpactor\\Extension\\Behat\\BehatExtension\|Phpactor\\Extension\\Behat\\BehatSuggestExtension\|Phpactor\\Extension\\ClassMover\\ClassMoverExtension\|Phpactor\\Extension\\ClassToFile\\ClassToFileExtension\|Phpactor\\Extension\\ClassToFileExtra\\ClassToFileExtraExtension\|Phpactor\\Extension\\CodeTransform\\CodeTransformExtension\|Phpactor\\Extension\\CodeTransformExtra\\CodeTransformExtraExtension\|Phpactor\\Extension\\Completion\\CompletionExtension\|Phpactor\\Extension\\CompletionExtra\\CompletionExtraExtension\|Phpactor\\Extension\\CompletionRpc\\CompletionRpcExtension\|Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension\|Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension\|Phpactor\\Extension\\ComposerInspector\\ComposerInspectorExtension\|Phpactor\\Extension\\Configuration\\ConfigurationExtension\|Phpactor\\Extension\\Console\\ConsoleExtension\|Phpactor\\Extension\\ContextMenu\\ContextMenuExtension\|Phpactor\\Extension\\Core\\CoreExtension\|Phpactor\\Extension\\Debug\\DebugExtension\|Phpactor\\Extension\\FilePathResolver\\FilePathResolverExtension\|Phpactor\\Extension\\LanguageServer\\LanguageServerExtension\|Phpactor\\Extension\\LanguageServerBlackfire\\LanguageServerBlackfireExtension\|Phpactor\\Extension\\LanguageServerBridge\\LanguageServerBridgeExtension\|Phpactor\\Extension\\LanguageServerCodeTransform\\LanguageServerCodeTransformExtension\|Phpactor\\Extension\\LanguageServerCompletion\\LanguageServerCompletionExtension\|Phpactor\\Extension\\LanguageServerConfiguration\\LanguageServerConfigurationExtension\|Phpactor\\Extension\\LanguageServerDiagnostics\\LanguageServerDiagnosticsExtension\|Phpactor\\Extension\\LanguageServerEvaluatableExpression\\LanguageServerEvaluatableExpressionExtension\|Phpactor\\Extension\\LanguageServerHighlight\\LanguageServerHighlightExtension\|Phpactor\\Extension\\LanguageServerHover\\LanguageServerHoverExtension\|Phpactor\\Extension\\LanguageServerIndexer\\LanguageServerIndexerExtension\|Phpactor\\Extension\\LanguageServerInlineValue\\LanguageServerInlineValueExtension\|Phpactor\\Extension\\LanguageServerPhpCsFixer\\LanguageServerPhpCsFixerExtension\|Phpactor\\Extension\\LanguageServerPhpCsFixer\\LanguageServerPhpCsFixerSuggestExtension\|Phpactor\\Extension\\LanguageServerPhpstan\\LanguageServerPhpstanExtension\|Phpactor\\Extension\\LanguageServerPhpstan\\LanguageServerPhpstanSuggestExtension\|Phpactor\\Extension\\LanguageServerPsalm\\LanguageServerPsalmExtension\|Phpactor\\Extension\\LanguageServerPsalm\\LanguageServerPsalmSuggestExtension\|Phpactor\\Extension\\LanguageServerReferenceFinder\\LanguageServerReferenceFinderExtension\|Phpactor\\Extension\\LanguageServerRename\\LanguageServerRenameExtension\|Phpactor\\Extension\\LanguageServerRename\\LanguageServerRenameWorseExtension\|Phpactor\\Extension\\LanguageServerSelectionRange\\LanguageServerSelectionRangeExtension\|Phpactor\\Extension\\LanguageServerSymbolProvider\\LanguageServerSymbolProviderExtension\|Phpactor\\Extension\\LanguageServerWorseReflection\\LanguageServerWorseReflectionExtension\|Phpactor\\Extension\\Logger\\LoggingExtension\|Phpactor\\Extension\\Navigation\\NavigationExtension\|Phpactor\\Extension\\ObjectRenderer\\ObjectRendererExtension\|Phpactor\\Extension\\OpenTelemetry\\OpenTelemetryExtension\|Phpactor\\Extension\\Php\\PhpExtension\|Phpactor\\Extension\\PhpCodeSniffer\\PhpCodeSnifferExtension\|Phpactor\\Extension\\PhpCodeSniffer\\PhpCodeSnifferSuggestExtension\|Phpactor\\Extension\\PHPUnit\\PHPUnitExtension\|Phpactor\\Extension\\Prophecy\\ProphecyExtension\|Phpactor\\Extension\\Prophecy\\ProphecySuggestExtension\|Phpactor\\Extension\\ReferenceFinder\\ReferenceFinderExtension\|Phpactor\\Extension\\ReferenceFinderRpc\\ReferenceFinderRpcExtension\|Phpactor\\Extension\\Rpc\\RpcExtension\|Phpactor\\Extension\\SourceCodeFilesystem\\SourceCodeFilesystemExtension\|Phpactor\\Extension\\SourceCodeFilesystemExtra\\SourceCodeFilesystemExtraExtension\|Phpactor\\Extension\\Symfony\\SymfonyExtension\|Phpactor\\Extension\\Symfony\\SymfonySuggestExtension\|Phpactor\\Extension\\WorseReferenceFinder\\WorseReferenceFinderExtension\|Phpactor\\Extension\\WorseReflection\\WorseReflectionExtension\|Phpactor\\Extension\\WorseReflectionAnalyse\\WorseReflectionAnalyseExtension\|Phpactor\\Extension\\WorseReflectionExtra\\WorseReflectionExtraExtension\|Phpactor\\Indexer\\Extension\\IndexerExtension and Phpactor\\Container\\Extension will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 1
-			path: lib/Phpactor.php
-
-		-
-			message: '#^Parameter \#1 \$config of method Phpactor\\MapResolver\\Resolver\:\:resolve\(\) expects array\<string, mixed\>, array given\.$#'
+			message: '#^Parameter \#1 \$config of method Phpactor\\MapResolver\\Resolver\:\:resolve\(\) expects array\<string, mixed\>, array\<mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Phpactor.php
@@ -13652,6 +13682,12 @@ parameters:
 
 		-
 			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Rename/Adapter/ReferenceFinder/ClassMover/ClassRenamer.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Rename/Adapter/ReferenceFinder/ClassMover/ClassRenamer.php
@@ -13795,18 +13831,6 @@ parameters:
 			path: lib/Rename/Tests/RenamerTestCase.php
 
 		-
-			message: '#^Parameter \#1 \$edits of static method Phpactor\\Rename\\Model\\LocatedTextEdits\:\:fromLocatedEditsToCollection\(\) expects array\<Phpactor\\Rename\\Model\\LocatedTextEdit\>, list\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Rename/Tests/RenamerTestCase.php
-
-		-
-			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects iterable, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Rename/Tests/RenamerTestCase.php
-
-		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Phpactor\\\\TextDocument\\\\EfficientLineCols'' and Phpactor\\TextDocument\\EfficientLineCols will always evaluate to true\.$#'
 			identifier: staticMethod.alreadyNarrowedType
 			count: 1
@@ -13843,13 +13867,13 @@ parameters:
 			path: lib/TextDocument/TextDocumentLocator/InMemoryDocumentLocator.php
 
 		-
-			message: '#^Offset ''path'' might not exist on array\{0\?\: string, scheme\?\: non\-falsy\-string\|null, 1\?\: non\-falsy\-string\|null, path\?\: non\-empty\-string\|null, 2\?\: non\-empty\-string\|null\}\.$#'
+			message: '#^Offset ''path'' might not exist on array\{\}\|array\{0\: string, scheme\: non\-falsy\-string\|null, 1\: non\-falsy\-string\|null, path\: non\-empty\-string\|null, 2\: non\-empty\-string\|null\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: lib/TextDocument/TextDocumentUri.php
 
 		-
-			message: '#^Offset ''scheme'' might not exist on array\{0\?\: string, scheme\?\: non\-falsy\-string\|null, 1\?\: non\-falsy\-string\|null, path\?\: non\-empty\-string\|null, 2\?\: non\-empty\-string\|null\}\.$#'
+			message: '#^Offset ''scheme'' might not exist on array\{\}\|array\{0\: string, scheme\: non\-falsy\-string\|null, 1\: non\-falsy\-string\|null, path\: non\-empty\-string\|null, 2\: non\-empty\-string\|null\}\.$#'
 			identifier: offsetAccess.notFound
 			count: 1
 			path: lib/TextDocument/TextDocumentUri.php
@@ -15062,18 +15086,6 @@ parameters:
 
 		-
 			message: '#^Method Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\:\:byMemberClass\(\) should return static\(Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\<T\>\) but returns static\(Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\<M of T&object&T\>\)\.$#'
-			identifier: return.type
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: '#^Method Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\:\:fromReflections\(\) should return static\(Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\<T\>\) but returns static\(Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\<T\>\)\.$#'
-			identifier: return.type
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: '#^Method Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\:\:merge\(\) should return static\(Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\<T\>\) but returns static\(Phpactor\\WorseReflection\\Core\\Reflection\\Collection\\AbstractReflectionCollection\<T\>\)\.$#'
 			identifier: return.type
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php

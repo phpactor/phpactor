@@ -4,9 +4,8 @@ namespace Phpactor\WorseReflection\Core;
 
 final class Visibility
 {
-    private function __construct(
-        private string $visibility
-    ) {
+    private function __construct(private string $visibility)
+    {
     }
 
     public function __toString(): string

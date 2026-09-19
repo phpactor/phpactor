@@ -9,9 +9,8 @@ class PhpVersionPathResolver
     /**
      *      @see https://www.php.net/manual/en/reserved.constants.php#reserved.constants.core
      */
-    public function __construct(
-        private string $phpVersion
-    ) {
+    public function __construct(private string $phpVersion)
+    {
     }
 
     /**

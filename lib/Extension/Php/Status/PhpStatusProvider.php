@@ -7,9 +7,8 @@ use Phpactor\Extension\Php\Model\ChainResolver;
 
 class PhpStatusProvider implements StatusProvider
 {
-    public function __construct(
-        private ChainResolver $chainResolver,
-    ) {
+    public function __construct(private ChainResolver $chainResolver)
+    {
     }
 
     public function title(): string
