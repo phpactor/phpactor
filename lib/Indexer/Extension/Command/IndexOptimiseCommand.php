@@ -14,9 +14,8 @@ class IndexOptimiseCommand extends Command
 {
     private const OPT_DRY_RUN = 'dry-run';
 
-    public function __construct(
-        private Indexer $indexer,
-    ) {
+    public function __construct(private Indexer $indexer,)
+    {
         parent::__construct();
     }
 

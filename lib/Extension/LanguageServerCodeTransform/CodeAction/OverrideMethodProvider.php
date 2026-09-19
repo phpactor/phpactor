@@ -16,9 +16,8 @@ use function Amp\call;
 
 class OverrideMethodProvider implements CodeActionProvider
 {
-    public function __construct(
-        private OverridableMethodFinder $finder,
-    ) {
+    public function __construct(private OverridableMethodFinder $finder,)
+    {
     }
 
     public function provideActionsFor(TextDocumentItem $item, Range $range, CancellationToken $cancel): Promise

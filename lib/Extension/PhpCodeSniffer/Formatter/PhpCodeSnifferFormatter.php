@@ -11,9 +11,8 @@ use function Amp\call;
 
 class PhpCodeSnifferFormatter implements Formatter
 {
-    public function __construct(
-        private PhpCodeSnifferProcess $phpCodeSniffer
-    ) {
+    public function __construct(private PhpCodeSnifferProcess $phpCodeSniffer)
+    {
     }
 
     public function format(TextDocumentItem $textDocument): Promise

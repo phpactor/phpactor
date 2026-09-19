@@ -11,9 +11,8 @@ use function Amp\call;
 
 class PhpCsFixerFormatter implements Formatter
 {
-    public function __construct(
-        private PhpCsFixerProcess $phpCsFixer
-    ) {
+    public function __construct(private PhpCsFixerProcess $phpCsFixer)
+    {
     }
 
     public function format(TextDocumentItem $textDocument): Promise

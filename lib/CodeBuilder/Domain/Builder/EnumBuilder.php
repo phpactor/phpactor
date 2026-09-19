@@ -35,8 +35,12 @@ class EnumBuilder extends ClassLikeBuilder
         $updatePolicy = UpdatePolicy::fromModifiedState($this->isModified());
         return new EnumPrototype(
             $this->name,
-            Cases::fromCases(array_map(function (CaseBuilder $case) { return $case->build(); }, $this->cases)),
-            Methods::fromMethods(array_map(function (MethodBuilder $builder) { return $builder->build(); }, $this->methods)),
+            Cases::fromCases(array_map(function (CaseBuilder $case) {
+                return $case->build();
+            }, $this->cases)),
+            Methods::fromMethods(array_map(function (MethodBuilder $builder) {
+                return $builder->build();
+            }, $this->methods)),
             $updatePolicy
         );
     }
