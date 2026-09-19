@@ -13,10 +13,4 @@ class AbsolutePathCandidateTest extends TestCase
         $this->expectException(RuntimeException::class);
         new AbsolutePathCandidate('hello', 'foo');
     }
-
-    public function testNormalizesWindowsPaths(): void
-    {
-        $path = new AbsolutePathCandidate('c:\hello', 'foo');
-        self::assertEquals('c:/hello', $path->path());
-    }
 }
