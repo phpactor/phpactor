@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServer\Tests\Unit;
 
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\AggregateDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServer\Listener\IncrementalUpdateListener;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
 use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesClientCapabilities;
@@ -171,13 +172,22 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     {
         // workspace is enabled by default
         $container = $this->createContainer();
-        self::assertInstanceOf(WorkspaceListener::class, $container->get(WorkspaceListener::class));
+        self::assertInstanceOf(WorkspaceListener::class, $container->get(LanguageServerExtension::SERVICE_TEXT_DOCUMENT_SYNC_LISTENER));
 
         // if disabled it returns NULL and will not be registered
         $container = $this->createContainer([
             LanguageServerExtension::PARAM_ENABLE_WORKPACE => false,
         ]);
-        $container->get(WorkspaceListener::class);
+        $container->get(LanguageServerExtension::SERVICE_TEXT_DOCUMENT_SYNC_LISTENER);
+    }
+
+    public function testEnablesIncrementalTextDocumentSync(): void
+    {
+        // workspace is enabled by default
+        $container = $this->createContainer([
+            LanguageServerExtension::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL => true,
+        ]);
+        self::assertInstanceOf(IncrementalUpdateListener::class, $container->get(LanguageServerExtension::SERVICE_TEXT_DOCUMENT_SYNC_LISTENER));
     }
 
     public function testExceptionWhenEnablingUnknownDiagProvider(): void

@@ -65,6 +65,7 @@ class IncrementalUpdateListener implements ListenerProviderInterface
             );
             $content = TextEdits::fromTextEdits([$edit])->apply($content);
         }
+
         $this->workspace->update(
             $versionedTextDocumentIdentifier,
             $content

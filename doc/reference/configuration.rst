@@ -1488,7 +1488,7 @@ Kill the diagnostics or code action processes if they outlive this timeout
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 
-Request that clients send text document updates incrementally
+Request that clients send text document updates incrementally (experimental)
 
 
 **Default**: ``false``
