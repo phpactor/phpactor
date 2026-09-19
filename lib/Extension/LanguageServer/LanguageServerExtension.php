@@ -136,7 +136,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_EXCLUDE_PATHS = 'language_server.diagnostic_exclude_paths';
     public const PARAM_DIAGNOSTIC_IGNORE_CODES = 'language_server.diagnostic_ignore_codes';
     public const PARAM_ENABLE_TRUST_CHECK = 'language_server.enable_trust_check';
-    public const PARAM_TEXT_DOCUMENT_SYNC = TextDocumentSyncKind::FULL;
+    public const PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL = 'language_server.text_document_sync_incremental';
 
     public function configure(Resolver $schema): void
     {
@@ -163,6 +163,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_PHPACTOR_BIN => __DIR__ . '/../../../bin/phpactor',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 2500,
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 5,
+            self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLE_TRUST_CHECK => 'Check to see if project path is trusted before loading configurations from it',
@@ -188,6 +189,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time (in milliseconds) to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time (in milliseconds) after a shutdown request before self-destructing',
             self::PARAM_PHPACTOR_BIN => 'Internal use only - name path to Phpactor binary',
+            self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL => 'Request that clients send text document updates incrementally (experimental)',
         ]);
     }
 
@@ -311,7 +313,7 @@ class LanguageServerExtension implements Extension
                 return null;
             }
 
-            if ($container->parameter(self::PARAM_TEXT_DOCUMENT_SYNC) === TextDocumentSyncKind::INCREMENTAL) {
+            if ($container->parameter(self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL)->bool() === true) {
                 return new IncrementalUpdateListener(
                     $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 );
@@ -499,7 +501,9 @@ class LanguageServerExtension implements Extension
         $container->register(TextDocumentHandler::class, function (Container $container) {
             return new TextDocumentHandler(
                 $container->get(EventDispatcherInterface::class),
-                TextDocumentSyncKind::INCREMENTAL,
+                $container->parameter(
+                    self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL
+                )->bool() ? TextDocumentSyncKind::INCREMENTAL : TextDocumentSyncKind::FULL,
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 

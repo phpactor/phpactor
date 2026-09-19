@@ -27,7 +27,6 @@ class LazyAggregateProvider implements ListenerProviderInterface
     {
         if (null === $this->aggregateProvider) {
             $this->aggregateProvider = new ListenerProviderAggregate();
-
             foreach ($this->serviceIds as $serviceId) {
                 /** @var object|null $listenerProvider */
                 $listenerProvider = $this->container->get($serviceId);
