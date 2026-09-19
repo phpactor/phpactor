@@ -1481,6 +1481,19 @@ Kill the diagnostics or code action processes if they outlive this timeout
 **Default**: ``5``
 
 
+.. _param_language_server.text_document_sync_incremental:
+
+
+``language_server.text_document_sync_incremental``
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Request that clients send text document updates incrementally (experimental)
+
+
+**Default**: ``false``
+
+
 .. _LanguageServerCompletionExtension:
 
 
@@ -1936,7 +1949,7 @@ When searching the index exclude records whose fully qualified names match any o
 Type: integer
 
 
-Number of child processes to parse files with while building the index. `0` picks a number based on the available CPU threads, `1` indexes everything in the main process
+Number of child processes to parse files with while building the index. `0` picks a number based on the available CPUs, `1` indexes everything in the main process
 
 
 **Default**: ``0``
@@ -1952,7 +1965,7 @@ Number of child processes to parse files with while building the index. `0` pick
 Type: integer
 
 
-Only index in parallel when at least this many files need indexing.
+Only index in parallel when at least this many files need indexing - starting a pool of workers does not pay for itself on a handful of changed files
 
 
 **Default**: ``500``
@@ -1968,7 +1981,7 @@ Only index in parallel when at least this many files need indexing.
 Type: string
 
 
-Internal use only. Path to the Phpactor binary used to spawn index workers
+Internal use only - path to the Phpactor binary used to spawn index workers
 
 
 **Default**: ``"%application_root%\/bin\/phpactor"``
@@ -2725,3 +2738,4 @@ Enable or disable this extension
 
 
 **Default**: ``false``
+

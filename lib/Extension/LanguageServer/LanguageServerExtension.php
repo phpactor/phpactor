@@ -23,6 +23,7 @@ use Phpactor\Extension\LanguageServer\DiagnosticProvider\PathExcludingDiagnostic
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
+use Phpactor\Extension\LanguageServer\Listener\IncrementalUpdateListener;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Listener\ProjectConfigTrustListener;
 use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
@@ -36,6 +37,7 @@ use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
+use Phpactor\LanguageServerProtocol\TextDocumentSyncKind;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
@@ -53,6 +55,7 @@ use Phpactor\LanguageServer\Core\Dispatcher\ArgumentResolver\ChainArgumentResolv
 use Phpactor\LanguageServer\Core\Dispatcher\ArgumentResolver;
 use Phpactor\LanguageServer\Handler\Workspace\DidChangeWatchedFilesHandler;
 use Phpactor\LanguageServer\Listener\DidChangeWatchedFilesListener;
+use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Middleware\HandlerMiddleware;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher;
 use Phpactor\LanguageServer\Middleware\ResponseHandlingMiddleware;
@@ -70,7 +73,6 @@ use Phpactor\LanguageServer\Handler\Workspace\CommandHandler;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Handler\System\ServiceHandler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
-use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
@@ -99,6 +101,7 @@ class LanguageServerExtension implements Extension
     public const SERVICE_LANGUAGE_SERVER_BUILDER = 'language_server.builder';
     public const SERVICE_EVENT_EMITTER = 'language_server.event_emitter';
     public const SERVICE_SESSION_WORKSPACE = 'language_server.session.workspace';
+    public const SERVICE_TEXT_DOCUMENT_SYNC_LISTENER = 'language_server.text_document_sync_listener';
     public const TAG_METHOD_HANDLER = 'language_server.session_handler';
     public const TAG_COMMAND = 'language_server.command';
     public const TAG_SERVICE_PROVIDER = 'language_server.service_provider';
@@ -133,6 +136,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_EXCLUDE_PATHS = 'language_server.diagnostic_exclude_paths';
     public const PARAM_DIAGNOSTIC_IGNORE_CODES = 'language_server.diagnostic_ignore_codes';
     public const PARAM_ENABLE_TRUST_CHECK = 'language_server.enable_trust_check';
+    public const PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL = 'language_server.text_document_sync_incremental';
 
     public function configure(Resolver $schema): void
     {
@@ -159,6 +163,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_PHPACTOR_BIN => __DIR__ . '/../../../bin/phpactor',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 2500,
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 5,
+            self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLE_TRUST_CHECK => 'Check to see if project path is trusted before loading configurations from it',
@@ -184,6 +189,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time (in milliseconds) to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time (in milliseconds) after a shutdown request before self-destructing',
             self::PARAM_PHPACTOR_BIN => 'Internal use only - name path to Phpactor binary',
+            self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL => 'Request that clients send text document updates incrementally (experimental)',
         ]);
     }
 
@@ -262,16 +268,6 @@ class LanguageServerExtension implements Extension
             return new Workspace($this->logger($container));
         });
 
-        $container->register(WorkspaceListener::class, function (Container $container) {
-            if ($container->parameter(self::PARAM_ENABLE_WORKPACE)->bool() === false) {
-                return null;
-            }
-
-            return new WorkspaceListener($this->workspace($container));
-        }, [
-            self::TAG_LISTENER_PROVIDER => [],
-        ]);
-
         $container->register(InvalidConfigListener::class, function (Container $container) {
             return new InvalidConfigListener(
                 $container->get(ClientApi::class),
@@ -308,6 +304,22 @@ class LanguageServerExtension implements Extension
                 $container->parameter(self::PARAM_FILE_EVENT_GLOBS)->value(),
                 $container->get(ClientCapabilities::class),
             );
+        }, [
+            self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
+        $container->register(self::SERVICE_TEXT_DOCUMENT_SYNC_LISTENER, function (Container $container) {
+            if ($container->parameter(self::PARAM_ENABLE_WORKPACE)->bool() === false) {
+                return null;
+            }
+
+            if ($container->parameter(self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL)->bool() === true) {
+                return new IncrementalUpdateListener(
+                    $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                );
+            }
+
+            return new WorkspaceListener($this->workspace($container));
         }, [
             self::TAG_LISTENER_PROVIDER => [],
         ]);
@@ -352,6 +364,7 @@ class LanguageServerExtension implements Extension
             );
 
             return new EventDispatcher($aggregate);
+
         });
     }
 
@@ -486,7 +499,12 @@ class LanguageServerExtension implements Extension
         });
 
         $container->register(TextDocumentHandler::class, function (Container $container) {
-            return new TextDocumentHandler($container->get(EventDispatcherInterface::class));
+            return new TextDocumentHandler(
+                $container->get(EventDispatcherInterface::class),
+                $container->parameter(
+                    self::PARAM_TEXT_DOCUMENT_SYNC_INCREMENTAL
+                )->bool() ? TextDocumentSyncKind::INCREMENTAL : TextDocumentSyncKind::FULL,
+            );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(StatsHandler::class, function (Container $container) {
@@ -701,7 +719,11 @@ class LanguageServerExtension implements Extension
      */
     private function resolveListeners(Container $container): array
     {
-        return array_filter(array_keys($container->getServiceIdsForTag(self::TAG_LISTENER_PROVIDER)), function (string $service) use ($container) {
+        $serviceIds = $container->getServiceIdsForTag(self::TAG_LISTENER_PROVIDER);
+        uasort($serviceIds, function (array $a, array $b) {
+            return ($a['priority'] ?? 0) <=> ($b['priority'] ?? 0);
+        });
+        return array_filter(array_keys($serviceIds), function (string $service) use ($container) {
             if (false === $container->parameter(self::PARAM_FILE_EVENTS)->bool() && $service === DidChangeWatchedFilesListener::class) {
                 return false;
             }
