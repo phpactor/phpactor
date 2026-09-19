@@ -55,6 +55,7 @@ use Phpactor\LanguageServer\Core\Dispatcher\ArgumentResolver\ChainArgumentResolv
 use Phpactor\LanguageServer\Core\Dispatcher\ArgumentResolver;
 use Phpactor\LanguageServer\Handler\Workspace\DidChangeWatchedFilesHandler;
 use Phpactor\LanguageServer\Listener\DidChangeWatchedFilesListener;
+use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Middleware\HandlerMiddleware;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher;
 use Phpactor\LanguageServer\Middleware\ResponseHandlingMiddleware;
@@ -100,6 +101,7 @@ class LanguageServerExtension implements Extension
     public const SERVICE_LANGUAGE_SERVER_BUILDER = 'language_server.builder';
     public const SERVICE_EVENT_EMITTER = 'language_server.event_emitter';
     public const SERVICE_SESSION_WORKSPACE = 'language_server.session.workspace';
+    public const SERVICE_TEXT_DOCUMENT_SYNC_LISTENER = 'language_server.text_document_sync_listener';
     public const TAG_METHOD_HANDLER = 'language_server.session_handler';
     public const TAG_COMMAND = 'language_server.command';
     public const TAG_SERVICE_PROVIDER = 'language_server.service_provider';
@@ -134,6 +136,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_EXCLUDE_PATHS = 'language_server.diagnostic_exclude_paths';
     public const PARAM_DIAGNOSTIC_IGNORE_CODES = 'language_server.diagnostic_ignore_codes';
     public const PARAM_ENABLE_TRUST_CHECK = 'language_server.enable_trust_check';
+    public const PARAM_TEXT_DOCUMENT_SYNC = TextDocumentSyncKind::FULL;
 
     public function configure(Resolver $schema): void
     {
@@ -303,10 +306,18 @@ class LanguageServerExtension implements Extension
             self::TAG_LISTENER_PROVIDER => [],
         ]);
 
-        $container->register(IncrementalUpdateListener::class, function (Container $container) {
-            return new IncrementalUpdateListener(
-                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
-            );
+        $container->register(self::SERVICE_TEXT_DOCUMENT_SYNC_LISTENER, function (Container $container) {
+            if ($container->parameter(self::PARAM_ENABLE_WORKPACE)->bool() === false) {
+                return null;
+            }
+
+            if ($container->parameter(self::PARAM_TEXT_DOCUMENT_SYNC) === TextDocumentSyncKind::INCREMENTAL) {
+                return new IncrementalUpdateListener(
+                    $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                );
+            }
+
+            return new WorkspaceListener($this->workspace($container));
         }, [
             self::TAG_LISTENER_PROVIDER => [],
         ]);
