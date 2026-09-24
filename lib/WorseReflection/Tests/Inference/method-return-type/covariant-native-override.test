@@ -1,0 +1,21 @@
+<?php
+
+class Animal {}
+class Dog extends Animal {}
+
+abstract class Shelter
+{
+    abstract public function adopt(): Animal;
+}
+
+final class DogShelter extends Shelter
+{
+    public function adopt(): Dog
+    {
+        return new Dog();
+    }
+}
+
+function (DogShelter $shelter): void {
+    wrAssertType('Dog', $shelter->adopt());
+};
