@@ -1,0 +1,19 @@
+<?php
+
+abstract class Repository
+{
+    /** @return array<int,string> */
+    abstract public function names(): array;
+}
+
+final class UserRepository extends Repository
+{
+    public function names(): array
+    {
+        return [];
+    }
+}
+
+function (UserRepository $repository): void {
+    wrAssertType('array<int,string>', $repository->names());
+};

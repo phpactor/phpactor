@@ -25,10 +25,34 @@ class MethodTypeResolver
         $resolvedType = $this->getTypesFromParentClass($contextClass);
 
         if (($resolvedType->isDefined())) {
-            return $resolvedType;
+            return $this->narrowerThanNativeType($resolvedType);
         }
 
-        return $this->getTypesFromInterfaces($contextClass);
+        return $this->narrowerThanNativeType($this->getTypesFromInterfaces($contextClass));
+    }
+
+    /**
+     * An inherited type only applies when it is at least as specific as the
+     * method's own native return type: a covariant override (e.g. `A` in the
+     * parent, `B extends A` in the child) must keep the child's type.
+     */
+    private function narrowerThanNativeType(Type $inheritedType): Type
+    {
+        if (!$inheritedType->isDefined()) {
+            return $inheritedType;
+        }
+
+        $nativeType = $this->method->type();
+
+        if (!$nativeType->isDefined()) {
+            return $inheritedType;
+        }
+
+        if ($nativeType->accepts($inheritedType)->isTrue()) {
+            return $inheritedType;
+        }
+
+        return TypeFactory::undefined();
     }
 
     private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Type
