@@ -1,19 +1,28 @@
 // File: source
 <?php
 
-class SomeClass {
+class TestClassWithSetup extends TestCase {
     public function setUp(): void
     {
         echo "I should not be overwritten";
     }
 }
 
+class TestCase {
+    protected function setUp(): void { }
+    protected function tearDown(): void { }
+}
 // File: expected
 <?php
 
-class SomeClass {
+class TestClassWithSetup extends TestCase {
     public function setUp(): void
     {
         echo "I should not be overwritten";
     }
+}
+
+class TestCase {
+    protected function setUp(): void { }
+    protected function tearDown(): void { }
 }
