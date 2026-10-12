@@ -13,6 +13,11 @@ class DirtyFileListProviderTest extends IntegrationTestCase
     const EXAMPLE_FILE_1 = 'foobar';
     const EXAMPLE_FILE_2 = 'barfoo';
 
+    protected function setUp(): void
+    {
+        $this->workspace()->reset();
+    }
+
     public function testTrackAndProvideDirtyDocuments(): void
     {
         $tracker = $this->createProvider();
@@ -57,11 +62,20 @@ class DirtyFileListProviderTest extends IntegrationTestCase
         self::assertCount(2, $files);
     }
 
-    public function testNonExistingFile(): void
+    public function testCreatesMissingDirectory(): void
+    {
+        $tracker = $this->createProvider('index/project/dirty');
+        $tracker->markDirty(TextDocumentUri::fromString($this->workspace()->path(self::EXAMPLE_FILE_1)));
+
+        self::assertFileExists($this->workspace()->path('index/project/dirty'));
+    }
+
+    public function testUnwritablePath(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Dirty index');
-        $tracker = $this->createProvider('foobar/no');
+        $this->workspace()->put('index', '');
+        $tracker = $this->createProvider('index/dirty');
         $tracker->markDirty(TextDocumentUri::fromString($this->workspace()->path(self::EXAMPLE_FILE_1)));
     }
 
