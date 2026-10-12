@@ -28,10 +28,15 @@ class DirtyFileListProvider implements FileListProvider, DirtyDocumentTracker
             return;
         }
 
+        $directory = dirname($this->dirtyPath);
+        if (!is_dir($directory)) {
+            @mkdir($directory, 0777, true);
+        }
+
         $handle = @fopen($this->dirtyPath, 'a');
         if (false === $handle) {
             throw new RuntimeException(sprintf(
-                'Dirty index file path "%s" cannot be created, maybe the directory does not exist?',
+                'Dirty index file path "%s" cannot be created',
                 $this->dirtyPath
             ));
         }
