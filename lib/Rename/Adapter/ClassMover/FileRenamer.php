@@ -43,7 +43,7 @@ class FileRenamer implements PhpactorFileRenamer
             $references = $this->client->class()->referencesTo($fromClass);
 
             // rename class definition
-            $locatedEdits = $this->replaceDefinition($to, $fromClass, $toClass);
+            $locatedEdits = $this->replaceDefinition($from, $fromClass, $toClass);
 
             $edits = TextEdits::none();
             $seen = [];
