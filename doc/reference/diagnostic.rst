@@ -53,6 +53,68 @@ Report if trying to call a class method which does not exist.
         
         - ``ERROR``: ``Method "bar" does not exist on class "Foobar"``
         
+    .. tab:: missing method on instance handled by __call
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function __call(string $name, array $arguments): mixed
+                {
+                }
+            }
+            
+            $f = new Foobar();
+            $f->bar();
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "bar" does not exist on class "Foobar"``
+        
+    .. tab:: missing method for static invocation handled by inherited __callStatic
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Model
+            {
+                public static function __callStatic(string $name, array $arguments): mixed
+                {
+                }
+            }
+            
+            class Foobar extends Model
+            {
+            }
+            
+            Foobar::bar();
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "bar" does not exist on class "Foobar"``
+        
+    .. tab:: missing method for static invocation is not handled by __call
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function __call(string $name, array $arguments): mixed
+                {
+                }
+            }
+            
+            Foobar::bar();
+        
+        Diagnostic(s):
+        
+        - ``ERROR``: ``Method "bar" does not exist on class "Foobar"``
+        
     .. tab:: missing enum case
         
         .. code-block:: php

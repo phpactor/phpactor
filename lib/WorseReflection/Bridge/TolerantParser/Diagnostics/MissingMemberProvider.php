@@ -94,6 +94,7 @@ class MissingMemberProvider implements DiagnosticProvider
         }
 
         if (!$found) {
+            $magic = $node instanceof CallExpression && $this->handledByMagicMethod($node, $containerType);
             yield new MissingMemberDiagnostic(
                 ByteOffsetRange::fromInts(
                     $memberName->getStartPosition(),
@@ -106,10 +107,11 @@ class MissingMemberProvider implements DiagnosticProvider
                     $reflection->classLikeType(),
                     $containerType->__toString()
                 ),
-                DiagnosticSeverity::ERROR(),
+                $magic ? DiagnosticSeverity::WARNING() : DiagnosticSeverity::ERROR(),
                 $containerType->name()->__toString(),
                 $methodName,
                 $memberType,
+                $magic,
             );
         }
     }
@@ -202,6 +204,74 @@ class MissingMemberProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Method "bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'missing method on instance handled by __call',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function __call(string $name, array $arguments): mixed
+                    {
+                    }
+                }
+
+                $f = new Foobar();
+                $f->bar();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('missing_member_magic', $diagnostics->at(0)->code());
+                Assert::assertEquals(DiagnosticSeverity::WARNING(), $diagnostics->at(0)->severity());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'missing method for static invocation handled by inherited __callStatic',
+            source: <<<'PHP'
+                <?php
+
+                class Model
+                {
+                    public static function __callStatic(string $name, array $arguments): mixed
+                    {
+                    }
+                }
+
+                class Foobar extends Model
+                {
+                }
+
+                Foobar::bar();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('missing_member_magic', $diagnostics->at(0)->code());
+                Assert::assertEquals(DiagnosticSeverity::WARNING(), $diagnostics->at(0)->severity());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'missing method for static invocation is not handled by __call',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function __call(string $name, array $arguments): mixed
+                    {
+                    }
+                }
+
+                Foobar::bar();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('missing_member', $diagnostics->at(0)->code());
+                Assert::assertEquals(DiagnosticSeverity::ERROR(), $diagnostics->at(0)->severity());
             }
         );
         yield new DiagnosticExample(
@@ -312,5 +382,16 @@ class MissingMemberProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+    }
+
+    private function handledByMagicMethod(CallExpression $node, ReflectedClassType $containerType): bool
+    {
+        $methods = $containerType->members()->byMemberType(ReflectionMember::TYPE_METHOD);
+
+        if ($node->callableExpression instanceof MemberAccessExpression) {
+            return $methods->has('__call');
+        }
+
+        return $methods->has('__callStatic');
     }
 }

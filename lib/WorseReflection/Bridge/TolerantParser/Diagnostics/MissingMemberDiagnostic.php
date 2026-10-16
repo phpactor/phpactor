@@ -15,6 +15,7 @@ class MissingMemberDiagnostic implements Diagnostic
         private string $classType,
         private string $methodName,
         private string $memberType,
+        private bool $magic = false,
     ) {
     }
 
@@ -55,6 +56,6 @@ class MissingMemberDiagnostic implements Diagnostic
 
     public function code(): string
     {
-        return 'missing_member';
+        return $this->magic ? 'missing_member_magic' : 'missing_member';
     }
 }
