@@ -32,6 +32,26 @@ would allow arbitrary code execution. Therefore directories must be **trusted**.
 When using the langauge server a dialog will show up asking if you trust the configuration
 file if one is present. On the CLI you can use the `phpactor config:trust` command.
 
+Trust entries may contain a ``*`` wildcard, which matches any sequence of
+characters (including ``/``), and a leading ``~`` is expanded to your home
+directory. This is useful to trust a whole workspace at once. Edit the trust
+file (the ``core.trust.path`` shown by ``phpactor config:dump``) and replace an
+entry with a pattern, for example:
+
+.. code:: json
+
+   {
+       "~/workspace/*": true
+   }
+
+Exact paths take precedence over patterns and, when several patterns match, the
+longest one wins, so a more specific pattern can exclude a directory from a
+broader one. ``*`` is the only wildcard: ``?`` and ``[]`` are matched literally.
+
+Note that trusting a directory allows Phpactor to load configuration files
+which may execute arbitrary code: only trust directories you control and keep
+patterns as narrow as possible.
+
 Config Dump
 -----------
 

@@ -50,7 +50,7 @@ class Trust
 
     public function hasTrust(string $path): bool
     {
-        return isset($this->trust[$path]);
+        return null !== $this->trustFor($path);
     }
 
     public function isTrusted(string $path): bool
@@ -59,11 +59,61 @@ class Trust
             return true;
         }
 
-        if (!$this->hasTrust($path)) {
-            return false;
+        return $this->trustFor($path) ?? false;
+    }
+
+    /**
+     * Exact paths take precedence, otherwise the longest matching pattern wins
+     * (so a more specific pattern can exclude a directory from a broader one).
+     */
+    private function trustFor(string $path): ?bool
+    {
+        if (isset($this->trust[$path])) {
+            return $this->trust[$path];
         }
 
-        return $this->trust[$path];
+        $trusted = null;
+        $matchedLength = 0;
+
+        foreach ($this->trust as $pattern => $value) {
+            $pattern = $this->expandHome($pattern);
+
+            if (strlen($pattern) <= $matchedLength) {
+                continue;
+            }
+
+            if ($path === $pattern || (str_contains($pattern, '*') && $this->matches($pattern, $path))) {
+                $trusted = $value;
+                $matchedLength = strlen($pattern);
+            }
+        }
+
+        return $trusted;
+    }
+
+    private function matches(string $pattern, string $path): bool
+    {
+        $parts = array_map(
+            fn (string $part): string => preg_quote($part, '/'),
+            explode('*', $pattern)
+        );
+
+        return 1 === preg_match('/^' . implode('.*', $parts) . '$/D', $path);
+    }
+
+    private function expandHome(string $pattern): string
+    {
+        if ('~' !== $pattern && !str_starts_with($pattern, '~/') && !str_starts_with($pattern, '~\\')) {
+            return $pattern;
+        }
+
+        $home = getenv('HOME') ?: getenv('USERPROFILE');
+
+        if (false === $home || '' === $home) {
+            return $pattern;
+        }
+
+        return $home . substr($pattern, 1);
     }
 
     private function writeTrust(): void

@@ -7,7 +7,10 @@ use Symfony\Component\Process\Process;
 
 abstract class SystemTestCase extends IntegrationTestCase
 {
-    protected function phpactorFromStringArgs(string $args, ?string $stdin = null): Process
+    /**
+     * @param array<string,string|false> $env
+     */
+    protected function phpactorFromStringArgs(string $args, ?string $stdin = null, array $env = []): Process
     {
         chdir($this->workspaceDir());
 
@@ -17,11 +20,11 @@ abstract class SystemTestCase extends IntegrationTestCase
             PHP_BINARY,
             $bin,
             $args
-        ), null, [
+        ), null, array_merge([
             'XDG_CACHE_HOME' => __DIR__ . '/../Assets/Cache',
             'XDG_DATA_HOME' => $this->workspace()->path(),
             'PHPACTOR_UNCONDITIONAL_TRUST' => true,
-        ]);
+        ], $env));
 
         if ($stdin) {
             $process->setInput($stdin);

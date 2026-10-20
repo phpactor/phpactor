@@ -67,7 +67,7 @@ class CoreExtension implements Extension
             self::PARAM_MIN_MEMORY_LIMIT => 'Ensure that PHP has a memory_limit of at least this amount in bytes',
             self::PARAM_SCHEMA => 'Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update',
             self::PARAM_PROJECT_CONFIG_CANDIDATES => '(internal) list of potential project-level configuration files',
-            self::PARAM_TRUST => '(internal) map of trusted project directories',
+            self::PARAM_TRUST => '(internal) map of trusted project directories (may contain `*` wildcards)',
             self::PARAM_TRUSTED => '(internal) if the configuration is trusted',
         ]);
     }

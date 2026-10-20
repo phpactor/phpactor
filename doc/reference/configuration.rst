@@ -105,7 +105,7 @@ Path to JSON schema, which can be used for config autocompletion, use phpactor c
 """"""""""""""
 
 
-(internal) map of trusted project directories
+(internal) map of trusted project directories (may contain `*` wildcards)
 
 
 **Default**: ``{"trust":[],"path":null}``
