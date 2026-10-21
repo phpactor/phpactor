@@ -28,7 +28,9 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
+use RuntimeException;
 
 class ReferencesHandlerTest extends TestCase
 {
@@ -177,7 +179,37 @@ class ReferencesHandlerTest extends TestCase
         $this->assertInstanceOf(LspLocation::class, $lspLocation);
     }
 
-    private function createTester(float $timeout = 60, float $softTimeout = 10): LanguageServerTester
+    public function testCreatesProgressAndEndsItWhenFindingReferencesFails(): void
+    {
+        $this->finder->findReferences(Argument::cetera())->willThrow(new RuntimeException('index unavailable'));
+        $client = TestRpcClient::create();
+        $tester = $this->createTester(client: $client);
+
+        try {
+            $tester->requestAndWait(ReferencesRequest::METHOD, [
+                'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
+                'position' => ProtocolFactory::position(0, 0),
+                'context' => new ReferenceContext(false),
+            ]);
+            $this->fail('Finding references did not fail');
+        } catch (RuntimeException $error) {
+            $this->assertSame('index unavailable', $error->getMessage());
+        }
+
+        $transmitter = $client->transmitter();
+        $create = $transmitter->mustShiftRequest();
+        $transmitter->shiftNotification();
+        $end = $transmitter->shiftNotification();
+        $this->assertSame('window/workDoneProgress/create', $create->method);
+        $this->assertNotNull($end);
+        $this->assertSame($create->params['token'] ?? null, $end->params['token'] ?? null);
+        $this->assertEquals([
+            'kind' => 'end',
+            'message' => 'Finding references failed: index unavailable',
+        ], $end->params['value'] ?? null);
+    }
+
+    private function createTester(float $timeout = 60, float $softTimeout = 10, ?TestRpcClient $client = null): LanguageServerTester
     {
         $builder = LanguageServerTesterBuilder::create();
         $builder->addHandler(
@@ -186,7 +218,7 @@ class ReferencesHandlerTest extends TestCase
                 $this->finder->reveal(),
                 $this->locator->reveal(),
                 new LocationConverter(new WorkspaceTextDocumentLocator($builder->workspace())),
-                new ClientApi(TestRpcClient::create()),
+                new ClientApi($client ?? TestRpcClient::create()),
                 $timeout,
                 $softTimeout,
             )
