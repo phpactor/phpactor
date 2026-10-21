@@ -25,6 +25,7 @@ use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Throwable;
 
 class ReferencesHandler implements Handler, CanRegisterCapabilities
 {
@@ -77,76 +78,82 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             }
 
             $token = WorkDoneToken::generate();
+            $this->clientApi->workDoneProgress()->create($token);
             $this->clientApi->workDoneProgress()->begin($token, 'Finding references');
             $start = microtime(true);
             $count = 0;
             $risky = 0;
             $dontAsk = false;
-            foreach ($this->finder->findReferences($phpactorDocument, $offset) as $potentialLocation) {
-                if ($potentialLocation->isSurely()) {
-                    $locations[] = $potentialLocation->location();
-                }
-
-                if ($potentialLocation->isMaybe()) {
-                    $risky++;
-                }
-
-                $count++;
-                $this->clientApi->workDoneProgress()->report($token, sprintf(
-                    '... analysed %s references confirmed %s ...',
-                    $count - 1,
-                    count($locations)
-                ));
-
-                if (false === $dontAsk && microtime(true) - $start > $this->softTimeoutSeconds) {
-                    $no = new MessageActionItem('No, show me what you got');
-                    $another = new MessageActionItem(sprintf('Another %.2f seconds', $this->softTimeoutSeconds));
-                    $until = new MessageActionItem(sprintf('Keep going until the %.2f second hard timeout', $this->timeoutSeconds));
-                    $selection = yield $this->clientApi->window()->showMessageRequest()->info(
-                        sprintf(
-                            'Finding references is taking a while, scanned %d and confirmed %d - do you want to continue?',
-                            $count - 1,
-                            count($locations),
-                        ),
-                        $no,
-                        $another,
-                        $until,
-                    );
-                    if ($selection == $no) {
-                        break;
+            try {
+                foreach ($this->finder->findReferences($phpactorDocument, $offset) as $potentialLocation) {
+                    if ($potentialLocation->isSurely()) {
+                        $locations[] = $potentialLocation->location();
                     }
-                    if ($selection == $another) {
-                        $this->clientApi->workDoneProgress()->report(
-                            $token,
-                            sprintf('searching for another %.2f seconds', $this->softTimeoutSeconds)
+
+                    if ($potentialLocation->isMaybe()) {
+                        $risky++;
+                    }
+
+                    $count++;
+                    $this->clientApi->workDoneProgress()->report($token, sprintf(
+                        '... analysed %s references confirmed %s ...',
+                        $count - 1,
+                        count($locations)
+                    ));
+
+                    if (false === $dontAsk && microtime(true) - $start > $this->softTimeoutSeconds) {
+                        $no = new MessageActionItem('No, show me what you got');
+                        $another = new MessageActionItem(sprintf('Another %.2f seconds', $this->softTimeoutSeconds));
+                        $until = new MessageActionItem(sprintf('Keep going until the %.2f second hard timeout', $this->timeoutSeconds));
+                        $selection = yield $this->clientApi->window()->showMessageRequest()->info(
+                            sprintf(
+                                'Finding references is taking a while, scanned %d and confirmed %d - do you want to continue?',
+                                $count - 1,
+                                count($locations),
+                            ),
+                            $no,
+                            $another,
+                            $until,
                         );
-                        $start = microtime(true);
-                        continue;
+                        if ($selection == $no) {
+                            break;
+                        }
+                        if ($selection == $another) {
+                            $this->clientApi->workDoneProgress()->report(
+                                $token,
+                                sprintf('searching for another %.2f seconds', $this->softTimeoutSeconds)
+                            );
+                            $start = microtime(true);
+                            continue;
+                        }
+                        if ($selection == $until) {
+                            $dontAsk = true;
+                        }
                     }
-                    if ($selection == $until) {
-                        $dontAsk = true;
+
+                    if (microtime(true) - $start > $this->timeoutSeconds) {
+                        $this->clientApi->workDoneProgress()->end(
+                            $token,
+                            sprintf(
+                                'Reference finding stopped, %s/%s references confirmed but took too long (%s/%s seconds). Adjust `%s`',
+                                count($locations),
+                                $count,
+                                number_format(microtime(true) - $start, 2),
+                                $this->timeoutSeconds,
+                                LanguageServerReferenceFinderExtension::PARAM_REFERENCE_TIMEOUT
+                            )
+                        );
+                        return $this->toLocations($locations);
+                    }
+
+                    if ($count % 10) {
+                        // give other co-routines a chance
+                        yield new Delayed(0);
                     }
                 }
-
-                if (microtime(true) - $start > $this->timeoutSeconds) {
-                    $this->clientApi->workDoneProgress()->end(
-                        $token,
-                        sprintf(
-                            'Reference finding stopped, %s/%s references confirmed but took too long (%s/%s seconds). Adjust `%s`',
-                            count($locations),
-                            $count,
-                            number_format(microtime(true) - $start, 2),
-                            $this->timeoutSeconds,
-                            LanguageServerReferenceFinderExtension::PARAM_REFERENCE_TIMEOUT
-                        )
-                    );
-                    return $this->toLocations($locations);
-                }
-
-                if ($count % 10) {
-                    // give other co-routines a chance
-                    yield new Delayed(0);
-                }
+            } catch (Throwable $error) {
+                $this->clientApi->workDoneProgress()->end($token, sprintf('Finding references failed: %s', $error->getMessage()));
+                throw $error;
             }
 
             $this->clientApi->workDoneProgress()->end($token, sprintf(
