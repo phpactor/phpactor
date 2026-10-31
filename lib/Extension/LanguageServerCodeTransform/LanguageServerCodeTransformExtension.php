@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantNamedMethodParameters;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantHereDoc;
@@ -517,6 +518,17 @@ class LanguageServerCodeTransformExtension implements Extension
                 'quickfix.fill.matchArms',
                 'Fill match arms',
                 'fill missing match arms for an enum',
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+            ]);
+
+        $container->register(ByteOffsetRefactorProvider::class.'.tolerant_named_method_parameters', function (Container $container) {
+            return new ByteOffsetRefactorProvider(
+                $container->get(TolerantNamedMethodParameters::class),
+                'quickfix.refactor.named_method_parameters',
+                'Toggle named parameters',
+                'Toggles if all parameters named parameters or not',
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
