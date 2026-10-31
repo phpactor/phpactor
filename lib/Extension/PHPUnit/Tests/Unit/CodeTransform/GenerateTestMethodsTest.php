@@ -5,6 +5,8 @@ namespace Phpactor\Extension\PHPUnit\Tests\Unit\CodeTransform;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use InvalidArgumentException;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\Extension\PHPUnit\CodeTransform\GenerateTestMethods;
@@ -117,6 +119,10 @@ class GenerateTestMethodsTest extends WorseTestCase
 
     private function createTestMethodGenerator(string $source): GenerateTestMethods
     {
-        return new GenerateTestMethods($this->reflectorForWorkspace($source), $this->updater());
+        $reflector = $this->reflectorForWorkspace($source);
+        $factory = new WorseBuilderFactory($reflector);
+        $override = new WorseOverrideMethod($reflector, $factory, $this->updater(), '8.5');
+
+        return new GenerateTestMethods($this->reflectorForWorkspace($source), $override);
     }
 }

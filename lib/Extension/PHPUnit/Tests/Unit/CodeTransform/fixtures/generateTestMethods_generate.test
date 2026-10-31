@@ -1,16 +1,24 @@
 // File: source
 <?php
-
-class SomeClass {
-    <>
+class EmptyTestClass extends TestCase {
+<>
 }
 
+class TestCase {
+    protected function setUp(): void { }
+    protected function tearDown(): void { }
+}
 // File: expected
 <?php
-
-class SomeClass {
-    public function setUp(): void
+class EmptyTestClass extends TestCase {
+    #[\Override]
+    protected function setUp(): void
     {
     }
-    
+
+}
+
+class TestCase {
+    protected function setUp(): void { }
+    protected function tearDown(): void { }
 }

@@ -3,8 +3,7 @@
 namespace Phpactor\Extension\PHPUnit\CodeTransform;
 
 use Generator;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -22,7 +21,7 @@ class GenerateTestMethods
 
     public function __construct(
         private Reflector $reflector,
-        private Updater $updater,
+        private WorseOverrideMethod $overrideMethod,
     ) {
     }
 
@@ -54,6 +53,8 @@ class GenerateTestMethods
 
     public function generateMethod(TextDocument $document, string $methodName): TextEdits
     {
+        $source = SourceCode::fromTextDocument($document);
+
         Assert::inArray(
             $methodName,
             self::METHODS_TO_GENERATE,
@@ -62,16 +63,6 @@ class GenerateTestMethods
 
         $class = $this->reflector->reflectClassesIn($document)->classes()->first();
 
-        $builder = SourceCodeBuilder::create();
-        $builder->namespace($class->name()->namespace());
-        $classBuilder = $builder->class($class->name()->short());
-
-        if ($class->methods()->has($methodName)) {
-            return TextEdits::none();
-        }
-
-        $classBuilder ->method($methodName) ->visibility('public') ->returnType('void') ;
-
-        return $this->updater->textEditsFor($builder->build(), $document);
+        return $this->overrideMethod->overrideMethod($source, (string) $class->name(), $methodName);
     }
 }
