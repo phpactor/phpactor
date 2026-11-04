@@ -472,6 +472,34 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'list() unpacking',
+            source: <<<'PHP'
+                <?php
+                    foreach ([['a', 'b']] as list($a, $b)) {
+                        echo $a . $b;
+                    }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'list unpacking of an untyped collection',
+            source: <<<'PHP'
+                <?php
+                function foo($rows): void {
+                    foreach ($rows as [$a, $b]) {
+                        echo $a . $b;
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'map unpacking',
             source: <<<'PHP'
                 <?php
