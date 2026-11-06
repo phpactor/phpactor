@@ -4,7 +4,9 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
+use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\ForeachKey;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
@@ -56,7 +58,12 @@ class ForeachStatementResolver implements Resolver
         }
 
         if ($expression instanceof ArrayCreationExpression) {
-            $this->valueFromArrayCreation($resolver, $expression, $node, $nodeContext, $frame);
+            $this->valueFromArrayElements($resolver, $expression->arrayElements, $nodeContext, $frame);
+            return;
+        }
+
+        if ($expression instanceof ListIntrinsicExpression) {
+            $this->valueFromArrayElements($resolver, $expression->listElements, $nodeContext, $frame);
         }
     }
 
@@ -123,36 +130,31 @@ class ForeachStatementResolver implements Resolver
         $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asDefinition());
     }
 
-    private function valueFromArrayCreation(
+    private function valueFromArrayElements(
         NodeContextResolver $resolver,
-        ArrayCreationExpression $expression,
-        ForeachStatement $node,
+        mixed $elements,
         NodeContext $nodeContext,
         Frame $frame
     ): void {
-        $elements = $expression->arrayElements;
-        if (!$elements instanceof ArrayElementList) {
+        if (!$elements instanceof ArrayElementList && !$elements instanceof ListExpressionList) {
             return;
         }
 
         $arrayType = $nodeContext->type();
-
-        if (!$arrayType instanceof IterableType) {
-            return;
-        }
-
         $index = 0;
 
         foreach ($elements->children as $item) {
             if (!$item instanceof ArrayElement) {
+                $index++;
                 continue;
             }
 
             $context = $resolver->resolveNode($frame, $item->elementValue);
-            $context = $context->withType($this->resolveArrayCreationType($arrayType, $index));
+            $context = $context->withType(
+                $arrayType instanceof IterableType ? $this->resolveArrayCreationType($arrayType, $index) : new MixedType()
+            );
 
             $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asAssignment());
-            $index++;
         }
     }
 
