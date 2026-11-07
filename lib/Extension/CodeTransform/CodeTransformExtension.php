@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform;
 
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantNamedMethodParameters;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer70;
@@ -259,6 +260,13 @@ class CodeTransformExtension implements Extension
 
         $container->register(RenameVariable::class, function (Container $container) {
             return new TolerantRenameVariable();
+        });
+
+        $container->register(TolerantNamedMethodParameters::class, function (Container $container) {
+            return new TolerantNamedMethodParameters(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $container->get(AstProvider::class),
+            );
         });
 
         $container->register(OverrideMethod::class, function (Container $container) {

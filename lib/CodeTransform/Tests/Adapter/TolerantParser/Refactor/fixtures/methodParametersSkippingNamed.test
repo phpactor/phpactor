@@ -1,0 +1,22 @@
+// File: source
+<?php
+class A {
+    public static function foo(string $someName = "Foo", bool $other = true) {}
+}
+
+$a = new A();
+$a->fo<>o(
+    other: false,
+);
+// File: expected
+<?php
+class A {
+    public static function foo(string $someName = "Foo", bool $other = true) {}
+}
+
+$a = new A();
+$a->foo(
+    'Foo',
+    false
+);
+
