@@ -10,12 +10,12 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class AdapterTestCase extends TestCase
 {
-    protected function renderer()
+    protected function renderer(): TwigRenderer
     {
         return new TwigRenderer();
     }
 
-    protected function updater()
+    protected function updater(): TolerantUpdater
     {
         return new TolerantUpdater($this->renderer());
     }
