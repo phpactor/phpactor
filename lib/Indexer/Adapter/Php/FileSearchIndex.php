@@ -22,7 +22,7 @@ class FileSearchIndex implements SearchIndex
     private bool $initialized = false;
 
     /**
-     * @var array<array{string,string,string|null}>
+     * @var array<string,array{string,string,string|null,int|string|null}>
      */
     private array $subjects = [];
 
@@ -62,7 +62,13 @@ class FileSearchIndex implements SearchIndex
             $record instanceof ClassRecord ? $record->type() : null,
             $record instanceof HasFlags ? $record->flags() : null,
         ];
-        $this->subjects[$this->recordHash($record)] = $info;
+        $hash = $this->recordHash($record);
+
+        if (isset($this->subjects[$hash]) && $this->subjects[$hash] == $info) {
+            return;
+        }
+
+        $this->subjects[$hash] = $info;
         $this->dirty = true;
 
         if (++$this->counter % self::BATCH_SIZE === 0) {
@@ -72,7 +78,14 @@ class FileSearchIndex implements SearchIndex
 
     public function remove(Record $record): void
     {
-        unset($this->subjects[$this->recordHash($record)]);
+        $this->open();
+        $hash = $this->recordHash($record);
+
+        if (!isset($this->subjects[$hash])) {
+            return;
+        }
+
+        unset($this->subjects[$hash]);
         $this->dirty = true;
     }
 
