@@ -22,7 +22,7 @@ class FileSearchIndex implements SearchIndex
     private bool $initialized = false;
 
     /**
-     * @var array<array{string,string,string|null}>
+     * @var array<string,array{string,string,string|null,int|string|null}>
      */
     private array $subjects = [];
 
@@ -64,7 +64,7 @@ class FileSearchIndex implements SearchIndex
         ];
         $hash = $this->recordHash($record);
 
-        if (isset($this->subjects[$hash]) && implode(self::DELIMITER, $this->subjects[$hash]) === implode(self::DELIMITER, $info)) {
+        if (isset($this->subjects[$hash]) && $this->subjects[$hash] == $info) {
             return;
         }
 
