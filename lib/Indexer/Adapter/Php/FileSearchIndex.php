@@ -62,7 +62,13 @@ class FileSearchIndex implements SearchIndex
             $record instanceof ClassRecord ? $record->type() : null,
             $record instanceof HasFlags ? $record->flags() : null,
         ];
-        $this->subjects[$this->recordHash($record)] = $info;
+        $hash = $this->recordHash($record);
+
+        if (isset($this->subjects[$hash]) && implode(self::DELIMITER, $this->subjects[$hash]) === implode(self::DELIMITER, $info)) {
+            return;
+        }
+
+        $this->subjects[$hash] = $info;
         $this->dirty = true;
 
         if (++$this->counter % self::BATCH_SIZE === 0) {
@@ -72,7 +78,14 @@ class FileSearchIndex implements SearchIndex
 
     public function remove(Record $record): void
     {
-        unset($this->subjects[$this->recordHash($record)]);
+        $this->open();
+        $hash = $this->recordHash($record);
+
+        if (!isset($this->subjects[$hash])) {
+            return;
+        }
+
+        unset($this->subjects[$hash]);
         $this->dirty = true;
     }
 
