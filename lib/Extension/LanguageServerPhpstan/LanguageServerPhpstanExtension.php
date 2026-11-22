@@ -30,6 +30,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
     public const PARAM_TMP_FILE_DISABLED = 'language_server_phpstan.tmp_file_disabled';
     public const PARAM_EDITOR_MODE = 'language_server_phpstan.editor_mode';
     public const PARAM_SEVERITY = 'language_server_phpstan.severity';
+    public const PARAM_WORKING_DIR = 'language_server_phpstan.working_dir';
 
     public function load(ContainerBuilder $container): void
     {
@@ -70,7 +71,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
 
                 $binPath = $pathResolver->resolve($container->parameter(self::PARAM_PHPSTAN_BIN)->string());
 
-                $root = $pathResolver->resolve('%project_root%');
+                $root = $pathResolver->resolve($container->parameter(self::PARAM_WORKING_DIR)->string());
 
                 $configPath = null;
                 if ($container->parameter(self::PARAM_CONFIG)->value()) {
@@ -103,6 +104,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $schema->setDefaults(
             [
             self::PARAM_PHPSTAN_BIN => '%project_root%/vendor/bin/phpstan',
+            self::PARAM_WORKING_DIR => '%project_root%',
             self::PARAM_SEVERITY => DiagnosticSeverity::ERROR,
             self::PARAM_LEVEL => null,
             self::PARAM_CONFIG => null,
@@ -117,6 +119,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             self::PARAM_SEVERITY => 'Severity at which PHPStan diagnostics should be reported. Ranges from 1 (error) to 4 (hint).',
             self::PARAM_LEVEL => 'Override the PHPStan level',
             self::PARAM_CONFIG => 'Override the PHPStan configuration file',
+            self::PARAM_WORKING_DIR => 'Working directory for PHPStan (defaults to project dir)',
             self::PARAM_MEM_LIMIT => 'Override the PHPStan memory limit',
             self::PARAM_TMP_FILE_DISABLED => 'Disable the use of temporary files when.'
                 . ' This prevents as-you-type diagnostics, but ensures paths in phpstan config are respected.'

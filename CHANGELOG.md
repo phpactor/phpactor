@@ -3,7 +3,17 @@ Changelog
 
 ## master
 
-- Fix rendering of property docblock text @dantleech
+Improvements:
+
+- phpstan: Allow working directory to be specified @dantleech #3088
+
+Bug fixes:
+
+- hover: Fix rendering of property docblock text @dantleech #3087
+- indexer: Create index directory before writing file @AdzerKI #3075
+- indexer: Do not rewrite the search index when no record changed @AdzerKI #3086
+- references: Create the references progress token and end the progress when finding references fails @AdzerKI #3081
+- analysis: Define foreach destructuring variables for list() and untyped collections @AdzerKI #3084
 
 ## 2026.10.07.0
 
@@ -17,6 +27,10 @@ Improvements:
 - Parallel indexing @ajenbo #3065
 - Stubs: Use first parameter when parameter is decalared twice @gregmayes #3064
 - Add override attribute when generating new methods @mamazu #3057
+
+Bug fixes:
+
+- analysis: Keep a covariant native return type over the parent's wider type @arjan-12b #3071
 
 ## 2026.06.23.0
 
