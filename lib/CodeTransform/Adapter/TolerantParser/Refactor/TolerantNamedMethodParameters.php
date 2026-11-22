@@ -17,6 +17,7 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -48,9 +49,12 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
         }
 
         try {
-            /** @var ReflectionMethodCall $method */
             $method = $this->reflector->reflectNode($document, $node->getEndPosition());
         } catch (NotFound $notFound) {
+            return TextEdits::none();
+        }
+
+        if (!$method instanceof ReflectionMethod) {
             return TextEdits::none();
         }
 
@@ -66,22 +70,21 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
         $isFirstArgumentNamed = iterator_to_array($value)[0]->name instanceof Token;
         if ($isFirstArgumentNamed) {
             return $this->convertToPositionalArguments($methodDefinition, $arguments, $node);
-        } else {
-            return $this->convertToNamedArguments($methodDefinition, $node);
         }
+
+        return $this->convertToNamedArguments($methodDefinition, $node);
     }
 
     private function convertToNamedArguments(ReflectionMethod $methodDefinition, CallExpression $node): TextEdits
     {
         $textEdits = [];
 
-        /** @var ReflectionParameterCollection $parameters */
         $parameters = $methodDefinition->parameters();
 
         /** @var Generator<int, ArgumentExpression>|array{} $arguments */
         $arguments = $node->argumentExpressionList?->getValues()?? [];
         foreach ($arguments as $i => $argument) {
-            if (!($argument->expression instanceof Node)) {
+            if (!$argument->expression instanceof Node) {
                 continue;
             }
 
@@ -109,7 +112,7 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
         /** @var Generator<ArgumentExpression>|array{} $argumentGenerator */
         $argumentGenerator = $arguments->getValues();
         foreach ($argumentGenerator as $argument) {
-            if (!($argument->expression instanceof Node)) {
+            if (!$argument->expression instanceof Node) {
                 return TextEdits::none();
             }
 
