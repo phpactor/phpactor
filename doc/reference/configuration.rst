@@ -2043,6 +2043,19 @@ Path to the PHPStan executable
 **Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
 
 
+.. _param_language_server_phpstan.working_dir:
+
+
+``language_server_phpstan.working_dir``
+"""""""""""""""""""""""""""""""""""""""
+
+
+Working directory for PHPStan (defaults to project dir)
+
+
+**Default**: ``"%project_root%"``
+
+
 .. _param_language_server_phpstan.severity:
 
 
