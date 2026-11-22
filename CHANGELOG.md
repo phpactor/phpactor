@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## master
+
+- Fix rendering of property docblock text @dantleech
+
 ## 2026.10.07.0
 
 Features:

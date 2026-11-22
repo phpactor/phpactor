@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Hover;
+use Phpactor\LanguageServerProtocol\MarkupContent;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
 use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
 use Phpactor\TestUtils\ExtractOffset;
@@ -16,7 +17,7 @@ class HoverHandlerTest extends IntegrationTestCase
     private const PATH = 'file:///hello';
 
     #[DataProvider('provideHover')]
-    public function testHover(string $test): void
+    public function testHover(string $test, ?string $expectedMatch = null): void
     {
         [ $text, $offset ] = ExtractOffset::fromSource($test);
 
@@ -29,7 +30,11 @@ class HoverHandlerTest extends IntegrationTestCase
         ]);
         $tester->assertSuccess($response);
         $result = $response->result;
-        $this->assertInstanceOf(Hover::class, $result);
+        self::assertInstanceOf(Hover::class, $result);
+        self::assertInstanceOf(MarkupContent::class, $result->contents);
+        if ($expectedMatch !== null) {
+            self::assertStringContainsString($expectedMatch, $result->contents->value);
+        }
     }
 
     public static function provideHover(): Generator
@@ -107,6 +112,44 @@ class HoverHandlerTest extends IntegrationTestCase
 
                 EOT
             ,
+        ];
+
+        yield 'promoted property' => [
+            <<<'EOT'
+                <?php
+
+                class Barfoo {
+                    public function __construct(
+                        /**
+                         * The original documentation
+                         */
+                        private string $foo,
+                    } {}
+                }
+                function foo(Barfoo $foo) {
+                    $foo->f<>oo;
+                }
+                EOT
+            ,
+            'The original',
+        ];
+
+        yield 'property' => [
+            <<<'EOT'
+                <?php
+
+                class Barfoo {
+                    /**
+                     * The original documentation
+                     */
+                    public string $foo;
+                }
+                function foo(Barfoo $foo) {
+                    $foo->f<>oo;
+                }
+                EOT
+            ,
+            'The original',
         ];
 
         yield 'class' => [

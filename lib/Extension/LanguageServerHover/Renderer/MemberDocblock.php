@@ -41,8 +41,8 @@ class MemberDocblock
         }
 
         if ($classLike instanceof ReflectionClass) {
-            if ($classLike->methods()->belongingTo($classLike->name())->has($this->member->name())) {
-                $ancestors[$name] = $classLike->methods()->belongingTo($classLike->name())->get($this->member->name());
+            if ($classLike->members()->belongingTo($classLike->name())->has($this->member->name())) {
+                $ancestors[$name] = $classLike->members()->belongingTo($classLike->name())->get($this->member->name());
             }
 
             $ancestors = $this->buildAncestors($classLike->parent(), $ancestors);
