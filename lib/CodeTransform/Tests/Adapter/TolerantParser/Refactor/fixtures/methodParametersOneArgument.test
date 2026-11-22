@@ -15,7 +15,5 @@ class A {
 }
 
 $a = new A();
-$a->foo(
-    10
-);
+$a->foo(10);
 

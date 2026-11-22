@@ -16,8 +16,6 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -54,10 +52,9 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
             return TextEdits::none();
         }
 
-        if (!$method instanceof ReflectionMethod) {
+        if (!$method instanceof ReflectionMethodCall) {
             return TextEdits::none();
         }
-
         try {
             $methodDefinition = $method->class()->methods()->get($method->name());
         } catch (NotFound) {
@@ -124,10 +121,21 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
             $setArguments[$argumentName] = $argument->expression->getText();
         }
 
+        if ($setArguments === []) {
+            return TextEdits::none();
+        }
+
+        $lastSetArgument = array_key_last($setArguments);
+
         $argumentValues = [];
         foreach ($methodDefinition->parameters() as $parameter) {
-            if (array_key_exists($parameter->name(), $setArguments)) {
-                $argumentValues[] = $setArguments[$parameter->name()];
+            $parameterName = $parameter->name();
+
+            if (array_key_exists($parameterName, $setArguments)) {
+                $argumentValues[] = $setArguments[$parameterName];
+                if ($parameterName === $lastSetArgument) {
+                    break;
+                }
                 continue;
             }
 
@@ -135,26 +143,14 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
             if ($value === null) {
                 return TextEdits::none();
             }
-            $argumentValues[] = var_export($parameter->default()->value(), true);
-        }
+            $argumentValues[] = var_export($value, true);
 
-        $contentToBeReplaced = $node->getText();
-        $newlinePosition = strpos($contentToBeReplaced, "\n");
-        if ($newlinePosition === false) {
-            $seperator = ', ';
-        } else {
-            $a = 0;
-            while ($contentToBeReplaced[$newlinePosition + 1 + $a] === ' ') {
-                $a++;
-            }
-
-            $seperator = ",\n".str_repeat(' ', $a);
         }
 
         return TextEdits::fromTextEdits([TextEdit::create(
-            $arguments->getStartPosition(),
-            $arguments->getEndPosition() - $arguments->getStartPosition(),
-            join($seperator, $argumentValues),
+            $node->openParen->getEndPosition(),
+            $node->closeParen->getStartPosition() - $node->openParen->getEndPosition(),
+            join(', ', $argumentValues),
         )]);
     }
 }

@@ -36,6 +36,7 @@ class TolerantNamedMethodParameterTest extends WorseTestCase
         yield 'oneArgument' => [ 'methodParametersOneArgument.test' ];
         yield 'multiple named arguments' => [ 'methodParametersMultipleNamedArguments.test' ];
         yield 'multiple arguments' => [ 'methodParametersMultiplePosArguments.test' ];
+        yield 'tailingArguments' => [ 'methodParametersTrailingArguments.test' ];
         yield 'named arguments skipping' => [ 'methodParametersSkippingNamed.test' ];
         yield 'named arguments wrong order' => [ 'methodParametersWrongOrder.test' ];
         yield 'named arguments with object defaults' => [ 'methodParametersObject.test' ];

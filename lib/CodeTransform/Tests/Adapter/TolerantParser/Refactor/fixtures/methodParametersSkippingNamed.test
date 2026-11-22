@@ -15,8 +15,5 @@ class A {
 }
 
 $a = new A();
-$a->foo(
-    'Foo',
-    false
-);
+$a->foo('Foo', false);
 
