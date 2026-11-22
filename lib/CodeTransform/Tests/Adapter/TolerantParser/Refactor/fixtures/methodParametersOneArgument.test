@@ -1,7 +1,7 @@
 // File: source
 <?php
 class A {
-    public static function foo(int $someName) {}
+    public function foo(int $someName) {}
 }
 
 $a = new A();
@@ -11,7 +11,7 @@ $a->fo<>o(
 // File: expected
 <?php
 class A {
-    public static function foo(int $someName) {}
+    public function foo(int $someName) {}
 }
 
 $a = new A();

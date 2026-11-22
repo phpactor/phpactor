@@ -1,0 +1,23 @@
+// File: source
+<?php
+class A {
+    public static function __construct(
+        private string $someName = "foo",
+        bool $other = true
+    ) {}
+}
+
+$a = new A(
+    someNa<>me: "Bloo",
+);
+// File: expected
+<?php
+class A {
+    public static function __construct(
+        private string $someName = "foo",
+        bool $other = true
+    ) {}
+}
+
+$a = new A("Bloo");
+

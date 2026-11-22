@@ -8,7 +8,9 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\AstProvider;
 use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
@@ -34,10 +36,10 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
         $node = $this->parser
             ->get($document)
             ->getDescendantNodeAtPosition($offset->toInt())
+            ->getFirstAncestor(CallExpression::class, ObjectCreationExpression::class)
         ;
-        $node = $node instanceof CallExpression ? $node : $node->getFirstAncestor(CallExpression::class);
 
-        if (!$node instanceof CallExpression) {
+        if (!$node instanceof CallExpression && !$node instanceof ObjectCreationExpression) {
             return TextEdits::none();
         }
 
@@ -52,11 +54,13 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
             return TextEdits::none();
         }
 
-        if (!$method instanceof ReflectionMethodCall) {
+        if (!$method instanceof ReflectionMethodCall && !$method instanceof ReflectionObjectCreationExpression) {
             return TextEdits::none();
         }
+
+        $methodName = $this->getMethodName($method);
         try {
-            $methodDefinition = $method->class()->methods()->get($method->name());
+            $methodDefinition = $method->class()->methods()->get($methodName);
         } catch (NotFound) {
             return TextEdits::none();
         }
@@ -72,11 +76,13 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
         return $this->convertToNamedArguments($methodDefinition, $node);
     }
 
-    private function convertToNamedArguments(ReflectionMethod $methodDefinition, CallExpression $node): TextEdits
-    {
+    private function convertToNamedArguments(
+        ReflectionMethod $definition,
+        CallExpression $node,
+    ): TextEdits {
         $textEdits = [];
 
-        $parameters = $methodDefinition->parameters();
+        $parameters = array_keys($this->getArguments($definition));
 
         /** @var Generator<int, ArgumentExpression>|array{} $arguments */
         $arguments = $node->argumentExpressionList?->getValues()?? [];
@@ -85,7 +91,7 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
                 continue;
             }
 
-            $name = $parameters->at($i)?->name();
+            $name = $parameters[$i] ?? null;
             if ($name === null) {
                 return TextEdits::none();
             }
@@ -103,7 +109,7 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
     private function convertToPositionalArguments(
         ReflectionMethod $methodDefinition,
         ArgumentExpressionList $arguments,
-        CallExpression $node
+        CallExpression|ObjectCreationExpression $node
     ): TextEdits {
         $setArguments = [];
         /** @var Generator<ArgumentExpression>|array{} $argumentGenerator */
@@ -128,9 +134,7 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
         $lastSetArgument = array_key_last($setArguments);
 
         $argumentValues = [];
-        foreach ($methodDefinition->parameters() as $parameter) {
-            $parameterName = $parameter->name();
-
+        foreach ($this->getArguments($methodDefinition) as $parameterName => $value) {
             if (array_key_exists($parameterName, $setArguments)) {
                 $argumentValues[] = $setArguments[$parameterName];
                 if ($parameterName === $lastSetArgument) {
@@ -139,12 +143,7 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
                 continue;
             }
 
-            $value = $parameter->default()->value();
-            if ($value === null) {
-                return TextEdits::none();
-            }
             $argumentValues[] = var_export($value, true);
-
         }
 
         return TextEdits::fromTextEdits([TextEdit::create(
@@ -152,5 +151,24 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
             $node->closeParen->getStartPosition() - $node->openParen->getEndPosition(),
             join(', ', $argumentValues),
         )]);
+    }
+
+    private function getMethodName(ReflectionObjectCreationExpression|ReflectionMethodCall $method): string
+    {
+        return match(true) {
+            $method instanceof ReflectionMethodCall => $method->name(),
+            $method instanceof ReflectionObjectCreationExpression => '__construct',
+        };
+    }
+
+    /** @return array<string, mixed> */
+    private function getArguments(ReflectionMethod $method): array
+    {
+        $parameters = [];
+        foreach ($method->parameters() as $parameter) {
+            $parameters[$parameter->name()] = $parameter->default()->value();
+        }
+
+        return $parameters;
     }
 }

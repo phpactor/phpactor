@@ -13,5 +13,5 @@ class A {
 }
 
 $a = new A();
-$a->foo(i: 1);
+$a->foo(NULL, 1);
 
