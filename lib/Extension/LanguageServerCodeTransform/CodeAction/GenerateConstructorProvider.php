@@ -39,7 +39,7 @@ class GenerateConstructorProvider implements CodeActionProvider
         return new Success([
             new CodeAction(
                 title: 'Generate constructor',
-                kind: self::KIND,
+                kind: $this->kinds()[0],
                 diagnostics: [],
                 isPreferred: false,
                 edit: $this->converter->toLspWorkspaceEdit($edits)
@@ -49,7 +49,10 @@ class GenerateConstructorProvider implements CodeActionProvider
 
     public function kinds(): array
     {
-        return [self::KIND];
+        return [
+            CodeActionKind::REFACTOR,
+            self::KIND,
+        ];
     }
 
     public function describe(): string
