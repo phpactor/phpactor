@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\PHPUnit;
 
-use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Container\OptionalExtension;
@@ -18,6 +18,7 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\PHPUnit\CodeTransform\GenerateTestMethods;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 
 class PHPUnitExtension implements OptionalExtension
 {
@@ -71,7 +72,7 @@ class PHPUnitExtension implements OptionalExtension
         $container->register(GenerateTestMethods::class, function (Container $container) {
             return new GenerateTestMethods(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->get(Updater::class),
+                $container->expect(OverrideMethod::class, WorseOverrideMethod::class),
             );
         });
     }
