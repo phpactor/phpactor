@@ -25,7 +25,10 @@ class AdapterTestCase extends TestCase
         return Workspace::create(__DIR__ . '/../Workspace');
     }
 
-    protected function sourceExpected($manifestPath)
+    /**
+    * @return array{string, string}
+    */
+    protected function sourceExpected($manifestPath): array
     {
         $workspace = $this->workspace();
         $workspace->reset();
@@ -41,7 +44,10 @@ class AdapterTestCase extends TestCase
         return [ $source, $expected ];
     }
 
-    protected function sourceExpectedAndOffset($manifestPath)
+    /**
+    * @return array{string, string, int, int}
+    */
+    protected function sourceExpectedAndOffset($manifestPath): array
     {
         [$source, $expected] = $this->sourceExpected($manifestPath);
         [$source, $offsetStart, $offsetEnd] = ExtractOffset::fromSource($source);
