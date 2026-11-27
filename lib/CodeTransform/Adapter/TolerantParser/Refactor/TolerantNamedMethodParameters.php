@@ -22,6 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Generator;
+use Webmozart\Assert\Assert;
 
 class TolerantNamedMethodParameters implements ByteOffsetRefactor
 {
@@ -78,7 +79,7 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
 
     private function convertToNamedArguments(
         ReflectionMethod $definition,
-        CallExpression $node,
+        CallExpression|ObjectCreationExpression $node,
     ): TextEdits {
         $textEdits = [];
 
@@ -145,6 +146,10 @@ class TolerantNamedMethodParameters implements ByteOffsetRefactor
 
             $argumentValues[] = var_export($value, true);
         }
+
+        // Parenthese are optional on constructor calls, but if we have arguments, we always have to have them.
+        Assert::notNull($node->openParen);
+        Assert::notNull($node->closeParen);
 
         return TextEdits::fromTextEdits([TextEdit::create(
             $node->openParen->getEndPosition(),
